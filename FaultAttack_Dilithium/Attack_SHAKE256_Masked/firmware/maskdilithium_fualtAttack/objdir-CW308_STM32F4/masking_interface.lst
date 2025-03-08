@@ -1,0 +1,177 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"masking_interface.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.canon_to_centered,"ax",%progbits
+  16              		.align	1
+  17              		.global	canon_to_centered
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	canon_to_centered:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "masking_interface.c"
+   1:masking_interface.c **** #include "masking_interface.h"
+   2:masking_interface.c **** //#include "dilithium_gadgets.h"
+   3:masking_interface.c **** #include "params.h"
+   4:masking_interface.c **** //#include "polyvec.h"
+   5:masking_interface.c **** #include "fips202.h"
+   6:masking_interface.c **** 
+   7:masking_interface.c **** 
+   8:masking_interface.c **** 
+   9:masking_interface.c **** 
+  10:masking_interface.c **** 
+  11:masking_interface.c **** int32_t canon_to_centered(uint32_t x){
+  28              		.loc 1 11 38 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  12:masking_interface.c ****   int32_t res = (int32_t) x;
+  33              		.loc 1 12 3 view .LVU1
+  13:masking_interface.c ****   if (res >= Q/2) res -= Q;
+  34              		.loc 1 13 3 view .LVU2
+  35              		.loc 1 13 6 is_stmt 0 view .LVU3
+  36 0000 044B     		ldr	r3, .L3
+  37 0002 9842     		cmp	r0, r3
+  38              		.loc 1 13 19 is_stmt 1 view .LVU4
+  39              		.loc 1 13 23 is_stmt 0 view .LVU5
+  40 0004 A2BF     		ittt	ge
+  41 0006 A0F5FF00 		subge	r0, r0, #8355840
+  42              	.LVL1:
+  43              		.loc 1 13 23 view .LVU6
+  44 000a A0F5C040 		subge	r0, r0, #24576
+  45 000e 00F1FF30 		addge	r0, r0, #-1
+  46              	.LVL2:
+  14:masking_interface.c ****   return res;
+  47              		.loc 1 14 3 is_stmt 1 view .LVU7
+  15:masking_interface.c **** }
+  48              		.loc 1 15 1 is_stmt 0 view .LVU8
+  49 0012 7047     		bx	lr
+  50              	.L4:
+  51              		.align	2
+  52              	.L3:
+  53 0014 00F03F00 		.word	4190208
+  54              		.cfi_endproc
+  55              	.LFE0:
+  57              		.section	.text.center,"ax",%progbits
+  58              		.align	1
+  59              		.global	center
+  60              		.syntax unified
+  61              		.thumb
+  62              		.thumb_func
+  63              		.fpu softvfp
+  65              	center:
+  66              	.LVL3:
+  67              	.LFB1:
+  16:masking_interface.c **** 
+  17:masking_interface.c **** int32_t center(int32_t x){
+  68              		.loc 1 17 26 is_stmt 1 view -0
+  69              		.cfi_startproc
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              		@ link register save eliminated.
+  18:masking_interface.c ****   /* Maps elements of Z_q in [-Q, ..., Q] to representatives in [-Q/2, ..., Q/2[ */
+  19:masking_interface.c ****   x += Q;
+  73              		.loc 1 19 3 view .LVU10
+  74              		.loc 1 19 5 is_stmt 0 view .LVU11
+  75 0000 064A     		ldr	r2, .L7
+  76 0002 1044     		add	r0, r0, r2
+  77              	.LVL4:
+  20:masking_interface.c ****   x %= Q;
+  78              		.loc 1 20 3 is_stmt 1 view .LVU12
+  79              		.loc 1 20 5 is_stmt 0 view .LVU13
+  80 0004 90FBF2F3 		sdiv	r3, r0, r2
+  81 0008 C3EB8321 		rsb	r1, r3, r3, lsl #10
+  82 000c 03EB4133 		add	r3, r3, r1, lsl #13
+  83 0010 C01A     		subs	r0, r0, r3
+  84              	.LVL5:
+  21:masking_interface.c ****   if (x > Q/2) x -= Q;
+  85              		.loc 1 21 3 is_stmt 1 view .LVU14
+  86              		.loc 1 21 6 is_stmt 0 view .LVU15
+  87 0012 034B     		ldr	r3, .L7+4
+  88 0014 9842     		cmp	r0, r3
+  89              		.loc 1 21 16 is_stmt 1 view .LVU16
+  90              		.loc 1 21 18 is_stmt 0 view .LVU17
+  91 0016 C8BF     		it	gt
+  92 0018 801A     		subgt	r0, r0, r2
+  93              	.LVL6:
+  22:masking_interface.c ****   return x;
+  94              		.loc 1 22 3 is_stmt 1 view .LVU18
+  23:masking_interface.c **** }
+  95              		.loc 1 23 1 is_stmt 0 view .LVU19
+  96 001a 7047     		bx	lr
+  97              	.L8:
+  98              		.align	2
+  99              	.L7:
+ 100 001c 01E07F00 		.word	8380417
+ 101 0020 00F03F00 		.word	4190208
+ 102              		.cfi_endproc
+ 103              	.LFE1:
+ 105              		.section	.text.center_to_canon,"ax",%progbits
+ 106              		.align	1
+ 107              		.global	center_to_canon
+ 108              		.syntax unified
+ 109              		.thumb
+ 110              		.thumb_func
+ 111              		.fpu softvfp
+ 113              	center_to_canon:
+ 114              	.LVL7:
+ 115              	.LFB2:
+  24:masking_interface.c **** 
+  25:masking_interface.c **** uint32_t center_to_canon(int32_t x){
+ 116              		.loc 1 25 36 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 0, pretend = 0, frame = 0
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+ 120              		@ link register save eliminated.
+  26:masking_interface.c ****   /* Maps elements of Z_q in [-Q/2, ..., Q/2[ to representatives in  [0, ..., Q[*/
+  27:masking_interface.c ****   if (x < 0) x += Q; 
+ 121              		.loc 1 27 3 view .LVU21
+ 122              		.loc 1 27 6 is_stmt 0 view .LVU22
+ 123 0000 0028     		cmp	r0, #0
+ 124              		.loc 1 27 14 is_stmt 1 view .LVU23
+ 125              		.loc 1 27 16 is_stmt 0 view .LVU24
+ 126 0002 BEBF     		ittt	lt
+ 127 0004 00F5FF00 		addlt	r0, r0, #8355840
+ 128              	.LVL8:
+ 129              		.loc 1 27 16 view .LVU25
+ 130 0008 00F5C040 		addlt	r0, r0, #24576
+ 131 000c 0130     		addlt	r0, r0, #1
+ 132              	.LVL9:
+  28:masking_interface.c ****   return x;
+ 133              		.loc 1 28 3 is_stmt 1 view .LVU26
+  29:masking_interface.c **** }
+ 134              		.loc 1 29 1 is_stmt 0 view .LVU27
+ 135 000e 7047     		bx	lr
+ 136              		.cfi_endproc
+ 137              	.LFE2:
+ 139              		.text
+ 140              	.Letext0:
+ 141              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 142              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+DEFINED SYMBOLS
+                            *ABS*:00000000 masking_interface.c
+C:\Users\dudixiao\AppData\Local\Temp\ccpqa2hr.s:16     .text.canon_to_centered:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccpqa2hr.s:24     .text.canon_to_centered:00000000 canon_to_centered
+C:\Users\dudixiao\AppData\Local\Temp\ccpqa2hr.s:53     .text.canon_to_centered:00000014 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccpqa2hr.s:58     .text.center:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccpqa2hr.s:65     .text.center:00000000 center
+C:\Users\dudixiao\AppData\Local\Temp\ccpqa2hr.s:100    .text.center:0000001c $d
+C:\Users\dudixiao\AppData\Local\Temp\ccpqa2hr.s:106    .text.center_to_canon:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccpqa2hr.s:113    .text.center_to_canon:00000000 center_to_canon
+
+NO UNDEFINED SYMBOLS

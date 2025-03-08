@@ -1,0 +1,774 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"ntt.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_ntt,"ax",%progbits
+  16              		.align	1
+  17              		.global	PQCLEAN_DILITHIUM2_CLEAN_ntt
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	PQCLEAN_DILITHIUM2_CLEAN_ntt:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "ntt.c"
+   1:ntt.c         **** #include "ntt.h"
+   2:ntt.c         **** #include "params.h"
+   3:ntt.c         **** #include "reduce.h"
+   4:ntt.c         **** #include <stdint.h>
+   5:ntt.c         **** 
+   6:ntt.c         **** static const int32_t zetas[N] = {
+   7:ntt.c         ****     0,    25847, -2608894,  -518909,   237124,  -777960,  -876248,   466468,
+   8:ntt.c         ****     1826347,  2353451,  -359251, -2091905,  3119733, -2884855,  3111497,  2680103,
+   9:ntt.c         ****     2725464,  1024112, -1079900,  3585928,  -549488, -1119584,  2619752, -2108549,
+  10:ntt.c         ****     -2118186, -3859737, -1399561, -3277672,  1757237,   -19422,  4010497,   280005,
+  11:ntt.c         ****     2706023,    95776,  3077325,  3530437, -1661693, -3592148, -2537516,  3915439,
+  12:ntt.c         ****     -3861115, -3043716,  3574422, -2867647,  3539968,  -300467,  2348700,  -539299,
+  13:ntt.c         ****     -1699267, -1643818,  3505694, -3821735,  3507263, -2140649, -1600420,  3699596,
+  14:ntt.c         ****     811944,   531354,   954230,  3881043,  3900724, -2556880,  2071892, -2797779,
+  15:ntt.c         ****     -3930395, -1528703, -3677745, -3041255, -1452451,  3475950,  2176455, -1585221,
+  16:ntt.c         ****     -1257611,  1939314, -4083598, -1000202, -3190144, -3157330, -3632928,   126922,
+  17:ntt.c         ****     3412210,  -983419,  2147896,  2715295, -2967645, -3693493,  -411027, -2477047,
+  18:ntt.c         ****     -671102, -1228525,   -22981, -1308169,  -381987,  1349076,  1852771, -1430430,
+  19:ntt.c         ****     -3343383,   264944,   508951,  3097992,    44288, -1100098,   904516,  3958618,
+  20:ntt.c         ****     -3724342,    -8578,  1653064, -3249728,  2389356,  -210977,   759969, -1316856,
+  21:ntt.c         ****     189548, -3553272,  3159746, -1851402, -2409325,  -177440,  1315589,  1341330,
+  22:ntt.c         ****     1285669, -1584928,  -812732, -1439742, -3019102, -3881060, -3628969,  3839961,
+  23:ntt.c         ****     2091667,  3407706,  2316500,  3817976, -3342478,  2244091, -2446433, -3562462,
+  24:ntt.c         ****     266997,  2434439, -1235728,  3513181, -3520352, -3759364, -1197226, -3193378,
+  25:ntt.c         ****     900702,  1859098,   909542,   819034,   495491, -1613174,   -43260,  -522500,
+  26:ntt.c         ****     -655327, -3122442,  2031748,  3207046, -3556995,  -525098,  -768622, -3595838,
+  27:ntt.c         ****     342297,   286988, -2437823,  4108315,  3437287, -3342277,  1735879,   203044,
+  28:ntt.c         ****     2842341,  2691481, -2590150,  1265009,  4055324,  1247620,  2486353,  1595974,
+  29:ntt.c         ****     -3767016,  1250494,  2635921, -3548272, -2994039,  1869119,  1903435, -1050970,
+  30:ntt.c         ****     -1333058,  1237275, -3318210, -1430225,  -451100,  1312455,  3306115, -1962642,
+  31:ntt.c         ****     -1279661,  1917081, -2546312, -1374803,  1500165,   777191,  2235880,  3406031,
+  32:ntt.c         ****     -542412, -2831860, -1671176, -1846953, -2584293, -3724270,   594136, -3776993,
+  33:ntt.c         ****     -2013608,  2432395,  2454455,  -164721,  1957272,  3369112,   185531, -1207385,
+  34:ntt.c         ****     -3183426,   162844,  1616392,  3014001,   810149,  1652634, -3694233, -1799107,
+  35:ntt.c         ****     -3038916,  3523897,  3866901,   269760,  2213111,  -975884,  1717735,   472078,
+  36:ntt.c         ****     -426683,  1723600, -1803090,  1910376, -1667432, -1104333,  -260646, -3833893,
+  37:ntt.c         ****     -2939036, -2235985,  -420899, -2286327,   183443,  -976891,  1612842, -3545687,
+  38:ntt.c         ****     -554416,  3919660,   -48306, -1362209,  3937738,  1400424,  -846154,  1976782
+  39:ntt.c         **** };
+  40:ntt.c         **** 
+  41:ntt.c         **** /*************************************************
+  42:ntt.c         **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_ntt
+  43:ntt.c         **** *
+  44:ntt.c         **** * Description: Forward NTT, in-place. No modular reduction is performed after
+  45:ntt.c         **** *              additions or subtractions. Output vector is in bitreversed order.
+  46:ntt.c         **** *
+  47:ntt.c         **** * Arguments:   - uint32_t p[N]: input/output coefficient array
+  48:ntt.c         **** **************************************************/
+  49:ntt.c         **** void PQCLEAN_DILITHIUM2_CLEAN_ntt(int32_t a[N]) {
+  28              		.loc 1 49 49 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  50:ntt.c         ****     unsigned int len, start, j, k;
+  32              		.loc 1 50 5 view .LVU1
+  51:ntt.c         ****     int32_t zeta, t;
+  33              		.loc 1 51 5 view .LVU2
+  52:ntt.c         **** 
+  53:ntt.c         ****     k = 0;
+  34              		.loc 1 53 5 view .LVU3
+  54:ntt.c         ****     for (len = 128; len > 0; len >>= 1) {
+  35              		.loc 1 54 5 view .LVU4
+  36              		.loc 1 54 21 view .LVU5
+  49:ntt.c         ****     unsigned int len, start, j, k;
+  37              		.loc 1 49 49 is_stmt 0 view .LVU6
+  38 0000 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  39              	.LCFI0:
+  40              		.cfi_def_cfa_offset 48
+  41              		.cfi_offset 4, -36
+  42              		.cfi_offset 5, -32
+  43              		.cfi_offset 6, -28
+  44              		.cfi_offset 7, -24
+  45              		.cfi_offset 8, -20
+  46              		.cfi_offset 9, -16
+  47              		.cfi_offset 10, -12
+  48              		.cfi_offset 11, -8
+  49              		.cfi_offset 14, -4
+  49:ntt.c         ****     unsigned int len, start, j, k;
+  50              		.loc 1 49 49 view .LVU7
+  51 0004 0646     		mov	r6, r0
+  55:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  56:ntt.c         ****             zeta = zetas[++k];
+  57:ntt.c         ****             for (j = start; j < start + len; ++j) {
+  52              		.loc 1 57 13 view .LVU8
+  53 0006 4FF00808 		mov	r8, #8
+  53:ntt.c         ****     for (len = 128; len > 0; len >>= 1) {
+  54              		.loc 1 53 7 view .LVU9
+  55 000a 4FF00009 		mov	r9, #0
+  54:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  56              		.loc 1 54 14 view .LVU10
+  57 000e 8025     		movs	r5, #128
+  58              	.LVL1:
+  59              	.L2:
+  55:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  60              		.loc 1 55 25 is_stmt 1 view .LVU11
+  55:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  61              		.loc 1 55 20 is_stmt 0 view .LVU12
+  62 0010 0024     		movs	r4, #0
+  63              	.LVL2:
+  64              	.L5:
+  56:ntt.c         ****             for (j = start; j < start + len; ++j) {
+  65              		.loc 1 56 13 is_stmt 1 view .LVU13
+  56:ntt.c         ****             for (j = start; j < start + len; ++j) {
+  66              		.loc 1 56 18 is_stmt 0 view .LVU14
+  67 0012 174B     		ldr	r3, .L8
+  68 0014 09F10109 		add	r9, r9, #1
+  69              	.LVL3:
+  56:ntt.c         ****             for (j = start; j < start + len; ++j) {
+  70              		.loc 1 56 18 view .LVU15
+  71 0018 06EB8407 		add	r7, r6, r4, lsl #2
+  72 001c 53F82920 		ldr	r2, [r3, r9, lsl #2]
+  73              	.LVL4:
+  74              		.loc 1 57 13 is_stmt 1 view .LVU16
+  75              		.loc 1 57 13 is_stmt 0 view .LVU17
+  76 0020 2B19     		adds	r3, r5, r4
+  77 0022 06EB830B 		add	fp, r6, r3, lsl #2
+  78 0026 A246     		mov	r10, r4
+  79              	.LVL5:
+  80              	.L3:
+  81              		.loc 1 57 29 is_stmt 1 discriminator 1 view .LVU18
+  82              		.loc 1 57 13 is_stmt 0 discriminator 1 view .LVU19
+  83 0028 9A45     		cmp	r10, r3
+  84 002a 0BD3     		bcc	.L4
+  58:ntt.c         ****                 t = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len]);
+  85              		.loc 1 58 84 discriminator 2 view .LVU20
+  86 002c 04EB4504 		add	r4, r4, r5, lsl #1
+  87              	.LVL6:
+  55:ntt.c         ****             zeta = zetas[++k];
+  88              		.loc 1 55 36 is_stmt 1 discriminator 2 view .LVU21
+  55:ntt.c         ****             zeta = zetas[++k];
+  89              		.loc 1 55 25 discriminator 2 view .LVU22
+  55:ntt.c         ****             zeta = zetas[++k];
+  90              		.loc 1 55 9 is_stmt 0 discriminator 2 view .LVU23
+  91 0030 FF2C     		cmp	r4, #255
+  92 0032 EED9     		bls	.L5
+  54:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  93              		.loc 1 54 30 is_stmt 1 discriminator 2 view .LVU24
+  54:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  94              		.loc 1 54 5 is_stmt 0 discriminator 2 view .LVU25
+  95 0034 B8F10108 		subs	r8, r8, #1
+  54:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  96              		.loc 1 54 34 discriminator 2 view .LVU26
+  97 0038 4FEA5505 		lsr	r5, r5, #1
+  98              	.LVL7:
+  54:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  99              		.loc 1 54 21 is_stmt 1 discriminator 2 view .LVU27
+  54:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+ 100              		.loc 1 54 5 is_stmt 0 discriminator 2 view .LVU28
+ 101 003c E8D1     		bne	.L2
+  59:ntt.c         ****                 a[j + len] = a[j] - t;
+  60:ntt.c         ****                 a[j] = a[j] + t;
+  61:ntt.c         ****             }
+  62:ntt.c         ****         }
+  63:ntt.c         ****     }
+  64:ntt.c         **** }
+ 102              		.loc 1 64 1 view .LVU29
+ 103 003e 03B0     		add	sp, sp, #12
+ 104              	.LCFI1:
+ 105              		.cfi_remember_state
+ 106              		.cfi_def_cfa_offset 36
+ 107              		@ sp needed
+ 108 0040 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 109              	.LVL8:
+ 110              	.L4:
+ 111              	.LCFI2:
+ 112              		.cfi_restore_state
+  58:ntt.c         ****                 a[j + len] = a[j] - t;
+ 113              		.loc 1 58 81 discriminator 3 view .LVU30
+ 114 0044 DBF80010 		ldr	r1, [fp]
+ 115 0048 0193     		str	r3, [sp, #4]
+  58:ntt.c         ****                 a[j + len] = a[j] - t;
+ 116              		.loc 1 58 17 is_stmt 1 discriminator 3 view .LVU31
+  58:ntt.c         ****                 a[j + len] = a[j] - t;
+ 117              		.loc 1 58 21 is_stmt 0 discriminator 3 view .LVU32
+ 118 004a 82FB0101 		smull	r0, r1, r2, r1
+ 119 004e 0092     		str	r2, [sp]
+ 120 0050 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce
+ 121              	.LVL9:
+  59:ntt.c         ****                 a[j + len] = a[j] - t;
+ 122              		.loc 1 59 17 is_stmt 1 discriminator 3 view .LVU33
+  59:ntt.c         ****                 a[j + len] = a[j] - t;
+ 123              		.loc 1 59 31 is_stmt 0 discriminator 3 view .LVU34
+ 124 0054 3968     		ldr	r1, [r7]
+  59:ntt.c         ****                 a[j + len] = a[j] - t;
+ 125              		.loc 1 59 35 discriminator 3 view .LVU35
+ 126 0056 091A     		subs	r1, r1, r0
+  59:ntt.c         ****                 a[j + len] = a[j] - t;
+ 127              		.loc 1 59 28 discriminator 3 view .LVU36
+ 128 0058 4BF8041B 		str	r1, [fp], #4
+  60:ntt.c         ****             }
+ 129              		.loc 1 60 17 is_stmt 1 discriminator 3 view .LVU37
+  60:ntt.c         ****             }
+ 130              		.loc 1 60 29 is_stmt 0 discriminator 3 view .LVU38
+ 131 005c 57F8041B 		ldr	r1, [r7], #4
+ 132 0060 0844     		add	r0, r0, r1
+ 133              	.LVL10:
+  57:ntt.c         ****                 t = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len]);
+ 134              		.loc 1 57 46 discriminator 3 view .LVU39
+ 135 0062 DDE90023 		ldrd	r2, r3, [sp]
+  60:ntt.c         ****             }
+ 136              		.loc 1 60 22 discriminator 3 view .LVU40
+ 137 0066 47F8040C 		str	r0, [r7, #-4]
+  57:ntt.c         ****                 t = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len]);
+ 138              		.loc 1 57 46 is_stmt 1 discriminator 3 view .LVU41
+ 139              	.LVL11:
+  57:ntt.c         ****                 t = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len]);
+ 140              		.loc 1 57 46 is_stmt 0 discriminator 3 view .LVU42
+ 141 006a 0AF1010A 		add	r10, r10, #1
+ 142              	.LVL12:
+  57:ntt.c         ****                 t = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len]);
+ 143              		.loc 1 57 46 discriminator 3 view .LVU43
+ 144 006e DBE7     		b	.L3
+ 145              	.L9:
+ 146              		.align	2
+ 147              	.L8:
+ 148 0070 00000000 		.word	.LANCHOR0
+ 149              		.cfi_endproc
+ 150              	.LFE0:
+ 152              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont,"ax",%progbits
+ 153              		.align	1
+ 154              		.global	PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont
+ 155              		.syntax unified
+ 156              		.thumb
+ 157              		.thumb_func
+ 158              		.fpu softvfp
+ 160              	PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont:
+ 161              	.LVL13:
+ 162              	.LFB1:
+  65:ntt.c         **** 
+  66:ntt.c         **** /*************************************************
+  67:ntt.c         **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont
+  68:ntt.c         **** *
+  69:ntt.c         **** * Description: Inverse NTT and multiplication by Montgomery factor 2^32.
+  70:ntt.c         **** *              In-place. No modular reductions after additions or
+  71:ntt.c         **** *              subtractions; input coefficients need to be smaller than
+  72:ntt.c         **** *              Q in absolute value. Output coefficient are smaller than Q in
+  73:ntt.c         **** *              absolute value.
+  74:ntt.c         **** *
+  75:ntt.c         **** * Arguments:   - uint32_t p[N]: input/output coefficient array
+  76:ntt.c         **** **************************************************/
+  77:ntt.c         **** void PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont(int32_t a[N]) {
+ 163              		.loc 1 77 59 is_stmt 1 view -0
+ 164              		.cfi_startproc
+ 165              		@ args = 0, pretend = 0, frame = 16
+ 166              		@ frame_needed = 0, uses_anonymous_args = 0
+  78:ntt.c         ****     unsigned int start, len, j, k;
+ 167              		.loc 1 78 5 view .LVU45
+  79:ntt.c         ****     int32_t t, zeta;
+ 168              		.loc 1 79 5 view .LVU46
+  80:ntt.c         ****     const int32_t f = 41978; // mont^2/256
+ 169              		.loc 1 80 5 view .LVU47
+  81:ntt.c         **** 
+  82:ntt.c         ****     k = 256;
+ 170              		.loc 1 82 5 view .LVU48
+  83:ntt.c         ****     for (len = 1; len < N; len <<= 1) {
+ 171              		.loc 1 83 5 view .LVU49
+ 172              		.loc 1 83 19 view .LVU50
+  77:ntt.c         ****     unsigned int start, len, j, k;
+ 173              		.loc 1 77 59 is_stmt 0 view .LVU51
+ 174 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 175              	.LCFI3:
+ 176              		.cfi_def_cfa_offset 36
+ 177              		.cfi_offset 4, -36
+ 178              		.cfi_offset 5, -32
+ 179              		.cfi_offset 6, -28
+ 180              		.cfi_offset 7, -24
+ 181              		.cfi_offset 8, -20
+ 182              		.cfi_offset 9, -16
+ 183              		.cfi_offset 10, -12
+ 184              		.cfi_offset 11, -8
+ 185              		.cfi_offset 14, -4
+  84:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+  85:ntt.c         ****             zeta = -zetas[--k];
+ 186              		.loc 1 85 26 view .LVU52
+ 187 0004 284A     		ldr	r2, .L21
+  77:ntt.c         ****     unsigned int start, len, j, k;
+ 188              		.loc 1 77 59 view .LVU53
+ 189 0006 85B0     		sub	sp, sp, #20
+ 190              	.LCFI4:
+ 191              		.cfi_def_cfa_offset 56
+  77:ntt.c         ****     unsigned int start, len, j, k;
+ 192              		.loc 1 77 59 view .LVU54
+ 193 0008 0446     		mov	r4, r0
+  86:ntt.c         ****             for (j = start; j < start + len; ++j) {
+ 194              		.loc 1 86 13 view .LVU55
+ 195 000a 4FF00808 		mov	r8, #8
+  82:ntt.c         ****     for (len = 1; len < N; len <<= 1) {
+ 196              		.loc 1 82 7 view .LVU56
+ 197 000e 4FF48079 		mov	r9, #256
+  83:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+ 198              		.loc 1 83 14 view .LVU57
+ 199 0012 0126     		movs	r6, #1
+ 200              	.LVL14:
+ 201              	.L11:
+  84:ntt.c         ****             zeta = -zetas[--k];
+ 202              		.loc 1 84 25 is_stmt 1 view .LVU58
+  84:ntt.c         ****             zeta = -zetas[--k];
+ 203              		.loc 1 84 20 is_stmt 0 view .LVU59
+ 204 0014 0025     		movs	r5, #0
+ 205              	.LVL15:
+ 206              	.L16:
+  85:ntt.c         ****             for (j = start; j < start + len; ++j) {
+ 207              		.loc 1 85 13 is_stmt 1 view .LVU60
+  85:ntt.c         ****             for (j = start; j < start + len; ++j) {
+ 208              		.loc 1 85 18 is_stmt 0 view .LVU61
+ 209 0016 09F1FF39 		add	r9, r9, #-1
+ 210              	.LVL16:
+  85:ntt.c         ****             for (j = start; j < start + len; ++j) {
+ 211              		.loc 1 85 18 view .LVU62
+ 212 001a 04EB850B 		add	fp, r4, r5, lsl #2
+ 213 001e 52F82930 		ldr	r3, [r2, r9, lsl #2]
+ 214 0022 5B42     		rsbs	r3, r3, #0
+ 215 0024 0293     		str	r3, [sp, #8]
+ 216              	.LVL17:
+ 217              		.loc 1 86 13 is_stmt 1 view .LVU63
+ 218              		.loc 1 86 13 is_stmt 0 view .LVU64
+ 219 0026 AB19     		adds	r3, r5, r6
+ 220              	.LVL18:
+ 221              		.loc 1 86 13 view .LVU65
+ 222 0028 2CBF     		ite	cs
+ 223 002a 0121     		movcs	r1, #1
+ 224 002c 0021     		movcc	r1, #0
+ 225 002e 0191     		str	r1, [sp, #4]
+ 226 0030 04EB8307 		add	r7, r4, r3, lsl #2
+ 227 0034 AA46     		mov	r10, r5
+ 228              	.LVL19:
+ 229              	.L14:
+ 230              		.loc 1 86 29 is_stmt 1 discriminator 1 view .LVU66
+ 231              		.loc 1 86 13 is_stmt 0 discriminator 1 view .LVU67
+ 232 0036 9A45     		cmp	r10, r3
+ 233 0038 1ED3     		bcc	.L15
+  87:ntt.c         ****                 t = a[j];
+  88:ntt.c         ****                 a[j] = t + a[j + len];
+ 234              		.loc 1 88 32 discriminator 2 view .LVU68
+ 235 003a 019B     		ldr	r3, [sp, #4]
+ 236 003c 002B     		cmp	r3, #0
+ 237 003e 0CBF     		ite	eq
+ 238 0040 3346     		moveq	r3, r6
+ 239 0042 0023     		movne	r3, #0
+ 240 0044 3344     		add	r3, r3, r6
+ 241 0046 1D44     		add	r5, r5, r3
+ 242              	.LVL20:
+  84:ntt.c         ****             zeta = -zetas[--k];
+ 243              		.loc 1 84 36 is_stmt 1 discriminator 2 view .LVU69
+  84:ntt.c         ****             zeta = -zetas[--k];
+ 244              		.loc 1 84 25 discriminator 2 view .LVU70
+  84:ntt.c         ****             zeta = -zetas[--k];
+ 245              		.loc 1 84 9 is_stmt 0 discriminator 2 view .LVU71
+ 246 0048 FF2D     		cmp	r5, #255
+ 247 004a E4D9     		bls	.L16
+  83:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+ 248              		.loc 1 83 28 is_stmt 1 discriminator 2 view .LVU72
+  83:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+ 249              		.loc 1 83 5 is_stmt 0 discriminator 2 view .LVU73
+ 250 004c B8F10108 		subs	r8, r8, #1
+  83:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+ 251              		.loc 1 83 32 discriminator 2 view .LVU74
+ 252 0050 4FEA4606 		lsl	r6, r6, #1
+ 253              	.LVL21:
+  83:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+ 254              		.loc 1 83 19 is_stmt 1 discriminator 2 view .LVU75
+  83:ntt.c         ****         for (start = 0; start < N; start = j + len) {
+ 255              		.loc 1 83 5 is_stmt 0 discriminator 2 view .LVU76
+ 256 0054 DED1     		bne	.L11
+ 257 0056 251F     		subs	r5, r4, #4
+  89:ntt.c         ****                 a[j + len] = t - a[j + len];
+  90:ntt.c         ****                 a[j + len] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len])
+  91:ntt.c         ****             }
+  92:ntt.c         ****         }
+  93:ntt.c         ****     }
+  94:ntt.c         **** 
+  95:ntt.c         ****     for (j = 0; j < N; ++j) {
+  96:ntt.c         ****         a[j] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)f * a[j]);
+ 258              		.loc 1 96 16 view .LVU77
+ 259 0058 4AF2FA36 		movw	r6, #41978
+ 260              	.LVL22:
+ 261              		.loc 1 96 16 view .LVU78
+ 262 005c 04F57F74 		add	r4, r4, #1020
+ 263              	.LVL23:
+ 264              	.L18:
+ 265              		.loc 1 96 9 is_stmt 1 discriminator 3 view .LVU79
+ 266              		.loc 1 96 16 is_stmt 0 discriminator 3 view .LVU80
+ 267 0060 55F8041F 		ldr	r1, [r5, #4]!
+ 268 0064 81FB0601 		smull	r0, r1, r1, r6
+ 269 0068 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce
+ 270              	.LVL24:
+  95:ntt.c         ****         a[j] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)f * a[j]);
+ 271              		.loc 1 95 5 discriminator 3 view .LVU81
+ 272 006c AC42     		cmp	r4, r5
+ 273              		.loc 1 96 14 discriminator 3 view .LVU82
+ 274 006e 2860     		str	r0, [r5]
+  95:ntt.c         ****         a[j] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)f * a[j]);
+ 275              		.loc 1 95 24 is_stmt 1 discriminator 3 view .LVU83
+  95:ntt.c         ****         a[j] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)f * a[j]);
+ 276              		.loc 1 95 17 discriminator 3 view .LVU84
+  95:ntt.c         ****         a[j] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)f * a[j]);
+ 277              		.loc 1 95 5 is_stmt 0 discriminator 3 view .LVU85
+ 278 0070 F6D1     		bne	.L18
+  97:ntt.c         ****     }
+  98:ntt.c         **** }
+ 279              		.loc 1 98 1 view .LVU86
+ 280 0072 05B0     		add	sp, sp, #20
+ 281              	.LCFI5:
+ 282              		.cfi_remember_state
+ 283              		.cfi_def_cfa_offset 36
+ 284              		@ sp needed
+ 285 0074 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 286              	.LVL25:
+ 287              	.L15:
+ 288              	.LCFI6:
+ 289              		.cfi_restore_state
+  87:ntt.c         ****                 a[j] = t + a[j + len];
+ 290              		.loc 1 87 17 is_stmt 1 discriminator 3 view .LVU87
+  87:ntt.c         ****                 a[j] = t + a[j + len];
+ 291              		.loc 1 87 19 is_stmt 0 discriminator 3 view .LVU88
+ 292 0078 DBF80010 		ldr	r1, [fp]
+ 293              	.LVL26:
+  88:ntt.c         ****                 a[j + len] = t - a[j + len];
+ 294              		.loc 1 88 17 is_stmt 1 discriminator 3 view .LVU89
+  88:ntt.c         ****                 a[j + len] = t - a[j + len];
+ 295              		.loc 1 88 29 is_stmt 0 discriminator 3 view .LVU90
+ 296 007c 3868     		ldr	r0, [r7]
+ 297 007e 0393     		str	r3, [sp, #12]
+  88:ntt.c         ****                 a[j + len] = t - a[j + len];
+ 298              		.loc 1 88 26 discriminator 3 view .LVU91
+ 299 0080 0844     		add	r0, r0, r1
+  88:ntt.c         ****                 a[j + len] = t - a[j + len];
+ 300              		.loc 1 88 22 discriminator 3 view .LVU92
+ 301 0082 4BF8040B 		str	r0, [fp], #4
+  89:ntt.c         ****                 a[j + len] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len])
+ 302              		.loc 1 89 17 is_stmt 1 discriminator 3 view .LVU93
+  89:ntt.c         ****                 a[j + len] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len])
+ 303              		.loc 1 89 32 is_stmt 0 discriminator 3 view .LVU94
+ 304 0086 57F8040B 		ldr	r0, [r7], #4
+  90:ntt.c         ****             }
+ 305              		.loc 1 90 30 discriminator 3 view .LVU95
+ 306 008a 029B     		ldr	r3, [sp, #8]
+  89:ntt.c         ****                 a[j + len] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len])
+ 307              		.loc 1 89 32 discriminator 3 view .LVU96
+ 308 008c 091A     		subs	r1, r1, r0
+ 309              	.LVL27:
+  89:ntt.c         ****                 a[j + len] = PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce((int64_t)zeta * a[j + len])
+ 310              		.loc 1 89 28 discriminator 3 view .LVU97
+ 311 008e 47F8041C 		str	r1, [r7, #-4]
+  90:ntt.c         ****             }
+ 312              		.loc 1 90 17 is_stmt 1 discriminator 3 view .LVU98
+  90:ntt.c         ****             }
+ 313              		.loc 1 90 30 is_stmt 0 discriminator 3 view .LVU99
+ 314 0092 83FB0101 		smull	r0, r1, r3, r1
+ 315 0096 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce
+ 316              	.LVL28:
+  86:ntt.c         ****                 t = a[j];
+ 317              		.loc 1 86 46 discriminator 3 view .LVU100
+ 318 009a 0AF1010A 		add	r10, r10, #1
+ 319 009e 039B     		ldr	r3, [sp, #12]
+ 320 00a0 014A     		ldr	r2, .L21
+  90:ntt.c         ****             }
+ 321              		.loc 1 90 28 discriminator 3 view .LVU101
+ 322 00a2 47F8040C 		str	r0, [r7, #-4]
+  86:ntt.c         ****                 t = a[j];
+ 323              		.loc 1 86 46 is_stmt 1 discriminator 3 view .LVU102
+  86:ntt.c         ****                 t = a[j];
+ 324              		.loc 1 86 46 is_stmt 0 discriminator 3 view .LVU103
+ 325 00a6 C6E7     		b	.L14
+ 326              	.L22:
+ 327              		.align	2
+ 328              	.L21:
+ 329 00a8 00000000 		.word	.LANCHOR0
+ 330              		.cfi_endproc
+ 331              	.LFE1:
+ 333              		.section	.rodata
+ 334              		.align	2
+ 335              		.set	.LANCHOR0,. + 0
+ 338              	zetas:
+ 339 0000 00000000 		.word	0
+ 340 0004 F7640000 		.word	25847
+ 341 0008 0231D8FF 		.word	-2608894
+ 342 000c 0315F8FF 		.word	-518909
+ 343 0010 449E0300 		.word	237124
+ 344 0014 1821F4FF 		.word	-777960
+ 345 0018 28A1F2FF 		.word	-876248
+ 346 001c 241E0700 		.word	466468
+ 347 0020 2BDE1B00 		.word	1826347
+ 348 0024 2BE92300 		.word	2353451
+ 349 0028 AD84FAFF 		.word	-359251
+ 350 002c 7F14E0FF 		.word	-2091905
+ 351 0030 759A2F00 		.word	3119733
+ 352 0034 09FBD3FF 		.word	-2884855
+ 353 0038 497A2F00 		.word	3111497
+ 354 003c 27E52800 		.word	2680103
+ 355 0040 58962900 		.word	2725464
+ 356 0044 70A00F00 		.word	1024112
+ 357 0048 A485EFFF 		.word	-1079900
+ 358 004c 88B73600 		.word	3585928
+ 359 0050 909DF7FF 		.word	-549488
+ 360 0054 A0EAEEFF 		.word	-1119584
+ 361 0058 68F92700 		.word	2619752
+ 362 005c 7BD3DFFF 		.word	-2108549
+ 363 0060 D6ADDFFF 		.word	-2118186
+ 364 0064 E71AC5FF 		.word	-3859737
+ 365 0068 F7A4EAFF 		.word	-1399561
+ 366 006c 98FCCDFF 		.word	-3277672
+ 367 0070 35D01A00 		.word	1757237
+ 368 0074 22B4FFFF 		.word	-19422
+ 369 0078 01323D00 		.word	4010497
+ 370 007c C5450400 		.word	280005
+ 371 0080 674A2900 		.word	2706023
+ 372 0084 20760100 		.word	95776
+ 373 0088 CDF42E00 		.word	3077325
+ 374 008c C5DE3500 		.word	3530437
+ 375 0090 03A5E6FF 		.word	-1661693
+ 376 0094 2C30C9FF 		.word	-3592148
+ 377 0098 D447D9FF 		.word	-2537516
+ 378 009c AFBE3B00 		.word	3915439
+ 379 00a0 8515C5FF 		.word	-3861115
+ 380 00a4 7C8ED1FF 		.word	-3043716
+ 381 00a8 968A3600 		.word	3574422
+ 382 00ac 413ED4FF 		.word	-2867647
+ 383 00b0 00043600 		.word	3539968
+ 384 00b4 4D6AFBFF 		.word	-300467
+ 385 00b8 9CD62300 		.word	2348700
+ 386 00bc 5DC5F7FF 		.word	-539299
+ 387 00c0 3D12E6FF 		.word	-1699267
+ 388 00c4 D6EAE6FF 		.word	-1643818
+ 389 00c8 1E7E3500 		.word	3505694
+ 390 00cc 59AFC5FF 		.word	-3821735
+ 391 00d0 3F843500 		.word	3507263
+ 392 00d4 1756DFFF 		.word	-2140649
+ 393 00d8 5C94E7FF 		.word	-1600420
+ 394 00dc 8C733800 		.word	3699596
+ 395 00e0 A8630C00 		.word	811944
+ 396 00e4 9A1B0800 		.word	531354
+ 397 00e8 768F0E00 		.word	954230
+ 398 00ec 53383B00 		.word	3881043
+ 399 00f0 34853B00 		.word	3900724
+ 400 00f4 30FCD8FF 		.word	-2556880
+ 401 00f8 549D1F00 		.word	2071892
+ 402 00fc 2D4FD5FF 		.word	-2797779
+ 403 0100 E506C4FF 		.word	-3930395
+ 404 0104 81ACE8FF 		.word	-1528703
+ 405 0108 CFE1C7FF 		.word	-3677745
+ 406 010c 1998D1FF 		.word	-3041255
+ 407 0110 5DD6E9FF 		.word	-1452451
+ 408 0114 EE093500 		.word	3475950
+ 409 0118 C7352100 		.word	2176455
+ 410 011c BBCFE7FF 		.word	-1585221
+ 411 0120 75CFECFF 		.word	-1257611
+ 412 0124 72971D00 		.word	1939314
+ 413 0128 72B0C1FF 		.word	-4083598
+ 414 012c F6BCF0FF 		.word	-1000202
+ 415 0130 8052CFFF 		.word	-3190144
+ 416 0134 AED2CFFF 		.word	-3157330
+ 417 0138 E090C8FF 		.word	-3632928
+ 418 013c CAEF0100 		.word	126922
+ 419 0140 F2103400 		.word	3412210
+ 420 0144 85FEF0FF 		.word	-983419
+ 421 0148 38C62000 		.word	2147896
+ 422 014c 9F6E2900 		.word	2715295
+ 423 0150 A3B7D2FF 		.word	-2967645
+ 424 0154 4BA4C7FF 		.word	-3693493
+ 425 0158 6DBAF9FF 		.word	-411027
+ 426 015c 0934DAFF 		.word	-2477047
+ 427 0160 82C2F5FF 		.word	-671102
+ 428 0164 1341EDFF 		.word	-1228525
+ 429 0168 3BA6FFFF 		.word	-22981
+ 430 016c F709ECFF 		.word	-1308169
+ 431 0170 DD2BFAFF 		.word	-381987
+ 432 0174 D4951400 		.word	1349076
+ 433 0178 63451C00 		.word	1852771
+ 434 017c 622CEAFF 		.word	-1430430
+ 435 0180 E9FBCCFF 		.word	-3343383
+ 436 0184 F00A0400 		.word	264944
+ 437 0188 17C40700 		.word	508951
+ 438 018c 88452F00 		.word	3097992
+ 439 0190 00AD0000 		.word	44288
+ 440 0194 BE36EFFF 		.word	-1100098
+ 441 0198 44CD0D00 		.word	904516
+ 442 019c 5A673C00 		.word	3958618
+ 443 01a0 CA2BC7FF 		.word	-3724342
+ 444 01a4 7EDEFFFF 		.word	-8578
+ 445 01a8 48391900 		.word	1653064
+ 446 01ac C069CEFF 		.word	-3249728
+ 447 01b0 6C752400 		.word	2389356
+ 448 01b4 DFC7FCFF 		.word	-210977
+ 449 01b8 A1980B00 		.word	759969
+ 450 01bc 08E8EBFF 		.word	-1316856
+ 451 01c0 6CE40200 		.word	189548
+ 452 01c4 08C8C9FF 		.word	-3553272
+ 453 01c8 C2363000 		.word	3159746
+ 454 01cc F6BFE3FF 		.word	-1851402
+ 455 01d0 933CDBFF 		.word	-2409325
+ 456 01d4 E04AFDFF 		.word	-177440
+ 457 01d8 05131400 		.word	1315589
+ 458 01dc 92771400 		.word	1341330
+ 459 01e0 259E1300 		.word	1285669
+ 460 01e4 E0D0E7FF 		.word	-1584928
+ 461 01e8 4499F3FF 		.word	-812732
+ 462 01ec 0208EAFF 		.word	-1439742
+ 463 01f0 A2EED1FF 		.word	-3019102
+ 464 01f4 9CC7C4FF 		.word	-3881060
+ 465 01f8 57A0C8FF 		.word	-3628969
+ 466 01fc D9973A00 		.word	3839961
+ 467 0200 93EA1F00 		.word	2091667
+ 468 0204 5AFF3300 		.word	3407706
+ 469 0208 D4582300 		.word	2316500
+ 470 020c F8413A00 		.word	3817976
+ 471 0210 72FFCCFF 		.word	-3342478
+ 472 0214 FB3D2200 		.word	2244091
+ 473 0218 9FABDAFF 		.word	-2446433
+ 474 021c 22A4C9FF 		.word	-3562462
+ 475 0220 F5120400 		.word	266997
+ 476 0224 87252500 		.word	2434439
+ 477 0228 F024EDFF 		.word	-1235728
+ 478 022c 5D9B3500 		.word	3513181
+ 479 0230 A048CAFF 		.word	-3520352
+ 480 0234 FCA2C6FF 		.word	-3759364
+ 481 0238 56BBEDFF 		.word	-1197226
+ 482 023c DE45CFFF 		.word	-3193378
+ 483 0240 5EBE0D00 		.word	900702
+ 484 0244 1A5E1C00 		.word	1859098
+ 485 0248 E6E00D00 		.word	909542
+ 486 024c 5A7F0C00 		.word	819034
+ 487 0250 838F0700 		.word	495491
+ 488 0254 8A62E7FF 		.word	-1613174
+ 489 0258 0457FFFF 		.word	-43260
+ 490 025c FC06F8FF 		.word	-522500
+ 491 0260 2100F6FF 		.word	-655327
+ 492 0264 F65AD0FF 		.word	-3122442
+ 493 0268 84001F00 		.word	2031748
+ 494 026c 86EF3000 		.word	3207046
+ 495 0270 7DB9C9FF 		.word	-3556995
+ 496 0274 D6FCF7FF 		.word	-525098
+ 497 0278 9245F4FF 		.word	-768622
+ 498 027c C221C9FF 		.word	-3595838
+ 499 0280 19390500 		.word	342297
+ 500 0284 0C610400 		.word	286988
+ 501 0288 41CDDAFF 		.word	-2437823
+ 502 028c 1BB03E00 		.word	4108315
+ 503 0290 E7723400 		.word	3437287
+ 504 0294 3B00CDFF 		.word	-3342277
+ 505 0298 C77C1A00 		.word	1735879
+ 506 029c 24190300 		.word	203044
+ 507 02a0 E55E2B00 		.word	2842341
+ 508 02a4 99112900 		.word	2691481
+ 509 02a8 3A7AD8FF 		.word	-2590150
+ 510 02ac 714D1300 		.word	1265009
+ 511 02b0 1CE13D00 		.word	4055324
+ 512 02b4 84091300 		.word	1247620
+ 513 02b8 51F02500 		.word	2486353
+ 514 02bc 465A1800 		.word	1595974
+ 515 02c0 1885C6FF 		.word	-3767016
+ 516 02c4 BE141300 		.word	1250494
+ 517 02c8 91382800 		.word	2635921
+ 518 02cc 90DBC9FF 		.word	-3548272
+ 519 02d0 8950D2FF 		.word	-2994039
+ 520 02d4 3F851C00 		.word	1869119
+ 521 02d8 4B0B1D00 		.word	1903435
+ 522 02dc A6F6EFFF 		.word	-1050970
+ 523 02e0 BEA8EBFF 		.word	-1333058
+ 524 02e4 1BE11200 		.word	1237275
+ 525 02e8 3E5ECDFF 		.word	-3318210
+ 526 02ec 2F2DEAFF 		.word	-1430225
+ 527 02f0 E41DF9FF 		.word	-451100
+ 528 02f4 C7061400 		.word	1312455
+ 529 02f8 83723200 		.word	3306115
+ 530 02fc 6E0DE2FF 		.word	-1962642
+ 531 0300 5379ECFF 		.word	-1279661
+ 532 0304 99401D00 		.word	1917081
+ 533 0308 7825D9FF 		.word	-2546312
+ 534 030c AD05EBFF 		.word	-1374803
+ 535 0310 05E41600 		.word	1500165
+ 536 0314 E7DB0B00 		.word	777191
+ 537 0318 E81D2200 		.word	2235880
+ 538 031c CFF83300 		.word	3406031
+ 539 0320 34B9F7FF 		.word	-542412
+ 540 0324 0CCAD4FF 		.word	-2831860
+ 541 0328 F87FE6FF 		.word	-1671176
+ 542 032c 57D1E3FF 		.word	-1846953
+ 543 0330 1B91D8FF 		.word	-2584293
+ 544 0334 122CC7FF 		.word	-3724270
+ 545 0338 D8100900 		.word	594136
+ 546 033c 1F5EC6FF 		.word	-3776993
+ 547 0340 5846E1FF 		.word	-2013608
+ 548 0344 8B1D2500 		.word	2432395
+ 549 0348 B7732500 		.word	2454455
+ 550 034c 8F7CFDFF 		.word	-164721
+ 551 0350 98DD1D00 		.word	1957272
+ 552 0354 98683300 		.word	3369112
+ 553 0358 BBD40200 		.word	185531
+ 554 035c A793EDFF 		.word	-1207385
+ 555 0360 BE6CCFFF 		.word	-3183426
+ 556 0364 1C7C0200 		.word	162844
+ 557 0368 08AA1800 		.word	1616392
+ 558 036c 71FD2D00 		.word	3014001
+ 559 0370 A55C0C00 		.word	810149
+ 560 0374 9A371900 		.word	1652634
+ 561 0378 67A1C7FF 		.word	-3694233
+ 562 037c 3D8CE4FF 		.word	-1799107
+ 563 0380 3CA1D1FF 		.word	-3038916
+ 564 0384 39C53500 		.word	3523897
+ 565 0388 15013B00 		.word	3866901
+ 566 038c C01D0400 		.word	269760
+ 567 0390 F7C42100 		.word	2213111
+ 568 0394 F41BF1FF 		.word	-975884
+ 569 0398 E7351A00 		.word	1717735
+ 570 039c 0E340700 		.word	472078
+ 571 03a0 457DF9FF 		.word	-426683
+ 572 03a4 D04C1A00 		.word	1723600
+ 573 03a8 AE7CE4FF 		.word	-1803090
+ 574 03ac 68261D00 		.word	1910376
+ 575 03b0 988EE6FF 		.word	-1667432
+ 576 03b4 3326EFFF 		.word	-1104333
+ 577 03b8 DA05FCFF 		.word	-260646
+ 578 03bc DB7FC5FF 		.word	-3833893
+ 579 03c0 6427D3FF 		.word	-2939036
+ 580 03c4 AFE1DDFF 		.word	-2235985
+ 581 03c8 DD93F9FF 		.word	-420899
+ 582 03cc 091DDDFF 		.word	-2286327
+ 583 03d0 93CC0200 		.word	183443
+ 584 03d4 0518F1FF 		.word	-976891
+ 585 03d8 2A9C1800 		.word	1612842
+ 586 03dc A9E5C9FF 		.word	-3545687
+ 587 03e0 508AF7FF 		.word	-554416
+ 588 03e4 2CCF3B00 		.word	3919660
+ 589 03e8 4E43FFFF 		.word	-48306
+ 590 03ec DF36EBFF 		.word	-1362209
+ 591 03f0 CA153C00 		.word	3937738
+ 592 03f4 685E1500 		.word	1400424
+ 593 03f8 B616F3FF 		.word	-846154
+ 594 03fc CE291E00 		.word	1976782
+ 595              		.text
+ 596              	.Letext0:
+ 597              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 598              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 599              		.file 4 "reduce.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 ntt.c
+C:\Users\dudixiao\AppData\Local\Temp\ccewskfe.s:16     .text.PQCLEAN_DILITHIUM2_CLEAN_ntt:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccewskfe.s:24     .text.PQCLEAN_DILITHIUM2_CLEAN_ntt:00000000 PQCLEAN_DILITHIUM2_CLEAN_ntt
+C:\Users\dudixiao\AppData\Local\Temp\ccewskfe.s:148    .text.PQCLEAN_DILITHIUM2_CLEAN_ntt:00000070 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccewskfe.s:153    .text.PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccewskfe.s:160    .text.PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont:00000000 PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont
+C:\Users\dudixiao\AppData\Local\Temp\ccewskfe.s:329    .text.PQCLEAN_DILITHIUM2_CLEAN_invntt_tomont:000000a8 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccewskfe.s:334    .rodata:00000000 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccewskfe.s:338    .rodata:00000000 zetas
+
+UNDEFINED SYMBOLS
+PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce

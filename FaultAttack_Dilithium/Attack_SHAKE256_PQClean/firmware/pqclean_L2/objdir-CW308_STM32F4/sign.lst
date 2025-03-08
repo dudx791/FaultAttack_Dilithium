@@ -1,0 +1,1813 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"sign.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.rodata.str1.1,"aMS",%progbits,1
+  16              	.LC0:
+  17 0000 45393943 		.ascii	"E99CB21815AA2F4A54759D507C2E5B4B0DDB0B78A179FEBB90E"
+  17      42323138 
+  17      31354141 
+  17      32463441 
+  17      35343735 
+  18 0033 31334331 		.ascii	"13C1ACAC329431FDB456AD904F9B2DD76E7501DCBB52E779525"
+  18      41434143 
+  18      33323934 
+  18      33314644 
+  18      42343536 
+  19 0066 42353636 		.ascii	"B566D767DF08301BE9637D2C77F872434B0F8E8A3B11F9B79AD"
+  19      44373637 
+  19      44463038 
+  19      33303142 
+  19      45393633 
+  20 0099 44374241 		.ascii	"D7BA0B66DC737A56DBC33C84A66B07247D52EC44B7F2E8D1C9A"
+  20      30423636 
+  20      44433733 
+  20      37413536 
+  20      44424333 
+  21 00cc 35463344 		.ascii	"5F3D2B6E4C7D1F2A3B5C9D6E8F3D8E2F5A9B7C4D1E6F3A2B8C5"
+  21      32423645 
+  21      34433744 
+  21      31463241 
+  21      33423543 
+  22 00ff 4400     		.ascii	"D\000"
+  23              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair,"ax",%progbits
+  24              		.align	1
+  25              		.global	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair
+  26              		.arch armv7e-m
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  30              		.fpu softvfp
+  32              	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair:
+  33              	.LVL0:
+  34              	.LFB0:
+  35              		.file 1 "sign.c"
+   1:sign.c        **** #include "fips202.h"
+   2:sign.c        **** #include "packing.h"
+   3:sign.c        **** #include "params.h"
+   4:sign.c        **** #include "poly.h"
+   5:sign.c        **** #include "polyvec.h"
+   6:sign.c        **** #include "randombytes.h"
+   7:sign.c        **** #include "sign.h"
+   8:sign.c        **** #include "symmetric.h"
+   9:sign.c        **** #include <stdint.h>
+  10:sign.c        **** 
+  11:sign.c        **** /*************************************************
+  12:sign.c        **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair
+  13:sign.c        **** *
+  14:sign.c        **** * Description: Generates public and private key.
+  15:sign.c        **** *
+  16:sign.c        **** * Arguments:   - uint8_t *pk: pointer to output public key (allocated
+  17:sign.c        **** *                             array of PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_PUBLICKEYBYTES bytes)
+  18:sign.c        **** *              - uint8_t *sk: pointer to output private key (allocated
+  19:sign.c        **** *                             array of PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_SECRETKEYBYTES bytes)
+  20:sign.c        **** *
+  21:sign.c        **** * Returns 0 (success)
+  22:sign.c        **** **************************************************/
+  23:sign.c        **** int PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair(uint8_t *pk, uint8_t *sk,uint8_t *p) {
+  36              		.loc 1 23 87 view -0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 37504
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  24:sign.c        ****     uint8_t seedbuf[2 * SEEDBYTES + CRHBYTES];
+  40              		.loc 1 24 5 view .LVU1
+  25:sign.c        ****     uint8_t tr[TRBYTES];
+  41              		.loc 1 25 5 view .LVU2
+  26:sign.c        ****     const uint8_t *rho, *rhoprime, *key;
+  42              		.loc 1 26 5 view .LVU3
+  27:sign.c        ****     polyvecl mat[K];
+  43              		.loc 1 27 5 view .LVU4
+  28:sign.c        ****     polyvecl s1, s1hat;
+  44              		.loc 1 28 5 view .LVU5
+  29:sign.c        ****     polyveck s2, t1, t0;
+  45              		.loc 1 29 5 view .LVU6
+  30:sign.c        **** 
+  31:sign.c        ****     /* Get randomness for rho, rhoprime and key */
+  32:sign.c        ****     // randombytes(seedbuf, SEEDBYTES);
+  33:sign.c        ****     char seedbufcha[2*(2*SEEDBYTES+CRHBYTES)] ="E99CB21815AA2F4A54759D507C2E5B4B0DDB0B78A179FEBB90E
+  46              		.loc 1 33 5 view .LVU7
+  23:sign.c        ****     uint8_t seedbuf[2 * SEEDBYTES + CRHBYTES];
+  47              		.loc 1 23 87 is_stmt 0 view .LVU8
+  48 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  49              	.LCFI0:
+  50              		.cfi_def_cfa_offset 28
+  51              		.cfi_offset 4, -28
+  52              		.cfi_offset 5, -24
+  53              		.cfi_offset 6, -20
+  54              		.cfi_offset 7, -16
+  55              		.cfi_offset 8, -12
+  56              		.cfi_offset 9, -8
+  57              		.cfi_offset 14, -4
+  58 0004 ADF5124D 		sub	sp, sp, #37376
+  59              	.LCFI1:
+  60              		.cfi_def_cfa_offset 37404
+  61 0008 A5B0     		sub	sp, sp, #148
+  62              	.LCFI2:
+  63              		.cfi_def_cfa_offset 37552
+  23:sign.c        ****     uint8_t seedbuf[2 * SEEDBYTES + CRHBYTES];
+  64              		.loc 1 23 87 view .LVU9
+  65 000a 1446     		mov	r4, r2
+  66 000c 0546     		mov	r5, r0
+  67 000e 0E46     		mov	r6, r1
+  68              		.loc 1 33 10 view .LVU10
+  69 0010 4FF48072 		mov	r2, #256
+  70              	.LVL1:
+  71              		.loc 1 33 10 view .LVU11
+  72 0014 5049     		ldr	r1, .L11
+  73              	.LVL2:
+  74              		.loc 1 33 10 view .LVU12
+  75 0016 64A8     		add	r0, sp, #400
+  76              	.LVL3:
+  77              		.loc 1 33 10 view .LVU13
+  78 0018 FFF7FEFF 		bl	memcpy
+  79              	.LVL4:
+  34:sign.c        ****     for(int ii=0; ii < 64;ii++)
+  80              		.loc 1 34 5 is_stmt 1 view .LVU14
+  81              	.LBB2:
+  82              		.loc 1 34 9 view .LVU15
+  83              		.loc 1 34 19 view .LVU16
+  35:sign.c        ****         seedbufcha[ii] = p[66+ii];
+  84              		.loc 1 35 24 is_stmt 0 view .LVU17
+  85 001c 64AF     		add	r7, sp, #400
+  86 001e 04F14203 		add	r3, r4, #66
+  87 0022 8234     		adds	r4, r4, #130
+  88              	.LVL5:
+  89              	.L2:
+  90              		.loc 1 35 24 view .LVU18
+  91 0024 1868     		ldr	r0, [r3]	@ unaligned
+  92 0026 5968     		ldr	r1, [r3, #4]	@ unaligned
+  93 0028 3A46     		mov	r2, r7
+  94 002a 03C2     		stmia	r2!, {r0, r1}
+  95 002c 0833     		adds	r3, r3, #8
+  96 002e A342     		cmp	r3, r4
+  97 0030 1746     		mov	r7, r2
+  98 0032 F7D1     		bne	.L2
+  99              	.LVL6:
+ 100              		.loc 1 35 24 view .LVU19
+ 101 0034 64AC     		add	r4, sp, #400
+ 102              	.LVL7:
+ 103              		.loc 1 35 24 view .LVU20
+ 104 0036 A4F1C002 		sub	r2, r4, #192
+ 105 003a 1046     		mov	r0, r2
+ 106              	.LBE2:
+ 107              	.LBB3:
+  36:sign.c        **** 	uint8_t cacheintsk[6*SEEDBYTES];
+  37:sign.c        **** 	for (int i = 0; i <2 * SEEDBYTES; i++)
+ 108              		.loc 1 37 11 view .LVU21
+ 109 003c 0021     		movs	r1, #0
+ 110              	.L5:
+ 111              	.LVL8:
+  38:sign.c        **** 	{
+  39:sign.c        **** 		if (seedbufcha[i] - 'A' >= 0)
+ 112              		.loc 1 39 3 is_stmt 1 view .LVU22
+ 113              		.loc 1 39 17 is_stmt 0 view .LVU23
+ 114 003e 14F8013B 		ldrb	r3, [r4], #1	@ zero_extendqisi2
+ 115              		.loc 1 39 6 view .LVU24
+ 116 0042 402B     		cmp	r3, #64
+  40:sign.c        **** 			cacheintsk[i] = 10 + seedbufcha[i] - 'A';
+ 117              		.loc 1 40 4 is_stmt 1 view .LVU25
+ 118              		.loc 1 40 39 is_stmt 0 view .LVU26
+ 119 0044 8CBF     		ite	hi
+ 120 0046 373B     		subhi	r3, r3, #55
+  41:sign.c        **** 		else
+  42:sign.c        **** 			cacheintsk[i] = seedbufcha[i] - '0';
+ 121              		.loc 1 42 4 is_stmt 1 view .LVU27
+ 122              		.loc 1 42 34 is_stmt 0 view .LVU28
+ 123 0048 303B     		subls	r3, r3, #48
+  37:sign.c        **** 	{
+ 124              		.loc 1 37 37 view .LVU29
+ 125 004a 0131     		adds	r1, r1, #1
+ 126              	.LVL9:
+ 127              		.loc 1 42 34 view .LVU30
+ 128 004c DBB2     		uxtb	r3, r3
+  37:sign.c        **** 	{
+ 129              		.loc 1 37 2 view .LVU31
+ 130 004e 4029     		cmp	r1, #64
+ 131 0050 00F8013B 		strb	r3, [r0], #1
+  37:sign.c        **** 	{
+ 132              		.loc 1 37 36 is_stmt 1 view .LVU32
+ 133              	.LVL10:
+  37:sign.c        **** 	{
+ 134              		.loc 1 37 18 view .LVU33
+  37:sign.c        **** 	{
+ 135              		.loc 1 37 2 is_stmt 0 view .LVU34
+ 136 0054 F3D1     		bne	.L5
+ 137 0056 14A9     		add	r1, sp, #80
+ 138              	.LVL11:
+  37:sign.c        **** 	{
+ 139              		.loc 1 37 2 view .LVU35
+ 140              	.LBE3:
+ 141              	.LBB4:
+  43:sign.c        **** 	}
+  44:sign.c        **** 	for (int i = 0; i < SEEDBYTES; i++)
+ 142              		.loc 1 44 11 view .LVU36
+ 143 0058 0023     		movs	r3, #0
+ 144 005a 0C46     		mov	r4, r1
+ 145              	.L6:
+ 146              	.LVL12:
+  45:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 147              		.loc 1 45 3 is_stmt 1 discriminator 3 view .LVU37
+ 148              		.loc 1 45 37 is_stmt 0 discriminator 3 view .LVU38
+ 149 005c 1778     		ldrb	r7, [r2]	@ zero_extendqisi2
+ 150 005e 5078     		ldrb	r0, [r2, #1]	@ zero_extendqisi2
+  44:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 151              		.loc 1 44 34 discriminator 3 view .LVU39
+ 152 0060 0133     		adds	r3, r3, #1
+ 153              	.LVL13:
+ 154              		.loc 1 45 37 discriminator 3 view .LVU40
+ 155 0062 00EB0710 		add	r0, r0, r7, lsl #4
+  44:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 156              		.loc 1 44 2 discriminator 3 view .LVU41
+ 157 0066 202B     		cmp	r3, #32
+ 158              		.loc 1 45 14 discriminator 3 view .LVU42
+ 159 0068 01F8010B 		strb	r0, [r1], #1
+  44:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 160              		.loc 1 44 33 is_stmt 1 discriminator 3 view .LVU43
+ 161              	.LVL14:
+  44:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 162              		.loc 1 44 18 discriminator 3 view .LVU44
+  44:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 163              		.loc 1 44 2 is_stmt 0 discriminator 3 view .LVU45
+ 164 006c 02F10202 		add	r2, r2, #2
+ 165 0070 F4D1     		bne	.L6
+ 166              	.LBE4:
+  46:sign.c        ****     //
+  47:sign.c        ****     shake256(seedbuf, 2 * SEEDBYTES + CRHBYTES, seedbuf, SEEDBYTES);
+ 167              		.loc 1 47 5 is_stmt 1 view .LVU46
+ 168 0072 2246     		mov	r2, r4
+ 169 0074 2046     		mov	r0, r4
+ 170 0076 8021     		movs	r1, #128
+ 171 0078 FFF7FEFF 		bl	shake256
+ 172              	.LVL15:
+  48:sign.c        ****     rho = seedbuf;
+ 173              		.loc 1 48 5 view .LVU47
+  49:sign.c        ****     rhoprime = rho + SEEDBYTES;
+ 174              		.loc 1 49 5 view .LVU48
+  50:sign.c        ****     key = rhoprime + CRHBYTES;
+ 175              		.loc 1 50 5 view .LVU49
+  51:sign.c        **** 
+  52:sign.c        ****     /* Expand matrix */
+  53:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand(mat, rho);
+ 176              		.loc 1 53 5 view .LVU50
+ 177 007c 0DF5A540 		add	r0, sp, #21120
+  54:sign.c        **** 
+  55:sign.c        ****     /* Sample short vectors s1 and s2 */
+  56:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta(&s1, rhoprime, 0);
+ 178              		.loc 1 56 5 is_stmt 0 view .LVU51
+ 179 0080 0DF17009 		add	r9, sp, #112
+ 180              	.LVL16:
+ 181              		.loc 1 56 5 view .LVU52
+ 182 0084 A4AF     		add	r7, sp, #656
+  53:sign.c        **** 
+ 183              		.loc 1 53 5 view .LVU53
+ 184 0086 2146     		mov	r1, r4
+ 185 0088 1030     		adds	r0, r0, #16
+  57:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta(&s2, rhoprime, L);
+ 186              		.loc 1 57 5 view .LVU54
+ 187 008a 0DF50A58 		add	r8, sp, #8832
+  53:sign.c        **** 
+ 188              		.loc 1 53 5 view .LVU55
+ 189 008e FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand
+ 190              	.LVL17:
+  56:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta(&s2, rhoprime, L);
+ 191              		.loc 1 56 5 is_stmt 1 view .LVU56
+ 192              		.loc 1 57 5 is_stmt 0 view .LVU57
+ 193 0092 08F11008 		add	r8, r8, #16
+  56:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta(&s2, rhoprime, L);
+ 194              		.loc 1 56 5 view .LVU58
+ 195 0096 4946     		mov	r1, r9
+ 196 0098 3846     		mov	r0, r7
+ 197 009a 0022     		movs	r2, #0
+ 198 009c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta
+ 199              	.LVL18:
+ 200              		.loc 1 57 5 is_stmt 1 view .LVU59
+ 201 00a0 4946     		mov	r1, r9
+ 202 00a2 4046     		mov	r0, r8
+ 203 00a4 0422     		movs	r2, #4
+ 204 00a6 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta
+ 205              	.LVL19:
+  58:sign.c        **** 
+  59:sign.c        ****     /* Matrix-vector multiplication */
+  60:sign.c        ****     s1hat = s1;
+ 206              		.loc 1 60 5 view .LVU60
+ 207              		.loc 1 60 11 is_stmt 0 view .LVU61
+ 208 00aa 0DF59450 		add	r0, sp, #4736
+ 209 00ae 3946     		mov	r1, r7
+ 210 00b0 4FF48052 		mov	r2, #4096
+ 211 00b4 1030     		adds	r0, r0, #16
+ 212 00b6 FFF7FEFF 		bl	memcpy
+ 213              	.LVL20:
+  61:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt(&s1hat);
+ 214              		.loc 1 61 5 is_stmt 1 view .LVU62
+ 215 00ba 0DF59450 		add	r0, sp, #4736
+ 216 00be 1030     		adds	r0, r0, #16
+ 217 00c0 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt
+ 218              	.LVL21:
+  62:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery(&t1, mat, &s1hat);
+ 219              		.loc 1 62 5 view .LVU63
+ 220 00c4 0DF59452 		add	r2, sp, #4736
+ 221 00c8 0DF5A541 		add	r1, sp, #21120
+ 222 00cc 0DF54A50 		add	r0, sp, #12928
+ 223 00d0 1032     		adds	r2, r2, #16
+ 224 00d2 1031     		adds	r1, r1, #16
+ 225 00d4 1030     		adds	r0, r0, #16
+ 226 00d6 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery
+ 227              	.LVL22:
+  63:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce(&t1);
+ 228              		.loc 1 63 5 view .LVU64
+ 229 00da 0DF54A50 		add	r0, sp, #12928
+ 230 00de 1030     		adds	r0, r0, #16
+ 231 00e0 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+ 232              	.LVL23:
+  64:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont(&t1);
+ 233              		.loc 1 64 5 view .LVU65
+ 234 00e4 0DF54A50 		add	r0, sp, #12928
+ 235 00e8 1030     		adds	r0, r0, #16
+ 236 00ea FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+ 237              	.LVL24:
+  65:sign.c        **** 
+  66:sign.c        ****     /* Add error vector s2 */
+  67:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_add(&t1, &t1, &s2);
+ 238              		.loc 1 67 5 view .LVU66
+ 239 00ee 0DF54A51 		add	r1, sp, #12928
+ 240 00f2 1031     		adds	r1, r1, #16
+ 241 00f4 4246     		mov	r2, r8
+ 242 00f6 0846     		mov	r0, r1
+ 243 00f8 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_add
+ 244              	.LVL25:
+  68:sign.c        **** 
+  69:sign.c        ****     /* Extract t1 and write public key */
+  70:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq(&t1);
+ 245              		.loc 1 70 5 view .LVU67
+ 246 00fc 0DF54A50 		add	r0, sp, #12928
+ 247 0100 1030     		adds	r0, r0, #16
+ 248 0102 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq
+ 249              	.LVL26:
+  71:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round(&t1, &t0, &t1);
+ 250              		.loc 1 71 5 view .LVU68
+ 251 0106 0DF58549 		add	r9, sp, #17024
+ 252              	.LVL27:
+ 253              		.loc 1 71 5 is_stmt 0 view .LVU69
+ 254 010a 0DF54A52 		add	r2, sp, #12928
+ 255 010e 09F11009 		add	r9, r9, #16
+ 256 0112 1032     		adds	r2, r2, #16
+ 257 0114 4946     		mov	r1, r9
+ 258 0116 1046     		mov	r0, r2
+ 259 0118 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round
+ 260              	.LVL28:
+  72:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_pack_pk(pk, rho, &t1);
+ 261              		.loc 1 72 5 is_stmt 1 view .LVU70
+ 262 011c 0DF54A52 		add	r2, sp, #12928
+ 263 0120 2146     		mov	r1, r4
+ 264 0122 2846     		mov	r0, r5
+ 265 0124 1032     		adds	r2, r2, #16
+ 266 0126 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_pack_pk
+ 267              	.LVL29:
+  73:sign.c        **** 
+  74:sign.c        ****     /* Compute H(rho, t1) and write secret key */
+  75:sign.c        ****     shake256(tr, TRBYTES, pk, PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_PUBLICKEYBYTES);
+ 268              		.loc 1 75 5 view .LVU71
+ 269 012a 2A46     		mov	r2, r5
+ 270 012c 04A8     		add	r0, sp, #16
+ 271 012e 4FF4A463 		mov	r3, #1312
+ 272 0132 4021     		movs	r1, #64
+ 273 0134 FFF7FEFF 		bl	shake256
+ 274              	.LVL30:
+  76:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_pack_sk(sk, rho, tr, key, &t0, &s1, &s2);
+ 275              		.loc 1 76 5 view .LVU72
+ 276 0138 3046     		mov	r0, r6
+ 277 013a CDE90178 		strd	r7, r8, [sp, #4]
+ 278 013e CDF80090 		str	r9, [sp]
+ 279 0142 2CAB     		add	r3, sp, #176
+ 280              	.LVL31:
+ 281              		.loc 1 76 5 is_stmt 0 view .LVU73
+ 282 0144 04AA     		add	r2, sp, #16
+ 283 0146 2146     		mov	r1, r4
+ 284 0148 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_pack_sk
+ 285              	.LVL32:
+  77:sign.c        **** 
+  78:sign.c        ****     return 0;
+ 286              		.loc 1 78 5 is_stmt 1 view .LVU74
+  79:sign.c        **** }
+ 287              		.loc 1 79 1 is_stmt 0 view .LVU75
+ 288 014c 0020     		movs	r0, #0
+ 289 014e 0DF5124D 		add	sp, sp, #37376
+ 290 0152 25B0     		add	sp, sp, #148
+ 291              	.LCFI3:
+ 292              		.cfi_def_cfa_offset 28
+ 293              		@ sp needed
+ 294 0154 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 295              	.LVL33:
+ 296              	.L12:
+ 297              		.loc 1 79 1 view .LVU76
+ 298              		.align	2
+ 299              	.L11:
+ 300 0158 00000000 		.word	.LC0
+ 301              		.cfi_endproc
+ 302              	.LFE0:
+ 304              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature,"ax",%progbits
+ 305              		.align	1
+ 306              		.global	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature
+ 307              		.syntax unified
+ 308              		.thumb
+ 309              		.thumb_func
+ 310              		.fpu softvfp
+ 312              	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature:
+ 313              	.LVL34:
+ 314              	.LFB1:
+  80:sign.c        **** 
+  81:sign.c        **** /*************************************************
+  82:sign.c        **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature
+  83:sign.c        **** *
+  84:sign.c        **** * Description: Computes signature.
+  85:sign.c        **** *
+  86:sign.c        **** * Arguments:   - uint8_t *sig:   pointer to output signature (of length PQCLEAN_DILITHIUM2_CLEAN_CR
+  87:sign.c        **** *              - size_t *siglen: pointer to output length of signature
+  88:sign.c        **** *              - uint8_t *m:     pointer to message to be signed
+  89:sign.c        **** *              - size_t mlen:    length of message
+  90:sign.c        **** *              - uint8_t *sk:    pointer to bit-packed secret key
+  91:sign.c        **** *
+  92:sign.c        **** * Returns 0 (success)
+  93:sign.c        **** **************************************************/
+  94:sign.c        **** // uint8_t buf_c[TAU*2];
+  95:sign.c        **** int PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature(uint8_t *sig,
+  96:sign.c        ****         size_t *siglen,
+  97:sign.c        ****         const uint8_t *m,
+  98:sign.c        ****         size_t mlen,
+  99:sign.c        ****         const uint8_t *sk,uint8_t *p) {
+ 315              		.loc 1 99 39 is_stmt 1 view -0
+ 316              		.cfi_startproc
+ 317              		@ args = 8, pretend = 0, frame = 50472
+ 318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100:sign.c        ****     unsigned int n;
+ 319              		.loc 1 100 5 view .LVU78
+ 101:sign.c        ****     uint8_t seedbuf[2 * SEEDBYTES + TRBYTES + RNDBYTES + 2 * CRHBYTES];
+ 320              		.loc 1 101 5 view .LVU79
+ 102:sign.c        ****     uint8_t *rho, *tr, *key, *mu, *rhoprime, *rnd;
+ 321              		.loc 1 102 5 view .LVU80
+ 103:sign.c        ****     uint16_t nonce = 0;
+ 322              		.loc 1 103 5 view .LVU81
+ 104:sign.c        ****     polyvecl mat[K], s1, y, z;
+ 323              		.loc 1 104 5 view .LVU82
+ 105:sign.c        ****     polyveck t0, s2, w1, w0, h;
+ 324              		.loc 1 105 5 view .LVU83
+ 106:sign.c        ****     poly cp;
+ 325              		.loc 1 106 5 view .LVU84
+ 107:sign.c        ****     shake256incctx state;
+ 326              		.loc 1 107 5 view .LVU85
+ 108:sign.c        **** 
+ 109:sign.c        ****     rho = seedbuf;
+ 327              		.loc 1 109 5 view .LVU86
+  99:sign.c        ****     unsigned int n;
+ 328              		.loc 1 99 39 is_stmt 0 view .LVU87
+ 329 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 330              	.LCFI4:
+ 331              		.cfi_def_cfa_offset 36
+ 332              		.cfi_offset 4, -36
+ 333              		.cfi_offset 5, -32
+ 334              		.cfi_offset 6, -28
+ 335              		.cfi_offset 7, -24
+ 336              		.cfi_offset 8, -20
+ 337              		.cfi_offset 9, -16
+ 338              		.cfi_offset 10, -12
+ 339              		.cfi_offset 11, -8
+ 340              		.cfi_offset 14, -4
+ 341 0004 ADF5454D 		sub	sp, sp, #50432
+ 342              	.LCFI5:
+ 343              		.cfi_def_cfa_offset 50468
+ 344 0008 8FB0     		sub	sp, sp, #60
+ 345              	.LCFI6:
+ 346              		.cfi_def_cfa_offset 50528
+ 347              	.LVL35:
+ 110:sign.c        ****     tr = rho + SEEDBYTES;
+ 348              		.loc 1 110 5 is_stmt 1 view .LVU88
+ 111:sign.c        ****     key = tr + TRBYTES;
+ 349              		.loc 1 111 5 view .LVU89
+ 112:sign.c        ****     rnd = key + SEEDBYTES;
+ 350              		.loc 1 112 5 view .LVU90
+ 113:sign.c        ****     mu = rnd + RNDBYTES;
+ 351              		.loc 1 113 5 view .LVU91
+ 114:sign.c        ****     rhoprime = mu + CRHBYTES;
+ 352              		.loc 1 114 5 view .LVU92
+ 115:sign.c        **** 	
+ 116:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_unpack_sk(rho, tr, key, &t0, &s1, &s2, sk);
+ 353              		.loc 1 116 5 view .LVU93
+  99:sign.c        ****     unsigned int n;
+ 354              		.loc 1 99 39 is_stmt 0 view .LVU94
+ 355 000a 9946     		mov	r9, r3
+ 356              		.loc 1 116 5 view .LVU95
+ 357 000c 0DF54543 		add	r3, sp, #50432
+ 358              	.LVL36:
+ 359              		.loc 1 116 5 view .LVU96
+ 360 0010 6033     		adds	r3, r3, #96
+ 361 0012 0DF58A47 		add	r7, sp, #17664
+ 362 0016 1B68     		ldr	r3, [r3]
+ 363 0018 0293     		str	r3, [sp, #8]
+ 364 001a 0DF1780A 		add	r10, sp, #120
+ 365              	.LVL37:
+ 366              		.loc 1 116 5 view .LVU97
+ 367 001e 3837     		adds	r7, r7, #56
+ 368 0020 0DF5A768 		add	r8, sp, #1336
+ 369 0024 0DF55453 		add	r3, sp, #13568
+ 370 0028 3833     		adds	r3, r3, #56
+  99:sign.c        ****     unsigned int n;
+ 371              		.loc 1 99 39 view .LVU98
+ 372 002a 1546     		mov	r5, r2
+ 373 002c 0446     		mov	r4, r0
+ 374              		.loc 1 116 5 view .LVU99
+ 375 002e 5246     		mov	r2, r10
+ 376              	.LVL38:
+ 377              		.loc 1 116 5 view .LVU100
+ 378 0030 06A8     		add	r0, sp, #24
+ 379              	.LVL39:
+  99:sign.c        ****     unsigned int n;
+ 380              		.loc 1 99 39 view .LVU101
+ 381 0032 0E46     		mov	r6, r1
+ 382              		.loc 1 116 5 view .LVU102
+ 383 0034 0197     		str	r7, [sp, #4]
+ 384 0036 0EA9     		add	r1, sp, #56
+ 385              	.LVL40:
+ 386              		.loc 1 116 5 view .LVU103
+ 387 0038 CDF80080 		str	r8, [sp]
+ 388 003c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_unpack_sk
+ 389              	.LVL41:
+ 117:sign.c        **** 	
+ 118:sign.c        ****     /* Compute mu = CRH(tr, msg) */
+ 119:sign.c        ****     shake256_inc_init(&state);
+ 390              		.loc 1 119 5 is_stmt 1 view .LVU104
+ 391 0040 05A8     		add	r0, sp, #20
+ 392 0042 FFF7FEFF 		bl	shake256_inc_init
+ 393              	.LVL42:
+ 120:sign.c        ****     shake256_inc_absorb(&state, tr, TRBYTES);
+ 394              		.loc 1 120 5 view .LVU105
+ 395 0046 4022     		movs	r2, #64
+ 396 0048 0EA9     		add	r1, sp, #56
+ 397              	.LVL43:
+ 398              		.loc 1 120 5 is_stmt 0 view .LVU106
+ 399 004a 05A8     		add	r0, sp, #20
+ 400 004c FFF7FEFF 		bl	shake256_inc_absorb
+ 401              	.LVL44:
+ 121:sign.c        ****     shake256_inc_absorb(&state, m, mlen);
+ 402              		.loc 1 121 5 is_stmt 1 view .LVU107
+ 403 0050 2946     		mov	r1, r5
+ 404 0052 4A46     		mov	r2, r9
+ 405 0054 05A8     		add	r0, sp, #20
+ 406 0056 FFF7FEFF 		bl	shake256_inc_absorb
+ 407              	.LVL45:
+ 122:sign.c        ****     shake256_inc_finalize(&state);
+ 408              		.loc 1 122 5 view .LVU108
+ 409 005a 05A8     		add	r0, sp, #20
+ 410 005c FFF7FEFF 		bl	shake256_inc_finalize
+ 411              	.LVL46:
+ 123:sign.c        ****     shake256_inc_squeeze(mu, CRHBYTES, &state);
+ 412              		.loc 1 123 5 view .LVU109
+ 413 0060 05AA     		add	r2, sp, #20
+ 414 0062 4021     		movs	r1, #64
+ 415 0064 2EA8     		add	r0, sp, #184
+ 416              	.LVL47:
+ 417              		.loc 1 123 5 is_stmt 0 view .LVU110
+ 418 0066 FFF7FEFF 		bl	shake256_inc_squeeze
+ 419              	.LVL48:
+ 124:sign.c        ****     shake256_inc_ctx_release(&state);
+ 420              		.loc 1 124 5 is_stmt 1 view .LVU111
+ 421 006a 05A8     		add	r0, sp, #20
+ 422 006c FFF7FEFF 		bl	shake256_inc_ctx_release
+ 423              	.LVL49:
+ 125:sign.c        **** 
+ 126:sign.c        ****     for (n = 0; n < RNDBYTES; n++) {
+ 424              		.loc 1 126 5 view .LVU112
+ 425              		.loc 1 126 17 view .LVU113
+ 127:sign.c        ****         rnd[n] = 0;
+ 128:sign.c        ****     }
+ 129:sign.c        **** 	
+ 130:sign.c        **** 
+ 131:sign.c        ****     trigger_high();
+ 132:sign.c        ****     shake256(rhoprime, CRHBYTES, key, SEEDBYTES + RNDBYTES + CRHBYTES);
+ 426              		.loc 1 132 5 is_stmt 0 view .LVU114
+ 427 0070 3EAD     		add	r5, sp, #248
+ 428              	.LVL50:
+ 127:sign.c        ****         rnd[n] = 0;
+ 429              		.loc 1 127 16 view .LVU115
+ 430 0072 2022     		movs	r2, #32
+ 431 0074 0021     		movs	r1, #0
+ 432 0076 26A8     		add	r0, sp, #152
+ 433              	.LVL51:
+ 127:sign.c        ****         rnd[n] = 0;
+ 434              		.loc 1 127 16 view .LVU116
+ 435 0078 FFF7FEFF 		bl	memset
+ 436              	.LVL52:
+ 131:sign.c        ****     shake256(rhoprime, CRHBYTES, key, SEEDBYTES + RNDBYTES + CRHBYTES);
+ 437              		.loc 1 131 5 is_stmt 1 view .LVU117
+ 438 007c FFF7FEFF 		bl	trigger_high
+ 439              	.LVL53:
+ 440              		.loc 1 132 5 view .LVU118
+ 441 0080 8023     		movs	r3, #128
+ 442 0082 5246     		mov	r2, r10
+ 443 0084 4021     		movs	r1, #64
+ 444 0086 2846     		mov	r0, r5
+ 445 0088 FFF7FEFF 		bl	shake256
+ 446              	.LVL54:
+ 133:sign.c        ****     trigger_low();
+ 447              		.loc 1 133 5 view .LVU119
+ 448 008c FFF7FEFF 		bl	trigger_low
+ 449              	.LVL55:
+ 134:sign.c        **** 
+ 135:sign.c        ****     for(int i=0; i < CRHBYTES ;i++){
+ 450              		.loc 1 135 5 view .LVU120
+ 451              	.LBB5:
+ 452              		.loc 1 135 9 view .LVU121
+ 453              		.loc 1 135 18 view .LVU122
+ 136:sign.c        ****         p[i+20] = rhoprime[i]; 
+ 454              		.loc 1 136 17 is_stmt 0 view .LVU123
+ 455 0090 0DF54543 		add	r3, sp, #50432
+ 456 0094 6433     		adds	r3, r3, #100
+ 457 0096 2A46     		mov	r2, r5
+ 458 0098 1B68     		ldr	r3, [r3]
+ 459 009a 0DF59C7C 		add	ip, sp, #312
+ 460 009e 1433     		adds	r3, r3, #20
+ 461              	.LVL56:
+ 462              	.L14:
+ 463              		.loc 1 136 17 view .LVU124
+ 464 00a0 1546     		mov	r5, r2
+ 465 00a2 03CD     		ldmia	r5!, {r0, r1}
+ 466 00a4 6545     		cmp	r5, ip
+ 467 00a6 1860     		str	r0, [r3]	@ unaligned
+ 468 00a8 5960     		str	r1, [r3, #4]	@ unaligned
+ 469 00aa 2A46     		mov	r2, r5
+ 470 00ac 03F10803 		add	r3, r3, #8
+ 471 00b0 F6D1     		bne	.L14
+ 472              	.LVL57:
+ 473              		.loc 1 136 17 view .LVU125
+ 474              	.LBE5:
+ 137:sign.c        ****     }
+ 138:sign.c        **** 
+ 139:sign.c        ****     /* Expand matrix and transform vectors */
+ 140:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand(mat, rho);
+ 475              		.loc 1 140 5 is_stmt 1 view .LVU126
+ 476 00b2 0DF50540 		add	r0, sp, #34048
+ 477 00b6 06A9     		add	r1, sp, #24
+ 478              	.LVL58:
+ 479              		.loc 1 140 5 is_stmt 0 view .LVU127
+ 480 00b8 3830     		adds	r0, r0, #56
+ 481 00ba FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand
+ 482              	.LVL59:
+ 141:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt(&s1);
+ 483              		.loc 1 141 5 is_stmt 1 view .LVU128
+ 484 00be 4046     		mov	r0, r8
+ 485 00c0 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt
+ 486              	.LVL60:
+ 142:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt(&s2);
+ 487              		.loc 1 142 5 view .LVU129
+ 488 00c4 3846     		mov	r0, r7
+ 489 00c6 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt
+ 490              	.LVL61:
+ 143:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt(&t0);
+ 491              		.loc 1 143 5 view .LVU130
+ 492 00ca 0DF55450 		add	r0, sp, #13568
+ 493 00ce 3830     		adds	r0, r0, #56
+ 494 00d0 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt
+ 495              	.LVL62:
+ 144:sign.c        **** 
+ 145:sign.c        **** rej:
+ 146:sign.c        ****     //p[11] +=1 ;
+ 147:sign.c        ****     /* Sample intermediate vector y */
+ 148:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1(&y, rhoprime, nonce++);
+ 149:sign.c        **** 
+ 150:sign.c        ****     /* Matrix-vector multiplication */
+ 151:sign.c        ****     z = y;
+ 152:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt(&z);
+ 153:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery(&w1, mat, &z);
+ 154:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce(&w1);
+ 155:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont(&w1);
+ 156:sign.c        **** 
+ 157:sign.c        ****     /* Decompose w and call the random oracle */
+ 158:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq(&w1);
+ 159:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose(&w1, &w0, &w1);
+ 160:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1(sig, &w1);
+ 161:sign.c        **** 
+ 162:sign.c        ****     shake256_inc_init(&state);
+ 163:sign.c        ****     shake256_inc_absorb(&state, mu, CRHBYTES);
+ 164:sign.c        ****     shake256_inc_absorb(&state, sig, K * POLYW1_PACKEDBYTES);
+ 165:sign.c        ****     shake256_inc_finalize(&state);
+ 166:sign.c        ****     shake256_inc_squeeze(sig, CTILDEBYTES, &state);
+ 167:sign.c        ****     shake256_inc_ctx_release(&state);
+ 168:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_poly_challenge(&cp, sig); /* uses only the first SEEDBYTES bytes of si
+ 169:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&cp);
+ 170:sign.c        **** 
+ 171:sign.c        ****     /* Compute z, reject if it reveals secret */
+ 172:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery(&z, &cp, &s1);
+ 173:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont(&z);
+ 174:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add(&z, &z, &y);
+ 175:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce(&z);
+ 176:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm(&z, GAMMA1 - BETA)) {
+ 496              		.loc 1 176 9 is_stmt 0 view .LVU131
+ 497 00d4 DFF8E8A1 		ldr	r10, .L18
+ 498              	.LVL63:
+ 177:sign.c        ****         goto rej;
+ 178:sign.c        ****     }
+ 179:sign.c        **** 
+ 180:sign.c        ****     /* Check that subtracting cs2 does not change high bits of w and low bits
+ 181:sign.c        ****      * do not reveal secret information */
+ 182:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery(&h, &cp, &s2);
+ 183:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont(&h);
+ 184:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub(&w0, &w0, &h);
+ 185:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce(&w0);
+ 186:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm(&w0, GAMMA2 - BETA)) {
+ 499              		.loc 1 186 9 view .LVU132
+ 500 00d8 DFF8E8B1 		ldr	fp, .L18+4
+ 143:sign.c        **** 
+ 501              		.loc 1 143 5 view .LVU133
+ 502 00dc 4FF00008 		mov	r8, #0
+ 148:sign.c        **** 
+ 503              		.loc 1 148 5 view .LVU134
+ 504 00e0 0DF1F809 		add	r9, sp, #248
+ 505              	.LVL64:
+ 506              	.L15:
+ 148:sign.c        **** 
+ 507              		.loc 1 148 5 is_stmt 1 view .LVU135
+ 148:sign.c        **** 
+ 508              		.loc 1 148 5 is_stmt 0 view .LVU136
+ 509 00e4 0DF5A950 		add	r0, sp, #5408
+ 510 00e8 1FFA88F2 		uxth	r2, r8
+ 511 00ec 4946     		mov	r1, r9
+ 512 00ee 1830     		adds	r0, r0, #24
+ 513 00f0 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1
+ 514              	.LVL65:
+ 151:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt(&z);
+ 515              		.loc 1 151 5 is_stmt 1 view .LVU137
+ 151:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt(&z);
+ 516              		.loc 1 151 7 is_stmt 0 view .LVU138
+ 517 00f4 0DF5A951 		add	r1, sp, #5408
+ 518 00f8 0DF51450 		add	r0, sp, #9472
+ 519 00fc 4FF48052 		mov	r2, #4096
+ 520 0100 1831     		adds	r1, r1, #24
+ 521 0102 3830     		adds	r0, r0, #56
+ 522 0104 FFF7FEFF 		bl	memcpy
+ 523              	.LVL66:
+ 152:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery(&w1, mat, &z);
+ 524              		.loc 1 152 5 is_stmt 1 view .LVU139
+ 525 0108 0DF51450 		add	r0, sp, #9472
+ 526 010c 3830     		adds	r0, r0, #56
+ 527 010e FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt
+ 528              	.LVL67:
+ 153:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce(&w1);
+ 529              		.loc 1 153 5 view .LVU140
+ 530 0112 0DF51452 		add	r2, sp, #9472
+ 531 0116 0DF50541 		add	r1, sp, #34048
+ 532 011a 0DF5AA40 		add	r0, sp, #21760
+ 533 011e 3832     		adds	r2, r2, #56
+ 534 0120 3831     		adds	r1, r1, #56
+ 535 0122 3830     		adds	r0, r0, #56
+ 536 0124 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery
+ 537              	.LVL68:
+ 154:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont(&w1);
+ 538              		.loc 1 154 5 view .LVU141
+ 539 0128 0DF5AA40 		add	r0, sp, #21760
+ 540 012c 3830     		adds	r0, r0, #56
+ 541 012e FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+ 542              	.LVL69:
+ 155:sign.c        **** 
+ 543              		.loc 1 155 5 view .LVU142
+ 544 0132 0DF5AA40 		add	r0, sp, #21760
+ 545 0136 3830     		adds	r0, r0, #56
+ 546 0138 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+ 547              	.LVL70:
+ 158:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose(&w1, &w0, &w1);
+ 548              		.loc 1 158 5 view .LVU143
+ 549 013c 0DF5AA40 		add	r0, sp, #21760
+ 550 0140 3830     		adds	r0, r0, #56
+ 551 0142 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq
+ 552              	.LVL71:
+ 159:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1(sig, &w1);
+ 553              		.loc 1 159 5 view .LVU144
+ 554 0146 0DF5AA42 		add	r2, sp, #21760
+ 555 014a 3832     		adds	r2, r2, #56
+ 556 014c 0DF5CA41 		add	r1, sp, #25856
+ 557 0150 1046     		mov	r0, r2
+ 558 0152 3831     		adds	r1, r1, #56
+ 559 0154 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose
+ 560              	.LVL72:
+ 160:sign.c        **** 
+ 561              		.loc 1 160 5 view .LVU145
+ 562 0158 0DF5AA41 		add	r1, sp, #21760
+ 563 015c 3831     		adds	r1, r1, #56
+ 564 015e 2046     		mov	r0, r4
+ 565 0160 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1
+ 566              	.LVL73:
+ 162:sign.c        ****     shake256_inc_absorb(&state, mu, CRHBYTES);
+ 567              		.loc 1 162 5 view .LVU146
+ 568 0164 05A8     		add	r0, sp, #20
+ 569 0166 FFF7FEFF 		bl	shake256_inc_init
+ 570              	.LVL74:
+ 163:sign.c        ****     shake256_inc_absorb(&state, sig, K * POLYW1_PACKEDBYTES);
+ 571              		.loc 1 163 5 view .LVU147
+ 572 016a 4022     		movs	r2, #64
+ 573 016c 2EA9     		add	r1, sp, #184
+ 574              	.LVL75:
+ 163:sign.c        ****     shake256_inc_absorb(&state, sig, K * POLYW1_PACKEDBYTES);
+ 575              		.loc 1 163 5 is_stmt 0 view .LVU148
+ 576 016e 05A8     		add	r0, sp, #20
+ 577 0170 FFF7FEFF 		bl	shake256_inc_absorb
+ 578              	.LVL76:
+ 164:sign.c        ****     shake256_inc_finalize(&state);
+ 579              		.loc 1 164 5 is_stmt 1 view .LVU149
+ 580 0174 4FF44072 		mov	r2, #768
+ 581 0178 2146     		mov	r1, r4
+ 582 017a 05A8     		add	r0, sp, #20
+ 583 017c FFF7FEFF 		bl	shake256_inc_absorb
+ 584              	.LVL77:
+ 165:sign.c        ****     shake256_inc_squeeze(sig, CTILDEBYTES, &state);
+ 585              		.loc 1 165 5 view .LVU150
+ 586 0180 05A8     		add	r0, sp, #20
+ 587 0182 FFF7FEFF 		bl	shake256_inc_finalize
+ 588              	.LVL78:
+ 166:sign.c        ****     shake256_inc_ctx_release(&state);
+ 589              		.loc 1 166 5 view .LVU151
+ 590 0186 05AA     		add	r2, sp, #20
+ 591 0188 2021     		movs	r1, #32
+ 592 018a 2046     		mov	r0, r4
+ 593 018c FFF7FEFF 		bl	shake256_inc_squeeze
+ 594              	.LVL79:
+ 167:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_poly_challenge(&cp, sig); /* uses only the first SEEDBYTES bytes of si
+ 595              		.loc 1 167 5 view .LVU152
+ 596 0190 05A8     		add	r0, sp, #20
+ 597 0192 FFF7FEFF 		bl	shake256_inc_ctx_release
+ 598              	.LVL80:
+ 168:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&cp);
+ 599              		.loc 1 168 5 view .LVU153
+ 600 0196 2146     		mov	r1, r4
+ 601 0198 4EA8     		add	r0, sp, #312
+ 602 019a FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_challenge
+ 603              	.LVL81:
+ 169:sign.c        **** 
+ 604              		.loc 1 169 5 view .LVU154
+ 605 019e 4EA8     		add	r0, sp, #312
+ 606 01a0 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 607              	.LVL82:
+ 172:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont(&z);
+ 608              		.loc 1 172 5 view .LVU155
+ 609 01a4 0DF51450 		add	r0, sp, #9472
+ 610 01a8 0DF5A762 		add	r2, sp, #1336
+ 611 01ac 4EA9     		add	r1, sp, #312
+ 612 01ae 3830     		adds	r0, r0, #56
+ 613 01b0 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery
+ 614              	.LVL83:
+ 173:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add(&z, &z, &y);
+ 615              		.loc 1 173 5 view .LVU156
+ 616 01b4 0DF51450 		add	r0, sp, #9472
+ 617 01b8 3830     		adds	r0, r0, #56
+ 618 01ba FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont
+ 619              	.LVL84:
+ 174:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce(&z);
+ 620              		.loc 1 174 5 view .LVU157
+ 621 01be 0DF51451 		add	r1, sp, #9472
+ 622 01c2 3831     		adds	r1, r1, #56
+ 623 01c4 0DF5A952 		add	r2, sp, #5408
+ 624 01c8 0846     		mov	r0, r1
+ 625 01ca 1832     		adds	r2, r2, #24
+ 626 01cc FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add
+ 627              	.LVL85:
+ 175:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm(&z, GAMMA1 - BETA)) {
+ 628              		.loc 1 175 5 view .LVU158
+ 629 01d0 0DF51450 		add	r0, sp, #9472
+ 630 01d4 3830     		adds	r0, r0, #56
+ 631 01d6 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce
+ 632              	.LVL86:
+ 176:sign.c        ****         goto rej;
+ 633              		.loc 1 176 5 view .LVU159
+ 176:sign.c        ****         goto rej;
+ 634              		.loc 1 176 9 is_stmt 0 view .LVU160
+ 635 01da 0DF51450 		add	r0, sp, #9472
+ 636 01de 5146     		mov	r1, r10
+ 637 01e0 3830     		adds	r0, r0, #56
+ 638 01e2 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm
+ 639              	.LVL87:
+ 176:sign.c        ****         goto rej;
+ 640              		.loc 1 176 8 view .LVU161
+ 641 01e6 0028     		cmp	r0, #0
+ 642 01e8 66D1     		bne	.L16
+ 182:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont(&h);
+ 643              		.loc 1 182 5 is_stmt 1 view .LVU162
+ 644 01ea 0DF5EA40 		add	r0, sp, #29952
+ 645 01ee 3A46     		mov	r2, r7
+ 646 01f0 4EA9     		add	r1, sp, #312
+ 647 01f2 3830     		adds	r0, r0, #56
+ 648 01f4 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery
+ 649              	.LVL88:
+ 183:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub(&w0, &w0, &h);
+ 650              		.loc 1 183 5 view .LVU163
+ 651 01f8 0DF5EA40 		add	r0, sp, #29952
+ 652 01fc 3830     		adds	r0, r0, #56
+ 653 01fe FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+ 654              	.LVL89:
+ 184:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce(&w0);
+ 655              		.loc 1 184 5 view .LVU164
+ 656 0202 0DF5CA41 		add	r1, sp, #25856
+ 657 0206 3831     		adds	r1, r1, #56
+ 658 0208 0DF5EA42 		add	r2, sp, #29952
+ 659 020c 0846     		mov	r0, r1
+ 660 020e 3832     		adds	r2, r2, #56
+ 661 0210 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub
+ 662              	.LVL90:
+ 185:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm(&w0, GAMMA2 - BETA)) {
+ 663              		.loc 1 185 5 view .LVU165
+ 664 0214 0DF5CA40 		add	r0, sp, #25856
+ 665 0218 3830     		adds	r0, r0, #56
+ 666 021a FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+ 667              	.LVL91:
+ 668              		.loc 1 186 5 view .LVU166
+ 669              		.loc 1 186 9 is_stmt 0 view .LVU167
+ 670 021e 0DF5CA40 		add	r0, sp, #25856
+ 671 0222 5946     		mov	r1, fp
+ 672 0224 3830     		adds	r0, r0, #56
+ 673 0226 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm
+ 674              	.LVL92:
+ 675              		.loc 1 186 8 view .LVU168
+ 676 022a 0028     		cmp	r0, #0
+ 677 022c 44D1     		bne	.L16
+ 187:sign.c        ****         goto rej;
+ 188:sign.c        ****     }
+ 189:sign.c        **** 
+ 190:sign.c        ****     /* Compute hints for w1 */
+ 191:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery(&h, &cp, &t0);
+ 678              		.loc 1 191 5 is_stmt 1 view .LVU169
+ 679 022e 0DF55452 		add	r2, sp, #13568
+ 680 0232 0DF5EA40 		add	r0, sp, #29952
+ 681 0236 3832     		adds	r2, r2, #56
+ 682 0238 4EA9     		add	r1, sp, #312
+ 683 023a 3830     		adds	r0, r0, #56
+ 684 023c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery
+ 685              	.LVL93:
+ 192:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont(&h);
+ 686              		.loc 1 192 5 view .LVU170
+ 687 0240 0DF5EA40 		add	r0, sp, #29952
+ 688 0244 3830     		adds	r0, r0, #56
+ 689 0246 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+ 690              	.LVL94:
+ 193:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce(&h);
+ 691              		.loc 1 193 5 view .LVU171
+ 692 024a 0DF5EA40 		add	r0, sp, #29952
+ 693 024e 3830     		adds	r0, r0, #56
+ 694 0250 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+ 695              	.LVL95:
+ 194:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm(&h, GAMMA2)) {
+ 696              		.loc 1 194 5 view .LVU172
+ 697              		.loc 1 194 9 is_stmt 0 view .LVU173
+ 698 0254 0DF5EA40 		add	r0, sp, #29952
+ 699 0258 4FF4BA31 		mov	r1, #95232
+ 700 025c 3830     		adds	r0, r0, #56
+ 701 025e FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm
+ 702              	.LVL96:
+ 703              		.loc 1 194 8 view .LVU174
+ 704 0262 0546     		mov	r5, r0
+ 705 0264 40BB     		cbnz	r0, .L16
+ 195:sign.c        ****         goto rej;
+ 196:sign.c        ****     }
+ 197:sign.c        **** 
+ 198:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_add(&w0, &w0, &h);
+ 706              		.loc 1 198 5 is_stmt 1 view .LVU175
+ 707 0266 0DF5CA41 		add	r1, sp, #25856
+ 708 026a 3831     		adds	r1, r1, #56
+ 709 026c 0DF5EA42 		add	r2, sp, #29952
+ 710 0270 0846     		mov	r0, r1
+ 711 0272 3832     		adds	r2, r2, #56
+ 712 0274 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_add
+ 713              	.LVL97:
+ 199:sign.c        ****     n = PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint(&h, &w0, &w1);
+ 714              		.loc 1 199 5 view .LVU176
+ 715              		.loc 1 199 9 is_stmt 0 view .LVU177
+ 716 0278 0DF5AA42 		add	r2, sp, #21760
+ 717 027c 0DF5CA41 		add	r1, sp, #25856
+ 718 0280 0DF5EA40 		add	r0, sp, #29952
+ 719 0284 3832     		adds	r2, r2, #56
+ 720 0286 3831     		adds	r1, r1, #56
+ 721 0288 3830     		adds	r0, r0, #56
+ 722 028a FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint
+ 723              	.LVL98:
+ 200:sign.c        ****     if (n > OMEGA) {
+ 724              		.loc 1 200 5 is_stmt 1 view .LVU178
+ 725              		.loc 1 200 8 is_stmt 0 view .LVU179
+ 726 028e 5028     		cmp	r0, #80
+ 727 0290 12D8     		bhi	.L16
+ 201:sign.c        ****         goto rej;
+ 202:sign.c        ****     }
+ 203:sign.c        **** 
+ 204:sign.c        ****     /* Write signature */
+ 205:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_pack_sig(sig, sig, &z, &h);
+ 728              		.loc 1 205 5 is_stmt 1 view .LVU180
+ 729 0292 0DF5EA43 		add	r3, sp, #29952
+ 730 0296 0DF51452 		add	r2, sp, #9472
+ 731 029a 2046     		mov	r0, r4
+ 732              	.LVL99:
+ 733              		.loc 1 205 5 is_stmt 0 view .LVU181
+ 734 029c 3833     		adds	r3, r3, #56
+ 735 029e 3832     		adds	r2, r2, #56
+ 736 02a0 2146     		mov	r1, r4
+ 737 02a2 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_pack_sig
+ 738              	.LVL100:
+ 206:sign.c        ****     *siglen = PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES;
+ 739              		.loc 1 206 5 is_stmt 1 view .LVU182
+ 740              		.loc 1 206 13 is_stmt 0 view .LVU183
+ 741 02a6 40F67413 		movw	r3, #2420
+ 207:sign.c        ****     return 0;
+ 208:sign.c        **** }
+ 742              		.loc 1 208 1 view .LVU184
+ 743 02aa 2846     		mov	r0, r5
+ 206:sign.c        ****     *siglen = PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES;
+ 744              		.loc 1 206 13 view .LVU185
+ 745 02ac 3360     		str	r3, [r6]
+ 207:sign.c        ****     return 0;
+ 746              		.loc 1 207 5 is_stmt 1 view .LVU186
+ 747              		.loc 1 208 1 is_stmt 0 view .LVU187
+ 748 02ae 0DF5454D 		add	sp, sp, #50432
+ 749 02b2 0FB0     		add	sp, sp, #60
+ 750              	.LCFI7:
+ 751              		.cfi_remember_state
+ 752              		.cfi_def_cfa_offset 36
+ 753              		@ sp needed
+ 754 02b4 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 755              	.LVL101:
+ 756              	.L16:
+ 757              	.LCFI8:
+ 758              		.cfi_restore_state
+ 759              		.loc 1 208 1 view .LVU188
+ 760 02b8 08F10108 		add	r8, r8, #1
+ 761              	.LVL102:
+ 762              		.loc 1 208 1 view .LVU189
+ 763 02bc 12E7     		b	.L15
+ 764              	.L19:
+ 765 02be 00BF     		.align	2
+ 766              	.L18:
+ 767 02c0 B2FF0100 		.word	130994
+ 768 02c4 B2730100 		.word	95154
+ 769              		.cfi_endproc
+ 770              	.LFE1:
+ 772              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign,"ax",%progbits
+ 773              		.align	1
+ 774              		.global	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign
+ 775              		.syntax unified
+ 776              		.thumb
+ 777              		.thumb_func
+ 778              		.fpu softvfp
+ 780              	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign:
+ 781              	.LVL103:
+ 782              	.LFB2:
+ 209:sign.c        **** 
+ 210:sign.c        **** /*************************************************
+ 211:sign.c        **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_crypto_sign
+ 212:sign.c        **** *
+ 213:sign.c        **** * Description: Compute signed message.
+ 214:sign.c        **** *
+ 215:sign.c        **** * Arguments:   - uint8_t *sm: pointer to output signed message (allocated
+ 216:sign.c        **** *                             array with PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + mlen bytes),
+ 217:sign.c        **** *                             can be equal to m
+ 218:sign.c        **** *              - size_t *smlen: pointer to output length of signed
+ 219:sign.c        **** *                               message
+ 220:sign.c        **** *              - const uint8_t *m: pointer to message to be signed
+ 221:sign.c        **** *              - size_t mlen: length of message
+ 222:sign.c        **** *              - const uint8_t *sk: pointer to bit-packed secret key
+ 223:sign.c        **** *
+ 224:sign.c        **** * Returns 0 (success)
+ 225:sign.c        **** **************************************************/
+ 226:sign.c        **** int PQCLEAN_DILITHIUM2_CLEAN_crypto_sign(uint8_t *sm,
+ 227:sign.c        ****         size_t *smlen,
+ 228:sign.c        ****         const uint8_t *m,
+ 229:sign.c        ****         size_t mlen,
+ 230:sign.c        ****         const uint8_t *sk,uint8_t *p) {
+ 783              		.loc 1 230 39 is_stmt 1 view -0
+ 784              		.cfi_startproc
+ 785              		@ args = 8, pretend = 0, frame = 0
+ 786              		@ frame_needed = 0, uses_anonymous_args = 0
+ 787              		.loc 1 230 39 is_stmt 0 view .LVU191
+ 788 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 789              	.LCFI9:
+ 790              		.cfi_def_cfa_offset 24
+ 791              		.cfi_offset 4, -16
+ 792              		.cfi_offset 5, -12
+ 793              		.cfi_offset 6, -8
+ 794              		.cfi_offset 14, -4
+ 795              		.loc 1 230 39 view .LVU192
+ 796 0002 0D46     		mov	r5, r1
+ 231:sign.c        ****     size_t i;
+ 797              		.loc 1 231 5 is_stmt 1 view .LVU193
+ 232:sign.c        **** 
+ 233:sign.c        ****     for (i = 0; i < mlen; ++i) {
+ 798              		.loc 1 233 5 view .LVU194
+ 799              	.LVL104:
+ 230:sign.c        ****     size_t i;
+ 800              		.loc 1 230 39 is_stmt 0 view .LVU195
+ 801 0004 1C46     		mov	r4, r3
+ 802 0006 D118     		adds	r1, r2, r3
+ 803              	.LVL105:
+ 230:sign.c        ****     size_t i;
+ 804              		.loc 1 230 39 view .LVU196
+ 805 0008 03F67413 		addw	r3, r3, #2420
+ 806              	.LVL106:
+ 230:sign.c        ****     size_t i;
+ 807              		.loc 1 230 39 view .LVU197
+ 808 000c 0344     		add	r3, r3, r0
+ 809              	.LVL107:
+ 810              	.L21:
+ 811              		.loc 1 233 17 is_stmt 1 discriminator 1 view .LVU198
+ 812              		.loc 1 233 5 is_stmt 0 discriminator 1 view .LVU199
+ 813 000e 9142     		cmp	r1, r2
+ 814 0010 0FD1     		bne	.L22
+ 234:sign.c        ****         sm[PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + mlen - 1 - i] = m[mlen - 1 - i];
+ 235:sign.c        ****     }
+ 236:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature(sm, smlen, sm + PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_
+ 815              		.loc 1 236 5 is_stmt 1 view .LVU200
+ 816 0012 079B     		ldr	r3, [sp, #28]
+ 817 0014 0193     		str	r3, [sp, #4]
+ 818 0016 069B     		ldr	r3, [sp, #24]
+ 819 0018 0093     		str	r3, [sp]
+ 820 001a 00F67412 		addw	r2, r0, #2420
+ 821              	.LVL108:
+ 822              		.loc 1 236 5 is_stmt 0 view .LVU201
+ 823 001e 2346     		mov	r3, r4
+ 824 0020 2946     		mov	r1, r5
+ 825 0022 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature
+ 826              	.LVL109:
+ 237:sign.c        ****     *smlen += mlen;
+ 827              		.loc 1 237 5 is_stmt 1 view .LVU202
+ 828              		.loc 1 237 12 is_stmt 0 view .LVU203
+ 829 0026 2B68     		ldr	r3, [r5]
+ 238:sign.c        ****     return 0;
+ 239:sign.c        **** }
+ 830              		.loc 1 239 1 view .LVU204
+ 831 0028 0020     		movs	r0, #0
+ 237:sign.c        ****     *smlen += mlen;
+ 832              		.loc 1 237 12 view .LVU205
+ 833 002a 2344     		add	r3, r3, r4
+ 834 002c 2B60     		str	r3, [r5]
+ 238:sign.c        ****     return 0;
+ 835              		.loc 1 238 5 is_stmt 1 view .LVU206
+ 836              		.loc 1 239 1 is_stmt 0 view .LVU207
+ 837 002e 02B0     		add	sp, sp, #8
+ 838              	.LCFI10:
+ 839              		.cfi_remember_state
+ 840              		.cfi_def_cfa_offset 16
+ 841              		@ sp needed
+ 842 0030 70BD     		pop	{r4, r5, r6, pc}
+ 843              	.LVL110:
+ 844              	.L22:
+ 845              	.LCFI11:
+ 846              		.cfi_restore_state
+ 234:sign.c        ****     }
+ 847              		.loc 1 234 9 is_stmt 1 discriminator 3 view .LVU208
+ 234:sign.c        ****     }
+ 848              		.loc 1 234 69 is_stmt 0 discriminator 3 view .LVU209
+ 849 0032 11F8016D 		ldrb	r6, [r1, #-1]!	@ zero_extendqisi2
+ 234:sign.c        ****     }
+ 850              		.loc 1 234 66 discriminator 3 view .LVU210
+ 851 0036 03F8016D 		strb	r6, [r3, #-1]!
+ 233:sign.c        ****         sm[PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + mlen - 1 - i] = m[mlen - 1 - i];
+ 852              		.loc 1 233 27 is_stmt 1 discriminator 3 view .LVU211
+ 853 003a E8E7     		b	.L21
+ 854              		.cfi_endproc
+ 855              	.LFE2:
+ 857              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify,"ax",%progbits
+ 858              		.align	1
+ 859              		.global	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify
+ 860              		.syntax unified
+ 861              		.thumb
+ 862              		.thumb_func
+ 863              		.fpu softvfp
+ 865              	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify:
+ 866              	.LVL111:
+ 867              	.LFB3:
+ 240:sign.c        **** 
+ 241:sign.c        **** /*************************************************
+ 242:sign.c        **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify
+ 243:sign.c        **** *
+ 244:sign.c        **** * Description: Verifies signature.
+ 245:sign.c        **** *
+ 246:sign.c        **** * Arguments:   - uint8_t *m: pointer to input signature
+ 247:sign.c        **** *              - size_t siglen: length of signature
+ 248:sign.c        **** *              - const uint8_t *m: pointer to message
+ 249:sign.c        **** *              - size_t mlen: length of message
+ 250:sign.c        **** *              - const uint8_t *pk: pointer to bit-packed public key
+ 251:sign.c        **** *
+ 252:sign.c        **** * Returns 0 if signature could be verified correctly and -1 otherwise
+ 253:sign.c        **** **************************************************/
+ 254:sign.c        **** int PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify(const uint8_t *sig,
+ 255:sign.c        ****         size_t siglen,
+ 256:sign.c        ****         const uint8_t *m,
+ 257:sign.c        ****         size_t mlen,
+ 258:sign.c        ****         const uint8_t *pk,uint8_t *p) {
+ 868              		.loc 1 258 39 view -0
+ 869              		.cfi_startproc
+ 870              		@ args = 8, pretend = 0, frame = 34736
+ 871              		@ frame_needed = 0, uses_anonymous_args = 0
+ 259:sign.c        ****     unsigned int i;
+ 872              		.loc 1 259 5 view .LVU213
+ 260:sign.c        ****     uint8_t buf[K * POLYW1_PACKEDBYTES];
+ 873              		.loc 1 260 5 view .LVU214
+ 261:sign.c        ****     uint8_t rho[SEEDBYTES];
+ 874              		.loc 1 261 5 view .LVU215
+ 262:sign.c        ****     uint8_t mu[CRHBYTES];
+ 875              		.loc 1 262 5 view .LVU216
+ 263:sign.c        ****     uint8_t c[CTILDEBYTES];
+ 876              		.loc 1 263 5 view .LVU217
+ 264:sign.c        ****     uint8_t c2[CTILDEBYTES];
+ 877              		.loc 1 264 5 view .LVU218
+ 265:sign.c        ****     poly cp;
+ 878              		.loc 1 265 5 view .LVU219
+ 266:sign.c        ****     polyvecl mat[K], z;
+ 879              		.loc 1 266 5 view .LVU220
+ 267:sign.c        ****     polyveck t1, w1, h;
+ 880              		.loc 1 267 5 view .LVU221
+ 268:sign.c        ****     shake256incctx state;
+ 881              		.loc 1 268 5 view .LVU222
+ 269:sign.c        **** 
+ 270:sign.c        ****     if (siglen != PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES) {
+ 882              		.loc 1 270 5 view .LVU223
+ 258:sign.c        ****     unsigned int i;
+ 883              		.loc 1 258 39 is_stmt 0 view .LVU224
+ 884 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 885              	.LCFI12:
+ 886              		.cfi_def_cfa_offset 20
+ 887              		.cfi_offset 4, -20
+ 888              		.cfi_offset 5, -16
+ 889              		.cfi_offset 6, -12
+ 890              		.cfi_offset 7, -8
+ 891              		.cfi_offset 14, -4
+ 892 0002 ADF5074D 		sub	sp, sp, #34560
+ 893              	.LCFI13:
+ 894              		.cfi_def_cfa_offset 34580
+ 895 0006 ADB0     		sub	sp, sp, #180
+ 896              	.LCFI14:
+ 897              		.cfi_def_cfa_offset 34760
+ 258:sign.c        ****     unsigned int i;
+ 898              		.loc 1 258 39 view .LVU225
+ 899 0008 1E46     		mov	r6, r3
+ 900 000a 0DF50743 		add	r3, sp, #34560
+ 901              	.LVL112:
+ 258:sign.c        ****     unsigned int i;
+ 902              		.loc 1 258 39 view .LVU226
+ 903 000e C833     		adds	r3, r3, #200
+ 904 0010 1F68     		ldr	r7, [r3]
+ 905              		.loc 1 270 8 view .LVU227
+ 906 0012 40F67413 		movw	r3, #2420
+ 907 0016 9942     		cmp	r1, r3
+ 258:sign.c        ****     unsigned int i;
+ 908              		.loc 1 258 39 view .LVU228
+ 909 0018 0446     		mov	r4, r0
+ 910 001a 1546     		mov	r5, r2
+ 911              		.loc 1 270 8 view .LVU229
+ 912 001c 40F0BA80 		bne	.L24
+ 271:sign.c        ****         return -1;
+ 272:sign.c        ****     }
+ 273:sign.c        **** 
+ 274:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_unpack_pk(rho, &t1, pk);
+ 913              		.loc 1 274 5 is_stmt 1 view .LVU230
+ 914 0020 0DF5BD51 		add	r1, sp, #6048
+ 915              	.LVL113:
+ 916              		.loc 1 274 5 is_stmt 0 view .LVU231
+ 917 0024 3A46     		mov	r2, r7
+ 918              	.LVL114:
+ 919              		.loc 1 274 5 view .LVU232
+ 920 0026 1031     		adds	r1, r1, #16
+ 921 0028 04A8     		add	r0, sp, #16
+ 922              	.LVL115:
+ 923              		.loc 1 274 5 view .LVU233
+ 924 002a FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_unpack_pk
+ 925              	.LVL116:
+ 275:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_unpack_sig(c, &z, &h, sig)) {
+ 926              		.loc 1 275 5 is_stmt 1 view .LVU234
+ 927              		.loc 1 275 9 is_stmt 0 view .LVU235
+ 928 002e 0DF55E52 		add	r2, sp, #14208
+ 929 0032 2346     		mov	r3, r4
+ 930 0034 3032     		adds	r2, r2, #48
+ 931 0036 0DF5F661 		add	r1, sp, #1968
+ 932 003a 0CA8     		add	r0, sp, #48
+ 933 003c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_unpack_sig
+ 934              	.LVL117:
+ 935              		.loc 1 275 8 view .LVU236
+ 936 0040 0028     		cmp	r0, #0
+ 937 0042 40F0A780 		bne	.L24
+ 276:sign.c        ****         return -1;
+ 277:sign.c        ****     }
+ 278:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm(&z, GAMMA1 - BETA)) {
+ 938              		.loc 1 278 5 is_stmt 1 view .LVU237
+ 939              		.loc 1 278 9 is_stmt 0 view .LVU238
+ 940 0046 5549     		ldr	r1, .L28
+ 941 0048 0DF5F660 		add	r0, sp, #1968
+ 942 004c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm
+ 943              	.LVL118:
+ 944              		.loc 1 278 8 view .LVU239
+ 945 0050 0446     		mov	r4, r0
+ 946              	.LVL119:
+ 947              		.loc 1 278 8 view .LVU240
+ 948 0052 0028     		cmp	r0, #0
+ 949 0054 40F09E80 		bne	.L24
+ 279:sign.c        ****         return -1;
+ 280:sign.c        ****     }
+ 281:sign.c        **** 
+ 282:sign.c        ****     /* Compute CRH(H(rho, t1), msg) */
+ 283:sign.c        ****     shake256(mu, CRHBYTES, pk, PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_PUBLICKEYBYTES);
+ 950              		.loc 1 283 5 is_stmt 1 view .LVU241
+ 951 0058 4FF4A463 		mov	r3, #1312
+ 952 005c 3A46     		mov	r2, r7
+ 953 005e 4021     		movs	r1, #64
+ 954 0060 1CA8     		add	r0, sp, #112
+ 955 0062 FFF7FEFF 		bl	shake256
+ 956              	.LVL120:
+ 284:sign.c        ****     shake256_inc_init(&state);
+ 957              		.loc 1 284 5 view .LVU242
+ 958 0066 03A8     		add	r0, sp, #12
+ 959 0068 FFF7FEFF 		bl	shake256_inc_init
+ 960              	.LVL121:
+ 285:sign.c        ****     shake256_inc_absorb(&state, mu, CRHBYTES);
+ 961              		.loc 1 285 5 view .LVU243
+ 962 006c 4022     		movs	r2, #64
+ 963 006e 1CA9     		add	r1, sp, #112
+ 964 0070 03A8     		add	r0, sp, #12
+ 965 0072 FFF7FEFF 		bl	shake256_inc_absorb
+ 966              	.LVL122:
+ 286:sign.c        ****     shake256_inc_absorb(&state, m, mlen);
+ 967              		.loc 1 286 5 view .LVU244
+ 968 0076 3246     		mov	r2, r6
+ 969 0078 2946     		mov	r1, r5
+ 970 007a 03A8     		add	r0, sp, #12
+ 971 007c FFF7FEFF 		bl	shake256_inc_absorb
+ 972              	.LVL123:
+ 287:sign.c        ****     shake256_inc_finalize(&state);
+ 973              		.loc 1 287 5 view .LVU245
+ 974 0080 03A8     		add	r0, sp, #12
+ 975 0082 FFF7FEFF 		bl	shake256_inc_finalize
+ 976              	.LVL124:
+ 288:sign.c        ****     shake256_inc_squeeze(mu, CRHBYTES, &state);
+ 977              		.loc 1 288 5 view .LVU246
+ 978 0086 03AA     		add	r2, sp, #12
+ 979 0088 4021     		movs	r1, #64
+ 980 008a 1CA8     		add	r0, sp, #112
+ 981 008c FFF7FEFF 		bl	shake256_inc_squeeze
+ 982              	.LVL125:
+ 289:sign.c        ****     shake256_inc_ctx_release(&state);
+ 983              		.loc 1 289 5 view .LVU247
+ 984 0090 03A8     		add	r0, sp, #12
+ 985 0092 FFF7FEFF 		bl	shake256_inc_ctx_release
+ 986              	.LVL126:
+ 290:sign.c        **** 
+ 291:sign.c        ****     /* Matrix-vector multiplication; compute Az - c2^dt1 */
+ 292:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_poly_challenge(&cp, c); /* uses only the first SEEDBYTES bytes of c */
+ 987              		.loc 1 292 5 view .LVU248
+ 988 0096 0CA9     		add	r1, sp, #48
+ 989 0098 ECA8     		add	r0, sp, #944
+ 990 009a FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_challenge
+ 991              	.LVL127:
+ 293:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand(mat, rho);
+ 992              		.loc 1 293 5 view .LVU249
+ 993 009e 0DF58F40 		add	r0, sp, #18304
+ 994 00a2 04A9     		add	r1, sp, #16
+ 995 00a4 3030     		adds	r0, r0, #48
+ 996 00a6 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand
+ 997              	.LVL128:
+ 294:sign.c        **** 
+ 295:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt(&z);
+ 998              		.loc 1 295 5 view .LVU250
+ 999 00aa 0DF5F660 		add	r0, sp, #1968
+ 1000 00ae FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt
+ 1001              	.LVL129:
+ 296:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery(&w1, mat, &z);
+ 1002              		.loc 1 296 5 view .LVU251
+ 1003 00b2 0DF58F41 		add	r1, sp, #18304
+ 1004 00b6 0DF51E50 		add	r0, sp, #10112
+ 1005 00ba 0DF5F662 		add	r2, sp, #1968
+ 1006 00be 3031     		adds	r1, r1, #48
+ 1007 00c0 3030     		adds	r0, r0, #48
+ 1008 00c2 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery
+ 1009              	.LVL130:
+ 297:sign.c        **** 
+ 298:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&cp);
+ 1010              		.loc 1 298 5 view .LVU252
+ 1011 00c6 ECA8     		add	r0, sp, #944
+ 1012 00c8 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 1013              	.LVL131:
+ 299:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl(&t1);
+ 1014              		.loc 1 299 5 view .LVU253
+ 1015 00cc 0DF5BD50 		add	r0, sp, #6048
+ 1016 00d0 1030     		adds	r0, r0, #16
+ 1017 00d2 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl
+ 1018              	.LVL132:
+ 300:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt(&t1);
+ 1019              		.loc 1 300 5 view .LVU254
+ 1020 00d6 0DF5BD50 		add	r0, sp, #6048
+ 1021 00da 1030     		adds	r0, r0, #16
+ 1022 00dc FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt
+ 1023              	.LVL133:
+ 301:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery(&t1, &cp, &t1);
+ 1024              		.loc 1 301 5 view .LVU255
+ 1025 00e0 0DF5BD52 		add	r2, sp, #6048
+ 1026 00e4 1032     		adds	r2, r2, #16
+ 1027 00e6 1046     		mov	r0, r2
+ 1028 00e8 ECA9     		add	r1, sp, #944
+ 1029 00ea FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery
+ 1030              	.LVL134:
+ 302:sign.c        **** 
+ 303:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub(&w1, &w1, &t1);
+ 1031              		.loc 1 303 5 view .LVU256
+ 1032 00ee 0DF51E51 		add	r1, sp, #10112
+ 1033 00f2 3031     		adds	r1, r1, #48
+ 1034 00f4 0DF5BD52 		add	r2, sp, #6048
+ 1035 00f8 0846     		mov	r0, r1
+ 1036 00fa 1032     		adds	r2, r2, #16
+ 1037 00fc FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub
+ 1038              	.LVL135:
+ 304:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce(&w1);
+ 1039              		.loc 1 304 5 view .LVU257
+ 1040 0100 0DF51E50 		add	r0, sp, #10112
+ 1041 0104 3030     		adds	r0, r0, #48
+ 1042 0106 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+ 1043              	.LVL136:
+ 305:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont(&w1);
+ 1044              		.loc 1 305 5 view .LVU258
+ 1045 010a 0DF51E50 		add	r0, sp, #10112
+ 1046 010e 3030     		adds	r0, r0, #48
+ 1047 0110 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+ 1048              	.LVL137:
+ 306:sign.c        **** 
+ 307:sign.c        ****     /* Reconstruct w1 */
+ 308:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq(&w1);
+ 1049              		.loc 1 308 5 view .LVU259
+ 1050 0114 0DF51E50 		add	r0, sp, #10112
+ 1051 0118 3030     		adds	r0, r0, #48
+ 1052 011a FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq
+ 1053              	.LVL138:
+ 309:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint(&w1, &w1, &h);
+ 1054              		.loc 1 309 5 view .LVU260
+ 1055 011e 0DF51E51 		add	r1, sp, #10112
+ 1056 0122 3031     		adds	r1, r1, #48
+ 1057 0124 0DF55E52 		add	r2, sp, #14208
+ 1058 0128 3032     		adds	r2, r2, #48
+ 1059 012a 0846     		mov	r0, r1
+ 1060 012c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint
+ 1061              	.LVL139:
+ 310:sign.c        ****     PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1(buf, &w1);
+ 1062              		.loc 1 310 5 view .LVU261
+ 1063 0130 0DF51E51 		add	r1, sp, #10112
+ 1064 0134 3031     		adds	r1, r1, #48
+ 1065 0136 2CA8     		add	r0, sp, #176
+ 1066 0138 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1
+ 1067              	.LVL140:
+ 311:sign.c        **** 
+ 312:sign.c        ****     /* Call random oracle and verify PQCLEAN_DILITHIUM2_CLEAN_challenge */
+ 313:sign.c        ****     shake256_inc_init(&state);
+ 1068              		.loc 1 313 5 view .LVU262
+ 1069 013c 03A8     		add	r0, sp, #12
+ 1070 013e FFF7FEFF 		bl	shake256_inc_init
+ 1071              	.LVL141:
+ 314:sign.c        ****     shake256_inc_absorb(&state, mu, CRHBYTES);
+ 1072              		.loc 1 314 5 view .LVU263
+ 1073 0142 4022     		movs	r2, #64
+ 1074 0144 1CA9     		add	r1, sp, #112
+ 1075 0146 03A8     		add	r0, sp, #12
+ 1076 0148 FFF7FEFF 		bl	shake256_inc_absorb
+ 1077              	.LVL142:
+ 315:sign.c        ****     shake256_inc_absorb(&state, buf, K * POLYW1_PACKEDBYTES);
+ 1078              		.loc 1 315 5 view .LVU264
+ 1079 014c 4FF44072 		mov	r2, #768
+ 1080 0150 2CA9     		add	r1, sp, #176
+ 1081 0152 03A8     		add	r0, sp, #12
+ 1082 0154 FFF7FEFF 		bl	shake256_inc_absorb
+ 1083              	.LVL143:
+ 316:sign.c        ****     shake256_inc_finalize(&state);
+ 1084              		.loc 1 316 5 view .LVU265
+ 1085 0158 03A8     		add	r0, sp, #12
+ 1086 015a FFF7FEFF 		bl	shake256_inc_finalize
+ 1087              	.LVL144:
+ 317:sign.c        ****     shake256_inc_squeeze(c2, CTILDEBYTES, &state);
+ 1088              		.loc 1 317 5 view .LVU266
+ 1089 015e 14AB     		add	r3, sp, #80
+ 1090 0160 1846     		mov	r0, r3
+ 1091 0162 03AA     		add	r2, sp, #12
+ 1092 0164 2021     		movs	r1, #32
+ 1093 0166 0193     		str	r3, [sp, #4]
+ 1094 0168 FFF7FEFF 		bl	shake256_inc_squeeze
+ 1095              	.LVL145:
+ 318:sign.c        ****     shake256_inc_ctx_release(&state);
+ 1096              		.loc 1 318 5 view .LVU267
+ 1097 016c 03A8     		add	r0, sp, #12
+ 1098 016e FFF7FEFF 		bl	shake256_inc_ctx_release
+ 1099              	.LVL146:
+ 319:sign.c        ****     for (i = 0; i < CTILDEBYTES; ++i) {
+ 1100              		.loc 1 319 5 view .LVU268
+ 1101              		.loc 1 319 17 view .LVU269
+ 1102 0172 019A     		ldr	r2, [sp, #4]
+ 1103 0174 0CAB     		add	r3, sp, #48
+ 1104              		.loc 1 319 12 is_stmt 0 view .LVU270
+ 1105 0176 2146     		mov	r1, r4
+ 1106              	.LVL147:
+ 1107              	.L25:
+ 320:sign.c        ****         if (c[i] != c2[i]) {
+ 1108              		.loc 1 320 9 is_stmt 1 view .LVU271
+ 1109              		.loc 1 320 14 is_stmt 0 view .LVU272
+ 1110 0178 13F8015B 		ldrb	r5, [r3], #1	@ zero_extendqisi2
+ 1111              		.loc 1 320 23 view .LVU273
+ 1112 017c 12F8010B 		ldrb	r0, [r2], #1	@ zero_extendqisi2
+ 1113              		.loc 1 320 12 view .LVU274
+ 1114 0180 8542     		cmp	r5, r0
+ 1115 0182 07D1     		bne	.L24
+ 319:sign.c        ****     for (i = 0; i < CTILDEBYTES; ++i) {
+ 1116              		.loc 1 319 34 is_stmt 1 discriminator 2 view .LVU275
+ 1117 0184 0131     		adds	r1, r1, #1
+ 1118              	.LVL148:
+ 319:sign.c        ****     for (i = 0; i < CTILDEBYTES; ++i) {
+ 1119              		.loc 1 319 17 discriminator 2 view .LVU276
+ 319:sign.c        ****     for (i = 0; i < CTILDEBYTES; ++i) {
+ 1120              		.loc 1 319 5 is_stmt 0 discriminator 2 view .LVU277
+ 1121 0186 2029     		cmp	r1, #32
+ 1122 0188 F6D1     		bne	.L25
+ 1123              	.LVL149:
+ 1124              	.L23:
+ 321:sign.c        ****             return -1;
+ 322:sign.c        ****         }
+ 323:sign.c        ****     }
+ 324:sign.c        ****     return 0;
+ 325:sign.c        **** }
+ 1125              		.loc 1 325 1 view .LVU278
+ 1126 018a 2046     		mov	r0, r4
+ 1127 018c 0DF5074D 		add	sp, sp, #34560
+ 1128 0190 2DB0     		add	sp, sp, #180
+ 1129              	.LCFI15:
+ 1130              		.cfi_remember_state
+ 1131              		.cfi_def_cfa_offset 20
+ 1132              		@ sp needed
+ 1133 0192 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1134              	.LVL150:
+ 1135              	.L24:
+ 1136              	.LCFI16:
+ 1137              		.cfi_restore_state
+ 271:sign.c        ****     }
+ 1138              		.loc 1 271 16 view .LVU279
+ 1139 0194 4FF0FF34 		mov	r4, #-1
+ 1140 0198 F7E7     		b	.L23
+ 1141              	.L29:
+ 1142 019a 00BF     		.align	2
+ 1143              	.L28:
+ 1144 019c B2FF0100 		.word	130994
+ 1145              		.cfi_endproc
+ 1146              	.LFE3:
+ 1148              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_open,"ax",%progbits
+ 1149              		.align	1
+ 1150              		.global	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_open
+ 1151              		.syntax unified
+ 1152              		.thumb
+ 1153              		.thumb_func
+ 1154              		.fpu softvfp
+ 1156              	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_open:
+ 1157              	.LVL151:
+ 1158              	.LFB4:
+ 326:sign.c        **** 
+ 327:sign.c        **** /*************************************************
+ 328:sign.c        **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_open
+ 329:sign.c        **** *
+ 330:sign.c        **** * Description: Verify signed message.
+ 331:sign.c        **** *
+ 332:sign.c        **** * Arguments:   - uint8_t *m: pointer to output message (allocated
+ 333:sign.c        **** *                            array with smlen bytes), can be equal to sm
+ 334:sign.c        **** *              - size_t *mlen: pointer to output length of message
+ 335:sign.c        **** *              - const uint8_t *sm: pointer to signed message
+ 336:sign.c        **** *              - size_t smlen: length of signed message
+ 337:sign.c        **** *              - const uint8_t *pk: pointer to bit-packed public key
+ 338:sign.c        **** *
+ 339:sign.c        **** * Returns 0 if signed message could be verified correctly and -1 otherwise
+ 340:sign.c        **** **************************************************/
+ 341:sign.c        **** int PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_open(uint8_t *m,
+ 342:sign.c        ****         size_t *mlen,
+ 343:sign.c        ****         const uint8_t *sm,
+ 344:sign.c        ****         size_t smlen,
+ 345:sign.c        ****         const uint8_t *pk,uint8_t *p) {
+ 1159              		.loc 1 345 39 is_stmt 1 view -0
+ 1160              		.cfi_startproc
+ 1161              		@ args = 8, pretend = 0, frame = 0
+ 1162              		@ frame_needed = 0, uses_anonymous_args = 0
+ 346:sign.c        ****     size_t i;
+ 1163              		.loc 1 346 5 view .LVU281
+ 347:sign.c        **** 
+ 348:sign.c        ****     if (smlen < PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES) {
+ 1164              		.loc 1 348 5 view .LVU282
+ 345:sign.c        ****     size_t i;
+ 1165              		.loc 1 345 39 is_stmt 0 view .LVU283
+ 1166 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 1167              	.LCFI17:
+ 1168              		.cfi_def_cfa_offset 32
+ 1169              		.cfi_offset 4, -20
+ 1170              		.cfi_offset 5, -16
+ 1171              		.cfi_offset 6, -12
+ 1172              		.cfi_offset 7, -8
+ 1173              		.cfi_offset 14, -4
+ 345:sign.c        ****     size_t i;
+ 1174              		.loc 1 345 39 view .LVU284
+ 1175 0002 1D46     		mov	r5, r3
+ 1176              		.loc 1 348 8 view .LVU285
+ 1177 0004 40F67313 		movw	r3, #2419
+ 1178              	.LVL152:
+ 1179              		.loc 1 348 8 view .LVU286
+ 1180 0008 9D42     		cmp	r5, r3
+ 345:sign.c        ****     size_t i;
+ 1181              		.loc 1 345 39 view .LVU287
+ 1182 000a 0746     		mov	r7, r0
+ 1183 000c 0E46     		mov	r6, r1
+ 1184 000e 1446     		mov	r4, r2
+ 1185              		.loc 1 348 8 view .LVU288
+ 1186 0010 1BD9     		bls	.L31
+ 349:sign.c        ****         goto badsig;
+ 350:sign.c        ****     }
+ 351:sign.c        **** 
+ 352:sign.c        ****     *mlen = smlen - PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES;
+ 1187              		.loc 1 352 5 is_stmt 1 view .LVU289
+ 353:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify(sm, PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES, sm +
+ 1188              		.loc 1 353 9 is_stmt 0 view .LVU290
+ 1189 0012 099A     		ldr	r2, [sp, #36]
+ 1190              	.LVL153:
+ 352:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify(sm, PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES, sm +
+ 1191              		.loc 1 352 19 view .LVU291
+ 1192 0014 A5F67413 		subw	r3, r5, #2420
+ 352:sign.c        ****     if (PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify(sm, PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES, sm +
+ 1193              		.loc 1 352 11 view .LVU292
+ 1194 0018 0B60     		str	r3, [r1]
+ 1195              		.loc 1 353 5 is_stmt 1 view .LVU293
+ 1196              		.loc 1 353 9 is_stmt 0 view .LVU294
+ 1197 001a 0192     		str	r2, [sp, #4]
+ 1198 001c 089A     		ldr	r2, [sp, #32]
+ 1199 001e 0092     		str	r2, [sp]
+ 1200 0020 40F67411 		movw	r1, #2420
+ 1201              	.LVL154:
+ 1202              		.loc 1 353 9 view .LVU295
+ 1203 0024 04F67412 		addw	r2, r4, #2420
+ 1204 0028 2046     		mov	r0, r4
+ 1205              	.LVL155:
+ 1206              		.loc 1 353 9 view .LVU296
+ 1207 002a FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify
+ 1208              	.LVL156:
+ 1209              		.loc 1 353 8 view .LVU297
+ 1210 002e 60B9     		cbnz	r0, .L31
+ 1211 0030 04F67314 		addw	r4, r4, #2419
+ 1212              	.LVL157:
+ 354:sign.c        ****         goto badsig;
+ 355:sign.c        ****     } else {
+ 356:sign.c        ****         /* All good, copy msg, return 0 */
+ 357:sign.c        ****         for (i = 0; i < *mlen; ++i) {
+ 1213              		.loc 1 357 16 view .LVU298
+ 1214 0034 0346     		mov	r3, r0
+ 1215              	.LVL158:
+ 1216              	.L32:
+ 1217              		.loc 1 357 21 is_stmt 1 discriminator 1 view .LVU299
+ 1218              		.loc 1 357 9 is_stmt 0 discriminator 1 view .LVU300
+ 1219 0036 3268     		ldr	r2, [r6]
+ 1220 0038 9A42     		cmp	r2, r3
+ 1221 003a 01D8     		bhi	.L33
+ 1222              	.LVL159:
+ 1223              	.L30:
+ 358:sign.c        ****             m[i] = sm[PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + i];
+ 359:sign.c        ****         }
+ 360:sign.c        ****         return 0;
+ 361:sign.c        ****     }
+ 362:sign.c        **** 
+ 363:sign.c        **** badsig:
+ 364:sign.c        ****     /* Signature verification failed */
+ 365:sign.c        ****     *mlen = (size_t) -1;
+ 366:sign.c        ****     for (i = 0; i < smlen; ++i) {
+ 367:sign.c        ****         m[i] = 0;
+ 368:sign.c        ****     }
+ 369:sign.c        **** 
+ 370:sign.c        ****     return -1;
+ 371:sign.c        **** }
+ 1224              		.loc 1 371 1 view .LVU301
+ 1225 003c 03B0     		add	sp, sp, #12
+ 1226              	.LCFI18:
+ 1227              		.cfi_remember_state
+ 1228              		.cfi_def_cfa_offset 20
+ 1229              		@ sp needed
+ 1230 003e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1231              	.LVL160:
+ 1232              	.L33:
+ 1233              	.LCFI19:
+ 1234              		.cfi_restore_state
+ 358:sign.c        ****             m[i] = sm[PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + i];
+ 1235              		.loc 1 358 13 is_stmt 1 discriminator 3 view .LVU302
+ 358:sign.c        ****             m[i] = sm[PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + i];
+ 1236              		.loc 1 358 22 is_stmt 0 discriminator 3 view .LVU303
+ 1237 0040 14F8012F 		ldrb	r2, [r4, #1]!	@ zero_extendqisi2
+ 358:sign.c        ****             m[i] = sm[PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + i];
+ 1238              		.loc 1 358 18 discriminator 3 view .LVU304
+ 1239 0044 FA54     		strb	r2, [r7, r3]
+ 357:sign.c        ****             m[i] = sm[PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + i];
+ 1240              		.loc 1 357 32 is_stmt 1 discriminator 3 view .LVU305
+ 1241 0046 0133     		adds	r3, r3, #1
+ 1242              	.LVL161:
+ 357:sign.c        ****             m[i] = sm[PQCLEAN_DILITHIUM2_CLEAN_CRYPTO_BYTES + i];
+ 1243              		.loc 1 357 32 is_stmt 0 discriminator 3 view .LVU306
+ 1244 0048 F5E7     		b	.L32
+ 1245              	.LVL162:
+ 1246              	.L31:
+ 1247              	.LDL1:
+ 365:sign.c        ****     for (i = 0; i < smlen; ++i) {
+ 1248              		.loc 1 365 5 is_stmt 1 view .LVU307
+ 365:sign.c        ****     for (i = 0; i < smlen; ++i) {
+ 1249              		.loc 1 365 11 is_stmt 0 view .LVU308
+ 1250 004a 4FF0FF34 		mov	r4, #-1
+ 1251              	.LVL163:
+ 365:sign.c        ****     for (i = 0; i < smlen; ++i) {
+ 1252              		.loc 1 365 11 view .LVU309
+ 1253 004e 3460     		str	r4, [r6]
+ 366:sign.c        ****         m[i] = 0;
+ 1254              		.loc 1 366 5 is_stmt 1 view .LVU310
+ 1255              	.LVL164:
+ 367:sign.c        ****     }
+ 1256              		.loc 1 367 14 is_stmt 0 view .LVU311
+ 1257 0050 2A46     		mov	r2, r5
+ 1258 0052 0021     		movs	r1, #0
+ 1259 0054 3846     		mov	r0, r7
+ 1260 0056 FFF7FEFF 		bl	memset
+ 1261              	.LVL165:
+ 370:sign.c        **** }
+ 1262              		.loc 1 370 12 view .LVU312
+ 1263 005a 2046     		mov	r0, r4
+ 1264              	.LVL166:
+ 370:sign.c        **** }
+ 1265              		.loc 1 370 12 view .LVU313
+ 1266 005c EEE7     		b	.L30
+ 1267              		.cfi_endproc
+ 1268              	.LFE4:
+ 1270              		.text
+ 1271              	.Letext0:
+ 1272              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\lib\\gcc\\arm-none-eabi\\
+ 1273              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 1274              		.file 4 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 1275              		.file 5 "fips202.h"
+ 1276              		.file 6 "poly.h"
+ 1277              		.file 7 "polyvec.h"
+ 1278              		.file 8 "packing.h"
+ 1279              		.file 9 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:00000000 sign.c
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:24     .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:32     .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair:00000000 PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:300    .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_keypair:00000158 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:305    .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:312    .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature:00000000 PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:767    .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_signature:000002c0 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:773    .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:780    .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign:00000000 PQCLEAN_DILITHIUM2_CLEAN_crypto_sign
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:858    .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:865    .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify:00000000 PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:1144   .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_verify:0000019c $d
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:1149   .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_open:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccoTPpW6.s:1156   .text.PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_open:00000000 PQCLEAN_DILITHIUM2_CLEAN_crypto_sign_open
+
+UNDEFINED SYMBOLS
+memcpy
+shake256
+PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand
+PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta
+PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt
+PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_add
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round
+PQCLEAN_DILITHIUM2_CLEAN_pack_pk
+PQCLEAN_DILITHIUM2_CLEAN_pack_sk
+PQCLEAN_DILITHIUM2_CLEAN_unpack_sk
+shake256_inc_init
+shake256_inc_absorb
+shake256_inc_finalize
+shake256_inc_squeeze
+shake256_inc_ctx_release
+memset
+trigger_high
+trigger_low
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt
+PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1
+PQCLEAN_DILITHIUM2_CLEAN_poly_challenge
+PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery
+PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont
+PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add
+PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce
+PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint
+PQCLEAN_DILITHIUM2_CLEAN_pack_sig
+PQCLEAN_DILITHIUM2_CLEAN_unpack_pk
+PQCLEAN_DILITHIUM2_CLEAN_unpack_sig
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl
+PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint

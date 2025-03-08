@@ -1,0 +1,615 @@
+   1              	# 1 "ntt.S"
+   1              	// based on code by: Markus Krausz (18.03.18)
+   0              	
+   0              	
+   2              	// date 23.07.21: Now licensed under CC0 with permission of the authors.
+   3              	
+   4              	.syntax unified
+   5              	#include "macros.i"
+   1              	#ifndef MACROS_I
+   2              	#define MACROS_I
+   3              	// 3
+   4              	.macro montgomery_mul_32 a, b, Qprime, Q, tmp, tmp2
+   5              	    smull \tmp, \a, \a, \b
+   6              	    mul \tmp2, \tmp, \Qprime
+   7              	    smlal \tmp, \a, \tmp2, \Q
+   8              	.endm
+   9              	
+  10              	// 2
+  11              	.macro addSub1 c0, c1
+  12              	    add.w \c0, \c1
+  13              	    sub.w \c1, \c0, \c1, lsl #1
+  14              	.endm
+  15              	
+  16              	// 3
+  17              	.macro addSub2 c0, c1, c2, c3
+  18              	    add \c0, \c1
+  19              	    add \c2, \c3
+  20              	    sub.w \c1, \c0, \c1, lsl #1
+  21              	    sub.w \c3, \c2, \c3, lsl #1
+  22              	.endm
+  23              	
+  24              	// 6
+  25              	.macro addSub4 c0, c1, c2, c3, c4, c5, c6, c7
+  26              	    add \c0, \c1
+  27              	    add \c2, \c3
+  28              	    add \c4, \c5
+  29              	    add \c6, \c7
+  30              	    sub.w \c1, \c0, \c1, lsl #1
+  31              	    sub.w \c3, \c2, \c3, lsl #1
+  32              	    sub.w \c5, \c4, \c5, lsl #1
+  33              	    sub.w \c7, \c6, \c7, lsl #1
+  34              	.endm
+  35              	
+  36              	.macro _2_layer_CT_32 c0, c1, c2, c3, zeta0, zeta1, zeta2, Qprime, Q, tmp, tmp2
+  37              	    montgomery_mul_32 \c2, \zeta0, \Qprime, \Q, \tmp, \tmp2
+  38              	    montgomery_mul_32 \c3, \zeta0, \Qprime, \Q, \tmp, \tmp2
+  39              	    addSub2 \c0, \c2, \c1, \c3
+  40              	
+  41              	    montgomery_mul_32 \c1, \zeta1, \Qprime, \Q, \tmp, \tmp2
+  42              	    montgomery_mul_32 \c3, \zeta2, \Qprime, \Q, \tmp, \tmp2
+  43              	    addSub2 \c0, \c1, \c2, \c3
+  44              	.endm
+  45              	
+  46              	.macro _2_layer_inv_CT_32 c0, c1, c2, c3, zeta0, zeta1, zeta2, Qprime, Q, tmp, tmp2
+  47              	    montgomery_mul_32 \c1, \zeta0, \Qprime, \Q, \tmp, \tmp2
+  48              	    montgomery_mul_32 \c3, \zeta0, \Qprime, \Q, \tmp, \tmp2
+  49              	    addSub2 \c0, \c1, \c2, \c3
+  50              	
+  51              	    montgomery_mul_32 \c2, \zeta1, \Qprime, \Q, \tmp, \tmp2
+  52              	    montgomery_mul_32 \c3, \zeta2, \Qprime, \Q, \tmp, \tmp2
+  53              	    addSub2 \c0, \c2, \c1, \c3
+  54              	.endm
+  55              	
+  56              	.macro _3_layer_CT_32 c0, c1, c2, c3, c4, c5, c6, c7, xi0, xi1, xi2, xi3, xi4, xi5, xi6, twiddle, Q
+  57              	    vmov.w \twiddle, \xi0
+  58              	    montgomery_mul_32 \c4, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  59              	    montgomery_mul_32 \c5, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  60              	    montgomery_mul_32 \c6, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  61              	    montgomery_mul_32 \c7, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  62              	    addSub4 \c0, \c4, \c1, \c5, \c2, \c6, \c3, \c7
+  63              	
+  64              	    vmov.w \twiddle, \xi1
+  65              	    montgomery_mul_32 \c2, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  66              	    montgomery_mul_32 \c3, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  67              	    vmov.w \twiddle, \xi2
+  68              	    montgomery_mul_32 \c6, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  69              	    montgomery_mul_32 \c7, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  70              	    addSub4 \c0, \c2, \c1, \c3, \c4, \c6, \c5, \c7
+  71              	
+  72              	    vmov.w \twiddle, \xi3
+  73              	    montgomery_mul_32 \c1, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  74              	    vmov.w \twiddle, \xi4
+  75              	    montgomery_mul_32 \c3, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  76              	    vmov.w \twiddle, \xi5
+  77              	    montgomery_mul_32 \c5, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  78              	    vmov.w \twiddle, \xi6
+  79              	    montgomery_mul_32 \c7, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  80              	    addSub4 \c0, \c1, \c2, \c3, \c4, \c5, \c6, \c7
+  81              	.endm
+  82              	
+  83              	.macro _3_layer_inv_CT_32 c0, c1, c2, c3, c4, c5, c6, c7, xi0, xi1, xi2, xi3, xi4, xi5, xi6, twiddl
+  84              	    vmov.w \twiddle, \xi0
+  85              	    montgomery_mul_32 \c1, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  86              	    montgomery_mul_32 \c3, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  87              	    montgomery_mul_32 \c5, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  88              	    montgomery_mul_32 \c7, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  89              	    addSub4 \c0, \c1, \c2, \c3, \c4, \c5, \c6, \c7
+  90              	
+  91              	    vmov.w \twiddle, \xi1
+  92              	    montgomery_mul_32 \c2, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  93              	    montgomery_mul_32 \c6, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  94              	    vmov.w \twiddle, \xi2
+  95              	    montgomery_mul_32 \c3, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  96              	    montgomery_mul_32 \c7, \twiddle, \Qprime, \Q, \tmp, \tmp2
+  97              	    addSub4 \c0, \c2, \c1, \c3, \c4, \c6, \c5, \c7
+  98              	
+  99              	    vmov.w \twiddle, \xi3
+ 100              	    montgomery_mul_32 \c4, \twiddle, \Qprime, \Q, \tmp, \tmp2
+ 101              	    vmov.w \twiddle, \xi4
+ 102              	    montgomery_mul_32 \c5, \twiddle, \Qprime, \Q, \tmp, \tmp2
+ 103              	    vmov.w \twiddle, \xi5
+ 104              	    montgomery_mul_32 \c6, \twiddle, \Qprime, \Q, \tmp, \tmp2
+ 105              	    vmov.w \twiddle, \xi6
+ 106              	    montgomery_mul_32 \c7, \twiddle, \Qprime, \Q, \tmp, \tmp2
+ 107              	    addSub4 \c0, \c4, \c1, \c5, \c2, \c6, \c3, \c7
+ 108              	.endm
+ 109              	
+ 110              	/************************************************************
+ 111              	* Name:         _3_layer_inv_butterfly_light_fast_first
+ 112              	*
+ 113              	* Description:  upper half of 3-layer inverse butterfly
+ 114              	*               defined over X^8 - 1
+ 115              	*
+ 116              	* Input:        (c4, c1, c6, c3) = coefficients on the upper half;
+ 117              	*               (xi0, xi1, xi2, xi3, xi4, xi5, xi6) =
+ 118              	*               (  1,  1,  w_4,   1, w_8, w_4, w_8^3) in
+ 119              	*               Montgomery domain
+ 120              	*
+ 121              	* Symbols:      R = 2^32
+ 122              	*
+ 123              	* Constants:    Qprime = -MOD^{-1} mod^{+-} R, Q = MOD
+ 124              	*
+ 125              	* Output:
+ 126              	*               c4 =  c4 + c1        + (c6 + c3)
+ 127              	*               c5 = (c4 - c1) w_4   + (c6 + c3) w_8^3
+ 128              	*               c6 =  c4 + c1        - (c6 + c3)
+ 129              	*               c7 = (c4 - c1) w_8^3 + (c6 + c3) w_4
+ 130              	************************************************************/
+ 131              	// 15
+ 132              	.macro _3_layer_inv_butterfly_light_fast_first c0, c1, c2, c3, c4, c5, c6, c7, xi0, xi1, xi2, xi3, 
+ 133              	    addSub2 \c4, \c1, \c6, \c3
+ 134              	    addSub1 \c4, \c6
+ 135              	
+ 136              	    vmov.w \tmp, \xi4
+ 137              	    vmov.w \tmp2, \xi6
+ 138              	
+ 139              	    smull.w \c0, \c5, \c1, \tmp
+ 140              	    smlal.w \c0, \c5, \c3, \tmp2
+ 141              	    mul.w \twiddle, \c0, \Qprime
+ 142              	    smlal.w \c0, \c5, \twiddle, \Q
+ 143              	
+ 144              	    smull.w \c2, \c7, \c1, \tmp2
+ 145              	    smlal.w \c2, \c7, \c3, \tmp
+ 146              	    mul.w \twiddle, \c2, \Qprime
+ 147              	    smlal.w \c2, \c7, \twiddle, \Q
+ 148              	.endm
+ 149              	
+ 150              	/************************************************************
+ 151              	* Name:         _3_layer_inv_butterfly_light_fast_second
+ 152              	*
+ 153              	* Description:  lower half of 3-layer inverse butterfly
+ 154              	*               defined over X^8 - 1, and the 2nd
+ 155              	*               layer of butterflies
+ 156              	*
+ 157              	* Input:
+ 158              	*               (c4, c5, c6, c7) = results of the upper half;
+ 159              	*               (c0, c1, c2, c3) = coefficients on the lower half;
+ 160              	*               (xi0, xi1, xi2, xi3, xi4, xi5, xi6) =
+ 161              	*               (  1,  1,  w_4,   1, w_8, w_4, w_8^3) in
+ 162              	*               Montgomery domain
+ 163              	*
+ 164              	* Symbols:      R = 2^32
+ 165              	*
+ 166              	* Constants:    Qprime = -MOD^{-1} mod^{+-} R, Q = MOD
+ 167              	*
+ 168              	* Output:       (normal order)
+ 169              	*               c0 =   c0 + c1     + (c2 + c3)         + (  c4 + c5     + (c6 + c7)       )
+ 170              	*               c1 =  (c0 - c1) w3 + (c2 - c3)  w4     + ( (c4 - c5) w5 + (c6 - c7) w6    )
+ 171              	*               c2 = ( c0 + c1     - (c2 + c3)) w1     + (( c4 + c5     - (c6 + c7)   ) w2)
+ 172              	*               c3 = ((c0 - c1) w3 - (c2 - c3)  w4) w1 + (((c4 - c5) w5 - (c6 - c7) w6) w2)
+ 173              	*               c4 =   c0 + c1     - (c2 + c3)         - (  c4 + c5     + (c6 + c7)       ) w0
+ 174              	*               c5 =  (c0 - c1) w3 + (c2 - c3)  w4     - ( (c4 - c5) w5 + (c6 - c7) w6    ) w0
+ 175              	*               c6 = ( c0 + c1     - (c2 + c3)) w1     - (( c4 + c5     - (c6 + c7)   ) w2) w0
+ 176              	*               c7 = ((c0 - c1) w3 - (c2 - c3)  w4) w1 - (((c4 - c5) w5 - (c6 - c7) w6) w2) w0
+ 177              	************************************************************/
+ 178              	// 19
+ 179              	.macro _3_layer_inv_butterfly_light_fast_second c0, c1, c2, c3, c4, c5, c6, c7, xi0, xi1, xi2, xi3,
+ 180              	    addSub2 \c0, \c1, \c2, \c3
+ 181              	
+ 182              	    vmov.w \twiddle, \xi2
+ 183              	    montgomery_mul_32 \c3, \twiddle, \Qprime, \Q, \tmp, \tmp2
+ 184              	    addSub2 \c0, \c2, \c1, \c3
+ 185              	
+ 186              	    montgomery_mul_32 \c6, \twiddle, \Qprime, \Q, \tmp, \tmp2
+ 187              	
+ 188              	    addSub4 \c0, \c4, \c1, \c5, \c2, \c6, \c3, \c7
+ 189              	.endm
+ 190              	
+   6              	
+   7              	// This code uses UMULL - which is constant time on the M4, but not on the M3
+   8              	// Make sure that this code is never used on an M3
+   9:ntt.S         **** smlad r0,r0,r0,r0
+  10              	
+  11              	// ##############################
+  12              	// ##########   NTT    ##########
+  13              	// ##############################
+  14              	
+  15              	//void pqcrystals_dilithium_ntt(int32_t p[N]);
+  16              	.global pqcrystals_dilithium_ntt
+  18              	.align 2
+  19              	pqcrystals_dilithium_ntt:
+  20              	  //bind aliases
+  21:ntt.S         ****   ptr_p     .req R0
+  22:ntt.S         ****   ptr_zeta  .req R1
+  23:ntt.S         ****   zeta      .req R1
+  24:ntt.S         ****   qinv      .req R2
+  25:ntt.S         ****   q         .req R3
+  26:ntt.S         ****   cntr      .req R4
+  27:ntt.S         ****   pol4      .req R4
+  28:ntt.S         ****   pol0      .req R5
+  29:ntt.S         ****   pol1      .req R6
+  30:ntt.S         ****   pol2      .req R7
+  31:ntt.S         ****   pol3      .req R8
+  32:ntt.S         ****   temp_h    .req R9
+  33:ntt.S         ****   temp_l    .req R10
+  34:ntt.S         ****   zeta0     .req R11
+  35:ntt.S         ****   zeta1     .req R12
+  36:ntt.S         ****   zeta2     .req R14
+  37:ntt.S         ****   pol5     .req R11
+  38:ntt.S         ****   pol6     .req R12
+  39:ntt.S         ****   pol7     .req R14
+  40              	
+  41              	  //preserve registers
+  42:ntt.S         ****   push {R4-R11, R14}
+  43              	  
+  44              	  //load constants, ptr
+  45:ntt.S         ****   ldr.w qinv, inv_ntt_asm_smull_qinv  //-qinv_signed
+  46:ntt.S         ****   ldr.w q, inv_ntt_asm_smull_q
+  47              	
+  48              	  //stage 1 - 3
+  49              	  .equ distance, 512
+  50              	  .equ strincr, 4
+  51              	  
+  52:ntt.S         ****   ldr ptr_zeta, =#zetas_new332
+  53:ntt.S         ****   vldm ptr_zeta!, {s2-s8} 
+  54:ntt.S         ****   vmov s0, ptr_zeta
+  55              	  
+  56:ntt.S         ****   add.w temp_l, ptr_p, #32*strincr // 32 iterations
+  57:ntt.S         ****   vmov s9, temp_l
+  58              	  1:
+  59              	    .rept 2
+  60:ntt.S         ****     ldr.w pol0, [ptr_p]
+  61:ntt.S         ****     ldr.w pol1, [ptr_p, #1*distance/4]
+  62:ntt.S         ****     ldr.w pol2, [ptr_p, #2*distance/4]
+  63:ntt.S         ****     ldr.w pol3, [ptr_p, #3*distance/4]
+  64:ntt.S         ****     ldr.w pol4, [ptr_p, #4*distance/4]
+  65:ntt.S         ****     ldr.w pol5, [ptr_p, #5*distance/4]
+  66:ntt.S         ****     ldr.w pol6, [ptr_p, #6*distance/4]
+  67:ntt.S         ****     ldr.w pol7, [ptr_p, #7*distance/4]
+  68:ntt.S         **** 
+  69:ntt.S         ****     _3_layer_CT_32 pol0, pol1, pol2, pol3, pol4, pol5, pol6, pol7, s2, s3, s4, s5, s6, s7, s8, zeta
+  70:ntt.S         **** 
+  71:ntt.S         ****     str.w pol1, [ptr_p, #1*distance/4]
+  72:ntt.S         ****     str.w pol2, [ptr_p, #2*distance/4]
+  73:ntt.S         ****     str.w pol3, [ptr_p, #3*distance/4]
+  74:ntt.S         ****     str.w pol4, [ptr_p, #4*distance/4]
+  75:ntt.S         ****     str.w pol5, [ptr_p, #5*distance/4]
+  76:ntt.S         ****     str.w pol6, [ptr_p, #6*distance/4]
+  77:ntt.S         ****     str.w pol7, [ptr_p, #7*distance/4]
+  78:ntt.S         ****     str.w pol0, [ptr_p], #strincr
+  79:ntt.S         ****     .endr
+  80:ntt.S         ****     vmov temp_l, s9
+  81:ntt.S         ****     cmp.w ptr_p, temp_l
+  82:ntt.S         ****     bne 1b
+  83              	  
+  84:ntt.S         ****   sub ptr_p, #32*4
+  85              	
+  86              	  // stage 4 - 6  
+  87              	  .equ distance, 64
+  88:ntt.S         ****   add.w temp_l, ptr_p, #8*112+8*4*4 // 8 iterations
+  89:ntt.S         ****   vmov s9, temp_l
+  90              	  1:
+  91:ntt.S         ****     add.w temp_l, ptr_p, #4*strincr // 4 iterations
+  92:ntt.S         ****     vmov s10, temp_l
+  93:ntt.S         ****     vmov ptr_zeta, s0
+  94:ntt.S         ****     vldm ptr_zeta!, {s2-s8}
+  95:ntt.S         ****     vmov s0, ptr_zeta
+  96              	    2:
+  97              	      .rept 2
+  98:ntt.S         ****       ldr.w pol0, [ptr_p]
+  99:ntt.S         ****       ldr.w pol1, [ptr_p, #1*distance/4]
+ 100:ntt.S         ****       ldr.w pol2, [ptr_p, #2*distance/4]
+ 101:ntt.S         ****       ldr.w pol3, [ptr_p, #3*distance/4]
+ 102:ntt.S         ****       ldr.w pol4, [ptr_p, #4*distance/4]
+ 103:ntt.S         ****       ldr.w pol5, [ptr_p, #5*distance/4]
+ 104:ntt.S         ****       ldr.w pol6, [ptr_p, #6*distance/4]
+ 105:ntt.S         ****       ldr.w pol7, [ptr_p, #7*distance/4]
+ 106:ntt.S         **** 
+ 107:ntt.S         ****       _3_layer_CT_32 pol0, pol1, pol2, pol3, pol4, pol5, pol6, pol7, s2, s3, s4, s5, s6, s7, s8, ze
+ 108:ntt.S         ****       
+ 109:ntt.S         ****       str.w pol1, [ptr_p, #1*distance/4]
+ 110:ntt.S         ****       str.w pol2, [ptr_p, #2*distance/4]
+ 111:ntt.S         ****       str.w pol3, [ptr_p, #3*distance/4]
+ 112:ntt.S         ****       str.w pol4, [ptr_p, #4*distance/4]
+ 113:ntt.S         ****       str.w pol5, [ptr_p, #5*distance/4]
+ 114:ntt.S         ****       str.w pol6, [ptr_p, #6*distance/4]
+ 115:ntt.S         ****       str.w pol7, [ptr_p, #7*distance/4]
+ 116:ntt.S         ****       str.w pol0, [ptr_p], #4
+ 117:ntt.S         ****       .endr
+ 118:ntt.S         ****       vmov temp_l, s10
+ 119:ntt.S         ****       cmp.w ptr_p, temp_l
+ 120:ntt.S         ****       bne 2b
+ 121              	
+ 122:ntt.S         ****     add.w ptr_p, #112
+ 123:ntt.S         ****     vmov temp_l, s9
+ 124:ntt.S         ****     cmp.w ptr_p, temp_l
+ 125:ntt.S         ****     bne 1b
+ 126              	  
+ 127:ntt.S         ****     sub ptr_p, #4*4*8+112*8
+ 128:ntt.S         ****     vmov ptr_zeta, s0
+ 129              	    //stage 7 and 8
+ 130:ntt.S         ****     add cntr, ptr_p, #1024 // 64 iterations
+ 131              	    1:
+ 132:ntt.S         ****       ldr.w zeta1, [ptr_zeta, #4]  //z128,..., z254
+ 133:ntt.S         ****       ldr.w zeta2, [ptr_zeta, #8]  //z129,..., z255
+ 134:ntt.S         ****       ldr zeta0, [ptr_zeta], #12  //z64, ..., z127
+ 135:ntt.S         ****       ldr.w pol0, [ptr_p]  //1*4
+ 136:ntt.S         ****       ldr.w pol1, [ptr_p, #4]
+ 137:ntt.S         ****       ldr.w pol2, [ptr_p, #8]
+ 138:ntt.S         ****       ldr.w pol3, [ptr_p, #12] 
+ 139              	
+ 140:ntt.S         ****       _2_layer_CT_32 pol0, pol1, pol2, pol3, zeta0, zeta1, zeta2, qinv, q, temp_h, temp_l
+ 141              	
+ 142:ntt.S         ****       str.w pol1, [ptr_p, #4]
+ 143:ntt.S         ****       str.w pol2, [ptr_p, #8]
+ 144:ntt.S         ****       str.w pol3, [ptr_p, #12]
+ 145:ntt.S         ****       str pol0, [ptr_p], #16
+ 146              	
+ 147:ntt.S         ****       cmp.w cntr, ptr_p
+ 148:ntt.S         ****       bne.w 1b
+ 149              	
+ 150              	    //restore registers
+ 151:ntt.S         ****     pop {R4-R11, PC}
+ 152              	
+ 153              	    //unbind aliases
+ 154              	    .unreq ptr_p
+ 155              	    .unreq ptr_zeta
+ 156              	    .unreq qinv
+ 157              	    .unreq q
+ 158              	    .unreq cntr
+ 159              	    .unreq pol0
+ 160              	    .unreq pol1
+ 161              	    .unreq pol2
+ 162              	    .unreq pol3
+ 163              	    .unreq temp_h
+ 164              	    .unreq temp_l
+ 165              	    .unreq zeta0
+ 166              	    .unreq zeta1
+ 167              	    .unreq zeta2
+ 168              	
+ 169 05c8 00000000 	.ltorg
+ 170              	// ##############################
+ 171              	// ##########  NTT^-1  ##########
+ 172              	// ##############################
+ 173              	
+ 174              	//void pqcrystals_dilithium_invntt_tomont(int32_t p[N]);
+ 175              	.global pqcrystals_dilithium_invntt_tomont
+ 177              	.align 2
+ 178              	pqcrystals_dilithium_invntt_tomont:
+ 179              	  //bind aliases
+ 180:ntt.S         ****   ptr_p     .req R0
+ 181:ntt.S         ****   ptr_zeta  .req R1
+ 182:ntt.S         ****   zeta      .req R1
+ 183:ntt.S         ****   qinv      .req R2
+ 184:ntt.S         ****   q         .req R3
+ 185:ntt.S         ****   cntr      .req R4
+ 186:ntt.S         ****   pol4      .req R4
+ 187:ntt.S         ****   pol0      .req R5
+ 188:ntt.S         ****   pol1      .req R6
+ 189:ntt.S         ****   pol2      .req R7
+ 190:ntt.S         ****   pol3      .req R8
+ 191:ntt.S         ****   temp_h    .req R9
+ 192:ntt.S         ****   temp_l    .req R10
+ 193:ntt.S         ****   zeta0     .req R11
+ 194:ntt.S         ****   zeta1     .req R12
+ 195:ntt.S         ****   zeta2     .req R14
+ 196:ntt.S         ****   pol5     .req R11
+ 197:ntt.S         ****   pol6     .req R12
+ 198:ntt.S         ****   pol7     .req R14
+ 199              	
+ 200              	  //preserve registers
+ 201:ntt.S         ****   push {R4-R11, R14}
+ 202              	    
+ 203              	  //load constants, ptr
+ 204:ntt.S         ****   ldr.w qinv, inv_ntt_asm_smull_qinv  //-qinv_signed
+ 205:ntt.S         ****   ldr.w q, inv_ntt_asm_smull_q
+ 206              	
+ 207              	  //stage 1 - 3
+ 208              	  .equ distance, 16
+ 209              	  .equ strincr, 32
+ 210              	
+ 211:ntt.S         ****   ldr ptr_zeta, =#zetas_new332inv
+ 212:ntt.S         ****   vldm ptr_zeta!, {s2-s8} 
+ 213:ntt.S         ****   vmov s0, ptr_zeta
+ 214              	  
+ 215:ntt.S         ****   add.w temp_l, ptr_p, #32*strincr // 32 iterations
+ 216:ntt.S         ****   vmov s9, temp_l
+ 217              	  1:
+ 218:ntt.S         ****     ldr.w pol4, [ptr_p, #4*distance/4]
+ 219:ntt.S         ****     ldr.w pol1, [ptr_p, #5*distance/4]
+ 220:ntt.S         ****     ldr.w pol6, [ptr_p, #6*distance/4]
+ 221:ntt.S         ****     ldr.w pol3, [ptr_p, #7*distance/4]
+ 222:ntt.S         ****     _3_layer_inv_butterfly_light_fast_first pol0, pol1, pol2, pol3, pol4, pol5, pol6, pol7, s2, s3,
+ 223              	    
+ 224:ntt.S         ****     ldr.w pol0, [ptr_p]
+ 225:ntt.S         ****     ldr.w pol1, [ptr_p, #1*distance/4]
+ 226:ntt.S         ****     ldr.w pol2, [ptr_p, #2*distance/4]
+ 227:ntt.S         ****     ldr.w pol3, [ptr_p, #3*distance/4]
+ 228:ntt.S         ****     _3_layer_inv_butterfly_light_fast_second pol0, pol1, pol2, pol3, pol4, pol5, pol6, pol7, s2, s3
+ 229              	    
+ 230:ntt.S         ****     str.w pol1, [ptr_p, #1*distance/4]
+ 231:ntt.S         ****     str.w pol2, [ptr_p, #2*distance/4]
+ 232:ntt.S         ****     str.w pol3, [ptr_p, #3*distance/4]
+ 233:ntt.S         ****     str.w pol4, [ptr_p, #4*distance/4]
+ 234:ntt.S         ****     str.w pol5, [ptr_p, #5*distance/4]
+ 235:ntt.S         ****     str.w pol6, [ptr_p, #6*distance/4]
+ 236:ntt.S         ****     str.w pol7, [ptr_p, #7*distance/4]
+ 237:ntt.S         ****     str.w pol0, [ptr_p], #strincr
+ 238:ntt.S         ****     vmov temp_l, s9
+ 239:ntt.S         ****     cmp.w ptr_p, temp_l
+ 240:ntt.S         ****   bne.w 1b
+ 241              	  
+ 242:ntt.S         ****   sub ptr_p, #32*strincr
+ 243              	
+ 244              	  // stage 4 - 6  
+ 245              	  .equ distance, 128
+ 246              	  .equ strincr, 256
+ 247              	  
+ 248              	  // iteration 0
+ 249:ntt.S         ****   movw temp_l, #4
+ 250:ntt.S         ****   add.w temp_l, ptr_p, #4*256 // 4 iterations
+ 251:ntt.S         ****   vmov s10, temp_l
+ 252              		
+ 253:ntt.S         ****   vmov ptr_zeta, s0
+ 254:ntt.S         ****   vldm ptr_zeta!, {s2-s8}
+ 255:ntt.S         ****   vmov s0, ptr_zeta
+ 256              	
+ 257              	  2:
+ 258:ntt.S         ****     ldr.w pol4, [ptr_p, #4*distance/4]
+ 259:ntt.S         ****     ldr.w pol1, [ptr_p, #5*distance/4]
+ 260:ntt.S         ****     ldr.w pol6, [ptr_p, #6*distance/4]
+ 261:ntt.S         ****     ldr.w pol3, [ptr_p, #7*distance/4]
+ 262:ntt.S         ****     _3_layer_inv_butterfly_light_fast_first pol0, pol1, pol2, pol3, pol4, pol5, pol6, pol7, s2, s3,
+ 263              	    
+ 264:ntt.S         ****     ldr.w pol0, [ptr_p]
+ 265:ntt.S         ****     ldr.w pol1, [ptr_p, #1*distance/4]
+ 266:ntt.S         ****     ldr.w pol2, [ptr_p, #2*distance/4]
+ 267:ntt.S         ****     ldr.w pol3, [ptr_p, #3*distance/4]
+ 268:ntt.S         ****     _3_layer_inv_butterfly_light_fast_second pol0, pol1, pol2, pol3, pol4, pol5, pol6, pol7, s2, s3
+ 269              	
+ 270:ntt.S         ****     str.w pol1, [ptr_p, #1*distance/4]
+ 271:ntt.S         ****     str.w pol2, [ptr_p, #2*distance/4]
+ 272:ntt.S         ****     str.w pol3, [ptr_p, #3*distance/4]
+ 273:ntt.S         ****     str.w pol4, [ptr_p, #4*distance/4]
+ 274:ntt.S         ****     str.w pol5, [ptr_p, #5*distance/4]
+ 275:ntt.S         ****     str.w pol6, [ptr_p, #6*distance/4]
+ 276:ntt.S         ****     str.w pol7, [ptr_p, #7*distance/4]
+ 277:ntt.S         ****     str.w pol0, [ptr_p]
+ 278:ntt.S         ****     add.w ptr_p, #strincr
+ 279              	
+ 280:ntt.S         ****     vmov temp_l, s10
+ 281:ntt.S         ****     cmp.w temp_l, ptr_p
+ 282:ntt.S         ****   bne.w 2b
+ 283              	
+ 284:ntt.S         ****   sub.w ptr_p, #4*256-4
+ 285              	
+ 286              	  // iteration 1-7
+ 287:ntt.S         ****   add.w temp_l, ptr_p, #7*4 // 7 iterations
+ 288:ntt.S         ****   vmov s9, temp_l
+ 289              	  1:
+ 290:ntt.S         ****     add.w temp_l, ptr_p, #4*strincr // 4 iterations
+ 291:ntt.S         ****     vmov s10, temp_l
+ 292              	
+ 293:ntt.S         **** 	  vmov ptr_zeta, s0
+ 294:ntt.S         ****     vldm ptr_zeta!, {s2-s8}
+ 295:ntt.S         ****     vmov s0, ptr_zeta
+ 296              	    2:     
+ 297:ntt.S         **** 	    ldr.w pol0, [ptr_p]
+ 298:ntt.S         **** 	    ldr.w pol1, [ptr_p, #1*distance/4]
+ 299:ntt.S         **** 	    ldr.w pol2, [ptr_p, #2*distance/4]
+ 300:ntt.S         **** 	    ldr.w pol3, [ptr_p, #3*distance/4]
+ 301:ntt.S         **** 	    ldr.w pol4, [ptr_p, #4*distance/4]
+ 302:ntt.S         **** 	    ldr.w pol5, [ptr_p, #5*distance/4]
+ 303:ntt.S         **** 	    ldr.w pol6, [ptr_p, #6*distance/4]
+ 304:ntt.S         **** 	    ldr.w pol7, [ptr_p, #7*distance/4]
+ 305              	
+ 306:ntt.S         **** 	    _3_layer_inv_CT_32 pol0, pol1, pol2, pol3, pol4, pol5, pol6, pol7, s2, s3, s4, s5, s6, s7, s8,
+ 307              	
+ 308:ntt.S         **** 	    str.w pol1, [ptr_p, #1*distance/4]
+ 309:ntt.S         **** 	    str.w pol2, [ptr_p, #2*distance/4]
+ 310:ntt.S         **** 	    str.w pol3, [ptr_p, #3*distance/4]
+ 311:ntt.S         **** 	    str.w pol4, [ptr_p, #4*distance/4]
+ 312:ntt.S         **** 	    str.w pol5, [ptr_p, #5*distance/4]
+ 313:ntt.S         **** 	    str.w pol6, [ptr_p, #6*distance/4]
+ 314:ntt.S         **** 	    str.w pol7, [ptr_p, #7*distance/4]
+ 315:ntt.S         **** 	    str.w pol0, [ptr_p]
+ 316:ntt.S         **** 	    add.w ptr_p, #strincr
+ 317              	
+ 318:ntt.S         ****       vmov temp_l, s10
+ 319:ntt.S         ****       cmp.w ptr_p, temp_l
+ 320:ntt.S         ****     bne 2b
+ 321:ntt.S         ****     sub.w ptr_p, #4*strincr-4
+ 322              	
+ 323:ntt.S         ****     vmov temp_l, s9
+ 324:ntt.S         ****     cmp.w temp_l, ptr_p
+ 325:ntt.S         ****   bne 1b
+ 326              	  
+ 327:ntt.S         ****   sub ptr_p, #8*4
+ 328:ntt.S         ****   vmov ptr_zeta, s0
+ 329              	  
+ 330              	  //stage 7 and 8
+ 331              	  .equ strincr, 4
+ 332              	
+ 333:ntt.S         ****   add.w cntr, ptr_p, #64*strincr // 64 iterations 
+ 334:ntt.S         ****   vmov s9, cntr
+ 335              	  1:
+ 336:ntt.S         ****     ldr.w zeta1, [ptr_zeta, #4]
+ 337:ntt.S         ****     ldr.w zeta2, [ptr_zeta, #8]
+ 338:ntt.S         ****     ldr zeta0, [ptr_zeta], #12
+ 339:ntt.S         ****     ldr.w pol0, [ptr_p]
+ 340:ntt.S         ****     ldr.w pol1, [ptr_p, #256]
+ 341:ntt.S         ****     ldr.w pol2, [ptr_p, #512]
+ 342:ntt.S         ****     ldr.w pol3, [ptr_p, #768]
+ 343              	
+ 344:ntt.S         ****     _2_layer_inv_CT_32 pol0, pol1, pol2, pol3, zeta0, zeta1, zeta2, qinv, q, temp_h, temp_l
+ 345              	
+ 346:ntt.S         ****     ldr.w zeta1, [ptr_zeta, #4]
+ 347:ntt.S         ****     ldr.w zeta2, [ptr_zeta, #8]
+ 348:ntt.S         ****     ldr.w zeta0, [ptr_zeta, #12]
+ 349:ntt.S         ****     ldr.w cntr, [ptr_zeta], #16
+ 350:ntt.S         ****     montgomery_mul_32 pol0, cntr, qinv, q, temp_h, temp_l
+ 351:ntt.S         ****     montgomery_mul_32 pol1, zeta1, qinv, q, temp_h, temp_l
+ 352:ntt.S         ****     montgomery_mul_32 pol2, zeta2, qinv, q, temp_h, temp_l
+ 353:ntt.S         ****     montgomery_mul_32 pol3, zeta0, qinv, q, temp_h, temp_l
+ 354              	
+ 355:ntt.S         ****     str.w pol1, [ptr_p, #256]
+ 356:ntt.S         ****     str.w pol2, [ptr_p, #512]
+ 357:ntt.S         ****     str.w pol3, [ptr_p, #768]
+ 358:ntt.S         ****     str pol0, [ptr_p], #strincr
+ 359              	
+ 360:ntt.S         ****     vmov cntr, s9
+ 361:ntt.S         ****     cmp.w cntr, ptr_p
+ 362:ntt.S         ****     bne.w 1b
+ 363              	
+ 364              	    //restore registers
+ 365:ntt.S         ****     pop {R4-R11, PC}
+ 366              	
+ 367              	    //unbind aliases
+ 368              	    .unreq ptr_p
+ 369              	    .unreq ptr_zeta
+ 370              	    .unreq qinv
+ 371              	    .unreq q
+ 372              	    .unreq cntr
+ 373              	    .unreq pol0
+ 374              	    .unreq pol1
+ 375              	    .unreq pol2
+ 376              	    .unreq pol3
+ 377              	    .unreq temp_h
+ 378              	    .unreq temp_l
+ 379              	    .unreq zeta0
+ 380              	    .unreq zeta1
+ 381              	    .unreq zeta2
+ 382              	
+ 383              	.align 2
+ 384              	inv_ntt_asm_smull_qinv:
+ 385 09fc FFDF7FFC 	.word 0xfc7fdfff
+ 386              	.align 2
+ 387              	inv_ntt_asm_smull_q:
+ 388 0a00 01E07F00 	.word 8380417
+ 389              	
+ 390              	.section .rodata
+ 391              	
+ 393              	.align 2
+ 394              	zetas_new332:
+ 395 0000 F7640000 	.word 25847, -2608894, -518909, 237124, -777960, -876248, 466468, 1826347, 2725464, 1024112, 270602
+ 395      0231D8FF 
+ 395      0315F8FF 
+ 395      449E0300 
+ 395      1821F4FF 
+ 397              	
+ 399              	.align 2
+ 400              	zetas_new332inv:
+ 401 03fc 00FE3F00 	.word 4193792, 4193792, -25847, 4193792, 518909, -25847, 2608894, 4193792, 4193792, -25847, 4193792
+ 401      00FE3F00 
+ 401      099BFFFF 
+ 401      00FE3F00 
+ 401      FDEA0700 
+DEFINED SYMBOLS
+               ntt.S:9      .text:00000000 $t
+               ntt.S:19     .text:00000004 pqcrystals_dilithium_ntt
+               ntt.S:384    .text:000009fc inv_ntt_asm_smull_qinv
+               ntt.S:387    .text:00000a00 inv_ntt_asm_smull_q
+               ntt.S:49     *ABS*:00000080 distance
+               ntt.S:50     *ABS*:00000004 strincr
+               ntt.S:394    .rodata:00000000 zetas_new332
+               ntt.S:169    .text:000005c8 $d
+               ntt.S:178    .text:000005cc pqcrystals_dilithium_invntt_tomont
+               ntt.S:177    .text:000005cc $t
+               ntt.S:400    .rodata:000003fc zetas_new332inv
+               ntt.S:385    .text:000009fc $d
+               ntt.S:388    .text:00000a00 $d
+               ntt.S:393    .rodata:00000000 $d
+               ntt.S:402    .text:00000a04 $d
+
+NO UNDEFINED SYMBOLS

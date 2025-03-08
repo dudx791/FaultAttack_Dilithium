@@ -1,0 +1,191 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"symmetric-shake.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.pqcrystals_dilithium_dilithium_shake128_stream_init,"ax",%progbits
+  16              		.align	1
+  17              		.global	pqcrystals_dilithium_dilithium_shake128_stream_init
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	pqcrystals_dilithium_dilithium_shake128_stream_init:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "symmetric-shake.c"
+   1:symmetric-shake.c **** #include <stdint.h>
+   2:symmetric-shake.c **** #include "params.h"
+   3:symmetric-shake.c **** #include "symmetric.h"
+   4:symmetric-shake.c **** #include "fips202.h"
+   5:symmetric-shake.c **** 
+   6:symmetric-shake.c **** void dilithium_shake128_stream_init(shake128incctx *state, const uint8_t seed[SEEDBYTES], uint16_t 
+   7:symmetric-shake.c **** {
+  28              		.loc 1 7 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+   8:symmetric-shake.c ****   uint8_t t[2];
+  32              		.loc 1 8 3 view .LVU1
+   9:symmetric-shake.c ****   t[0] = nonce;
+  33              		.loc 1 9 3 view .LVU2
+   7:symmetric-shake.c ****   uint8_t t[2];
+  34              		.loc 1 7 1 is_stmt 0 view .LVU3
+  35 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 24
+  38              		.cfi_offset 4, -12
+  39              		.cfi_offset 5, -8
+  40              		.cfi_offset 14, -4
+   7:symmetric-shake.c ****   uint8_t t[2];
+  41              		.loc 1 7 1 view .LVU4
+  42 0002 0446     		mov	r4, r0
+  43 0004 0D46     		mov	r5, r1
+  44              		.loc 1 9 8 view .LVU5
+  45 0006 8DF80420 		strb	r2, [sp, #4]
+  10:symmetric-shake.c ****   t[1] = nonce >> 8;
+  46              		.loc 1 10 3 is_stmt 1 view .LVU6
+  47              		.loc 1 10 8 is_stmt 0 view .LVU7
+  48 000a 120A     		lsrs	r2, r2, #8
+  49              	.LVL1:
+  50              		.loc 1 10 8 view .LVU8
+  51 000c 8DF80520 		strb	r2, [sp, #5]
+  11:symmetric-shake.c **** 
+  12:symmetric-shake.c ****   shake128_inc_init(state);
+  52              		.loc 1 12 3 is_stmt 1 view .LVU9
+  53 0010 FFF7FEFF 		bl	shake128_inc_init
+  54              	.LVL2:
+  13:symmetric-shake.c ****   shake128_inc_absorb(state, seed, SEEDBYTES);
+  55              		.loc 1 13 3 view .LVU10
+  56 0014 2946     		mov	r1, r5
+  57 0016 2046     		mov	r0, r4
+  58 0018 2022     		movs	r2, #32
+  59 001a FFF7FEFF 		bl	shake128_inc_absorb
+  60              	.LVL3:
+  14:symmetric-shake.c ****   shake128_inc_absorb(state, t, 2);
+  61              		.loc 1 14 3 view .LVU11
+  62 001e 0222     		movs	r2, #2
+  63 0020 01A9     		add	r1, sp, #4
+  64 0022 2046     		mov	r0, r4
+  65 0024 FFF7FEFF 		bl	shake128_inc_absorb
+  66              	.LVL4:
+  15:symmetric-shake.c ****   shake128_inc_finalize(state);
+  67              		.loc 1 15 3 view .LVU12
+  68 0028 2046     		mov	r0, r4
+  69 002a FFF7FEFF 		bl	shake128_inc_finalize
+  70              	.LVL5:
+  16:symmetric-shake.c **** }
+  71              		.loc 1 16 1 is_stmt 0 view .LVU13
+  72 002e 03B0     		add	sp, sp, #12
+  73              	.LCFI1:
+  74              		.cfi_def_cfa_offset 12
+  75              		@ sp needed
+  76 0030 30BD     		pop	{r4, r5, pc}
+  77              		.loc 1 16 1 view .LVU14
+  78              		.cfi_endproc
+  79              	.LFE0:
+  81              		.section	.text.pqcrystals_dilithium_dilithium_shake256_stream_init,"ax",%progbits
+  82              		.align	1
+  83              		.global	pqcrystals_dilithium_dilithium_shake256_stream_init
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  87              		.fpu softvfp
+  89              	pqcrystals_dilithium_dilithium_shake256_stream_init:
+  90              	.LVL6:
+  91              	.LFB1:
+  17:symmetric-shake.c **** 
+  18:symmetric-shake.c **** void dilithium_shake256_stream_init(shake256incctx *state, const uint8_t seed[CRHBYTES], uint16_t n
+  19:symmetric-shake.c **** {
+  92              		.loc 1 19 1 is_stmt 1 view -0
+  93              		.cfi_startproc
+  94              		@ args = 0, pretend = 0, frame = 8
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  20:symmetric-shake.c ****   uint8_t t[2];
+  96              		.loc 1 20 3 view .LVU16
+  21:symmetric-shake.c ****   t[0] = nonce;
+  97              		.loc 1 21 3 view .LVU17
+  19:symmetric-shake.c ****   uint8_t t[2];
+  98              		.loc 1 19 1 is_stmt 0 view .LVU18
+  99 0000 37B5     		push	{r0, r1, r2, r4, r5, lr}
+ 100              	.LCFI2:
+ 101              		.cfi_def_cfa_offset 24
+ 102              		.cfi_offset 4, -12
+ 103              		.cfi_offset 5, -8
+ 104              		.cfi_offset 14, -4
+  19:symmetric-shake.c ****   uint8_t t[2];
+ 105              		.loc 1 19 1 view .LVU19
+ 106 0002 0446     		mov	r4, r0
+ 107 0004 0D46     		mov	r5, r1
+ 108              		.loc 1 21 8 view .LVU20
+ 109 0006 8DF80420 		strb	r2, [sp, #4]
+  22:symmetric-shake.c ****   t[1] = nonce >> 8;
+ 110              		.loc 1 22 3 is_stmt 1 view .LVU21
+ 111              		.loc 1 22 8 is_stmt 0 view .LVU22
+ 112 000a 120A     		lsrs	r2, r2, #8
+ 113              	.LVL7:
+ 114              		.loc 1 22 8 view .LVU23
+ 115 000c 8DF80520 		strb	r2, [sp, #5]
+  23:symmetric-shake.c **** 
+  24:symmetric-shake.c ****   shake256_inc_init(state);
+ 116              		.loc 1 24 3 is_stmt 1 view .LVU24
+ 117 0010 FFF7FEFF 		bl	shake256_inc_init
+ 118              	.LVL8:
+  25:symmetric-shake.c ****   shake256_inc_absorb(state, seed, CRHBYTES);
+ 119              		.loc 1 25 3 view .LVU25
+ 120 0014 2946     		mov	r1, r5
+ 121 0016 2046     		mov	r0, r4
+ 122 0018 4022     		movs	r2, #64
+ 123 001a FFF7FEFF 		bl	shake256_inc_absorb
+ 124              	.LVL9:
+  26:symmetric-shake.c ****   shake256_inc_absorb(state, t, 2);
+ 125              		.loc 1 26 3 view .LVU26
+ 126 001e 0222     		movs	r2, #2
+ 127 0020 01A9     		add	r1, sp, #4
+ 128 0022 2046     		mov	r0, r4
+ 129 0024 FFF7FEFF 		bl	shake256_inc_absorb
+ 130              	.LVL10:
+  27:symmetric-shake.c ****   shake256_inc_finalize(state);
+ 131              		.loc 1 27 3 view .LVU27
+ 132 0028 2046     		mov	r0, r4
+ 133 002a FFF7FEFF 		bl	shake256_inc_finalize
+ 134              	.LVL11:
+  28:symmetric-shake.c **** }
+ 135              		.loc 1 28 1 is_stmt 0 view .LVU28
+ 136 002e 03B0     		add	sp, sp, #12
+ 137              	.LCFI3:
+ 138              		.cfi_def_cfa_offset 12
+ 139              		@ sp needed
+ 140 0030 30BD     		pop	{r4, r5, pc}
+ 141              		.loc 1 28 1 view .LVU29
+ 142              		.cfi_endproc
+ 143              	.LFE1:
+ 145              		.text
+ 146              	.Letext0:
+ 147              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 148              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 149              		.file 4 "fips202.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 symmetric-shake.c
+C:\Users\dudixiao\AppData\Local\Temp\ccvxP0C0.s:16     .text.pqcrystals_dilithium_dilithium_shake128_stream_init:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccvxP0C0.s:24     .text.pqcrystals_dilithium_dilithium_shake128_stream_init:00000000 pqcrystals_dilithium_dilithium_shake128_stream_init
+C:\Users\dudixiao\AppData\Local\Temp\ccvxP0C0.s:82     .text.pqcrystals_dilithium_dilithium_shake256_stream_init:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccvxP0C0.s:89     .text.pqcrystals_dilithium_dilithium_shake256_stream_init:00000000 pqcrystals_dilithium_dilithium_shake256_stream_init
+
+UNDEFINED SYMBOLS
+shake128_inc_init
+shake128_inc_absorb
+shake128_inc_finalize
+shake256_inc_init
+shake256_inc_absorb
+shake256_inc_finalize

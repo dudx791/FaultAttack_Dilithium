@@ -1,0 +1,286 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"reduce.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce,"ax",%progbits
+  16              		.align	1
+  17              		.global	PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "reduce.c"
+   1:reduce.c      **** #include "params.h"
+   2:reduce.c      **** #include "reduce.h"
+   3:reduce.c      **** #include <stdint.h>
+   4:reduce.c      **** 
+   5:reduce.c      **** /*************************************************
+   6:reduce.c      **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce
+   7:reduce.c      **** *
+   8:reduce.c      **** * Description: For finite field element a with -2^{31}Q <= a <= Q*2^31,
+   9:reduce.c      **** *              compute r \equiv a*2^{-32} (mod Q) such that -Q < r < Q.
+  10:reduce.c      **** *
+  11:reduce.c      **** * Arguments:   - int64_t: finite field element a
+  12:reduce.c      **** *
+  13:reduce.c      **** * Returns r.
+  14:reduce.c      **** **************************************************/
+  15:reduce.c      **** int32_t PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce(int64_t a) {
+  28              		.loc 1 15 63 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  16:reduce.c      ****     int32_t t;
+  33              		.loc 1 16 5 view .LVU1
+  17:reduce.c      **** 
+  18:reduce.c      ****     t = (int32_t)((uint64_t)a * (uint64_t)QINV);
+  34              		.loc 1 18 5 view .LVU2
+  15:reduce.c      ****     int32_t t;
+  35              		.loc 1 15 63 is_stmt 0 view .LVU3
+  36 0000 0346     		mov	r3, r0
+  37              	.LVL1:
+  19:reduce.c      ****     t = (a - (int64_t)t * Q) >> 32;
+  38              		.loc 1 19 5 is_stmt 1 view .LVU4
+  18:reduce.c      ****     t = (a - (int64_t)t * Q) >> 32;
+  39              		.loc 1 18 9 is_stmt 0 view .LVU5
+  40 0002 C3EBC302 		rsb	r2, r3, r3, lsl #3
+  15:reduce.c      ****     int32_t t;
+  41              		.loc 1 15 63 view .LVU6
+  42 0006 0846     		mov	r0, r1
+  43              	.LVL2:
+  18:reduce.c      ****     t = (a - (int64_t)t * Q) >> 32;
+  44              		.loc 1 18 9 view .LVU7
+  45 0008 03EB8222 		add	r2, r3, r2, lsl #10
+  46              		.loc 1 19 12 view .LVU8
+  47 000c 0249     		ldr	r1, .L2
+  18:reduce.c      ****     t = (a - (int64_t)t * Q) >> 32;
+  48              		.loc 1 18 9 view .LVU9
+  49 000e 03EB4232 		add	r2, r3, r2, lsl #13
+  50              	.LVL3:
+  20:reduce.c      ****     return t;
+  51              		.loc 1 20 5 is_stmt 1 view .LVU10
+  21:reduce.c      **** }
+  52              		.loc 1 21 1 is_stmt 0 view .LVU11
+  53 0012 C2FB0130 		smlal	r3, r0, r2, r1
+  54              	.LVL4:
+  55              		.loc 1 21 1 view .LVU12
+  56 0016 7047     		bx	lr
+  57              	.L3:
+  58              		.align	2
+  59              	.L2:
+  60 0018 FF1F80FF 		.word	-8380417
+  61              		.cfi_endproc
+  62              	.LFE0:
+  64              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_reduce32,"ax",%progbits
+  65              		.align	1
+  66              		.global	PQCLEAN_DILITHIUM2_CLEAN_reduce32
+  67              		.syntax unified
+  68              		.thumb
+  69              		.thumb_func
+  70              		.fpu softvfp
+  72              	PQCLEAN_DILITHIUM2_CLEAN_reduce32:
+  73              	.LVL5:
+  74              	.LFB1:
+  22:reduce.c      **** 
+  23:reduce.c      **** /*************************************************
+  24:reduce.c      **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_reduce32
+  25:reduce.c      **** *
+  26:reduce.c      **** * Description: For finite field element a with a <= 2^{31} - 2^{22} - 1,
+  27:reduce.c      **** *              compute r \equiv a (mod Q) such that -6283009 <= r <= 6283007.
+  28:reduce.c      **** *
+  29:reduce.c      **** * Arguments:   - int32_t: finite field element a
+  30:reduce.c      **** *
+  31:reduce.c      **** * Returns r.
+  32:reduce.c      **** **************************************************/
+  33:reduce.c      **** int32_t PQCLEAN_DILITHIUM2_CLEAN_reduce32(int32_t a) {
+  75              		.loc 1 33 54 is_stmt 1 view -0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  34:reduce.c      ****     int32_t t;
+  80              		.loc 1 34 5 view .LVU14
+  35:reduce.c      **** 
+  36:reduce.c      ****     t = (a + (1 << 22)) >> 23;
+  81              		.loc 1 36 5 view .LVU15
+  37:reduce.c      ****     t = a - t * Q;
+  82              		.loc 1 37 5 view .LVU16
+  38:reduce.c      ****     return t;
+  39:reduce.c      **** }
+  83              		.loc 1 39 1 is_stmt 0 view .LVU17
+  84 0000 034A     		ldr	r2, .L5
+  36:reduce.c      ****     t = a - t * Q;
+  85              		.loc 1 36 12 view .LVU18
+  86 0002 00F58003 		add	r3, r0, #4194304
+  36:reduce.c      ****     t = a - t * Q;
+  87              		.loc 1 36 7 view .LVU19
+  88 0006 DB15     		asrs	r3, r3, #23
+  89              	.LVL6:
+  38:reduce.c      ****     return t;
+  90              		.loc 1 38 5 is_stmt 1 view .LVU20
+  91              		.loc 1 39 1 is_stmt 0 view .LVU21
+  92 0008 02FB0300 		mla	r0, r2, r3, r0
+  93              	.LVL7:
+  94              		.loc 1 39 1 view .LVU22
+  95 000c 7047     		bx	lr
+  96              	.L6:
+  97 000e 00BF     		.align	2
+  98              	.L5:
+  99 0010 FF1F80FF 		.word	-8380417
+ 100              		.cfi_endproc
+ 101              	.LFE1:
+ 103              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_caddq,"ax",%progbits
+ 104              		.align	1
+ 105              		.global	PQCLEAN_DILITHIUM2_CLEAN_caddq
+ 106              		.syntax unified
+ 107              		.thumb
+ 108              		.thumb_func
+ 109              		.fpu softvfp
+ 111              	PQCLEAN_DILITHIUM2_CLEAN_caddq:
+ 112              	.LVL8:
+ 113              	.LFB2:
+  40:reduce.c      **** 
+  41:reduce.c      **** /*************************************************
+  42:reduce.c      **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_caddq
+  43:reduce.c      **** *
+  44:reduce.c      **** * Description: Add Q if input coefficient is negative.
+  45:reduce.c      **** *
+  46:reduce.c      **** * Arguments:   - int32_t: finite field element a
+  47:reduce.c      **** *
+  48:reduce.c      **** * Returns r.
+  49:reduce.c      **** **************************************************/
+  50:reduce.c      **** int32_t PQCLEAN_DILITHIUM2_CLEAN_caddq(int32_t a) {
+ 114              		.loc 1 50 51 is_stmt 1 view -0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 0
+ 117              		@ frame_needed = 0, uses_anonymous_args = 0
+ 118              		@ link register save eliminated.
+  51:reduce.c      ****     a += (a >> 31) & Q;
+ 119              		.loc 1 51 5 view .LVU24
+ 120              		.loc 1 51 20 is_stmt 0 view .LVU25
+ 121 0000 024B     		ldr	r3, .L8
+ 122 0002 03EAE073 		and	r3, r3, r0, asr #31
+ 123              	.LVL9:
+  52:reduce.c      ****     return a;
+ 124              		.loc 1 52 5 is_stmt 1 view .LVU26
+  53:reduce.c      **** }
+ 125              		.loc 1 53 1 is_stmt 0 view .LVU27
+ 126 0006 1844     		add	r0, r0, r3
+ 127              	.LVL10:
+ 128              		.loc 1 53 1 view .LVU28
+ 129 0008 7047     		bx	lr
+ 130              	.L9:
+ 131 000a 00BF     		.align	2
+ 132              	.L8:
+ 133 000c 01E07F00 		.word	8380417
+ 134              		.cfi_endproc
+ 135              	.LFE2:
+ 137              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_freeze,"ax",%progbits
+ 138              		.align	1
+ 139              		.global	PQCLEAN_DILITHIUM2_CLEAN_freeze
+ 140              		.syntax unified
+ 141              		.thumb
+ 142              		.thumb_func
+ 143              		.fpu softvfp
+ 145              	PQCLEAN_DILITHIUM2_CLEAN_freeze:
+ 146              	.LVL11:
+ 147              	.LFB3:
+  54:reduce.c      **** 
+  55:reduce.c      **** /*************************************************
+  56:reduce.c      **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_freeze
+  57:reduce.c      **** *
+  58:reduce.c      **** * Description: For finite field element a, compute standard
+  59:reduce.c      **** *              representative r = a mod^+ Q.
+  60:reduce.c      **** *
+  61:reduce.c      **** * Arguments:   - int32_t: finite field element a
+  62:reduce.c      **** *
+  63:reduce.c      **** * Returns r.
+  64:reduce.c      **** **************************************************/
+  65:reduce.c      **** int32_t PQCLEAN_DILITHIUM2_CLEAN_freeze(int32_t a) {
+ 148              		.loc 1 65 52 is_stmt 1 view -0
+ 149              		.cfi_startproc
+ 150              		@ args = 0, pretend = 0, frame = 0
+ 151              		@ frame_needed = 0, uses_anonymous_args = 0
+  66:reduce.c      ****     a = PQCLEAN_DILITHIUM2_CLEAN_reduce32(a);
+ 152              		.loc 1 66 5 view .LVU30
+  65:reduce.c      ****     a = PQCLEAN_DILITHIUM2_CLEAN_reduce32(a);
+ 153              		.loc 1 65 52 is_stmt 0 view .LVU31
+ 154 0000 08B5     		push	{r3, lr}
+ 155              	.LCFI0:
+ 156              		.cfi_def_cfa_offset 8
+ 157              		.cfi_offset 3, -8
+ 158              		.cfi_offset 14, -4
+ 159              		.loc 1 66 9 view .LVU32
+ 160 0002 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_reduce32
+ 161              	.LVL12:
+  67:reduce.c      ****     a = PQCLEAN_DILITHIUM2_CLEAN_caddq(a);
+ 162              		.loc 1 67 5 is_stmt 1 view .LVU33
+ 163              	.LBB4:
+ 164              	.LBI4:
+  50:reduce.c      ****     a += (a >> 31) & Q;
+ 165              		.loc 1 50 9 view .LVU34
+ 166              	.LBB5:
+  51:reduce.c      ****     return a;
+ 167              		.loc 1 51 5 view .LVU35
+  52:reduce.c      **** }
+ 168              		.loc 1 52 5 view .LVU36
+  52:reduce.c      **** }
+ 169              		.loc 1 52 5 is_stmt 0 view .LVU37
+ 170              	.LBE5:
+ 171              	.LBE4:
+  68:reduce.c      ****     return a;
+ 172              		.loc 1 68 5 is_stmt 1 view .LVU38
+ 173              	.LBB7:
+ 174              	.LBB6:
+  51:reduce.c      ****     return a;
+ 175              		.loc 1 51 20 is_stmt 0 view .LVU39
+ 176 0006 024B     		ldr	r3, .L11
+ 177 0008 03EAE073 		and	r3, r3, r0, asr #31
+ 178              	.LBE6:
+ 179              	.LBE7:
+  69:reduce.c      **** }
+ 180              		.loc 1 69 1 view .LVU40
+ 181 000c 1844     		add	r0, r0, r3
+ 182              	.LVL13:
+ 183              		.loc 1 69 1 view .LVU41
+ 184 000e 08BD     		pop	{r3, pc}
+ 185              	.L12:
+ 186              		.align	2
+ 187              	.L11:
+ 188 0010 01E07F00 		.word	8380417
+ 189              		.cfi_endproc
+ 190              	.LFE3:
+ 192              		.text
+ 193              	.Letext0:
+ 194              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 195              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+DEFINED SYMBOLS
+                            *ABS*:00000000 reduce.c
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:16     .text.PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:24     .text.PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce:00000000 PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:60     .text.PQCLEAN_DILITHIUM2_CLEAN_montgomery_reduce:00000018 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:65     .text.PQCLEAN_DILITHIUM2_CLEAN_reduce32:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:72     .text.PQCLEAN_DILITHIUM2_CLEAN_reduce32:00000000 PQCLEAN_DILITHIUM2_CLEAN_reduce32
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:99     .text.PQCLEAN_DILITHIUM2_CLEAN_reduce32:00000010 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:104    .text.PQCLEAN_DILITHIUM2_CLEAN_caddq:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:111    .text.PQCLEAN_DILITHIUM2_CLEAN_caddq:00000000 PQCLEAN_DILITHIUM2_CLEAN_caddq
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:133    .text.PQCLEAN_DILITHIUM2_CLEAN_caddq:0000000c $d
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:138    .text.PQCLEAN_DILITHIUM2_CLEAN_freeze:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:145    .text.PQCLEAN_DILITHIUM2_CLEAN_freeze:00000000 PQCLEAN_DILITHIUM2_CLEAN_freeze
+C:\Users\dudixiao\AppData\Local\Temp\ccFEE5kf.s:188    .text.PQCLEAN_DILITHIUM2_CLEAN_freeze:00000010 $d
+
+NO UNDEFINED SYMBOLS

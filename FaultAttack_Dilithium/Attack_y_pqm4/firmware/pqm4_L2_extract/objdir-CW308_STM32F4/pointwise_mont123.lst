@@ -1,0 +1,133 @@
+   1              	# 1 "pointwise_mont123.S"
+   1              	.syntax unified
+   0              	
+   0              	
+   2              	.thumb
+   3              	
+   4              	.macro montgomery_multiplication res, pa, pb, q, qinv
+   5              	    smull \pa, \res, \pa, \pb
+   6              	    mul \pb, \pa, \qinv
+   7              	    smlal \pa, \res, \pb, \q
+   8              	.endm
+   9              	
+  10              	
+  11              	// void asm_pointwise_montgomery(int32_t c[N], const int32_t a[N], const int32_t b[N]);
+  12              	.global pqcrystals_dilithium_asm_pointwise_montgomery
+  14              	.align 2
+  15              	pqcrystals_dilithium_asm_pointwise_montgomery:
+  16:pointwise_mont123.S ****     push.w {r4-r11, r14}
+  17:pointwise_mont123.S ****     c_ptr .req r0
+  18:pointwise_mont123.S ****     a_ptr .req r1
+  19:pointwise_mont123.S ****     b_ptr .req r2
+  20:pointwise_mont123.S ****     qinv  .req r3
+  21:pointwise_mont123.S ****     q     .req r4
+  22:pointwise_mont123.S ****     pa0   .req r5
+  23:pointwise_mont123.S ****     pa1   .req r6
+  24:pointwise_mont123.S ****     pa2   .req r7
+  25:pointwise_mont123.S ****     pb0   .req r8
+  26:pointwise_mont123.S ****     pb1   .req r9
+  27:pointwise_mont123.S ****     pb2   .req r10
+  28:pointwise_mont123.S ****     tmp0  .req r11
+  29:pointwise_mont123.S ****     ctr   .req r12
+  30:pointwise_mont123.S ****     res   .req r14
+  31              	
+  32:pointwise_mont123.S ****     movw qinv, #:lower16:0xfc7fdfff
+  33:pointwise_mont123.S ****     movt qinv, #:upper16:0xfc7fdfff
+  34:pointwise_mont123.S ****     movw q, #0xE001
+  35:pointwise_mont123.S ****     movt q, #0x7F
+  36              	
+  37              	
+  38              	    // 85x3 = 255 coefficients
+  39:pointwise_mont123.S ****     movw ctr, #85
+  40              	    1:
+  41:pointwise_mont123.S ****         ldr.w pa1, [a_ptr, #4]
+  42:pointwise_mont123.S ****         ldr.w pa2, [a_ptr, #8]
+  43:pointwise_mont123.S ****         ldr pa0, [a_ptr], #12
+  44:pointwise_mont123.S ****         ldr.w pb1, [b_ptr, #4]
+  45:pointwise_mont123.S ****         ldr.w pb2, [b_ptr, #8]
+  46:pointwise_mont123.S ****         ldr pb0, [b_ptr], #12
+  47              	
+  48:pointwise_mont123.S ****         montgomery_multiplication res, pa0, pb0, q, qinv
+  49:pointwise_mont123.S ****         str res, [c_ptr], #4
+  50:pointwise_mont123.S ****         montgomery_multiplication res, pa1, pb1, q, qinv
+  51:pointwise_mont123.S ****         str res, [c_ptr], #4
+  52:pointwise_mont123.S ****         montgomery_multiplication res, pa2, pb2, q, qinv
+  53:pointwise_mont123.S ****         str res, [c_ptr], #4
+  54:pointwise_mont123.S ****     subs ctr, #1
+  55:pointwise_mont123.S ****     bne.w 1b
+  56              	
+  57              	    // final coefficient
+  58:pointwise_mont123.S ****     ldr.w pa0, [a_ptr]
+  59:pointwise_mont123.S ****     ldr.w pb0, [b_ptr]
+  60:pointwise_mont123.S ****     montgomery_multiplication res, pa0, pb0, q, qinv
+  61:pointwise_mont123.S ****     str.w res, [c_ptr]
+  62              	
+  63:pointwise_mont123.S ****     pop.w {r4-r11, pc}
+  65              	
+  66              	// void asm_pointwise_acc_montgomery(int32_t c[N], const int32_t a[N], const int32_t b[N]);
+  67              	.global pqcrystals_dilithium_asm_pointwise_acc_montgomery
+  69              	.align 2
+  70              	pqcrystals_dilithium_asm_pointwise_acc_montgomery:
+  71:pointwise_mont123.S ****     push.w {r4-r11, r14}
+  72:pointwise_mont123.S ****     c_ptr .req r0
+  73:pointwise_mont123.S ****     a_ptr .req r1
+  74:pointwise_mont123.S ****     b_ptr .req r2
+  75:pointwise_mont123.S ****     qinv  .req r3
+  76:pointwise_mont123.S ****     q     .req r4
+  77:pointwise_mont123.S ****     pa0   .req r5
+  78:pointwise_mont123.S ****     pa1   .req r6
+  79:pointwise_mont123.S ****     pa2   .req r7
+  80:pointwise_mont123.S ****     pb0   .req r8
+  81:pointwise_mont123.S ****     pb1   .req r9
+  82:pointwise_mont123.S ****     pb2   .req r10
+  83:pointwise_mont123.S ****     tmp0  .req r11
+  84:pointwise_mont123.S ****     ctr   .req r12
+  85:pointwise_mont123.S ****     res   .req r14
+  86              	
+  87:pointwise_mont123.S ****     movw qinv, #:lower16:0xfc7fdfff
+  88:pointwise_mont123.S ****     movt qinv, #:upper16:0xfc7fdfff
+  89:pointwise_mont123.S ****     movw q, #0xE001
+  90:pointwise_mont123.S ****     movt q, #0x7F
+  91              	
+  92              	
+  93              	    // 85x3 = 255 coefficients
+  94:pointwise_mont123.S ****     movw ctr, #85
+  95              	    1:
+  96:pointwise_mont123.S ****         ldr.w pa1, [a_ptr, #4]
+  97:pointwise_mont123.S ****         ldr.w pa2, [a_ptr, #8]
+  98:pointwise_mont123.S ****         ldr pa0, [a_ptr], #12
+  99:pointwise_mont123.S ****         ldr.w pb1, [b_ptr, #4]
+ 100:pointwise_mont123.S ****         ldr.w pb2, [b_ptr, #8]
+ 101:pointwise_mont123.S ****         ldr pb0, [b_ptr], #12
+ 102              	
+ 103:pointwise_mont123.S ****         montgomery_multiplication res, pa0, pb0, q, qinv
+ 104:pointwise_mont123.S ****         montgomery_multiplication pa0, pa1, pb1, q, qinv
+ 105:pointwise_mont123.S ****         montgomery_multiplication pa1, pa2, pb2, q, qinv
+ 106              	
+ 107:pointwise_mont123.S ****         ldr.w pb0, [c_ptr]
+ 108:pointwise_mont123.S ****         ldr.w pb1, [c_ptr, #4]
+ 109:pointwise_mont123.S ****         ldr.w pb2, [c_ptr, #8]
+ 110:pointwise_mont123.S ****         add.w res, res, pb0
+ 111:pointwise_mont123.S ****         str res, [c_ptr], #12
+ 112:pointwise_mont123.S ****         add.w pa0, pa0, pb1
+ 113:pointwise_mont123.S ****         str pa0, [c_ptr, #-8]
+ 114:pointwise_mont123.S ****         add.w pa1, pa1, pb2
+ 115:pointwise_mont123.S ****         str pa1, [c_ptr, #-4]
+ 116:pointwise_mont123.S ****     subs ctr, #1
+ 117:pointwise_mont123.S ****     bne.w 1b
+ 118              	
+ 119              	    // final coefficient
+ 120:pointwise_mont123.S ****     ldr.w pa0, [a_ptr]
+ 121:pointwise_mont123.S ****     ldr.w pb0, [b_ptr]
+ 122:pointwise_mont123.S ****     ldr.w pa1, [c_ptr]
+ 123:pointwise_mont123.S ****     montgomery_multiplication res, pa0, pb0, q, qinv
+ 124:pointwise_mont123.S ****     add.w res, res, pa1
+ 125:pointwise_mont123.S ****     str.w res, [c_ptr]
+ 126              	
+ 127:pointwise_mont123.S ****     pop.w {r4-r11, pc}
+DEFINED SYMBOLS
+ pointwise_mont123.S:15     .text:00000000 pqcrystals_dilithium_asm_pointwise_montgomery
+ pointwise_mont123.S:14     .text:00000000 $t
+ pointwise_mont123.S:70     .text:00000084 pqcrystals_dilithium_asm_pointwise_acc_montgomery
+
+NO UNDEFINED SYMBOLS

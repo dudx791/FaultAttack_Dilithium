@@ -1,0 +1,1371 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"sign.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.rodata.str1.1,"aMS",%progbits,1
+  16              	.LC0:
+  17 0000 45393943 		.ascii	"E99CB21815AA2F4A54759D507C2E5B4B0DDB0B78A179FEBB90E"
+  17      42323138 
+  17      31354141 
+  17      32463441 
+  17      35343735 
+  18 0033 31334331 		.ascii	"13C1ACAC329431FDB456AD904F9B2DD76E7501DCBB52E779525"
+  18      41434143 
+  18      33323934 
+  18      33314644 
+  18      42343536 
+  19 0066 42353636 		.ascii	"B566D767DF08301BE9637D2C77F872434B0F8E8A3B11F9B79AD"
+  19      44373637 
+  19      44463038 
+  19      33303142 
+  19      45393633 
+  20 0099 44374241 		.ascii	"D7BA0B66DC737A56DBC33C84A66B07247D52EC44B7F2E8D1C9A"
+  20      30423636 
+  20      44433733 
+  20      37413536 
+  20      44424333 
+  21 00cc 35463344 		.ascii	"5F3D2B6E4C7D1F2A3B5C9D6E8F3D8E2F5A9B7C4D1E6F3A2B8C5"
+  21      32423645 
+  21      34433744 
+  21      31463241 
+  21      33423543 
+  22 00ff 4400     		.ascii	"D\000"
+  23              		.section	.text.crypto_sign_keypair,"ax",%progbits
+  24              		.align	1
+  25              		.global	crypto_sign_keypair
+  26              		.arch armv7e-m
+  27              		.syntax unified
+  28              		.thumb
+  29              		.thumb_func
+  30              		.fpu softvfp
+  32              	crypto_sign_keypair:
+  33              	.LVL0:
+  34              	.LFB0:
+  35              		.file 1 "sign.c"
+   1:sign.c        **** #include <stdint.h>
+   2:sign.c        **** #include "params.h"
+   3:sign.c        **** #include "sign.h"
+   4:sign.c        **** #include "packing.h"
+   5:sign.c        **** #include "polyvec.h"
+   6:sign.c        **** #include "poly.h"
+   7:sign.c        **** #include "randombytes.h"
+   8:sign.c        **** #include "symmetric.h"
+   9:sign.c        **** #include "smallpoly.h"
+  10:sign.c        **** 
+  11:sign.c        **** /*************************************************
+  12:sign.c        **** * Name:        crypto_sign_keypair
+  13:sign.c        **** *
+  14:sign.c        **** * Description: Generates public and private key.
+  15:sign.c        **** *
+  16:sign.c        **** * Arguments:   - uint8_t *pk: pointer to output public key (allocated
+  17:sign.c        **** *                             array of CRYPTO_PUBLICKEYBYTES bytes)
+  18:sign.c        **** *              - uint8_t *sk: pointer to output private key (allocated
+  19:sign.c        **** *                             array of CRYPTO_SECRETKEYBYTES bytes)
+  20:sign.c        **** *
+  21:sign.c        **** * Returns 0 (success)
+  22:sign.c        **** **************************************************/
+  23:sign.c        **** int crypto_sign_keypair(uint8_t *pk, uint8_t *sk) {
+  36              		.loc 1 23 51 view -0
+  37              		.cfi_startproc
+  38              		@ args = 0, pretend = 0, frame = 37504
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  24:sign.c        ****   uint8_t seedbuf[2*SEEDBYTES + CRHBYTES];
+  40              		.loc 1 24 3 view .LVU1
+  25:sign.c        ****   uint8_t tr[TRBYTES];
+  41              		.loc 1 25 3 view .LVU2
+  26:sign.c        ****   const uint8_t *rho, *rhoprime, *key;
+  42              		.loc 1 26 3 view .LVU3
+  27:sign.c        ****   polyvecl mat[K];
+  43              		.loc 1 27 3 view .LVU4
+  28:sign.c        ****   polyvecl s1, s1hat;
+  44              		.loc 1 28 3 view .LVU5
+  29:sign.c        ****   polyveck s2, t1, t0;
+  45              		.loc 1 29 3 view .LVU6
+  30:sign.c        **** 
+  31:sign.c        ****   /* Get randomness for rho, rhoprime and key */
+  32:sign.c        ****   //randombytes(seedbuf, SEEDBYTES);
+  33:sign.c        ****   char seedbufcha[2*(2*SEEDBYTES+CRHBYTES)] ="E99CB21815AA2F4A54759D507C2E5B4B0DDB0B78A179FEBB90E13
+  46              		.loc 1 33 3 view .LVU7
+  23:sign.c        ****   uint8_t seedbuf[2*SEEDBYTES + CRHBYTES];
+  47              		.loc 1 23 51 is_stmt 0 view .LVU8
+  48 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+  49              	.LCFI0:
+  50              		.cfi_def_cfa_offset 28
+  51              		.cfi_offset 4, -28
+  52              		.cfi_offset 5, -24
+  53              		.cfi_offset 6, -20
+  54              		.cfi_offset 7, -16
+  55              		.cfi_offset 8, -12
+  56              		.cfi_offset 9, -8
+  57              		.cfi_offset 14, -4
+  58 0004 ADF5124D 		sub	sp, sp, #37376
+  59              	.LCFI1:
+  60              		.cfi_def_cfa_offset 37404
+  61 0008 A5B0     		sub	sp, sp, #148
+  62              	.LCFI2:
+  63              		.cfi_def_cfa_offset 37552
+  64              		.loc 1 33 8 view .LVU9
+  65 000a 4FF48072 		mov	r2, #256
+  23:sign.c        ****   uint8_t seedbuf[2*SEEDBYTES + CRHBYTES];
+  66              		.loc 1 23 51 view .LVU10
+  67 000e 0546     		mov	r5, r0
+  68 0010 0E46     		mov	r6, r1
+  69              		.loc 1 33 8 view .LVU11
+  70 0012 64A8     		add	r0, sp, #400
+  71              	.LVL1:
+  72              		.loc 1 33 8 view .LVU12
+  73 0014 4A49     		ldr	r1, .L9
+  74              	.LVL2:
+  75              		.loc 1 33 8 view .LVU13
+  76 0016 64AC     		add	r4, sp, #400
+  77 0018 FFF7FEFF 		bl	memcpy
+  78              	.LVL3:
+  34:sign.c        **** 	uint8_t cacheintsk[6*SEEDBYTES];
+  79              		.loc 1 34 2 is_stmt 1 view .LVU14
+  35:sign.c        **** 	for (int i = 0; i <2 * SEEDBYTES; i++)
+  80              		.loc 1 35 2 view .LVU15
+  81              	.LBB2:
+  82              		.loc 1 35 7 view .LVU16
+  83              		.loc 1 35 18 view .LVU17
+  84 001c A4F1C002 		sub	r2, r4, #192
+  85              	.LBE2:
+  33:sign.c        **** 	uint8_t cacheintsk[6*SEEDBYTES];
+  86              		.loc 1 33 8 is_stmt 0 view .LVU18
+  87 0020 1046     		mov	r0, r2
+  88              	.LBB3:
+  89              		.loc 1 35 11 view .LVU19
+  90 0022 0021     		movs	r1, #0
+  91              	.LVL4:
+  92              	.L4:
+  36:sign.c        **** 	{
+  37:sign.c        **** 		if (seedbufcha[i] - 'A' >= 0)
+  93              		.loc 1 37 3 is_stmt 1 view .LVU20
+  94              		.loc 1 37 17 is_stmt 0 view .LVU21
+  95 0024 14F8013B 		ldrb	r3, [r4], #1	@ zero_extendqisi2
+  96              		.loc 1 37 6 view .LVU22
+  97 0028 402B     		cmp	r3, #64
+  38:sign.c        **** 			cacheintsk[i] = 10 + seedbufcha[i] - 'A';
+  98              		.loc 1 38 4 is_stmt 1 view .LVU23
+  99              		.loc 1 38 39 is_stmt 0 view .LVU24
+ 100 002a 8CBF     		ite	hi
+ 101 002c 373B     		subhi	r3, r3, #55
+  39:sign.c        **** 		else
+  40:sign.c        **** 			cacheintsk[i] = seedbufcha[i] - '0';
+ 102              		.loc 1 40 4 is_stmt 1 view .LVU25
+ 103              		.loc 1 40 34 is_stmt 0 view .LVU26
+ 104 002e 303B     		subls	r3, r3, #48
+  35:sign.c        **** 	{
+ 105              		.loc 1 35 37 view .LVU27
+ 106 0030 0131     		adds	r1, r1, #1
+ 107              	.LVL5:
+ 108              		.loc 1 40 34 view .LVU28
+ 109 0032 DBB2     		uxtb	r3, r3
+  35:sign.c        **** 	{
+ 110              		.loc 1 35 2 view .LVU29
+ 111 0034 4029     		cmp	r1, #64
+ 112 0036 00F8013B 		strb	r3, [r0], #1
+  35:sign.c        **** 	{
+ 113              		.loc 1 35 36 is_stmt 1 view .LVU30
+ 114              	.LVL6:
+  35:sign.c        **** 	{
+ 115              		.loc 1 35 18 view .LVU31
+  35:sign.c        **** 	{
+ 116              		.loc 1 35 2 is_stmt 0 view .LVU32
+ 117 003a F3D1     		bne	.L4
+ 118 003c 14A9     		add	r1, sp, #80
+ 119              	.LVL7:
+  35:sign.c        **** 	{
+ 120              		.loc 1 35 2 view .LVU33
+ 121              	.LBE3:
+ 122              	.LBB4:
+  41:sign.c        **** 	}
+  42:sign.c        **** 	for (int i = 0; i < SEEDBYTES; i++)
+ 123              		.loc 1 42 11 view .LVU34
+ 124 003e 0023     		movs	r3, #0
+ 125 0040 0C46     		mov	r4, r1
+ 126              	.L5:
+ 127              	.LVL8:
+  43:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 128              		.loc 1 43 3 is_stmt 1 discriminator 3 view .LVU35
+ 129              		.loc 1 43 37 is_stmt 0 discriminator 3 view .LVU36
+ 130 0042 1778     		ldrb	r7, [r2]	@ zero_extendqisi2
+ 131 0044 5078     		ldrb	r0, [r2, #1]	@ zero_extendqisi2
+  42:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 132              		.loc 1 42 34 discriminator 3 view .LVU37
+ 133 0046 0133     		adds	r3, r3, #1
+ 134              	.LVL9:
+ 135              		.loc 1 43 37 discriminator 3 view .LVU38
+ 136 0048 00EB0710 		add	r0, r0, r7, lsl #4
+  42:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 137              		.loc 1 42 2 discriminator 3 view .LVU39
+ 138 004c 202B     		cmp	r3, #32
+ 139              		.loc 1 43 14 discriminator 3 view .LVU40
+ 140 004e 01F8010B 		strb	r0, [r1], #1
+  42:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 141              		.loc 1 42 33 is_stmt 1 discriminator 3 view .LVU41
+ 142              	.LVL10:
+  42:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 143              		.loc 1 42 18 discriminator 3 view .LVU42
+  42:sign.c        **** 		seedbuf[i] = cacheintsk[2*i] * 16 + cacheintsk[2*i + 1];
+ 144              		.loc 1 42 2 is_stmt 0 discriminator 3 view .LVU43
+ 145 0052 02F10202 		add	r2, r2, #2
+ 146 0056 F4D1     		bne	.L5
+ 147              	.LBE4:
+  44:sign.c        ****   
+  45:sign.c        ****   //
+  46:sign.c        ****   shake256(seedbuf, 2*SEEDBYTES + CRHBYTES, seedbuf, SEEDBYTES);
+ 148              		.loc 1 46 3 is_stmt 1 view .LVU44
+ 149 0058 2246     		mov	r2, r4
+ 150 005a 2046     		mov	r0, r4
+ 151 005c 8021     		movs	r1, #128
+ 152 005e FFF7FEFF 		bl	shake256
+ 153              	.LVL11:
+  47:sign.c        ****   rho = seedbuf;
+ 154              		.loc 1 47 3 view .LVU45
+  48:sign.c        ****   rhoprime = rho + SEEDBYTES;
+ 155              		.loc 1 48 3 view .LVU46
+  49:sign.c        ****   key = rhoprime + CRHBYTES;
+ 156              		.loc 1 49 3 view .LVU47
+  50:sign.c        **** 
+  51:sign.c        ****   /* Expand matrix */
+  52:sign.c        ****   polyvec_matrix_expand(mat, rho);
+ 157              		.loc 1 52 3 view .LVU48
+ 158 0062 0DF5A540 		add	r0, sp, #21120
+  53:sign.c        **** 
+  54:sign.c        ****   /* Sample short vectors s1 and s2 */
+  55:sign.c        ****   polyvecl_uniform_eta(&s1, rhoprime, 0);
+ 159              		.loc 1 55 3 is_stmt 0 view .LVU49
+ 160 0066 0DF17009 		add	r9, sp, #112
+ 161              	.LVL12:
+ 162              		.loc 1 55 3 view .LVU50
+ 163 006a A4AF     		add	r7, sp, #656
+  52:sign.c        **** 
+ 164              		.loc 1 52 3 view .LVU51
+ 165 006c 2146     		mov	r1, r4
+ 166 006e 1030     		adds	r0, r0, #16
+  56:sign.c        ****   polyveck_uniform_eta(&s2, rhoprime, L);
+ 167              		.loc 1 56 3 view .LVU52
+ 168 0070 0DF50A58 		add	r8, sp, #8832
+  52:sign.c        **** 
+ 169              		.loc 1 52 3 view .LVU53
+ 170 0074 FFF7FEFF 		bl	pqcrystals_dilithium_polyvec_matrix_expand
+ 171              	.LVL13:
+  55:sign.c        ****   polyveck_uniform_eta(&s2, rhoprime, L);
+ 172              		.loc 1 55 3 is_stmt 1 view .LVU54
+ 173              		.loc 1 56 3 is_stmt 0 view .LVU55
+ 174 0078 08F11008 		add	r8, r8, #16
+  55:sign.c        ****   polyveck_uniform_eta(&s2, rhoprime, L);
+ 175              		.loc 1 55 3 view .LVU56
+ 176 007c 4946     		mov	r1, r9
+ 177 007e 3846     		mov	r0, r7
+ 178 0080 0022     		movs	r2, #0
+ 179 0082 FFF7FEFF 		bl	pqcrystals_dilithium_polyvecl_uniform_eta
+ 180              	.LVL14:
+ 181              		.loc 1 56 3 is_stmt 1 view .LVU57
+ 182 0086 4946     		mov	r1, r9
+ 183 0088 4046     		mov	r0, r8
+ 184 008a 0422     		movs	r2, #4
+ 185 008c FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_uniform_eta
+ 186              	.LVL15:
+  57:sign.c        **** 
+  58:sign.c        ****   /* Matrix-vector multiplication */
+  59:sign.c        ****   s1hat = s1;
+ 187              		.loc 1 59 3 view .LVU58
+ 188              		.loc 1 59 9 is_stmt 0 view .LVU59
+ 189 0090 0DF59450 		add	r0, sp, #4736
+ 190 0094 3946     		mov	r1, r7
+ 191 0096 4FF48052 		mov	r2, #4096
+ 192 009a 1030     		adds	r0, r0, #16
+ 193 009c FFF7FEFF 		bl	memcpy
+ 194              	.LVL16:
+  60:sign.c        ****   polyvecl_ntt(&s1hat);
+ 195              		.loc 1 60 3 is_stmt 1 view .LVU60
+ 196 00a0 0DF59450 		add	r0, sp, #4736
+ 197 00a4 1030     		adds	r0, r0, #16
+ 198 00a6 FFF7FEFF 		bl	pqcrystals_dilithium_polyvecl_ntt
+ 199              	.LVL17:
+  61:sign.c        ****   polyvec_matrix_pointwise_montgomery(&t1, mat, &s1hat);
+ 200              		.loc 1 61 3 view .LVU61
+ 201 00aa 0DF59452 		add	r2, sp, #4736
+ 202 00ae 0DF5A541 		add	r1, sp, #21120
+ 203 00b2 0DF54A50 		add	r0, sp, #12928
+ 204 00b6 1032     		adds	r2, r2, #16
+ 205 00b8 1031     		adds	r1, r1, #16
+ 206 00ba 1030     		adds	r0, r0, #16
+ 207 00bc FFF7FEFF 		bl	pqcrystals_dilithium_polyvec_matrix_pointwise_montgomery
+ 208              	.LVL18:
+  62:sign.c        ****   polyveck_reduce(&t1);
+ 209              		.loc 1 62 3 view .LVU62
+ 210 00c0 0DF54A50 		add	r0, sp, #12928
+ 211 00c4 1030     		adds	r0, r0, #16
+ 212 00c6 FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_reduce
+ 213              	.LVL19:
+  63:sign.c        ****   polyveck_invntt_tomont(&t1);
+ 214              		.loc 1 63 3 view .LVU63
+ 215 00ca 0DF54A50 		add	r0, sp, #12928
+ 216 00ce 1030     		adds	r0, r0, #16
+ 217 00d0 FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_invntt_tomont
+ 218              	.LVL20:
+  64:sign.c        **** 
+  65:sign.c        ****   /* Add error vector s2 */
+  66:sign.c        ****   polyveck_add(&t1, &t1, &s2);
+ 219              		.loc 1 66 3 view .LVU64
+ 220 00d4 0DF54A51 		add	r1, sp, #12928
+ 221 00d8 1031     		adds	r1, r1, #16
+ 222 00da 4246     		mov	r2, r8
+ 223 00dc 0846     		mov	r0, r1
+ 224 00de FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_add
+ 225              	.LVL21:
+  67:sign.c        **** 
+  68:sign.c        ****   /* Extract t1 and write public key */
+  69:sign.c        ****   polyveck_caddq(&t1);
+ 226              		.loc 1 69 3 view .LVU65
+ 227 00e2 0DF54A50 		add	r0, sp, #12928
+ 228 00e6 1030     		adds	r0, r0, #16
+ 229 00e8 FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_caddq
+ 230              	.LVL22:
+  70:sign.c        ****   polyveck_power2round(&t1, &t0, &t1);
+ 231              		.loc 1 70 3 view .LVU66
+ 232 00ec 0DF58549 		add	r9, sp, #17024
+ 233              	.LVL23:
+ 234              		.loc 1 70 3 is_stmt 0 view .LVU67
+ 235 00f0 0DF54A52 		add	r2, sp, #12928
+ 236 00f4 09F11009 		add	r9, r9, #16
+ 237 00f8 1032     		adds	r2, r2, #16
+ 238 00fa 4946     		mov	r1, r9
+ 239 00fc 1046     		mov	r0, r2
+ 240 00fe FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_power2round
+ 241              	.LVL24:
+  71:sign.c        ****   pack_pk(pk, rho, &t1);
+ 242              		.loc 1 71 3 is_stmt 1 view .LVU68
+ 243 0102 0DF54A52 		add	r2, sp, #12928
+ 244 0106 2146     		mov	r1, r4
+ 245 0108 2846     		mov	r0, r5
+ 246 010a 1032     		adds	r2, r2, #16
+ 247 010c FFF7FEFF 		bl	pqcrystals_dilithium_pack_pk
+ 248              	.LVL25:
+  72:sign.c        **** 
+  73:sign.c        ****   /* Compute H(rho, t1) and write secret key */
+  74:sign.c        ****   shake256(tr, TRBYTES, pk, CRYPTO_PUBLICKEYBYTES);
+ 249              		.loc 1 74 3 view .LVU69
+ 250 0110 2A46     		mov	r2, r5
+ 251 0112 04A8     		add	r0, sp, #16
+ 252 0114 4FF4A463 		mov	r3, #1312
+ 253 0118 4021     		movs	r1, #64
+ 254 011a FFF7FEFF 		bl	shake256
+ 255              	.LVL26:
+  75:sign.c        ****   pack_sk(sk, rho, tr, key, &t0, &s1, &s2);
+ 256              		.loc 1 75 3 view .LVU70
+ 257 011e 3046     		mov	r0, r6
+ 258 0120 CDE90178 		strd	r7, r8, [sp, #4]
+ 259 0124 CDF80090 		str	r9, [sp]
+ 260 0128 2CAB     		add	r3, sp, #176
+ 261              	.LVL27:
+ 262              		.loc 1 75 3 is_stmt 0 view .LVU71
+ 263 012a 04AA     		add	r2, sp, #16
+ 264 012c 2146     		mov	r1, r4
+ 265 012e FFF7FEFF 		bl	pqcrystals_dilithium_pack_sk
+ 266              	.LVL28:
+  76:sign.c        **** 
+  77:sign.c        ****   return 0;
+ 267              		.loc 1 77 3 is_stmt 1 view .LVU72
+  78:sign.c        **** }
+ 268              		.loc 1 78 1 is_stmt 0 view .LVU73
+ 269 0132 0020     		movs	r0, #0
+ 270 0134 0DF5124D 		add	sp, sp, #37376
+ 271 0138 25B0     		add	sp, sp, #148
+ 272              	.LCFI3:
+ 273              		.cfi_def_cfa_offset 28
+ 274              		@ sp needed
+ 275 013a BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 276              	.LVL29:
+ 277              	.L10:
+ 278              		.loc 1 78 1 view .LVU74
+ 279 013e 00BF     		.align	2
+ 280              	.L9:
+ 281 0140 00000000 		.word	.LC0
+ 282              		.cfi_endproc
+ 283              	.LFE0:
+ 285              		.section	.text.crypto_sign_signature,"ax",%progbits
+ 286              		.align	1
+ 287              		.global	crypto_sign_signature
+ 288              		.syntax unified
+ 289              		.thumb
+ 290              		.thumb_func
+ 291              		.fpu softvfp
+ 293              	crypto_sign_signature:
+ 294              	.LVL30:
+ 295              	.LFB1:
+  79:sign.c        **** 
+  80:sign.c        **** 
+  81:sign.c        **** /*************************************************
+  82:sign.c        **** * Name:        crypto_sign_signature
+  83:sign.c        **** *
+  84:sign.c        **** * Description: Computes signature.
+  85:sign.c        **** *
+  86:sign.c        **** * Arguments:   - uint8_t *sig:   pointer to output signature (of length CRYPTO_BYTES)
+  87:sign.c        **** *              - size_t *siglen: pointer to output length of signature
+  88:sign.c        **** *              - uint8_t *m:     pointer to message to be signed
+  89:sign.c        **** *              - size_t mlen:    length of message
+  90:sign.c        **** *              - uint8_t *sk:    pointer to bit-packed secret key
+  91:sign.c        **** *
+  92:sign.c        **** * Returns 0 (success)
+  93:sign.c        **** **************************************************/
+  94:sign.c        **** int crypto_sign_signature(uint8_t *sig,
+  95:sign.c        ****                           size_t *siglen,
+  96:sign.c        ****                           const uint8_t *m,
+  97:sign.c        ****                           size_t mlen,
+  98:sign.c        ****                           const uint8_t *sk,uint8_t *p)
+  99:sign.c        **** {
+ 296              		.loc 1 99 1 is_stmt 1 view -0
+ 297              		.cfi_startproc
+ 298              		@ args = 8, pretend = 0, frame = 12784
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 100:sign.c        ****   uint8_t seedbuf[2 * SEEDBYTES + TRBYTES + RNDBYTES + 2 * CRHBYTES];
+ 300              		.loc 1 100 3 view .LVU76
+ 101:sign.c        ****   uint8_t *rho, *tr, *key, *mu, *rhoprime, *rnd;
+ 301              		.loc 1 101 3 view .LVU77
+ 102:sign.c        ****   uint16_t nonce = 0;
+ 302              		.loc 1 102 3 view .LVU78
+ 103:sign.c        ****   unsigned int n;
+ 303              		.loc 1 103 3 view .LVU79
+ 104:sign.c        ****   polyvecl mat[K], y, z;
+ 304              		.loc 1 104 3 view .LVU80
+ 105:sign.c        ****   polyveck t0, w1, w0;
+ 305              		.loc 1 105 3 view .LVU81
+ 106:sign.c        ****   poly cp;
+ 306              		.loc 1 106 3 view .LVU82
+ 107:sign.c        ****   shake256incctx state;
+ 307              		.loc 1 107 3 view .LVU83
+ 108:sign.c        **** 
+ 109:sign.c        ****   smallpoly s1_prime[L];
+ 308              		.loc 1 109 3 view .LVU84
+ 110:sign.c        ****   smallpoly s2_prime[K];
+ 309              		.loc 1 110 3 view .LVU85
+ 111:sign.c        ****   smallpoly cp_small;
+ 310              		.loc 1 111 3 view .LVU86
+ 112:sign.c        ****   smallhalfpoly cp_small_prime;
+ 311              		.loc 1 112 3 view .LVU87
+ 113:sign.c        **** 
+ 114:sign.c        ****   rho = seedbuf;
+ 312              		.loc 1 114 3 view .LVU88
+  99:sign.c        ****   uint8_t seedbuf[2 * SEEDBYTES + TRBYTES + RNDBYTES + 2 * CRHBYTES];
+ 313              		.loc 1 99 1 is_stmt 0 view .LVU89
+ 314 0000 30B5     		push	{r4, r5, lr}
+ 315              	.LCFI4:
+ 316              		.cfi_def_cfa_offset 12
+ 317              		.cfi_offset 4, -12
+ 318              		.cfi_offset 5, -8
+ 319              		.cfi_offset 14, -4
+ 320 0002 ADF5485D 		sub	sp, sp, #12800
+ 321              	.LCFI5:
+ 322              		.cfi_def_cfa_offset 12812
+ 323 0006 81B0     		sub	sp, sp, #4
+ 324              	.LCFI6:
+ 325              		.cfi_def_cfa_offset 12816
+ 326              	.LVL31:
+ 115:sign.c        ****   tr = rho + SEEDBYTES;
+ 327              		.loc 1 115 3 is_stmt 1 view .LVU90
+ 116:sign.c        ****   key = tr + TRBYTES;
+ 328              		.loc 1 116 3 view .LVU91
+ 117:sign.c        ****   rnd = key + SEEDBYTES;
+ 329              		.loc 1 117 3 view .LVU92
+ 118:sign.c        ****   mu = rnd + RNDBYTES;
+ 330              		.loc 1 118 3 view .LVU93
+ 119:sign.c        ****   rhoprime = mu + CRHBYTES;
+ 331              		.loc 1 119 3 view .LVU94
+ 120:sign.c        ****   unpack_sk(rho, tr, key, &t0, s1_prime, s2_prime, sk);
+ 332              		.loc 1 120 3 view .LVU95
+  99:sign.c        ****   uint8_t seedbuf[2 * SEEDBYTES + TRBYTES + RNDBYTES + 2 * CRHBYTES];
+ 333              		.loc 1 99 1 is_stmt 0 view .LVU96
+ 334 0008 1D46     		mov	r5, r3
+ 335              		.loc 1 120 3 view .LVU97
+ 336 000a 0DF54853 		add	r3, sp, #12800
+ 337              	.LVL32:
+ 338              		.loc 1 120 3 view .LVU98
+ 339 000e 1033     		adds	r3, r3, #16
+ 340 0010 40A9     		add	r1, sp, #256
+ 341              	.LVL33:
+ 342              		.loc 1 120 3 view .LVU99
+ 343 0012 1B68     		ldr	r3, [r3]
+ 344 0014 0293     		str	r3, [sp, #8]
+ 345 0016 0DF50853 		add	r3, sp, #8704
+ 346 001a 0193     		str	r3, [sp, #4]
+ 347 001c 0DF59053 		add	r3, sp, #4608
+ 348 0020 A1F12000 		sub	r0, r1, #32
+ 349              	.LVL34:
+  99:sign.c        ****   uint8_t seedbuf[2 * SEEDBYTES + TRBYTES + RNDBYTES + 2 * CRHBYTES];
+ 350              		.loc 1 99 1 view .LVU100
+ 351 0024 1446     		mov	r4, r2
+ 352              		.loc 1 120 3 view .LVU101
+ 353 0026 0093     		str	r3, [sp]
+ 354 0028 50AA     		add	r2, sp, #320
+ 355              	.LVL35:
+ 356              		.loc 1 120 3 view .LVU102
+ 357 002a 80AB     		add	r3, sp, #512
+ 358 002c FFF7FEFF 		bl	pqcrystals_dilithium_unpack_sk
+ 359              	.LVL36:
+ 121:sign.c        **** 
+ 122:sign.c        ****   /* Compute mu = CRH(tr, msg) */
+ 123:sign.c        ****   shake256_inc_init(&state);
+ 360              		.loc 1 123 3 is_stmt 1 view .LVU103
+ 361 0030 04A8     		add	r0, sp, #16
+ 362 0032 FFF7FEFF 		bl	shake256_inc_init
+ 363              	.LVL37:
+ 124:sign.c        ****   shake256_inc_absorb(&state, tr, TRBYTES);
+ 364              		.loc 1 124 3 view .LVU104
+ 365 0036 4022     		movs	r2, #64
+ 366 0038 40A9     		add	r1, sp, #256
+ 367              	.LVL38:
+ 368              		.loc 1 124 3 is_stmt 0 view .LVU105
+ 369 003a 04A8     		add	r0, sp, #16
+ 370 003c FFF7FEFF 		bl	shake256_inc_absorb
+ 371              	.LVL39:
+ 125:sign.c        ****   shake256_inc_absorb(&state, m, mlen);
+ 372              		.loc 1 125 3 is_stmt 1 view .LVU106
+ 373 0040 2A46     		mov	r2, r5
+ 374 0042 2146     		mov	r1, r4
+ 375 0044 04A8     		add	r0, sp, #16
+ 376 0046 FFF7FEFF 		bl	shake256_inc_absorb
+ 377              	.LVL40:
+ 126:sign.c        ****   shake256_inc_finalize(&state);
+ 378              		.loc 1 126 3 view .LVU107
+ 379 004a 04A8     		add	r0, sp, #16
+ 380 004c FFF7FEFF 		bl	shake256_inc_finalize
+ 381              	.LVL41:
+ 127:sign.c        ****   shake256_inc_squeeze(mu, CRHBYTES, &state);
+ 382              		.loc 1 127 3 view .LVU108
+ 383 0050 04AA     		add	r2, sp, #16
+ 384 0052 4021     		movs	r1, #64
+ 385 0054 60A8     		add	r0, sp, #384
+ 386              	.LVL42:
+ 387              		.loc 1 127 3 is_stmt 0 view .LVU109
+ 388 0056 FFF7FEFF 		bl	shake256_inc_squeeze
+ 389              	.LVL43:
+ 128:sign.c        **** 
+ 129:sign.c        ****   for (n = 0; n < RNDBYTES; n++) {
+ 390              		.loc 1 129 3 is_stmt 1 view .LVU110
+ 391              		.loc 1 129 15 view .LVU111
+ 130:sign.c        ****      rnd[n] = 0;
+ 392              		.loc 1 130 13 is_stmt 0 view .LVU112
+ 393 005a 2022     		movs	r2, #32
+ 394 005c 0021     		movs	r1, #0
+ 395 005e 58A8     		add	r0, sp, #352
+ 396              	.LVL44:
+ 397              		.loc 1 130 13 view .LVU113
+ 398 0060 FFF7FEFF 		bl	memset
+ 399              	.LVL45:
+ 131:sign.c        ****   }
+ 132:sign.c        ****   
+ 133:sign.c        ****   trigger_high();
+ 400              		.loc 1 133 3 is_stmt 1 view .LVU114
+ 401 0064 FFF7FEFF 		bl	trigger_high
+ 402              	.LVL46:
+ 134:sign.c        ****   shake256(rhoprime, CRHBYTES, key, SEEDBYTES + RNDBYTES + CRHBYTES);
+ 403              		.loc 1 134 3 view .LVU115
+ 404 0068 8023     		movs	r3, #128
+ 405 006a 50AA     		add	r2, sp, #320
+ 406              	.LVL47:
+ 407              		.loc 1 134 3 is_stmt 0 view .LVU116
+ 408 006c 4021     		movs	r1, #64
+ 409 006e 70A8     		add	r0, sp, #448
+ 410              	.LVL48:
+ 411              		.loc 1 134 3 view .LVU117
+ 412 0070 FFF7FEFF 		bl	shake256
+ 413              	.LVL49:
+ 135:sign.c        ****   trigger_low();
+ 414              		.loc 1 135 3 is_stmt 1 view .LVU118
+ 415 0074 FFF7FEFF 		bl	trigger_low
+ 416              	.LVL50:
+ 136:sign.c        ****   
+ 137:sign.c        ****   for(int ii=20; ii < CRHBYTES;ii++)
+ 417              		.loc 1 137 3 view .LVU119
+ 418              	.LBB5:
+ 419              		.loc 1 137 7 view .LVU120
+ 420              		.loc 1 137 18 view .LVU121
+ 138:sign.c        **** 	  p[ii] = rhoprime[ii];
+ 421              		.loc 1 138 10 is_stmt 0 view .LVU122
+ 422 0078 0DF54853 		add	r3, sp, #12800
+ 423 007c 1433     		adds	r3, r3, #20
+ 424 007e 1A68     		ldr	r2, [r3]
+ 425 0080 75AD     		add	r5, sp, #468
+ 426              	.LVL51:
+ 427              		.loc 1 138 10 view .LVU123
+ 428 0082 1432     		adds	r2, r2, #20
+ 429 0084 7FAB     		add	r3, sp, #508
+ 430              	.LVL52:
+ 431              	.L12:
+ 432              		.loc 1 138 10 view .LVU124
+ 433 0086 2C46     		mov	r4, r5
+ 434 0088 03CC     		ldmia	r4!, {r0, r1}
+ 435 008a 9C42     		cmp	r4, r3
+ 436 008c 1060     		str	r0, [r2]	@ unaligned
+ 437 008e 5160     		str	r1, [r2, #4]	@ unaligned
+ 438 0090 2546     		mov	r5, r4
+ 439 0092 02F10802 		add	r2, r2, #8
+ 440 0096 F6D1     		bne	.L12
+ 441 0098 2068     		ldr	r0, [r4]
+ 442 009a 1060     		str	r0, [r2]	@ unaligned
+ 443              	.LVL53:
+ 444              		.loc 1 138 10 view .LVU125
+ 445              	.LBE5:
+ 139:sign.c        ****   
+ 140:sign.c        ****   
+ 141:sign.c        ****   /* Expand matrix and transform vectors */
+ 142:sign.c        ****   
+ 143:sign.c        ****   return 0;
+ 446              		.loc 1 143 3 is_stmt 1 view .LVU126
+ 144:sign.c        **** }
+ 447              		.loc 1 144 1 is_stmt 0 view .LVU127
+ 448 009c 0020     		movs	r0, #0
+ 449 009e 0DF5485D 		add	sp, sp, #12800
+ 450 00a2 01B0     		add	sp, sp, #4
+ 451              	.LCFI7:
+ 452              		.cfi_def_cfa_offset 12
+ 453              		@ sp needed
+ 454 00a4 30BD     		pop	{r4, r5, pc}
+ 455              		.loc 1 144 1 view .LVU128
+ 456              		.cfi_endproc
+ 457              	.LFE1:
+ 459              		.section	.text.crypto_sign,"ax",%progbits
+ 460              		.align	1
+ 461              		.global	crypto_sign
+ 462              		.syntax unified
+ 463              		.thumb
+ 464              		.thumb_func
+ 465              		.fpu softvfp
+ 467              	crypto_sign:
+ 468              	.LVL54:
+ 469              	.LFB2:
+ 145:sign.c        **** 
+ 146:sign.c        **** /*************************************************
+ 147:sign.c        **** * Name:        crypto_sign
+ 148:sign.c        **** *
+ 149:sign.c        **** * Description: Compute signed message.
+ 150:sign.c        **** *
+ 151:sign.c        **** * Arguments:   - uint8_t *sm: pointer to output signed message (allocated
+ 152:sign.c        **** *                             array with CRYPTO_BYTES + mlen bytes),
+ 153:sign.c        **** *                             can be equal to m
+ 154:sign.c        **** *              - size_t *smlen: pointer to output length of signed
+ 155:sign.c        **** *                               message
+ 156:sign.c        **** *              - const uint8_t *m: pointer to message to be signed
+ 157:sign.c        **** *              - size_t mlen: length of message
+ 158:sign.c        **** *              - const uint8_t *sk: pointer to bit-packed secret key
+ 159:sign.c        **** *
+ 160:sign.c        **** * Returns 0 (success)
+ 161:sign.c        **** **************************************************/
+ 162:sign.c        **** int crypto_sign(uint8_t *sm,
+ 163:sign.c        ****                 size_t *smlen,
+ 164:sign.c        ****                 const uint8_t *m,
+ 165:sign.c        ****                 size_t mlen,
+ 166:sign.c        ****                 const uint8_t *sk,uint8_t *p)
+ 167:sign.c        **** {
+ 470              		.loc 1 167 1 is_stmt 1 view -0
+ 471              		.cfi_startproc
+ 472              		@ args = 8, pretend = 0, frame = 0
+ 473              		@ frame_needed = 0, uses_anonymous_args = 0
+ 474              		.loc 1 167 1 is_stmt 0 view .LVU130
+ 475 0000 73B5     		push	{r0, r1, r4, r5, r6, lr}
+ 476              	.LCFI8:
+ 477              		.cfi_def_cfa_offset 24
+ 478              		.cfi_offset 4, -16
+ 479              		.cfi_offset 5, -12
+ 480              		.cfi_offset 6, -8
+ 481              		.cfi_offset 14, -4
+ 482              		.loc 1 167 1 view .LVU131
+ 483 0002 0D46     		mov	r5, r1
+ 168:sign.c        ****   size_t i;
+ 484              		.loc 1 168 3 is_stmt 1 view .LVU132
+ 169:sign.c        **** 
+ 170:sign.c        ****   for(i = 0; i < mlen; ++i)
+ 485              		.loc 1 170 3 view .LVU133
+ 486              	.LVL55:
+ 167:sign.c        ****   size_t i;
+ 487              		.loc 1 167 1 is_stmt 0 view .LVU134
+ 488 0004 1C46     		mov	r4, r3
+ 489 0006 D118     		adds	r1, r2, r3
+ 490              	.LVL56:
+ 167:sign.c        ****   size_t i;
+ 491              		.loc 1 167 1 view .LVU135
+ 492 0008 03F67413 		addw	r3, r3, #2420
+ 493              	.LVL57:
+ 167:sign.c        ****   size_t i;
+ 494              		.loc 1 167 1 view .LVU136
+ 495 000c 0344     		add	r3, r3, r0
+ 496              	.LVL58:
+ 497              	.L15:
+ 498              		.loc 1 170 14 is_stmt 1 discriminator 1 view .LVU137
+ 499              		.loc 1 170 3 is_stmt 0 discriminator 1 view .LVU138
+ 500 000e 9142     		cmp	r1, r2
+ 501 0010 0FD1     		bne	.L16
+ 171:sign.c        ****     sm[CRYPTO_BYTES + mlen - 1 - i] = m[mlen - 1 - i];
+ 172:sign.c        ****   crypto_sign_signature(sm, smlen, sm + CRYPTO_BYTES, mlen, sk,p);
+ 502              		.loc 1 172 3 is_stmt 1 view .LVU139
+ 503 0012 079B     		ldr	r3, [sp, #28]
+ 504 0014 0193     		str	r3, [sp, #4]
+ 505 0016 069B     		ldr	r3, [sp, #24]
+ 506 0018 0093     		str	r3, [sp]
+ 507 001a 00F67412 		addw	r2, r0, #2420
+ 508              	.LVL59:
+ 509              		.loc 1 172 3 is_stmt 0 view .LVU140
+ 510 001e 2346     		mov	r3, r4
+ 511 0020 2946     		mov	r1, r5
+ 512 0022 FFF7FEFF 		bl	crypto_sign_signature
+ 513              	.LVL60:
+ 173:sign.c        ****   *smlen += mlen;
+ 514              		.loc 1 173 3 is_stmt 1 view .LVU141
+ 515              		.loc 1 173 10 is_stmt 0 view .LVU142
+ 516 0026 2B68     		ldr	r3, [r5]
+ 174:sign.c        ****   return 0;
+ 175:sign.c        **** }
+ 517              		.loc 1 175 1 view .LVU143
+ 518 0028 0020     		movs	r0, #0
+ 173:sign.c        ****   *smlen += mlen;
+ 519              		.loc 1 173 10 view .LVU144
+ 520 002a 2344     		add	r3, r3, r4
+ 521 002c 2B60     		str	r3, [r5]
+ 174:sign.c        ****   return 0;
+ 522              		.loc 1 174 3 is_stmt 1 view .LVU145
+ 523              		.loc 1 175 1 is_stmt 0 view .LVU146
+ 524 002e 02B0     		add	sp, sp, #8
+ 525              	.LCFI9:
+ 526              		.cfi_remember_state
+ 527              		.cfi_def_cfa_offset 16
+ 528              		@ sp needed
+ 529 0030 70BD     		pop	{r4, r5, r6, pc}
+ 530              	.LVL61:
+ 531              	.L16:
+ 532              	.LCFI10:
+ 533              		.cfi_restore_state
+ 171:sign.c        ****   crypto_sign_signature(sm, smlen, sm + CRYPTO_BYTES, mlen, sk,p);
+ 534              		.loc 1 171 5 is_stmt 1 discriminator 3 view .LVU147
+ 171:sign.c        ****   crypto_sign_signature(sm, smlen, sm + CRYPTO_BYTES, mlen, sk,p);
+ 535              		.loc 1 171 40 is_stmt 0 discriminator 3 view .LVU148
+ 536 0032 11F8016D 		ldrb	r6, [r1, #-1]!	@ zero_extendqisi2
+ 171:sign.c        ****   crypto_sign_signature(sm, smlen, sm + CRYPTO_BYTES, mlen, sk,p);
+ 537              		.loc 1 171 37 discriminator 3 view .LVU149
+ 538 0036 03F8016D 		strb	r6, [r3, #-1]!
+ 170:sign.c        ****     sm[CRYPTO_BYTES + mlen - 1 - i] = m[mlen - 1 - i];
+ 539              		.loc 1 170 24 is_stmt 1 discriminator 3 view .LVU150
+ 540 003a E8E7     		b	.L15
+ 541              		.cfi_endproc
+ 542              	.LFE2:
+ 544              		.section	.text.crypto_sign_verify,"ax",%progbits
+ 545              		.align	1
+ 546              		.global	crypto_sign_verify
+ 547              		.syntax unified
+ 548              		.thumb
+ 549              		.thumb_func
+ 550              		.fpu softvfp
+ 552              	crypto_sign_verify:
+ 553              	.LVL62:
+ 554              	.LFB3:
+ 176:sign.c        **** 
+ 177:sign.c        **** /*************************************************
+ 178:sign.c        **** * Name:        crypto_sign_verify
+ 179:sign.c        **** *
+ 180:sign.c        **** * Description: Verifies signature.
+ 181:sign.c        **** *
+ 182:sign.c        **** * Arguments:   - uint8_t *m: pointer to input signature
+ 183:sign.c        **** *              - size_t siglen: length of signature
+ 184:sign.c        **** *              - const uint8_t *m: pointer to message
+ 185:sign.c        **** *              - size_t mlen: length of message
+ 186:sign.c        **** *              - const uint8_t *pk: pointer to bit-packed public key
+ 187:sign.c        **** *
+ 188:sign.c        **** * Returns 0 if signature could be verified correctly and -1 otherwise
+ 189:sign.c        **** **************************************************/
+ 190:sign.c        **** int crypto_sign_verify(const uint8_t *sig,
+ 191:sign.c        ****                        size_t siglen,
+ 192:sign.c        ****                        const uint8_t *m,
+ 193:sign.c        ****                        size_t mlen,
+ 194:sign.c        ****                        const uint8_t *pk)
+ 195:sign.c        **** {
+ 555              		.loc 1 195 1 view -0
+ 556              		.cfi_startproc
+ 557              		@ args = 4, pretend = 0, frame = 34936
+ 558              		@ frame_needed = 0, uses_anonymous_args = 0
+ 196:sign.c        ****   unsigned int i;
+ 559              		.loc 1 196 3 view .LVU152
+ 197:sign.c        ****   uint8_t buf[K*POLYW1_PACKEDBYTES];
+ 560              		.loc 1 197 3 view .LVU153
+ 198:sign.c        ****   uint8_t rho[SEEDBYTES];
+ 561              		.loc 1 198 3 view .LVU154
+ 199:sign.c        ****   uint8_t mu[CRHBYTES];
+ 562              		.loc 1 199 3 view .LVU155
+ 200:sign.c        ****   uint8_t c[CTILDEBYTES];
+ 563              		.loc 1 200 3 view .LVU156
+ 201:sign.c        ****   uint8_t c2[CTILDEBYTES];
+ 564              		.loc 1 201 3 view .LVU157
+ 202:sign.c        ****   poly cp;
+ 565              		.loc 1 202 3 view .LVU158
+ 203:sign.c        ****   polyvecl mat[K], z;
+ 566              		.loc 1 203 3 view .LVU159
+ 204:sign.c        ****   polyveck t1, w1, h;
+ 567              		.loc 1 204 3 view .LVU160
+ 205:sign.c        ****   shake256incctx state;
+ 568              		.loc 1 205 3 view .LVU161
+ 206:sign.c        **** 
+ 207:sign.c        ****   if(siglen != CRYPTO_BYTES)
+ 569              		.loc 1 207 3 view .LVU162
+ 195:sign.c        ****   unsigned int i;
+ 570              		.loc 1 195 1 is_stmt 0 view .LVU163
+ 571 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 572              	.LCFI11:
+ 573              		.cfi_def_cfa_offset 20
+ 574              		.cfi_offset 4, -20
+ 575              		.cfi_offset 5, -16
+ 576              		.cfi_offset 6, -12
+ 577              		.cfi_offset 7, -8
+ 578              		.cfi_offset 14, -4
+ 579 0002 ADF5084D 		sub	sp, sp, #34816
+ 580              	.LCFI12:
+ 581              		.cfi_def_cfa_offset 34836
+ 582 0006 9FB0     		sub	sp, sp, #124
+ 583              	.LCFI13:
+ 584              		.cfi_def_cfa_offset 34960
+ 195:sign.c        ****   unsigned int i;
+ 585              		.loc 1 195 1 view .LVU164
+ 586 0008 1E46     		mov	r6, r3
+ 587 000a 0DF50843 		add	r3, sp, #34816
+ 588              	.LVL63:
+ 195:sign.c        ****   unsigned int i;
+ 589              		.loc 1 195 1 view .LVU165
+ 590 000e 9033     		adds	r3, r3, #144
+ 591 0010 1F68     		ldr	r7, [r3]
+ 592              		.loc 1 207 5 view .LVU166
+ 593 0012 40F67413 		movw	r3, #2420
+ 594 0016 9942     		cmp	r1, r3
+ 195:sign.c        ****   unsigned int i;
+ 595              		.loc 1 195 1 view .LVU167
+ 596 0018 0446     		mov	r4, r0
+ 597 001a 1546     		mov	r5, r2
+ 598              		.loc 1 207 5 view .LVU168
+ 599 001c 40F0B780 		bne	.L18
+ 208:sign.c        ****     return -1;
+ 209:sign.c        **** 
+ 210:sign.c        ****   unpack_pk(rho, &t1, pk);
+ 600              		.loc 1 210 3 is_stmt 1 view .LVU169
+ 601 0020 0DF5C351 		add	r1, sp, #6240
+ 602              	.LVL64:
+ 603              		.loc 1 210 3 is_stmt 0 view .LVU170
+ 604 0024 3A46     		mov	r2, r7
+ 605              	.LVL65:
+ 606              		.loc 1 210 3 view .LVU171
+ 607 0026 1831     		adds	r1, r1, #24
+ 608 0028 02A8     		add	r0, sp, #8
+ 609              	.LVL66:
+ 610              		.loc 1 210 3 view .LVU172
+ 611 002a FFF7FEFF 		bl	pqcrystals_dilithium_unpack_pk
+ 612              	.LVL67:
+ 211:sign.c        ****   if(unpack_sig(c, &z, &h, sig))
+ 613              		.loc 1 211 3 is_stmt 1 view .LVU173
+ 614              		.loc 1 211 6 is_stmt 0 view .LVU174
+ 615 002e 0DF56152 		add	r2, sp, #14400
+ 616 0032 2346     		mov	r3, r4
+ 617 0034 3832     		adds	r2, r2, #56
+ 618 0036 0DF67801 		addw	r1, sp, #2168
+ 619 003a 0AA8     		add	r0, sp, #40
+ 620 003c FFF7FEFF 		bl	pqcrystals_dilithium_unpack_sig
+ 621              	.LVL68:
+ 622              		.loc 1 211 5 view .LVU175
+ 623 0040 0028     		cmp	r0, #0
+ 624 0042 40F0A480 		bne	.L18
+ 212:sign.c        ****     return -1;
+ 213:sign.c        ****   if(polyvecl_chknorm(&z, GAMMA1 - BETA))
+ 625              		.loc 1 213 3 is_stmt 1 view .LVU176
+ 626              		.loc 1 213 6 is_stmt 0 view .LVU177
+ 627 0046 5349     		ldr	r1, .L22
+ 628 0048 0DF67800 		addw	r0, sp, #2168
+ 629 004c FFF7FEFF 		bl	pqcrystals_dilithium_polyvecl_chknorm
+ 630              	.LVL69:
+ 631              		.loc 1 213 5 view .LVU178
+ 632 0050 0446     		mov	r4, r0
+ 633              	.LVL70:
+ 634              		.loc 1 213 5 view .LVU179
+ 635 0052 0028     		cmp	r0, #0
+ 636 0054 40F09B80 		bne	.L18
+ 214:sign.c        ****     return -1;
+ 215:sign.c        **** 
+ 216:sign.c        ****   /* Compute CRH(h(rho, t1), msg) */
+ 217:sign.c        ****   shake256(mu, CRHBYTES, pk, CRYPTO_PUBLICKEYBYTES);
+ 637              		.loc 1 217 3 is_stmt 1 view .LVU180
+ 638 0058 4FF4A463 		mov	r3, #1312
+ 639 005c 3A46     		mov	r2, r7
+ 640 005e 4021     		movs	r1, #64
+ 641 0060 1AA8     		add	r0, sp, #104
+ 642 0062 FFF7FEFF 		bl	shake256
+ 643              	.LVL71:
+ 218:sign.c        ****   shake256_inc_init(&state);
+ 644              		.loc 1 218 3 view .LVU181
+ 645 0066 2AA8     		add	r0, sp, #168
+ 646 0068 FFF7FEFF 		bl	shake256_inc_init
+ 647              	.LVL72:
+ 219:sign.c        ****   shake256_inc_absorb(&state, mu, CRHBYTES);
+ 648              		.loc 1 219 3 view .LVU182
+ 649 006c 4022     		movs	r2, #64
+ 650 006e 1AA9     		add	r1, sp, #104
+ 651 0070 2AA8     		add	r0, sp, #168
+ 652 0072 FFF7FEFF 		bl	shake256_inc_absorb
+ 653              	.LVL73:
+ 220:sign.c        ****   shake256_inc_absorb(&state, m, mlen);
+ 654              		.loc 1 220 3 view .LVU183
+ 655 0076 3246     		mov	r2, r6
+ 656 0078 2946     		mov	r1, r5
+ 657 007a 2AA8     		add	r0, sp, #168
+ 658 007c FFF7FEFF 		bl	shake256_inc_absorb
+ 659              	.LVL74:
+ 221:sign.c        ****   shake256_inc_finalize(&state);
+ 660              		.loc 1 221 3 view .LVU184
+ 661 0080 2AA8     		add	r0, sp, #168
+ 662 0082 FFF7FEFF 		bl	shake256_inc_finalize
+ 663              	.LVL75:
+ 222:sign.c        ****   shake256_inc_squeeze(mu, CRHBYTES, &state);
+ 664              		.loc 1 222 3 view .LVU185
+ 665 0086 2AAA     		add	r2, sp, #168
+ 666 0088 4021     		movs	r1, #64
+ 667 008a 1AA8     		add	r0, sp, #104
+ 668 008c FFF7FEFF 		bl	shake256_inc_squeeze
+ 669              	.LVL76:
+ 223:sign.c        **** 
+ 224:sign.c        ****   /* Matrix-vector multiplication; compute Az - c2^dt1 */
+ 225:sign.c        ****   poly_challenge(&cp, c);
+ 670              		.loc 1 225 3 view .LVU186
+ 671 0090 0AA9     		add	r1, sp, #40
+ 672 0092 0DF58F60 		add	r0, sp, #1144
+ 673 0096 FFF7FEFF 		bl	pqcrystals_dilithium_poly_challenge
+ 674              	.LVL77:
+ 226:sign.c        ****   polyvec_matrix_expand(mat, rho);
+ 675              		.loc 1 226 3 view .LVU187
+ 676 009a 0DF59040 		add	r0, sp, #18432
+ 677 009e 02A9     		add	r1, sp, #8
+ 678 00a0 7830     		adds	r0, r0, #120
+ 679 00a2 FFF7FEFF 		bl	pqcrystals_dilithium_polyvec_matrix_expand
+ 680              	.LVL78:
+ 227:sign.c        **** 
+ 228:sign.c        ****   polyvecl_ntt(&z);
+ 681              		.loc 1 228 3 view .LVU188
+ 682 00a6 0DF67800 		addw	r0, sp, #2168
+ 683 00aa FFF7FEFF 		bl	pqcrystals_dilithium_polyvecl_ntt
+ 684              	.LVL79:
+ 229:sign.c        ****   polyvec_matrix_pointwise_montgomery(&w1, mat, &z);
+ 685              		.loc 1 229 3 view .LVU189
+ 686 00ae 0DF59041 		add	r1, sp, #18432
+ 687 00b2 0DF52150 		add	r0, sp, #10304
+ 688 00b6 0DF67802 		addw	r2, sp, #2168
+ 689 00ba 7831     		adds	r1, r1, #120
+ 690 00bc 3830     		adds	r0, r0, #56
+ 691 00be FFF7FEFF 		bl	pqcrystals_dilithium_polyvec_matrix_pointwise_montgomery
+ 692              	.LVL80:
+ 230:sign.c        **** 
+ 231:sign.c        ****   poly_ntt(&cp);
+ 693              		.loc 1 231 3 view .LVU190
+ 694 00c2 0DF58F60 		add	r0, sp, #1144
+ 695 00c6 FFF7FEFF 		bl	pqcrystals_dilithium_poly_ntt
+ 696              	.LVL81:
+ 232:sign.c        ****   polyveck_shiftl(&t1);
+ 697              		.loc 1 232 3 view .LVU191
+ 698 00ca 0DF5C350 		add	r0, sp, #6240
+ 699 00ce 1830     		adds	r0, r0, #24
+ 700 00d0 FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_shiftl
+ 701              	.LVL82:
+ 233:sign.c        ****   polyveck_ntt(&t1);
+ 702              		.loc 1 233 3 view .LVU192
+ 703 00d4 0DF5C350 		add	r0, sp, #6240
+ 704 00d8 1830     		adds	r0, r0, #24
+ 705 00da FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_ntt
+ 706              	.LVL83:
+ 234:sign.c        ****   polyveck_pointwise_poly_montgomery(&t1, &cp, &t1);
+ 707              		.loc 1 234 3 view .LVU193
+ 708 00de 0DF5C352 		add	r2, sp, #6240
+ 709 00e2 1832     		adds	r2, r2, #24
+ 710 00e4 1046     		mov	r0, r2
+ 711 00e6 0DF58F61 		add	r1, sp, #1144
+ 712 00ea FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_pointwise_poly_montgomery
+ 713              	.LVL84:
+ 235:sign.c        **** 
+ 236:sign.c        ****   polyveck_sub(&w1, &w1, &t1);
+ 714              		.loc 1 236 3 view .LVU194
+ 715 00ee 0DF52151 		add	r1, sp, #10304
+ 716 00f2 3831     		adds	r1, r1, #56
+ 717 00f4 0DF5C352 		add	r2, sp, #6240
+ 718 00f8 0846     		mov	r0, r1
+ 719 00fa 1832     		adds	r2, r2, #24
+ 720 00fc FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_sub
+ 721              	.LVL85:
+ 237:sign.c        ****   polyveck_reduce(&w1);
+ 722              		.loc 1 237 3 view .LVU195
+ 723 0100 0DF52150 		add	r0, sp, #10304
+ 724 0104 3830     		adds	r0, r0, #56
+ 725 0106 FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_reduce
+ 726              	.LVL86:
+ 238:sign.c        ****   polyveck_invntt_tomont(&w1);
+ 727              		.loc 1 238 3 view .LVU196
+ 728 010a 0DF52150 		add	r0, sp, #10304
+ 729 010e 3830     		adds	r0, r0, #56
+ 730 0110 FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_invntt_tomont
+ 731              	.LVL87:
+ 239:sign.c        **** 
+ 240:sign.c        ****   /* Reconstruct w1 */
+ 241:sign.c        ****   polyveck_caddq(&w1);
+ 732              		.loc 1 241 3 view .LVU197
+ 733 0114 0DF52150 		add	r0, sp, #10304
+ 734 0118 3830     		adds	r0, r0, #56
+ 735 011a FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_caddq
+ 736              	.LVL88:
+ 242:sign.c        ****   polyveck_use_hint(&w1, &w1, &h);
+ 737              		.loc 1 242 3 view .LVU198
+ 738 011e 0DF52151 		add	r1, sp, #10304
+ 739 0122 3831     		adds	r1, r1, #56
+ 740 0124 0DF56152 		add	r2, sp, #14400
+ 741 0128 3832     		adds	r2, r2, #56
+ 742 012a 0846     		mov	r0, r1
+ 743 012c FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_use_hint
+ 744              	.LVL89:
+ 243:sign.c        ****   polyveck_pack_w1(buf, &w1);
+ 745              		.loc 1 243 3 view .LVU199
+ 746 0130 0DF52151 		add	r1, sp, #10304
+ 747 0134 3831     		adds	r1, r1, #56
+ 748 0136 5EA8     		add	r0, sp, #376
+ 749 0138 FFF7FEFF 		bl	pqcrystals_dilithium_polyveck_pack_w1
+ 750              	.LVL90:
+ 244:sign.c        **** 
+ 245:sign.c        ****   /* Call random oracle and verify challenge */
+ 246:sign.c        ****   shake256_inc_init(&state);
+ 751              		.loc 1 246 3 view .LVU200
+ 752 013c 2AA8     		add	r0, sp, #168
+ 753 013e FFF7FEFF 		bl	shake256_inc_init
+ 754              	.LVL91:
+ 247:sign.c        ****   shake256_inc_absorb(&state, mu, CRHBYTES);
+ 755              		.loc 1 247 3 view .LVU201
+ 756 0142 4022     		movs	r2, #64
+ 757 0144 1AA9     		add	r1, sp, #104
+ 758 0146 2AA8     		add	r0, sp, #168
+ 759 0148 FFF7FEFF 		bl	shake256_inc_absorb
+ 760              	.LVL92:
+ 248:sign.c        ****   shake256_inc_absorb(&state, buf, K*POLYW1_PACKEDBYTES);
+ 761              		.loc 1 248 3 view .LVU202
+ 762 014c 4FF44072 		mov	r2, #768
+ 763 0150 5EA9     		add	r1, sp, #376
+ 764 0152 2AA8     		add	r0, sp, #168
+ 765 0154 FFF7FEFF 		bl	shake256_inc_absorb
+ 766              	.LVL93:
+ 249:sign.c        ****   shake256_inc_finalize(&state);
+ 767              		.loc 1 249 3 view .LVU203
+ 768 0158 2AA8     		add	r0, sp, #168
+ 769 015a FFF7FEFF 		bl	shake256_inc_finalize
+ 770              	.LVL94:
+ 250:sign.c        ****   shake256_inc_squeeze(c2, CTILDEBYTES, &state);
+ 771              		.loc 1 250 3 view .LVU204
+ 772 015e 12AB     		add	r3, sp, #72
+ 773 0160 2AAA     		add	r2, sp, #168
+ 774 0162 2021     		movs	r1, #32
+ 775 0164 1846     		mov	r0, r3
+ 776 0166 0193     		str	r3, [sp, #4]
+ 777 0168 FFF7FEFF 		bl	shake256_inc_squeeze
+ 778              	.LVL95:
+ 251:sign.c        ****   for(i = 0; i < CTILDEBYTES; ++i)
+ 779              		.loc 1 251 3 view .LVU205
+ 780              		.loc 1 251 14 view .LVU206
+ 781 016c 019A     		ldr	r2, [sp, #4]
+ 782 016e 0AAB     		add	r3, sp, #40
+ 783              		.loc 1 251 9 is_stmt 0 view .LVU207
+ 784 0170 2146     		mov	r1, r4
+ 785              	.LVL96:
+ 786              	.L19:
+ 252:sign.c        ****     if(c[i] != c2[i])
+ 787              		.loc 1 252 5 is_stmt 1 view .LVU208
+ 788              		.loc 1 252 9 is_stmt 0 view .LVU209
+ 789 0172 13F8015B 		ldrb	r5, [r3], #1	@ zero_extendqisi2
+ 790              		.loc 1 252 18 view .LVU210
+ 791 0176 12F8010B 		ldrb	r0, [r2], #1	@ zero_extendqisi2
+ 792              		.loc 1 252 7 view .LVU211
+ 793 017a 8542     		cmp	r5, r0
+ 794 017c 07D1     		bne	.L18
+ 251:sign.c        ****   for(i = 0; i < CTILDEBYTES; ++i)
+ 795              		.loc 1 251 31 is_stmt 1 discriminator 2 view .LVU212
+ 796 017e 0131     		adds	r1, r1, #1
+ 797              	.LVL97:
+ 251:sign.c        ****   for(i = 0; i < CTILDEBYTES; ++i)
+ 798              		.loc 1 251 14 discriminator 2 view .LVU213
+ 251:sign.c        ****   for(i = 0; i < CTILDEBYTES; ++i)
+ 799              		.loc 1 251 3 is_stmt 0 discriminator 2 view .LVU214
+ 800 0180 2029     		cmp	r1, #32
+ 801 0182 F6D1     		bne	.L19
+ 802              	.LVL98:
+ 803              	.L17:
+ 253:sign.c        ****       return -1;
+ 254:sign.c        **** 
+ 255:sign.c        ****   return 0;
+ 256:sign.c        **** }
+ 804              		.loc 1 256 1 view .LVU215
+ 805 0184 2046     		mov	r0, r4
+ 806 0186 0DF5084D 		add	sp, sp, #34816
+ 807 018a 1FB0     		add	sp, sp, #124
+ 808              	.LCFI14:
+ 809              		.cfi_remember_state
+ 810              		.cfi_def_cfa_offset 20
+ 811              		@ sp needed
+ 812 018c F0BD     		pop	{r4, r5, r6, r7, pc}
+ 813              	.LVL99:
+ 814              	.L18:
+ 815              	.LCFI15:
+ 816              		.cfi_restore_state
+ 208:sign.c        **** 
+ 817              		.loc 1 208 12 view .LVU216
+ 818 018e 4FF0FF34 		mov	r4, #-1
+ 819 0192 F7E7     		b	.L17
+ 820              	.L23:
+ 821              		.align	2
+ 822              	.L22:
+ 823 0194 B2FF0100 		.word	130994
+ 824              		.cfi_endproc
+ 825              	.LFE3:
+ 827              		.section	.text.crypto_sign_open,"ax",%progbits
+ 828              		.align	1
+ 829              		.global	crypto_sign_open
+ 830              		.syntax unified
+ 831              		.thumb
+ 832              		.thumb_func
+ 833              		.fpu softvfp
+ 835              	crypto_sign_open:
+ 836              	.LVL100:
+ 837              	.LFB4:
+ 257:sign.c        **** 
+ 258:sign.c        **** /*************************************************
+ 259:sign.c        **** * Name:        crypto_sign_open
+ 260:sign.c        **** *
+ 261:sign.c        **** * Description: Verify signed message.
+ 262:sign.c        **** *
+ 263:sign.c        **** * Arguments:   - uint8_t *m: pointer to output message (allocated
+ 264:sign.c        **** *                            array with smlen bytes), can be equal to sm
+ 265:sign.c        **** *              - size_t *mlen: pointer to output length of message
+ 266:sign.c        **** *              - const uint8_t *sm: pointer to signed message
+ 267:sign.c        **** *              - size_t smlen: length of signed message
+ 268:sign.c        **** *              - const uint8_t *pk: pointer to bit-packed public key
+ 269:sign.c        **** *
+ 270:sign.c        **** * Returns 0 if signed message could be verified correctly and -1 otherwise
+ 271:sign.c        **** **************************************************/
+ 272:sign.c        **** int crypto_sign_open(uint8_t *m,
+ 273:sign.c        ****                      size_t *mlen,
+ 274:sign.c        ****                      const uint8_t *sm,
+ 275:sign.c        ****                      size_t smlen,
+ 276:sign.c        ****                      const uint8_t *pk)
+ 277:sign.c        **** {
+ 838              		.loc 1 277 1 is_stmt 1 view -0
+ 839              		.cfi_startproc
+ 840              		@ args = 4, pretend = 0, frame = 0
+ 841              		@ frame_needed = 0, uses_anonymous_args = 0
+ 278:sign.c        ****   size_t i;
+ 842              		.loc 1 278 3 view .LVU218
+ 279:sign.c        **** 
+ 280:sign.c        ****   if(smlen < CRYPTO_BYTES)
+ 843              		.loc 1 280 3 view .LVU219
+ 277:sign.c        ****   size_t i;
+ 844              		.loc 1 277 1 is_stmt 0 view .LVU220
+ 845 0000 F7B5     		push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 846              	.LCFI16:
+ 847              		.cfi_def_cfa_offset 32
+ 848              		.cfi_offset 4, -20
+ 849              		.cfi_offset 5, -16
+ 850              		.cfi_offset 6, -12
+ 851              		.cfi_offset 7, -8
+ 852              		.cfi_offset 14, -4
+ 277:sign.c        ****   size_t i;
+ 853              		.loc 1 277 1 view .LVU221
+ 854 0002 1D46     		mov	r5, r3
+ 855              		.loc 1 280 5 view .LVU222
+ 856 0004 40F67313 		movw	r3, #2419
+ 857              	.LVL101:
+ 858              		.loc 1 280 5 view .LVU223
+ 859 0008 9D42     		cmp	r5, r3
+ 277:sign.c        ****   size_t i;
+ 860              		.loc 1 277 1 view .LVU224
+ 861 000a 0746     		mov	r7, r0
+ 862 000c 0E46     		mov	r6, r1
+ 863 000e 1446     		mov	r4, r2
+ 864              		.loc 1 280 5 view .LVU225
+ 865 0010 19D9     		bls	.L25
+ 281:sign.c        ****     goto badsig;
+ 282:sign.c        **** 
+ 283:sign.c        ****   *mlen = smlen - CRYPTO_BYTES;
+ 866              		.loc 1 283 3 is_stmt 1 view .LVU226
+ 284:sign.c        ****   if(crypto_sign_verify(sm, CRYPTO_BYTES, sm + CRYPTO_BYTES, *mlen, pk))
+ 867              		.loc 1 284 6 is_stmt 0 view .LVU227
+ 868 0012 089A     		ldr	r2, [sp, #32]
+ 869              	.LVL102:
+ 283:sign.c        ****   if(crypto_sign_verify(sm, CRYPTO_BYTES, sm + CRYPTO_BYTES, *mlen, pk))
+ 870              		.loc 1 283 17 view .LVU228
+ 871 0014 A5F67413 		subw	r3, r5, #2420
+ 283:sign.c        ****   if(crypto_sign_verify(sm, CRYPTO_BYTES, sm + CRYPTO_BYTES, *mlen, pk))
+ 872              		.loc 1 283 9 view .LVU229
+ 873 0018 0B60     		str	r3, [r1]
+ 874              		.loc 1 284 3 is_stmt 1 view .LVU230
+ 875              		.loc 1 284 6 is_stmt 0 view .LVU231
+ 876 001a 2046     		mov	r0, r4
+ 877              	.LVL103:
+ 878              		.loc 1 284 6 view .LVU232
+ 879 001c 0092     		str	r2, [sp]
+ 880 001e 40F67411 		movw	r1, #2420
+ 881              	.LVL104:
+ 882              		.loc 1 284 6 view .LVU233
+ 883 0022 04F67412 		addw	r2, r4, #2420
+ 884 0026 FFF7FEFF 		bl	crypto_sign_verify
+ 885              	.LVL105:
+ 886              		.loc 1 284 5 view .LVU234
+ 887 002a 60B9     		cbnz	r0, .L25
+ 888 002c 04F67314 		addw	r4, r4, #2419
+ 889              	.LVL106:
+ 285:sign.c        ****     goto badsig;
+ 286:sign.c        ****   else {
+ 287:sign.c        ****     /* All good, copy msg, return 0 */
+ 288:sign.c        ****     for(i = 0; i < *mlen; ++i)
+ 890              		.loc 1 288 11 view .LVU235
+ 891 0030 0346     		mov	r3, r0
+ 892              	.LVL107:
+ 893              	.L26:
+ 894              		.loc 1 288 16 is_stmt 1 discriminator 1 view .LVU236
+ 895              		.loc 1 288 5 is_stmt 0 discriminator 1 view .LVU237
+ 896 0032 3268     		ldr	r2, [r6]
+ 897 0034 9A42     		cmp	r2, r3
+ 898 0036 01D8     		bhi	.L27
+ 899              	.LVL108:
+ 900              	.L24:
+ 289:sign.c        ****       m[i] = sm[CRYPTO_BYTES + i];
+ 290:sign.c        ****     return 0;
+ 291:sign.c        ****   }
+ 292:sign.c        **** 
+ 293:sign.c        **** badsig:
+ 294:sign.c        ****   /* Signature verification failed */
+ 295:sign.c        ****   *mlen = -1;
+ 296:sign.c        ****   for(i = 0; i < smlen; ++i)
+ 297:sign.c        ****     m[i] = 0;
+ 298:sign.c        **** 
+ 299:sign.c        ****   return -1;
+ 300:sign.c        **** }
+ 901              		.loc 1 300 1 view .LVU238
+ 902 0038 03B0     		add	sp, sp, #12
+ 903              	.LCFI17:
+ 904              		.cfi_remember_state
+ 905              		.cfi_def_cfa_offset 20
+ 906              		@ sp needed
+ 907 003a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 908              	.LVL109:
+ 909              	.L27:
+ 910              	.LCFI18:
+ 911              		.cfi_restore_state
+ 289:sign.c        ****       m[i] = sm[CRYPTO_BYTES + i];
+ 912              		.loc 1 289 7 is_stmt 1 discriminator 3 view .LVU239
+ 289:sign.c        ****       m[i] = sm[CRYPTO_BYTES + i];
+ 913              		.loc 1 289 16 is_stmt 0 discriminator 3 view .LVU240
+ 914 003c 14F8012F 		ldrb	r2, [r4, #1]!	@ zero_extendqisi2
+ 289:sign.c        ****       m[i] = sm[CRYPTO_BYTES + i];
+ 915              		.loc 1 289 12 discriminator 3 view .LVU241
+ 916 0040 FA54     		strb	r2, [r7, r3]
+ 288:sign.c        ****       m[i] = sm[CRYPTO_BYTES + i];
+ 917              		.loc 1 288 27 is_stmt 1 discriminator 3 view .LVU242
+ 918 0042 0133     		adds	r3, r3, #1
+ 919              	.LVL110:
+ 288:sign.c        ****       m[i] = sm[CRYPTO_BYTES + i];
+ 920              		.loc 1 288 27 is_stmt 0 discriminator 3 view .LVU243
+ 921 0044 F5E7     		b	.L26
+ 922              	.LVL111:
+ 923              	.L25:
+ 924              	.LDL1:
+ 295:sign.c        ****   for(i = 0; i < smlen; ++i)
+ 925              		.loc 1 295 3 is_stmt 1 view .LVU244
+ 295:sign.c        ****   for(i = 0; i < smlen; ++i)
+ 926              		.loc 1 295 9 is_stmt 0 view .LVU245
+ 927 0046 4FF0FF34 		mov	r4, #-1
+ 928              	.LVL112:
+ 295:sign.c        ****   for(i = 0; i < smlen; ++i)
+ 929              		.loc 1 295 9 view .LVU246
+ 930 004a 3460     		str	r4, [r6]
+ 296:sign.c        ****     m[i] = 0;
+ 931              		.loc 1 296 3 is_stmt 1 view .LVU247
+ 932              	.LVL113:
+ 297:sign.c        **** 
+ 933              		.loc 1 297 10 is_stmt 0 view .LVU248
+ 934 004c 2A46     		mov	r2, r5
+ 935 004e 0021     		movs	r1, #0
+ 936 0050 3846     		mov	r0, r7
+ 937 0052 FFF7FEFF 		bl	memset
+ 938              	.LVL114:
+ 299:sign.c        **** }
+ 939              		.loc 1 299 10 view .LVU249
+ 940 0056 2046     		mov	r0, r4
+ 941              	.LVL115:
+ 299:sign.c        **** }
+ 942              		.loc 1 299 10 view .LVU250
+ 943 0058 EEE7     		b	.L24
+ 944              		.cfi_endproc
+ 945              	.LFE4:
+ 947              		.text
+ 948              	.Letext0:
+ 949              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 950              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 951              		.file 4 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\lib\\gcc\\arm-none-eabi\\
+ 952              		.file 5 "poly.h"
+ 953              		.file 6 "polyvec.h"
+ 954              		.file 7 "smallpoly.h"
+ 955              		.file 8 "fips202.h"
+ 956              		.file 9 "packing.h"
+ 957              		.file 10 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:00000000 sign.c
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:24     .text.crypto_sign_keypair:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:32     .text.crypto_sign_keypair:00000000 crypto_sign_keypair
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:281    .text.crypto_sign_keypair:00000140 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:286    .text.crypto_sign_signature:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:293    .text.crypto_sign_signature:00000000 crypto_sign_signature
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:460    .text.crypto_sign:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:467    .text.crypto_sign:00000000 crypto_sign
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:545    .text.crypto_sign_verify:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:552    .text.crypto_sign_verify:00000000 crypto_sign_verify
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:823    .text.crypto_sign_verify:00000194 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:828    .text.crypto_sign_open:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccFu6309.s:835    .text.crypto_sign_open:00000000 crypto_sign_open
+
+UNDEFINED SYMBOLS
+memcpy
+shake256
+pqcrystals_dilithium_polyvec_matrix_expand
+pqcrystals_dilithium_polyvecl_uniform_eta
+pqcrystals_dilithium_polyveck_uniform_eta
+pqcrystals_dilithium_polyvecl_ntt
+pqcrystals_dilithium_polyvec_matrix_pointwise_montgomery
+pqcrystals_dilithium_polyveck_reduce
+pqcrystals_dilithium_polyveck_invntt_tomont
+pqcrystals_dilithium_polyveck_add
+pqcrystals_dilithium_polyveck_caddq
+pqcrystals_dilithium_polyveck_power2round
+pqcrystals_dilithium_pack_pk
+pqcrystals_dilithium_pack_sk
+pqcrystals_dilithium_unpack_sk
+shake256_inc_init
+shake256_inc_absorb
+shake256_inc_finalize
+shake256_inc_squeeze
+memset
+trigger_high
+trigger_low
+pqcrystals_dilithium_unpack_pk
+pqcrystals_dilithium_unpack_sig
+pqcrystals_dilithium_polyvecl_chknorm
+pqcrystals_dilithium_poly_challenge
+pqcrystals_dilithium_poly_ntt
+pqcrystals_dilithium_polyveck_shiftl
+pqcrystals_dilithium_polyveck_ntt
+pqcrystals_dilithium_polyveck_pointwise_poly_montgomery
+pqcrystals_dilithium_polyveck_sub
+pqcrystals_dilithium_polyveck_use_hint
+pqcrystals_dilithium_polyveck_pack_w1

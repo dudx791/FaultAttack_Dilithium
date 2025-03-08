@@ -1,0 +1,468 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"mask_main.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.mask_hash,"ax",%progbits
+  16              		.align	1
+  17              		.global	mask_hash
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	mask_hash:
+  25              	.LVL0:
+  26              	.LFB3:
+  27              		.file 1 "mask_main.c"
+   1:mask_main.c   **** #include <stdio.h>
+   2:mask_main.c   **** #include <stdlib.h>
+   3:mask_main.c   **** #include <string.h>
+   4:mask_main.c   **** #include <ctype.h>
+   5:mask_main.c   **** #include "api.h"
+   6:mask_main.c   **** #include "params.h"
+   7:mask_main.c   **** #include "config.h"
+   8:mask_main.c   **** #include "masking_interface.h"
+   9:mask_main.c   **** #include "fips202.h"
+  10:mask_main.c   **** 
+  11:mask_main.c   **** uint8_t mask_hash(uint8_t cmd, uint8_t scmd, uint8_t len, uint8_t* p)
+  12:mask_main.c   **** {
+  28              		.loc 1 12 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 872
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  13:mask_main.c   **** 
+  14:mask_main.c   ****   size_t mlen = 33;
+  32              		.loc 1 14 3 view .LVU1
+  15:mask_main.c   ****   uint8_t seed_y[64*N_SHARES];
+  33              		.loc 1 15 3 view .LVU2
+  16:mask_main.c   ****   uint8_t in[(SEEDBYTES+CRHBYTES)*N_SHARES];
+  34              		.loc 1 16 3 view .LVU3
+  17:mask_main.c   ****   uint8_t masked_key[SEEDBYTES*N_SHARES];
+  35              		.loc 1 17 3 view .LVU4
+  18:mask_main.c   ****   
+  19:mask_main.c   ****   //給消息賦值
+  20:mask_main.c   **** 	uint8_t m[33];
+  36              		.loc 1 20 2 view .LVU5
+  21:mask_main.c   **** 	for(int ii=0; ii < 33;ii++)
+  37              		.loc 1 21 2 view .LVU6
+  38              	.LBB2:
+  39              		.loc 1 21 6 view .LVU7
+  40              		.loc 1 21 16 view .LVU8
+  41              	.LBE2:
+  12:mask_main.c   **** 
+  42              		.loc 1 12 1 is_stmt 0 view .LVU9
+  43 0000 70B5     		push	{r4, r5, r6, lr}
+  44              	.LCFI0:
+  45              		.cfi_def_cfa_offset 16
+  46              		.cfi_offset 4, -16
+  47              		.cfi_offset 5, -12
+  48              		.cfi_offset 6, -8
+  49              		.cfi_offset 14, -4
+  50 0002 ADF55A7D 		sub	sp, sp, #872
+  51              	.LCFI1:
+  52              		.cfi_def_cfa_offset 888
+  12:mask_main.c   **** 
+  53              		.loc 1 12 1 view .LVU10
+  54 0006 1E46     		mov	r6, r3
+  55              	.LBB3:
+  22:mask_main.c   **** 		m[ii] =p[ii];
+  56              		.loc 1 22 9 view .LVU11
+  57 0008 01AA     		add	r2, sp, #4
+  58              	.LVL1:
+  59              		.loc 1 22 9 view .LVU12
+  60 000a 03F12005 		add	r5, r3, #32
+  61              	.LVL2:
+  62              	.L2:
+  63              		.loc 1 22 9 view .LVU13
+  64 000e 1868     		ldr	r0, [r3]	@ unaligned
+  65 0010 5968     		ldr	r1, [r3, #4]	@ unaligned
+  66 0012 1446     		mov	r4, r2
+  67 0014 03C4     		stmia	r4!, {r0, r1}
+  68 0016 0833     		adds	r3, r3, #8
+  69 0018 AB42     		cmp	r3, r5
+  70 001a 2246     		mov	r2, r4
+  71 001c F7D1     		bne	.L2
+  72 001e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  73 0020 2370     		strb	r3, [r4]
+  74              	.LVL3:
+  75              		.loc 1 22 9 view .LVU14
+  76              	.LBE3:
+  77              	.LBB4:
+  23:mask_main.c   **** 	
+  24:mask_main.c   **** 	
+  25:mask_main.c   **** 	//固定賦值給masked_key
+  26:mask_main.c   **** 	for(int ii=0; ii < 96;ii++)
+  27:mask_main.c   **** 		masked_key[ii] =p[85+ii];
+  78              		.loc 1 27 18 view .LVU15
+  79 0022 6022     		movs	r2, #96
+  80 0024 06F15501 		add	r1, r6, #85
+  81 0028 22A8     		add	r0, sp, #136
+  82 002a FFF7FEFF 		bl	memcpy
+  83              	.LVL4:
+  84              	.LBE4:
+  85              	.LBB5:
+  28:mask_main.c   ****   
+  29:mask_main.c   ****   
+  30:mask_main.c   ****   //給tr賦值
+  31:mask_main.c   **** 	uint8_t tr[48];
+  32:mask_main.c   **** 	for(int ii=0; ii < 48;ii++)
+  33:mask_main.c   **** 		tr[ii] =p[35+ii];
+  86              		.loc 1 33 10 view .LVU16
+  87 002e 0AAC     		add	r4, sp, #40
+  88 0030 06F12303 		add	r3, r6, #35
+  89 0034 06F15305 		add	r5, r6, #83
+  90              	.L3:
+  91 0038 1868     		ldr	r0, [r3]	@ unaligned
+  92 003a 5968     		ldr	r1, [r3, #4]	@ unaligned
+  93 003c 2246     		mov	r2, r4
+  94 003e 03C2     		stmia	r2!, {r0, r1}
+  95 0040 0833     		adds	r3, r3, #8
+  96 0042 AB42     		cmp	r3, r5
+  97 0044 1446     		mov	r4, r2
+  98 0046 F7D1     		bne	.L3
+  99              	.LBE5:
+  34:mask_main.c   ****   
+  35:mask_main.c   ****   
+  36:mask_main.c   ****   //計算mu
+  37:mask_main.c   ****   keccak_state state;
+ 100              		.loc 1 37 3 is_stmt 1 view .LVU17
+  38:mask_main.c   ****   uint8_t mu[48];
+ 101              		.loc 1 38 3 view .LVU18
+  39:mask_main.c   ****   shake256_init(&state);
+ 102              		.loc 1 39 3 view .LVU19
+ 103 0048 6AA8     		add	r0, sp, #424
+ 104 004a FFF7FEFF 		bl	pqcrystals_fips202_ref_shake256_init
+ 105              	.LVL5:
+  40:mask_main.c   ****   shake256_absorb(&state, tr, CRHBYTES);
+ 106              		.loc 1 40 3 view .LVU20
+ 107 004e 0AA9     		add	r1, sp, #40
+ 108 0050 6AA8     		add	r0, sp, #424
+ 109 0052 3022     		movs	r2, #48
+ 110 0054 FFF7FEFF 		bl	pqcrystals_fips202_ref_shake256_absorb
+ 111              	.LVL6:
+  41:mask_main.c   ****   shake256_absorb(&state, m, mlen);
+ 112              		.loc 1 41 3 view .LVU21
+ 113 0058 01A9     		add	r1, sp, #4
+ 114 005a 2122     		movs	r2, #33
+ 115 005c 6AA8     		add	r0, sp, #424
+ 116 005e FFF7FEFF 		bl	pqcrystals_fips202_ref_shake256_absorb
+ 117              	.LVL7:
+  42:mask_main.c   ****   shake256_finalize(&state);
+ 118              		.loc 1 42 3 view .LVU22
+ 119 0062 6AA8     		add	r0, sp, #424
+ 120 0064 FFF7FEFF 		bl	pqcrystals_fips202_ref_shake256_finalize
+ 121              	.LVL8:
+  43:mask_main.c   ****   shake256_squeeze(mu, CRHBYTES, &state);
+ 122              		.loc 1 43 3 view .LVU23
+ 123              	.LBB6:
+ 124              	.LBB7:
+  44:mask_main.c   ****   
+  45:mask_main.c   ****   
+  46:mask_main.c   ****   for(int i=0; i < SEEDBYTES; ++i){
+  47:mask_main.c   ****     for(int j=0; j < N_SHARES; ++j){
+  48:mask_main.c   ****       in[i + (SEEDBYTES+CRHBYTES)*j] = masked_key[i + (SEEDBYTES)*j]; 
+ 125              		.loc 1 48 38 is_stmt 0 view .LVU24
+ 126 0068 22AC     		add	r4, sp, #136
+ 127              	.LBE7:
+ 128              	.LBE6:
+  43:mask_main.c   ****   shake256_squeeze(mu, CRHBYTES, &state);
+ 129              		.loc 1 43 3 view .LVU25
+ 130 006a 6AAA     		add	r2, sp, #424
+ 131 006c 16A8     		add	r0, sp, #88
+ 132 006e 3021     		movs	r1, #48
+ 133 0070 FFF7FEFF 		bl	pqcrystals_fips202_ref_shake256_squeeze
+ 134              	.LVL9:
+  46:mask_main.c   ****     for(int j=0; j < N_SHARES; ++j){
+ 135              		.loc 1 46 3 is_stmt 1 view .LVU26
+ 136              	.LBB9:
+  46:mask_main.c   ****     for(int j=0; j < N_SHARES; ++j){
+ 137              		.loc 1 46 7 view .LVU27
+  46:mask_main.c   ****     for(int j=0; j < N_SHARES; ++j){
+ 138              		.loc 1 46 16 view .LVU28
+ 139              	.LBB8:
+ 140              		.loc 1 48 38 is_stmt 0 view .LVU29
+ 141 0074 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 142 0076 9EAD     		add	r5, sp, #632
+ 143 0078 0FC5     		stmia	r5!, {r0, r1, r2, r3}
+ 144 007a 94E80F00 		ldm	r4, {r0, r1, r2, r3}
+ 145 007e 85E80F00 		stm	r5, {r0, r1, r2, r3}
+ 146 0082 2AAD     		add	r5, sp, #168
+ 147 0084 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 148 0086 B2AC     		add	r4, sp, #712
+ 149 0088 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 150 008a 95E80F00 		ldm	r5, {r0, r1, r2, r3}
+ 151 008e 32AD     		add	r5, sp, #200
+ 152 0090 84E80F00 		stm	r4, {r0, r1, r2, r3}
+ 153 0094 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ 154 0096 C6AC     		add	r4, sp, #792
+ 155 0098 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 156 009a 95E80F00 		ldm	r5, {r0, r1, r2, r3}
+ 157 009e 84E80F00 		stm	r4, {r0, r1, r2, r3}
+ 158              	.LVL10:
+ 159              		.loc 1 48 38 view .LVU30
+ 160              	.LBE8:
+ 161              	.LBE9:
+ 162              	.LBB10:
+  49:mask_main.c   ****     }
+  50:mask_main.c   ****   }
+  51:mask_main.c   **** 
+  52:mask_main.c   ****   for(int i=SEEDBYTES; i < SEEDBYTES+CRHBYTES; ++i){
+  53:mask_main.c   ****     in[i] = mu[i-SEEDBYTES];
+ 163              		.loc 1 53 11 view .LVU31
+ 164 00a2 16AC     		add	r4, sp, #88
+ 165 00a4 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 166 00a6 A6AD     		add	r5, sp, #664
+ 167 00a8 0FC5     		stmia	r5!, {r0, r1, r2, r3}
+ 168 00aa 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+ 169 00ac 0FC5     		stmia	r5!, {r0, r1, r2, r3}
+ 170 00ae 94E80F00 		ldm	r4, {r0, r1, r2, r3}
+ 171 00b2 85E80F00 		stm	r5, {r0, r1, r2, r3}
+ 172              	.LBB11:
+  54:mask_main.c   ****     for(int j=1; j < N_SHARES; ++j){
+  55:mask_main.c   ****       in[i + (SEEDBYTES+CRHBYTES)*j] = 0; 
+ 173              		.loc 1 55 38 view .LVU32
+ 174 00b6 3022     		movs	r2, #48
+ 175 00b8 0021     		movs	r1, #0
+ 176 00ba BAA8     		add	r0, sp, #744
+ 177 00bc FFF7FEFF 		bl	memset
+ 178              	.LVL11:
+ 179 00c0 3022     		movs	r2, #48
+ 180 00c2 0021     		movs	r1, #0
+ 181 00c4 CEA8     		add	r0, sp, #824
+ 182 00c6 FFF7FEFF 		bl	memset
+ 183              	.LVL12:
+ 184              		.loc 1 55 38 view .LVU33
+ 185              	.LBE11:
+ 186              	.LBE10:
+  56:mask_main.c   ****     }
+  57:mask_main.c   ****   }
+  58:mask_main.c   ****   trigger_high();
+ 187              		.loc 1 58 3 is_stmt 1 view .LVU34
+ 188 00ca FFF7FEFF 		bl	trigger_high
+ 189              	.LVL13:
+  59:mask_main.c   ****   shake256_masked(seed_y, 64, in, SEEDBYTES+CRHBYTES);
+ 190              		.loc 1 59 3 view .LVU35
+ 191 00ce 5023     		movs	r3, #80
+ 192 00d0 9EAA     		add	r2, sp, #632
+ 193 00d2 4021     		movs	r1, #64
+ 194 00d4 3AA8     		add	r0, sp, #232
+ 195 00d6 FFF7FEFF 		bl	shake256_masked
+ 196              	.LVL14:
+  60:mask_main.c   ****   trigger_low();
+ 197              		.loc 1 60 3 view .LVU36
+ 198 00da FFF7FEFF 		bl	trigger_low
+ 199              	.LVL15:
+  61:mask_main.c   ****   //清零p
+  62:mask_main.c   ****   for(int ii=0; ii < 180;ii++)
+ 200              		.loc 1 62 3 view .LVU37
+ 201              		.loc 1 62 7 view .LVU38
+ 202              		.loc 1 62 17 view .LVU39
+ 203              	.LBB12:
+  63:mask_main.c   **** 	  p[ii] = 0;
+  64:mask_main.c   ****   
+  65:mask_main.c   ****   //輸出結果放入p數組中
+  66:mask_main.c   ****   for(int ii=0; ii < 180 ;ii++)
+  67:mask_main.c   **** 	  p[ii] = seed_y[ii];
+ 204              		.loc 1 67 10 is_stmt 0 view .LVU40
+ 205 00de 3AA9     		add	r1, sp, #232
+ 206 00e0 B422     		movs	r2, #180
+ 207 00e2 3046     		mov	r0, r6
+ 208 00e4 FFF7FEFF 		bl	memcpy
+ 209              	.LVL16:
+ 210              	.LBE12:
+  68:mask_main.c   **** 
+  69:mask_main.c   **** 	/* for(int ii=0; ii < 33 ;ii++)
+  70:mask_main.c   **** 	  p[ii] = m[ii];
+  71:mask_main.c   **** 
+  72:mask_main.c   **** 	for(int ii=0; ii < 48 ;ii++)
+  73:mask_main.c   **** 	  p[35+ii] = tr[ii];
+  74:mask_main.c   ****   
+  75:mask_main.c   ****     for(int ii=0; ii < 96 ;ii++)
+  76:mask_main.c   **** 	  p[83+ii] = masked_key[ii]; */
+  77:mask_main.c   ****   simpleserial_put('r', 180, p);
+ 211              		.loc 1 77 3 is_stmt 1 view .LVU41
+ 212 00e8 3246     		mov	r2, r6
+ 213 00ea B421     		movs	r1, #180
+ 214 00ec 7220     		movs	r0, #114
+ 215 00ee FFF7FEFF 		bl	simpleserial_put
+ 216              	.LVL17:
+  78:mask_main.c   ****    return 0x00;
+ 217              		.loc 1 78 4 view .LVU42
+  79:mask_main.c   **** }
+ 218              		.loc 1 79 1 is_stmt 0 view .LVU43
+ 219 00f2 0020     		movs	r0, #0
+ 220 00f4 0DF55A7D 		add	sp, sp, #872
+ 221              	.LCFI2:
+ 222              		.cfi_def_cfa_offset 16
+ 223              		@ sp needed
+ 224 00f8 70BD     		pop	{r4, r5, r6, pc}
+ 225              		.loc 1 79 1 view .LVU44
+ 226              		.cfi_endproc
+ 227              	.LFE3:
+ 229              		.section	.text.startup.main,"ax",%progbits
+ 230              		.align	1
+ 231              		.global	main
+ 232              		.syntax unified
+ 233              		.thumb
+ 234              		.thumb_func
+ 235              		.fpu softvfp
+ 237              	main:
+ 238              	.LFB4:
+  80:mask_main.c   **** 
+  81:mask_main.c   **** 
+  82:mask_main.c   **** 
+  83:mask_main.c   **** int main(void){
+ 239              		.loc 1 83 15 is_stmt 1 view -0
+ 240              		.cfi_startproc
+ 241              		@ Volatile: function does not return.
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+  84:mask_main.c   **** 
+  85:mask_main.c   ****     platform_init();
+ 244              		.loc 1 85 5 view .LVU46
+  83:mask_main.c   **** 
+ 245              		.loc 1 83 15 is_stmt 0 view .LVU47
+ 246 0000 08B5     		push	{r3, lr}
+ 247              	.LCFI3:
+ 248              		.cfi_def_cfa_offset 8
+ 249              		.cfi_offset 3, -8
+ 250              		.cfi_offset 14, -4
+ 251              		.loc 1 85 5 view .LVU48
+ 252 0002 FFF7FEFF 		bl	platform_init
+ 253              	.LVL18:
+  86:mask_main.c   ****     init_uart();
+ 254              		.loc 1 86 5 is_stmt 1 view .LVU49
+ 255 0006 FFF7FEFF 		bl	init_uart
+ 256              	.LVL19:
+  87:mask_main.c   **** 
+  88:mask_main.c   ****     trigger_setup();
+ 257              		.loc 1 88 5 view .LVU50
+ 258 000a FFF7FEFF 		bl	trigger_setup
+ 259              	.LVL20:
+  89:mask_main.c   ****     
+  90:mask_main.c   ****     /* Device reset detected */
+  91:mask_main.c   ****     putch('r');
+ 260              		.loc 1 91 5 view .LVU51
+ 261 000e 7220     		movs	r0, #114
+ 262 0010 FFF7FEFF 		bl	putch
+ 263              	.LVL21:
+  92:mask_main.c   ****     putch('R');
+ 264              		.loc 1 92 5 view .LVU52
+ 265 0014 5220     		movs	r0, #82
+ 266 0016 FFF7FEFF 		bl	putch
+ 267              	.LVL22:
+  93:mask_main.c   ****     putch('E');
+ 268              		.loc 1 93 5 view .LVU53
+ 269 001a 4520     		movs	r0, #69
+ 270 001c FFF7FEFF 		bl	putch
+ 271              	.LVL23:
+  94:mask_main.c   ****     putch('S');
+ 272              		.loc 1 94 5 view .LVU54
+ 273 0020 5320     		movs	r0, #83
+ 274 0022 FFF7FEFF 		bl	putch
+ 275              	.LVL24:
+  95:mask_main.c   ****     putch('E');
+ 276              		.loc 1 95 5 view .LVU55
+ 277 0026 4520     		movs	r0, #69
+ 278 0028 FFF7FEFF 		bl	putch
+ 279              	.LVL25:
+  96:mask_main.c   ****     putch('T');
+ 280              		.loc 1 96 5 view .LVU56
+ 281 002c 5420     		movs	r0, #84
+ 282 002e FFF7FEFF 		bl	putch
+ 283              	.LVL26:
+  97:mask_main.c   ****     putch(' ');
+ 284              		.loc 1 97 5 view .LVU57
+ 285 0032 2020     		movs	r0, #32
+ 286 0034 FFF7FEFF 		bl	putch
+ 287              	.LVL27:
+  98:mask_main.c   ****     putch(' ');
+ 288              		.loc 1 98 5 view .LVU58
+ 289 0038 2020     		movs	r0, #32
+ 290 003a FFF7FEFF 		bl	putch
+ 291              	.LVL28:
+  99:mask_main.c   ****     putch(' ');
+ 292              		.loc 1 99 5 view .LVU59
+ 293 003e 2020     		movs	r0, #32
+ 294 0040 FFF7FEFF 		bl	putch
+ 295              	.LVL29:
+ 100:mask_main.c   ****     putch('\n');
+ 296              		.loc 1 100 5 view .LVU60
+ 297 0044 0A20     		movs	r0, #10
+ 298 0046 FFF7FEFF 		bl	putch
+ 299              	.LVL30:
+ 101:mask_main.c   ****     
+ 102:mask_main.c   ****     simpleserial_init();
+ 300              		.loc 1 102 5 view .LVU61
+ 301 004a FFF7FEFF 		bl	simpleserial_init
+ 302              	.LVL31:
+ 103:mask_main.c   **** 	
+ 104:mask_main.c   **** 	simpleserial_addcmd('3', 183, mask_hash);
+ 303              		.loc 1 104 2 view .LVU62
+ 304 004e 044A     		ldr	r2, .L8
+ 305 0050 B721     		movs	r1, #183
+ 306 0052 3320     		movs	r0, #51
+ 307 0054 FFF7FEFF 		bl	simpleserial_addcmd
+ 308              	.LVL32:
+ 309              	.L7:
+ 105:mask_main.c   **** 	
+ 106:mask_main.c   **** 	while(1)
+ 310              		.loc 1 106 2 discriminator 1 view .LVU63
+ 311              	.LBB13:
+ 107:mask_main.c   ****         simpleserial_get();
+ 312              		.loc 1 107 9 discriminator 1 view .LVU64
+ 313 0058 FFF7FEFF 		bl	simpleserial_get
+ 314              	.LVL33:
+ 315              	.LBE13:
+ 106:mask_main.c   ****         simpleserial_get();
+ 316              		.loc 1 106 7 discriminator 1 view .LVU65
+ 317 005c FCE7     		b	.L7
+ 318              	.L9:
+ 319 005e 00BF     		.align	2
+ 320              	.L8:
+ 321 0060 00000000 		.word	mask_hash
+ 322              		.cfi_endproc
+ 323              	.LFE4:
+ 325              		.text
+ 326              	.Letext0:
+ 327              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 328              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\lib\\gcc\\arm-none-eabi\\
+ 329              		.file 4 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 330              		.file 5 "fips202.h"
+ 331              		.file 6 "<built-in>"
+DEFINED SYMBOLS
+                            *ABS*:00000000 mask_main.c
+C:\Users\dudixiao\AppData\Local\Temp\ccau2Ouc.s:16     .text.mask_hash:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccau2Ouc.s:24     .text.mask_hash:00000000 mask_hash
+C:\Users\dudixiao\AppData\Local\Temp\ccau2Ouc.s:230    .text.startup.main:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccau2Ouc.s:237    .text.startup.main:00000000 main
+C:\Users\dudixiao\AppData\Local\Temp\ccau2Ouc.s:321    .text.startup.main:00000060 $d
+
+UNDEFINED SYMBOLS
+memcpy
+pqcrystals_fips202_ref_shake256_init
+pqcrystals_fips202_ref_shake256_absorb
+pqcrystals_fips202_ref_shake256_finalize
+pqcrystals_fips202_ref_shake256_squeeze
+memset
+trigger_high
+shake256_masked
+trigger_low
+simpleserial_put
+platform_init
+init_uart
+trigger_setup
+putch
+simpleserial_init
+simpleserial_addcmd
+simpleserial_get

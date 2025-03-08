@@ -1,0 +1,1113 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"sp800-185.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.left_encode,"ax",%progbits
+  16              		.align	1
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu softvfp
+  23              	left_encode:
+  24              	.LVL0:
+  25              	.LFB0:
+  26              		.file 1 "sp800-185.c"
+   1:sp800-185.c   **** #include <stddef.h>
+   2:sp800-185.c   **** #include <stdint.h>
+   3:sp800-185.c   **** 
+   4:sp800-185.c   **** #include "sp800-185.h"
+   5:sp800-185.c   **** 
+   6:sp800-185.c   **** static size_t left_encode(uint8_t *encbuf, size_t value) {
+  27              		.loc 1 6 58 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+   7:sp800-185.c   ****     size_t n, i, v;
+  31              		.loc 1 7 5 view .LVU1
+   8:sp800-185.c   **** 
+   9:sp800-185.c   ****     for (v = value, n = 0; v && (n < sizeof(size_t)); n++, v >>= 8) {
+  32              		.loc 1 9 5 view .LVU2
+   6:sp800-185.c   ****     size_t n, i, v;
+  33              		.loc 1 6 58 is_stmt 0 view .LVU3
+  34 0000 30B5     		push	{r4, r5, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 12
+  37              		.cfi_offset 4, -12
+  38              		.cfi_offset 5, -8
+  39              		.cfi_offset 14, -4
+   6:sp800-185.c   ****     size_t n, i, v;
+  40              		.loc 1 6 58 view .LVU4
+  41 0002 0246     		mov	r2, r0
+  42              		.loc 1 9 12 view .LVU5
+  43 0004 0B46     		mov	r3, r1
+  44              		.loc 1 9 23 view .LVU6
+  45 0006 0020     		movs	r0, #0
+  46              	.LVL1:
+  47              	.L2:
+  48              		.loc 1 9 28 is_stmt 1 discriminator 1 view .LVU7
+  49              		.loc 1 9 5 is_stmt 0 discriminator 1 view .LVU8
+  50 0008 0BB1     		cbz	r3, .L3
+  51              		.loc 1 9 30 discriminator 3 view .LVU9
+  52 000a 0428     		cmp	r0, #4
+  53 000c 10D1     		bne	.L4
+  54              	.L3:
+  10:sp800-185.c   ****         ; /* empty */
+  11:sp800-185.c   ****     }
+  12:sp800-185.c   ****     if (n == 0) {
+  55              		.loc 1 12 5 is_stmt 1 view .LVU10
+  56 000e 0128     		cmp	r0, #1
+  57 0010 38BF     		it	cc
+  58 0012 0120     		movcc	r0, #1
+  59              	.LVL2:
+  13:sp800-185.c   ****         n = 1;
+  14:sp800-185.c   ****     }
+  15:sp800-185.c   ****     for (i = 1; i <= n; i++) {
+  60              		.loc 1 15 5 view .LVU11
+  61              		.loc 1 15 17 view .LVU12
+  62 0014 431E     		subs	r3, r0, #1
+  63              	.LVL3:
+  64              		.loc 1 15 17 is_stmt 0 view .LVU13
+  65 0016 DB00     		lsls	r3, r3, #3
+  66 0018 1446     		mov	r4, r2
+  67              	.LVL4:
+  68              	.L5:
+  16:sp800-185.c   ****         encbuf[i] = (uint8_t)(value >> (8 * (n - i)));
+  69              		.loc 1 16 9 is_stmt 1 discriminator 3 view .LVU14
+  70              		.loc 1 16 37 is_stmt 0 discriminator 3 view .LVU15
+  71 001a 21FA03F5 		lsr	r5, r1, r3
+  15:sp800-185.c   ****         encbuf[i] = (uint8_t)(value >> (8 * (n - i)));
+  72              		.loc 1 15 5 discriminator 3 view .LVU16
+  73 001e 083B     		subs	r3, r3, #8
+  74 0020 13F1080F 		cmn	r3, #8
+  75              		.loc 1 16 21 discriminator 3 view .LVU17
+  76 0024 04F8015F 		strb	r5, [r4, #1]!
+  15:sp800-185.c   ****         encbuf[i] = (uint8_t)(value >> (8 * (n - i)));
+  77              		.loc 1 15 25 is_stmt 1 discriminator 3 view .LVU18
+  15:sp800-185.c   ****         encbuf[i] = (uint8_t)(value >> (8 * (n - i)));
+  78              		.loc 1 15 17 discriminator 3 view .LVU19
+  15:sp800-185.c   ****         encbuf[i] = (uint8_t)(value >> (8 * (n - i)));
+  79              		.loc 1 15 5 is_stmt 0 discriminator 3 view .LVU20
+  80 0028 F7D1     		bne	.L5
+  17:sp800-185.c   ****     }
+  18:sp800-185.c   ****     encbuf[0] = (uint8_t)n;
+  81              		.loc 1 18 5 is_stmt 1 view .LVU21
+  82              		.loc 1 18 17 is_stmt 0 view .LVU22
+  83 002a 1070     		strb	r0, [r2]
+  19:sp800-185.c   ****     return n + 1;
+  84              		.loc 1 19 5 is_stmt 1 view .LVU23
+  20:sp800-185.c   **** }
+  85              		.loc 1 20 1 is_stmt 0 view .LVU24
+  86 002c 0130     		adds	r0, r0, #1
+  87              	.LVL5:
+  88              		.loc 1 20 1 view .LVU25
+  89 002e 30BD     		pop	{r4, r5, pc}
+  90              	.LVL6:
+  91              	.L4:
+  10:sp800-185.c   ****     }
+  92              		.loc 1 10 9 is_stmt 1 discriminator 4 view .LVU26
+   9:sp800-185.c   ****         ; /* empty */
+  93              		.loc 1 9 55 discriminator 4 view .LVU27
+   9:sp800-185.c   ****         ; /* empty */
+  94              		.loc 1 9 56 is_stmt 0 discriminator 4 view .LVU28
+  95 0030 0130     		adds	r0, r0, #1
+  96              	.LVL7:
+   9:sp800-185.c   ****         ; /* empty */
+  97              		.loc 1 9 62 discriminator 4 view .LVU29
+  98 0032 1B0A     		lsrs	r3, r3, #8
+  99              	.LVL8:
+   9:sp800-185.c   ****         ; /* empty */
+ 100              		.loc 1 9 62 discriminator 4 view .LVU30
+ 101 0034 E8E7     		b	.L2
+ 102              		.cfi_endproc
+ 103              	.LFE0:
+ 105              		.section	.text.cshake128_inc_init,"ax",%progbits
+ 106              		.align	1
+ 107              		.global	cshake128_inc_init
+ 108              		.syntax unified
+ 109              		.thumb
+ 110              		.thumb_func
+ 111              		.fpu softvfp
+ 113              	cshake128_inc_init:
+ 114              	.LVL9:
+ 115              	.LFB1:
+  21:sp800-185.c   **** 
+  22:sp800-185.c   **** void cshake128_inc_init(shake128incctx *state, const uint8_t *name, size_t namelen, const uint8_t *
+ 116              		.loc 1 22 122 is_stmt 1 view -0
+ 117              		.cfi_startproc
+ 118              		@ args = 4, pretend = 0, frame = 8
+ 119              		@ frame_needed = 0, uses_anonymous_args = 0
+  23:sp800-185.c   ****     uint8_t encbuf[sizeof(size_t) +1];
+ 120              		.loc 1 23 5 view .LVU32
+  24:sp800-185.c   **** 
+  25:sp800-185.c   ****     shake128_inc_init(state);
+ 121              		.loc 1 25 5 view .LVU33
+  22:sp800-185.c   ****     uint8_t encbuf[sizeof(size_t) +1];
+ 122              		.loc 1 22 122 is_stmt 0 view .LVU34
+ 123 0000 2DE9F341 		push	{r0, r1, r4, r5, r6, r7, r8, lr}
+ 124              	.LCFI1:
+ 125              		.cfi_def_cfa_offset 32
+ 126              		.cfi_offset 4, -24
+ 127              		.cfi_offset 5, -20
+ 128              		.cfi_offset 6, -16
+ 129              		.cfi_offset 7, -12
+ 130              		.cfi_offset 8, -8
+ 131              		.cfi_offset 14, -4
+  22:sp800-185.c   ****     uint8_t encbuf[sizeof(size_t) +1];
+ 132              		.loc 1 22 122 view .LVU35
+ 133 0004 DDF82080 		ldr	r8, [sp, #32]
+ 134 0008 1E46     		mov	r6, r3
+ 135 000a 0446     		mov	r4, r0
+ 136 000c 1546     		mov	r5, r2
+ 137 000e 0F46     		mov	r7, r1
+ 138              		.loc 1 25 5 view .LVU36
+ 139 0010 FFF7FEFF 		bl	shake128_inc_init
+ 140              	.LVL10:
+  26:sp800-185.c   **** 
+  27:sp800-185.c   ****     shake128_inc_absorb(state, encbuf, left_encode(encbuf, SHAKE128_RATE));
+ 141              		.loc 1 27 5 is_stmt 1 view .LVU37
+ 142 0014 A821     		movs	r1, #168
+ 143 0016 6846     		mov	r0, sp
+ 144 0018 FFF7FEFF 		bl	left_encode
+ 145              	.LVL11:
+ 146 001c 6946     		mov	r1, sp
+ 147 001e 0246     		mov	r2, r0
+ 148 0020 2046     		mov	r0, r4
+ 149 0022 FFF7FEFF 		bl	shake128_inc_absorb
+ 150              	.LVL12:
+  28:sp800-185.c   **** 
+  29:sp800-185.c   ****     shake128_inc_absorb(state, encbuf, left_encode(encbuf, namelen * 8));
+ 151              		.loc 1 29 5 view .LVU38
+ 152 0026 E900     		lsls	r1, r5, #3
+ 153 0028 6846     		mov	r0, sp
+ 154 002a FFF7FEFF 		bl	left_encode
+ 155              	.LVL13:
+ 156 002e 6946     		mov	r1, sp
+ 157 0030 0246     		mov	r2, r0
+ 158 0032 2046     		mov	r0, r4
+ 159 0034 FFF7FEFF 		bl	shake128_inc_absorb
+ 160              	.LVL14:
+  30:sp800-185.c   ****     shake128_inc_absorb(state, name, namelen);
+ 161              		.loc 1 30 5 view .LVU39
+ 162 0038 2A46     		mov	r2, r5
+ 163 003a 3946     		mov	r1, r7
+ 164 003c 2046     		mov	r0, r4
+ 165 003e FFF7FEFF 		bl	shake128_inc_absorb
+ 166              	.LVL15:
+  31:sp800-185.c   **** 
+  32:sp800-185.c   ****     shake128_inc_absorb(state, encbuf, left_encode(encbuf, cstmlen * 8));
+ 167              		.loc 1 32 5 view .LVU40
+ 168 0042 4FEAC801 		lsl	r1, r8, #3
+ 169 0046 6846     		mov	r0, sp
+ 170 0048 FFF7FEFF 		bl	left_encode
+ 171              	.LVL16:
+ 172 004c 6946     		mov	r1, sp
+ 173 004e 0246     		mov	r2, r0
+ 174 0050 2046     		mov	r0, r4
+ 175 0052 FFF7FEFF 		bl	shake128_inc_absorb
+ 176              	.LVL17:
+  33:sp800-185.c   ****     shake128_inc_absorb(state, cstm, cstmlen);
+ 177              		.loc 1 33 5 view .LVU41
+ 178 0056 4246     		mov	r2, r8
+ 179 0058 3146     		mov	r1, r6
+ 180 005a 2046     		mov	r0, r4
+ 181 005c FFF7FEFF 		bl	shake128_inc_absorb
+ 182              	.LVL18:
+  34:sp800-185.c   **** 
+  35:sp800-185.c   ****     if (state->ctx[25] != 0) {
+ 183              		.loc 1 35 5 view .LVU42
+ 184              		.loc 1 35 14 is_stmt 0 view .LVU43
+ 185 0060 2368     		ldr	r3, [r4]
+ 186              		.loc 1 35 8 view .LVU44
+ 187 0062 D3E93212 		ldrd	r1, r2, [r3, #200]
+ 188 0066 0A43     		orrs	r2, r1, r2
+ 189 0068 0BD0     		beq	.L10
+  36:sp800-185.c   ****         state->ctx[25] = SHAKE128_RATE - 1;
+ 190              		.loc 1 36 9 is_stmt 1 view .LVU45
+ 191              		.loc 1 36 24 is_stmt 0 view .LVU46
+ 192 006a A720     		movs	r0, #167
+ 193 006c 0021     		movs	r1, #0
+ 194 006e C3E93201 		strd	r0, [r3, #200]
+  37:sp800-185.c   ****         encbuf[0] = 0;
+ 195              		.loc 1 37 9 is_stmt 1 view .LVU47
+  38:sp800-185.c   ****         shake128_inc_absorb(state, encbuf, 1);
+ 196              		.loc 1 38 9 is_stmt 0 view .LVU48
+ 197 0072 0122     		movs	r2, #1
+  37:sp800-185.c   ****         encbuf[0] = 0;
+ 198              		.loc 1 37 19 view .LVU49
+ 199 0074 0023     		movs	r3, #0
+ 200              		.loc 1 38 9 view .LVU50
+ 201 0076 6946     		mov	r1, sp
+ 202 0078 2046     		mov	r0, r4
+  37:sp800-185.c   ****         encbuf[0] = 0;
+ 203              		.loc 1 37 19 view .LVU51
+ 204 007a 8DF80030 		strb	r3, [sp]
+ 205              		.loc 1 38 9 is_stmt 1 view .LVU52
+ 206 007e FFF7FEFF 		bl	shake128_inc_absorb
+ 207              	.LVL19:
+ 208              	.L10:
+  39:sp800-185.c   ****     }
+  40:sp800-185.c   **** }
+ 209              		.loc 1 40 1 is_stmt 0 view .LVU53
+ 210 0082 02B0     		add	sp, sp, #8
+ 211              	.LCFI2:
+ 212              		.cfi_def_cfa_offset 24
+ 213              		@ sp needed
+ 214 0084 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 215              		.loc 1 40 1 view .LVU54
+ 216              		.cfi_endproc
+ 217              	.LFE1:
+ 219              		.section	.text.cshake128_inc_absorb,"ax",%progbits
+ 220              		.align	1
+ 221              		.global	cshake128_inc_absorb
+ 222              		.syntax unified
+ 223              		.thumb
+ 224              		.thumb_func
+ 225              		.fpu softvfp
+ 227              	cshake128_inc_absorb:
+ 228              	.LVL20:
+ 229              	.LFB2:
+  41:sp800-185.c   **** 
+  42:sp800-185.c   **** void cshake128_inc_absorb(shake128incctx *state, const uint8_t *input, size_t inlen) {
+ 230              		.loc 1 42 86 is_stmt 1 view -0
+ 231              		.cfi_startproc
+ 232              		@ args = 0, pretend = 0, frame = 0
+ 233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234              		@ link register save eliminated.
+  43:sp800-185.c   ****     shake128_inc_absorb(state, input, inlen);
+ 235              		.loc 1 43 5 view .LVU56
+ 236 0000 FFF7FEBF 		b	shake128_inc_absorb
+ 237              	.LVL21:
+ 238              		.loc 1 43 5 is_stmt 0 view .LVU57
+ 239              		.cfi_endproc
+ 240              	.LFE2:
+ 242              		.section	.text.cshake128_inc_finalize,"ax",%progbits
+ 243              		.align	1
+ 244              		.global	cshake128_inc_finalize
+ 245              		.syntax unified
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.fpu softvfp
+ 250              	cshake128_inc_finalize:
+ 251              	.LVL22:
+ 252              	.LFB3:
+  44:sp800-185.c   **** }
+  45:sp800-185.c   **** 
+  46:sp800-185.c   **** void cshake128_inc_finalize(shake128incctx *state) {
+ 253              		.loc 1 46 52 is_stmt 1 view -0
+ 254              		.cfi_startproc
+ 255              		@ args = 0, pretend = 0, frame = 0
+ 256              		@ frame_needed = 0, uses_anonymous_args = 0
+  47:sp800-185.c   ****     state->ctx[state->ctx[25] >> 3] ^= (uint64_t)0x04 << (8 * (state->ctx[25] & 0x07));
+ 257              		.loc 1 47 5 view .LVU59
+ 258              		.loc 1 47 10 is_stmt 0 view .LVU60
+ 259 0000 0368     		ldr	r3, [r0]
+ 260              		.loc 1 47 26 view .LVU61
+ 261 0002 D3E93220 		ldrd	r2, r0, [r3, #200]
+ 262              	.LVL23:
+ 263              		.loc 1 47 37 view .LVU62
+ 264 0006 D108     		lsrs	r1, r2, #3
+ 265              		.loc 1 47 55 view .LVU63
+ 266 0008 02F00702 		and	r2, r2, #7
+ 267              		.loc 1 47 37 view .LVU64
+ 268 000c 41EA4071 		orr	r1, r1, r0, lsl #29
+ 269              		.loc 1 47 55 view .LVU65
+ 270 0010 D200     		lsls	r2, r2, #3
+  46:sp800-185.c   ****     state->ctx[state->ctx[25] >> 3] ^= (uint64_t)0x04 << (8 * (state->ctx[25] & 0x07));
+ 271              		.loc 1 46 52 view .LVU66
+ 272 0012 70B5     		push	{r4, r5, r6, lr}
+ 273              	.LCFI3:
+ 274              		.cfi_def_cfa_offset 16
+ 275              		.cfi_offset 4, -16
+ 276              		.cfi_offset 5, -12
+ 277              		.cfi_offset 6, -8
+ 278              		.cfi_offset 14, -4
+ 279              		.loc 1 47 55 view .LVU67
+ 280 0014 A2F12000 		sub	r0, r2, #32
+ 281 0018 0424     		movs	r4, #4
+ 282              		.loc 1 47 37 view .LVU68
+ 283 001a 03EBC106 		add	r6, r3, r1, lsl #3
+ 284              		.loc 1 47 55 view .LVU69
+ 285 001e C2F12005 		rsb	r5, r2, #32
+ 286 0022 24FA05F5 		lsr	r5, r4, r5
+ 287 0026 04FA00F0 		lsl	r0, r4, r0
+ 288 002a 04FA02F2 		lsl	r2, r4, r2
+ 289              		.loc 1 47 37 view .LVU70
+ 290 002e 53F83140 		ldr	r4, [r3, r1, lsl #3]
+ 291              		.loc 1 47 55 view .LVU71
+ 292 0032 2843     		orrs	r0, r0, r5
+ 293              		.loc 1 47 37 view .LVU72
+ 294 0034 7568     		ldr	r5, [r6, #4]
+ 295 0036 6240     		eors	r2, r2, r4
+ 296 0038 43F83120 		str	r2, [r3, r1, lsl #3]
+ 297 003c 6840     		eors	r0, r0, r5
+ 298 003e 7060     		str	r0, [r6, #4]
+  48:sp800-185.c   ****     state->ctx[(SHAKE128_RATE - 1) >> 3] ^= (uint64_t)128 << (8 * ((SHAKE128_RATE - 1) & 0x07));
+ 299              		.loc 1 48 5 is_stmt 1 view .LVU73
+ 300              		.loc 1 48 42 is_stmt 0 view .LVU74
+ 301 0040 D3F8A420 		ldr	r2, [r3, #164]
+  49:sp800-185.c   ****     state->ctx[25] = 0;
+ 302              		.loc 1 49 20 view .LVU75
+ 303 0044 0020     		movs	r0, #0
+  48:sp800-185.c   ****     state->ctx[(SHAKE128_RATE - 1) >> 3] ^= (uint64_t)128 << (8 * ((SHAKE128_RATE - 1) & 0x07));
+ 304              		.loc 1 48 42 view .LVU76
+ 305 0046 02F10042 		add	r2, r2, #-2147483648
+ 306              		.loc 1 49 20 view .LVU77
+ 307 004a 0021     		movs	r1, #0
+ 308 004c C3E93201 		strd	r0, [r3, #200]
+  48:sp800-185.c   ****     state->ctx[(SHAKE128_RATE - 1) >> 3] ^= (uint64_t)128 << (8 * ((SHAKE128_RATE - 1) & 0x07));
+ 309              		.loc 1 48 42 view .LVU78
+ 310 0050 C3F8A420 		str	r2, [r3, #164]
+ 311              		.loc 1 49 5 is_stmt 1 view .LVU79
+  50:sp800-185.c   **** }
+ 312              		.loc 1 50 1 is_stmt 0 view .LVU80
+ 313 0054 70BD     		pop	{r4, r5, r6, pc}
+ 314              		.cfi_endproc
+ 315              	.LFE3:
+ 317              		.section	.text.cshake128_inc_squeeze,"ax",%progbits
+ 318              		.align	1
+ 319              		.global	cshake128_inc_squeeze
+ 320              		.syntax unified
+ 321              		.thumb
+ 322              		.thumb_func
+ 323              		.fpu softvfp
+ 325              	cshake128_inc_squeeze:
+ 326              	.LVL24:
+ 327              	.LFB4:
+  51:sp800-185.c   **** 
+  52:sp800-185.c   **** void cshake128_inc_squeeze(uint8_t *output, size_t outlen, shake128incctx *state) {
+ 328              		.loc 1 52 83 is_stmt 1 view -0
+ 329              		.cfi_startproc
+ 330              		@ args = 0, pretend = 0, frame = 0
+ 331              		@ frame_needed = 0, uses_anonymous_args = 0
+ 332              		@ link register save eliminated.
+  53:sp800-185.c   ****     shake128_inc_squeeze(output, outlen, state);
+ 333              		.loc 1 53 5 view .LVU82
+ 334 0000 FFF7FEBF 		b	shake128_inc_squeeze
+ 335              	.LVL25:
+ 336              		.loc 1 53 5 is_stmt 0 view .LVU83
+ 337              		.cfi_endproc
+ 338              	.LFE4:
+ 340              		.section	.text.cshake128_inc_ctx_release,"ax",%progbits
+ 341              		.align	1
+ 342              		.global	cshake128_inc_ctx_release
+ 343              		.syntax unified
+ 344              		.thumb
+ 345              		.thumb_func
+ 346              		.fpu softvfp
+ 348              	cshake128_inc_ctx_release:
+ 349              	.LVL26:
+ 350              	.LFB5:
+  54:sp800-185.c   **** }
+  55:sp800-185.c   **** 
+  56:sp800-185.c   **** void cshake128_inc_ctx_release(shake128incctx *state) {
+ 351              		.loc 1 56 55 is_stmt 1 view -0
+ 352              		.cfi_startproc
+ 353              		@ args = 0, pretend = 0, frame = 0
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 355              		@ link register save eliminated.
+  57:sp800-185.c   ****     shake128_inc_ctx_release(state);
+ 356              		.loc 1 57 5 view .LVU85
+ 357 0000 FFF7FEBF 		b	shake128_inc_ctx_release
+ 358              	.LVL27:
+ 359              		.loc 1 57 5 is_stmt 0 view .LVU86
+ 360              		.cfi_endproc
+ 361              	.LFE5:
+ 363              		.section	.text.cshake128_inc_ctx_clone,"ax",%progbits
+ 364              		.align	1
+ 365              		.global	cshake128_inc_ctx_clone
+ 366              		.syntax unified
+ 367              		.thumb
+ 368              		.thumb_func
+ 369              		.fpu softvfp
+ 371              	cshake128_inc_ctx_clone:
+ 372              	.LVL28:
+ 373              	.LFB6:
+  58:sp800-185.c   **** }
+  59:sp800-185.c   **** 
+  60:sp800-185.c   **** void cshake128_inc_ctx_clone(shake128incctx *dest, const shake128incctx *src) {
+ 374              		.loc 1 60 79 is_stmt 1 view -0
+ 375              		.cfi_startproc
+ 376              		@ args = 0, pretend = 0, frame = 0
+ 377              		@ frame_needed = 0, uses_anonymous_args = 0
+ 378              		@ link register save eliminated.
+  61:sp800-185.c   ****     shake128_inc_ctx_clone(dest, src);
+ 379              		.loc 1 61 5 view .LVU88
+ 380 0000 FFF7FEBF 		b	shake128_inc_ctx_clone
+ 381              	.LVL29:
+ 382              		.loc 1 61 5 is_stmt 0 view .LVU89
+ 383              		.cfi_endproc
+ 384              	.LFE6:
+ 386              		.section	.text.cshake256_inc_init,"ax",%progbits
+ 387              		.align	1
+ 388              		.global	cshake256_inc_init
+ 389              		.syntax unified
+ 390              		.thumb
+ 391              		.thumb_func
+ 392              		.fpu softvfp
+ 394              	cshake256_inc_init:
+ 395              	.LVL30:
+ 396              	.LFB7:
+  62:sp800-185.c   **** }
+  63:sp800-185.c   **** 
+  64:sp800-185.c   **** void cshake256_inc_init(shake256incctx *state, const uint8_t *name, size_t namelen, const uint8_t *
+ 397              		.loc 1 64 122 is_stmt 1 view -0
+ 398              		.cfi_startproc
+ 399              		@ args = 4, pretend = 0, frame = 8
+ 400              		@ frame_needed = 0, uses_anonymous_args = 0
+  65:sp800-185.c   ****     uint8_t encbuf[sizeof(size_t) +1];
+ 401              		.loc 1 65 5 view .LVU91
+  66:sp800-185.c   **** 
+  67:sp800-185.c   ****     shake256_inc_init(state);
+ 402              		.loc 1 67 5 view .LVU92
+  64:sp800-185.c   ****     uint8_t encbuf[sizeof(size_t) +1];
+ 403              		.loc 1 64 122 is_stmt 0 view .LVU93
+ 404 0000 2DE9F341 		push	{r0, r1, r4, r5, r6, r7, r8, lr}
+ 405              	.LCFI4:
+ 406              		.cfi_def_cfa_offset 32
+ 407              		.cfi_offset 4, -24
+ 408              		.cfi_offset 5, -20
+ 409              		.cfi_offset 6, -16
+ 410              		.cfi_offset 7, -12
+ 411              		.cfi_offset 8, -8
+ 412              		.cfi_offset 14, -4
+  64:sp800-185.c   ****     uint8_t encbuf[sizeof(size_t) +1];
+ 413              		.loc 1 64 122 view .LVU94
+ 414 0004 DDF82080 		ldr	r8, [sp, #32]
+ 415 0008 1E46     		mov	r6, r3
+ 416 000a 0446     		mov	r4, r0
+ 417 000c 1546     		mov	r5, r2
+ 418 000e 0F46     		mov	r7, r1
+ 419              		.loc 1 67 5 view .LVU95
+ 420 0010 FFF7FEFF 		bl	shake256_inc_init
+ 421              	.LVL31:
+  68:sp800-185.c   **** 
+  69:sp800-185.c   ****     shake256_inc_absorb(state, encbuf, left_encode(encbuf, SHAKE256_RATE));
+ 422              		.loc 1 69 5 is_stmt 1 view .LVU96
+ 423 0014 8821     		movs	r1, #136
+ 424 0016 6846     		mov	r0, sp
+ 425 0018 FFF7FEFF 		bl	left_encode
+ 426              	.LVL32:
+ 427 001c 6946     		mov	r1, sp
+ 428 001e 0246     		mov	r2, r0
+ 429 0020 2046     		mov	r0, r4
+ 430 0022 FFF7FEFF 		bl	shake256_inc_absorb
+ 431              	.LVL33:
+  70:sp800-185.c   **** 
+  71:sp800-185.c   ****     shake256_inc_absorb(state, encbuf, left_encode(encbuf, namelen * 8));
+ 432              		.loc 1 71 5 view .LVU97
+ 433 0026 E900     		lsls	r1, r5, #3
+ 434 0028 6846     		mov	r0, sp
+ 435 002a FFF7FEFF 		bl	left_encode
+ 436              	.LVL34:
+ 437 002e 6946     		mov	r1, sp
+ 438 0030 0246     		mov	r2, r0
+ 439 0032 2046     		mov	r0, r4
+ 440 0034 FFF7FEFF 		bl	shake256_inc_absorb
+ 441              	.LVL35:
+  72:sp800-185.c   ****     shake256_inc_absorb(state, name, namelen);
+ 442              		.loc 1 72 5 view .LVU98
+ 443 0038 2A46     		mov	r2, r5
+ 444 003a 3946     		mov	r1, r7
+ 445 003c 2046     		mov	r0, r4
+ 446 003e FFF7FEFF 		bl	shake256_inc_absorb
+ 447              	.LVL36:
+  73:sp800-185.c   **** 
+  74:sp800-185.c   ****     shake256_inc_absorb(state, encbuf, left_encode(encbuf, cstmlen * 8));
+ 448              		.loc 1 74 5 view .LVU99
+ 449 0042 4FEAC801 		lsl	r1, r8, #3
+ 450 0046 6846     		mov	r0, sp
+ 451 0048 FFF7FEFF 		bl	left_encode
+ 452              	.LVL37:
+ 453 004c 6946     		mov	r1, sp
+ 454 004e 0246     		mov	r2, r0
+ 455 0050 2046     		mov	r0, r4
+ 456 0052 FFF7FEFF 		bl	shake256_inc_absorb
+ 457              	.LVL38:
+  75:sp800-185.c   ****     shake256_inc_absorb(state, cstm, cstmlen);
+ 458              		.loc 1 75 5 view .LVU100
+ 459 0056 4246     		mov	r2, r8
+ 460 0058 3146     		mov	r1, r6
+ 461 005a 2046     		mov	r0, r4
+ 462 005c FFF7FEFF 		bl	shake256_inc_absorb
+ 463              	.LVL39:
+  76:sp800-185.c   **** 
+  77:sp800-185.c   ****     if (state->ctx[25] != 0) {
+ 464              		.loc 1 77 5 view .LVU101
+ 465              		.loc 1 77 14 is_stmt 0 view .LVU102
+ 466 0060 2368     		ldr	r3, [r4]
+ 467              		.loc 1 77 8 view .LVU103
+ 468 0062 D3E93212 		ldrd	r1, r2, [r3, #200]
+ 469 0066 0A43     		orrs	r2, r1, r2
+ 470 0068 0BD0     		beq	.L17
+  78:sp800-185.c   ****         state->ctx[25] = SHAKE256_RATE - 1;
+ 471              		.loc 1 78 9 is_stmt 1 view .LVU104
+ 472              		.loc 1 78 24 is_stmt 0 view .LVU105
+ 473 006a 8720     		movs	r0, #135
+ 474 006c 0021     		movs	r1, #0
+ 475 006e C3E93201 		strd	r0, [r3, #200]
+  79:sp800-185.c   ****         encbuf[0] = 0;
+ 476              		.loc 1 79 9 is_stmt 1 view .LVU106
+  80:sp800-185.c   ****         shake256_inc_absorb(state, encbuf, 1);
+ 477              		.loc 1 80 9 is_stmt 0 view .LVU107
+ 478 0072 0122     		movs	r2, #1
+  79:sp800-185.c   ****         encbuf[0] = 0;
+ 479              		.loc 1 79 19 view .LVU108
+ 480 0074 0023     		movs	r3, #0
+ 481              		.loc 1 80 9 view .LVU109
+ 482 0076 6946     		mov	r1, sp
+ 483 0078 2046     		mov	r0, r4
+  79:sp800-185.c   ****         encbuf[0] = 0;
+ 484              		.loc 1 79 19 view .LVU110
+ 485 007a 8DF80030 		strb	r3, [sp]
+ 486              		.loc 1 80 9 is_stmt 1 view .LVU111
+ 487 007e FFF7FEFF 		bl	shake256_inc_absorb
+ 488              	.LVL40:
+ 489              	.L17:
+  81:sp800-185.c   ****     }
+  82:sp800-185.c   **** }
+ 490              		.loc 1 82 1 is_stmt 0 view .LVU112
+ 491 0082 02B0     		add	sp, sp, #8
+ 492              	.LCFI5:
+ 493              		.cfi_def_cfa_offset 24
+ 494              		@ sp needed
+ 495 0084 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 496              		.loc 1 82 1 view .LVU113
+ 497              		.cfi_endproc
+ 498              	.LFE7:
+ 500              		.section	.text.cshake256_inc_absorb,"ax",%progbits
+ 501              		.align	1
+ 502              		.global	cshake256_inc_absorb
+ 503              		.syntax unified
+ 504              		.thumb
+ 505              		.thumb_func
+ 506              		.fpu softvfp
+ 508              	cshake256_inc_absorb:
+ 509              	.LVL41:
+ 510              	.LFB8:
+  83:sp800-185.c   **** 
+  84:sp800-185.c   **** void cshake256_inc_absorb(shake256incctx *state, const uint8_t *input, size_t inlen) {
+ 511              		.loc 1 84 86 is_stmt 1 view -0
+ 512              		.cfi_startproc
+ 513              		@ args = 0, pretend = 0, frame = 0
+ 514              		@ frame_needed = 0, uses_anonymous_args = 0
+ 515              		@ link register save eliminated.
+  85:sp800-185.c   ****     shake256_inc_absorb(state, input, inlen);
+ 516              		.loc 1 85 5 view .LVU115
+ 517 0000 FFF7FEBF 		b	shake256_inc_absorb
+ 518              	.LVL42:
+ 519              		.loc 1 85 5 is_stmt 0 view .LVU116
+ 520              		.cfi_endproc
+ 521              	.LFE8:
+ 523              		.section	.text.cshake256_inc_finalize,"ax",%progbits
+ 524              		.align	1
+ 525              		.global	cshake256_inc_finalize
+ 526              		.syntax unified
+ 527              		.thumb
+ 528              		.thumb_func
+ 529              		.fpu softvfp
+ 531              	cshake256_inc_finalize:
+ 532              	.LVL43:
+ 533              	.LFB9:
+  86:sp800-185.c   **** }
+  87:sp800-185.c   **** 
+  88:sp800-185.c   **** void cshake256_inc_finalize(shake256incctx *state) {
+ 534              		.loc 1 88 52 is_stmt 1 view -0
+ 535              		.cfi_startproc
+ 536              		@ args = 0, pretend = 0, frame = 0
+ 537              		@ frame_needed = 0, uses_anonymous_args = 0
+  89:sp800-185.c   ****     state->ctx[state->ctx[25] >> 3] ^= (uint64_t)0x04 << (8 * (state->ctx[25] & 0x07));
+ 538              		.loc 1 89 5 view .LVU118
+ 539              		.loc 1 89 10 is_stmt 0 view .LVU119
+ 540 0000 0368     		ldr	r3, [r0]
+ 541              		.loc 1 89 26 view .LVU120
+ 542 0002 D3E93220 		ldrd	r2, r0, [r3, #200]
+ 543              	.LVL44:
+ 544              		.loc 1 89 37 view .LVU121
+ 545 0006 D108     		lsrs	r1, r2, #3
+ 546              		.loc 1 89 55 view .LVU122
+ 547 0008 02F00702 		and	r2, r2, #7
+ 548              		.loc 1 89 37 view .LVU123
+ 549 000c 41EA4071 		orr	r1, r1, r0, lsl #29
+ 550              		.loc 1 89 55 view .LVU124
+ 551 0010 D200     		lsls	r2, r2, #3
+  88:sp800-185.c   ****     state->ctx[state->ctx[25] >> 3] ^= (uint64_t)0x04 << (8 * (state->ctx[25] & 0x07));
+ 552              		.loc 1 88 52 view .LVU125
+ 553 0012 70B5     		push	{r4, r5, r6, lr}
+ 554              	.LCFI6:
+ 555              		.cfi_def_cfa_offset 16
+ 556              		.cfi_offset 4, -16
+ 557              		.cfi_offset 5, -12
+ 558              		.cfi_offset 6, -8
+ 559              		.cfi_offset 14, -4
+ 560              		.loc 1 89 55 view .LVU126
+ 561 0014 A2F12000 		sub	r0, r2, #32
+ 562 0018 0424     		movs	r4, #4
+ 563              		.loc 1 89 37 view .LVU127
+ 564 001a 03EBC106 		add	r6, r3, r1, lsl #3
+ 565              		.loc 1 89 55 view .LVU128
+ 566 001e C2F12005 		rsb	r5, r2, #32
+ 567 0022 24FA05F5 		lsr	r5, r4, r5
+ 568 0026 04FA00F0 		lsl	r0, r4, r0
+ 569 002a 04FA02F2 		lsl	r2, r4, r2
+ 570              		.loc 1 89 37 view .LVU129
+ 571 002e 53F83140 		ldr	r4, [r3, r1, lsl #3]
+ 572              		.loc 1 89 55 view .LVU130
+ 573 0032 2843     		orrs	r0, r0, r5
+ 574              		.loc 1 89 37 view .LVU131
+ 575 0034 7568     		ldr	r5, [r6, #4]
+ 576 0036 6240     		eors	r2, r2, r4
+ 577 0038 43F83120 		str	r2, [r3, r1, lsl #3]
+ 578 003c 6840     		eors	r0, r0, r5
+ 579 003e 7060     		str	r0, [r6, #4]
+  90:sp800-185.c   ****     state->ctx[(SHAKE256_RATE - 1) >> 3] ^= (uint64_t)128 << (8 * ((SHAKE256_RATE - 1) & 0x07));
+ 580              		.loc 1 90 5 is_stmt 1 view .LVU132
+ 581              		.loc 1 90 42 is_stmt 0 view .LVU133
+ 582 0040 D3F88420 		ldr	r2, [r3, #132]
+  91:sp800-185.c   ****     state->ctx[25] = 0;
+ 583              		.loc 1 91 20 view .LVU134
+ 584 0044 0020     		movs	r0, #0
+  90:sp800-185.c   ****     state->ctx[(SHAKE256_RATE - 1) >> 3] ^= (uint64_t)128 << (8 * ((SHAKE256_RATE - 1) & 0x07));
+ 585              		.loc 1 90 42 view .LVU135
+ 586 0046 02F10042 		add	r2, r2, #-2147483648
+ 587              		.loc 1 91 20 view .LVU136
+ 588 004a 0021     		movs	r1, #0
+ 589 004c C3E93201 		strd	r0, [r3, #200]
+  90:sp800-185.c   ****     state->ctx[(SHAKE256_RATE - 1) >> 3] ^= (uint64_t)128 << (8 * ((SHAKE256_RATE - 1) & 0x07));
+ 590              		.loc 1 90 42 view .LVU137
+ 591 0050 C3F88420 		str	r2, [r3, #132]
+ 592              		.loc 1 91 5 is_stmt 1 view .LVU138
+  92:sp800-185.c   **** }
+ 593              		.loc 1 92 1 is_stmt 0 view .LVU139
+ 594 0054 70BD     		pop	{r4, r5, r6, pc}
+ 595              		.cfi_endproc
+ 596              	.LFE9:
+ 598              		.section	.text.cshake256_inc_squeeze,"ax",%progbits
+ 599              		.align	1
+ 600              		.global	cshake256_inc_squeeze
+ 601              		.syntax unified
+ 602              		.thumb
+ 603              		.thumb_func
+ 604              		.fpu softvfp
+ 606              	cshake256_inc_squeeze:
+ 607              	.LVL45:
+ 608              	.LFB10:
+  93:sp800-185.c   **** 
+  94:sp800-185.c   **** void cshake256_inc_squeeze(uint8_t *output, size_t outlen, shake256incctx *state) {
+ 609              		.loc 1 94 83 is_stmt 1 view -0
+ 610              		.cfi_startproc
+ 611              		@ args = 0, pretend = 0, frame = 0
+ 612              		@ frame_needed = 0, uses_anonymous_args = 0
+ 613              		@ link register save eliminated.
+  95:sp800-185.c   ****     shake256_inc_squeeze(output, outlen, state);
+ 614              		.loc 1 95 5 view .LVU141
+ 615 0000 FFF7FEBF 		b	shake256_inc_squeeze
+ 616              	.LVL46:
+ 617              		.loc 1 95 5 is_stmt 0 view .LVU142
+ 618              		.cfi_endproc
+ 619              	.LFE10:
+ 621              		.section	.text.cshake256_inc_ctx_release,"ax",%progbits
+ 622              		.align	1
+ 623              		.global	cshake256_inc_ctx_release
+ 624              		.syntax unified
+ 625              		.thumb
+ 626              		.thumb_func
+ 627              		.fpu softvfp
+ 629              	cshake256_inc_ctx_release:
+ 630              	.LVL47:
+ 631              	.LFB11:
+  96:sp800-185.c   **** }
+  97:sp800-185.c   **** 
+  98:sp800-185.c   **** void cshake256_inc_ctx_release(shake256incctx *state) {
+ 632              		.loc 1 98 55 is_stmt 1 view -0
+ 633              		.cfi_startproc
+ 634              		@ args = 0, pretend = 0, frame = 0
+ 635              		@ frame_needed = 0, uses_anonymous_args = 0
+ 636              		@ link register save eliminated.
+  99:sp800-185.c   ****     shake256_inc_ctx_release(state);
+ 637              		.loc 1 99 5 view .LVU144
+ 638 0000 FFF7FEBF 		b	shake256_inc_ctx_release
+ 639              	.LVL48:
+ 640              		.loc 1 99 5 is_stmt 0 view .LVU145
+ 641              		.cfi_endproc
+ 642              	.LFE11:
+ 644              		.section	.text.cshake256_inc_ctx_clone,"ax",%progbits
+ 645              		.align	1
+ 646              		.global	cshake256_inc_ctx_clone
+ 647              		.syntax unified
+ 648              		.thumb
+ 649              		.thumb_func
+ 650              		.fpu softvfp
+ 652              	cshake256_inc_ctx_clone:
+ 653              	.LVL49:
+ 654              	.LFB12:
+ 100:sp800-185.c   **** }
+ 101:sp800-185.c   **** 
+ 102:sp800-185.c   **** void cshake256_inc_ctx_clone(shake256incctx *dest, const shake256incctx *src) {
+ 655              		.loc 1 102 79 is_stmt 1 view -0
+ 656              		.cfi_startproc
+ 657              		@ args = 0, pretend = 0, frame = 0
+ 658              		@ frame_needed = 0, uses_anonymous_args = 0
+ 659              		@ link register save eliminated.
+ 103:sp800-185.c   ****     shake256_inc_ctx_clone(dest, src);
+ 660              		.loc 1 103 5 view .LVU147
+ 661 0000 FFF7FEBF 		b	shake256_inc_ctx_clone
+ 662              	.LVL50:
+ 663              		.loc 1 103 5 is_stmt 0 view .LVU148
+ 664              		.cfi_endproc
+ 665              	.LFE12:
+ 667              		.section	.text.cshake128,"ax",%progbits
+ 668              		.align	1
+ 669              		.global	cshake128
+ 670              		.syntax unified
+ 671              		.thumb
+ 672              		.thumb_func
+ 673              		.fpu softvfp
+ 675              	cshake128:
+ 676              	.LVL51:
+ 677              	.LFB13:
+ 104:sp800-185.c   **** }
+ 105:sp800-185.c   **** 
+ 106:sp800-185.c   **** /*************************************************
+ 107:sp800-185.c   ****  * Name:        cshake128
+ 108:sp800-185.c   ****  *
+ 109:sp800-185.c   ****  * Description: cSHAKE128 XOF with non-incremental API
+ 110:sp800-185.c   ****  *
+ 111:sp800-185.c   ****  * Arguments:   - uint8_t *output: pointer to output
+ 112:sp800-185.c   ****  *              - size_t outlen: requested output length in bytes
+ 113:sp800-185.c   ****  *              - const uint8_t *name: pointer to function-name string
+ 114:sp800-185.c   ****  *              - size_t namelen: length of function-name string in bytes
+ 115:sp800-185.c   ****  *              - const uint8_t *cstm: pointer to non-empty customization string
+ 116:sp800-185.c   ****  *              - size_t cstmlen: length of customization string in bytes
+ 117:sp800-185.c   ****  *              - const uint8_t *input: pointer to input
+ 118:sp800-185.c   ****  *              - size_t inlen: length of input in bytes
+ 119:sp800-185.c   ****  **************************************************/
+ 120:sp800-185.c   **** void cshake128(uint8_t *output, size_t outlen,
+ 121:sp800-185.c   ****                const uint8_t *name, size_t namelen,
+ 122:sp800-185.c   ****                const uint8_t *cstm, size_t cstmlen,
+ 123:sp800-185.c   ****                const uint8_t *input, size_t inlen) {
+ 678              		.loc 1 123 52 is_stmt 1 view -0
+ 679              		.cfi_startproc
+ 680              		@ args = 16, pretend = 0, frame = 8
+ 681              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124:sp800-185.c   ****     shake128incctx state;
+ 682              		.loc 1 124 5 view .LVU150
+ 125:sp800-185.c   ****     cshake128_inc_init(&state, name, namelen, cstm, cstmlen);
+ 683              		.loc 1 125 5 view .LVU151
+ 123:sp800-185.c   ****     shake128incctx state;
+ 684              		.loc 1 123 52 is_stmt 0 view .LVU152
+ 685 0000 30B5     		push	{r4, r5, lr}
+ 686              	.LCFI7:
+ 687              		.cfi_def_cfa_offset 12
+ 688              		.cfi_offset 4, -12
+ 689              		.cfi_offset 5, -8
+ 690              		.cfi_offset 14, -4
+ 691 0002 85B0     		sub	sp, sp, #20
+ 692              	.LCFI8:
+ 693              		.cfi_def_cfa_offset 32
+ 123:sp800-185.c   ****     shake128incctx state;
+ 694              		.loc 1 123 52 view .LVU153
+ 695 0004 0D46     		mov	r5, r1
+ 696 0006 1146     		mov	r1, r2
+ 697              	.LVL52:
+ 123:sp800-185.c   ****     shake128incctx state;
+ 698              		.loc 1 123 52 view .LVU154
+ 699 0008 1A46     		mov	r2, r3
+ 700              	.LVL53:
+ 701              		.loc 1 125 5 view .LVU155
+ 702 000a 099B     		ldr	r3, [sp, #36]
+ 703              	.LVL54:
+ 704              		.loc 1 125 5 view .LVU156
+ 705 000c 0093     		str	r3, [sp]
+ 123:sp800-185.c   ****     shake128incctx state;
+ 706              		.loc 1 123 52 view .LVU157
+ 707 000e 0446     		mov	r4, r0
+ 708              		.loc 1 125 5 view .LVU158
+ 709 0010 089B     		ldr	r3, [sp, #32]
+ 710 0012 03A8     		add	r0, sp, #12
+ 711              	.LVL55:
+ 712              		.loc 1 125 5 view .LVU159
+ 713 0014 FFF7FEFF 		bl	cshake128_inc_init
+ 714              	.LVL56:
+ 126:sp800-185.c   ****     cshake128_inc_absorb(&state, input, inlen);
+ 715              		.loc 1 126 5 is_stmt 1 view .LVU160
+ 716              	.LBB14:
+ 717              	.LBI14:
+  42:sp800-185.c   ****     shake128_inc_absorb(state, input, inlen);
+ 718              		.loc 1 42 6 view .LVU161
+ 719              	.LBB15:
+  43:sp800-185.c   **** }
+ 720              		.loc 1 43 5 view .LVU162
+ 721 0018 DDE90A12 		ldrd	r1, r2, [sp, #40]
+ 722 001c 03A8     		add	r0, sp, #12
+ 723              	.LVL57:
+  43:sp800-185.c   **** }
+ 724              		.loc 1 43 5 is_stmt 0 view .LVU163
+ 725 001e FFF7FEFF 		bl	shake128_inc_absorb
+ 726              	.LVL58:
+  43:sp800-185.c   **** }
+ 727              		.loc 1 43 5 view .LVU164
+ 728              	.LBE15:
+ 729              	.LBE14:
+ 127:sp800-185.c   ****     cshake128_inc_finalize(&state);
+ 730              		.loc 1 127 5 is_stmt 1 view .LVU165
+ 731 0022 03A8     		add	r0, sp, #12
+ 732 0024 FFF7FEFF 		bl	cshake128_inc_finalize
+ 733              	.LVL59:
+ 128:sp800-185.c   ****     cshake128_inc_squeeze(output, outlen, &state);
+ 734              		.loc 1 128 5 view .LVU166
+ 735              	.LBB16:
+ 736              	.LBI16:
+  52:sp800-185.c   ****     shake128_inc_squeeze(output, outlen, state);
+ 737              		.loc 1 52 6 view .LVU167
+ 738              	.LBB17:
+  53:sp800-185.c   **** }
+ 739              		.loc 1 53 5 view .LVU168
+ 740 0028 03AA     		add	r2, sp, #12
+ 741              	.LVL60:
+  53:sp800-185.c   **** }
+ 742              		.loc 1 53 5 is_stmt 0 view .LVU169
+ 743 002a 2946     		mov	r1, r5
+ 744 002c 2046     		mov	r0, r4
+ 745 002e FFF7FEFF 		bl	shake128_inc_squeeze
+ 746              	.LVL61:
+  53:sp800-185.c   **** }
+ 747              		.loc 1 53 5 view .LVU170
+ 748              	.LBE17:
+ 749              	.LBE16:
+ 129:sp800-185.c   ****     cshake128_inc_ctx_release(&state);
+ 750              		.loc 1 129 5 is_stmt 1 view .LVU171
+ 751              	.LBB18:
+ 752              	.LBI18:
+  56:sp800-185.c   ****     shake128_inc_ctx_release(state);
+ 753              		.loc 1 56 6 view .LVU172
+ 754              	.LBB19:
+  57:sp800-185.c   **** }
+ 755              		.loc 1 57 5 view .LVU173
+ 756 0032 03A8     		add	r0, sp, #12
+ 757              	.LVL62:
+  57:sp800-185.c   **** }
+ 758              		.loc 1 57 5 is_stmt 0 view .LVU174
+ 759 0034 FFF7FEFF 		bl	shake128_inc_ctx_release
+ 760              	.LVL63:
+  57:sp800-185.c   **** }
+ 761              		.loc 1 57 5 view .LVU175
+ 762              	.LBE19:
+ 763              	.LBE18:
+ 130:sp800-185.c   **** }
+ 764              		.loc 1 130 1 view .LVU176
+ 765 0038 05B0     		add	sp, sp, #20
+ 766              	.LCFI9:
+ 767              		.cfi_def_cfa_offset 12
+ 768              		@ sp needed
+ 769 003a 30BD     		pop	{r4, r5, pc}
+ 770              		.loc 1 130 1 view .LVU177
+ 771              		.cfi_endproc
+ 772              	.LFE13:
+ 774              		.section	.text.cshake256,"ax",%progbits
+ 775              		.align	1
+ 776              		.global	cshake256
+ 777              		.syntax unified
+ 778              		.thumb
+ 779              		.thumb_func
+ 780              		.fpu softvfp
+ 782              	cshake256:
+ 783              	.LVL64:
+ 784              	.LFB14:
+ 131:sp800-185.c   **** 
+ 132:sp800-185.c   **** /*************************************************
+ 133:sp800-185.c   ****  * Name:        cshake256
+ 134:sp800-185.c   ****  *
+ 135:sp800-185.c   ****  * Description: cSHAKE256 XOF with non-incremental API
+ 136:sp800-185.c   ****  *
+ 137:sp800-185.c   ****  * Arguments:   - uint8_t *output: pointer to output
+ 138:sp800-185.c   ****  *              - size_t outlen: requested output length in bytes
+ 139:sp800-185.c   ****  *              - const uint8_t *name: pointer to function-name string
+ 140:sp800-185.c   ****  *              - size_t namelen: length of function-name string in bytes
+ 141:sp800-185.c   ****  *              - const uint8_t *cstm: pointer to non-empty customization string
+ 142:sp800-185.c   ****  *              - size_t cstmlen: length of customization string in bytes
+ 143:sp800-185.c   ****  *              - const uint8_t *input: pointer to input
+ 144:sp800-185.c   ****  *              - size_t inlen: length of input in bytes
+ 145:sp800-185.c   ****  **************************************************/
+ 146:sp800-185.c   **** void cshake256(uint8_t *output, size_t outlen,
+ 147:sp800-185.c   ****                const uint8_t *name, size_t namelen,
+ 148:sp800-185.c   ****                const uint8_t *cstm, size_t cstmlen,
+ 149:sp800-185.c   ****                const uint8_t *input, size_t inlen) {
+ 785              		.loc 1 149 52 is_stmt 1 view -0
+ 786              		.cfi_startproc
+ 787              		@ args = 16, pretend = 0, frame = 8
+ 788              		@ frame_needed = 0, uses_anonymous_args = 0
+ 150:sp800-185.c   ****     shake256incctx state;
+ 789              		.loc 1 150 5 view .LVU179
+ 151:sp800-185.c   ****     cshake256_inc_init(&state, name, namelen, cstm, cstmlen);
+ 790              		.loc 1 151 5 view .LVU180
+ 149:sp800-185.c   ****     shake256incctx state;
+ 791              		.loc 1 149 52 is_stmt 0 view .LVU181
+ 792 0000 30B5     		push	{r4, r5, lr}
+ 793              	.LCFI10:
+ 794              		.cfi_def_cfa_offset 12
+ 795              		.cfi_offset 4, -12
+ 796              		.cfi_offset 5, -8
+ 797              		.cfi_offset 14, -4
+ 798 0002 85B0     		sub	sp, sp, #20
+ 799              	.LCFI11:
+ 800              		.cfi_def_cfa_offset 32
+ 149:sp800-185.c   ****     shake256incctx state;
+ 801              		.loc 1 149 52 view .LVU182
+ 802 0004 0D46     		mov	r5, r1
+ 803 0006 1146     		mov	r1, r2
+ 804              	.LVL65:
+ 149:sp800-185.c   ****     shake256incctx state;
+ 805              		.loc 1 149 52 view .LVU183
+ 806 0008 1A46     		mov	r2, r3
+ 807              	.LVL66:
+ 808              		.loc 1 151 5 view .LVU184
+ 809 000a 099B     		ldr	r3, [sp, #36]
+ 810              	.LVL67:
+ 811              		.loc 1 151 5 view .LVU185
+ 812 000c 0093     		str	r3, [sp]
+ 149:sp800-185.c   ****     shake256incctx state;
+ 813              		.loc 1 149 52 view .LVU186
+ 814 000e 0446     		mov	r4, r0
+ 815              		.loc 1 151 5 view .LVU187
+ 816 0010 089B     		ldr	r3, [sp, #32]
+ 817 0012 03A8     		add	r0, sp, #12
+ 818              	.LVL68:
+ 819              		.loc 1 151 5 view .LVU188
+ 820 0014 FFF7FEFF 		bl	cshake256_inc_init
+ 821              	.LVL69:
+ 152:sp800-185.c   ****     cshake256_inc_absorb(&state, input, inlen);
+ 822              		.loc 1 152 5 is_stmt 1 view .LVU189
+ 823              	.LBB20:
+ 824              	.LBI20:
+  84:sp800-185.c   ****     shake256_inc_absorb(state, input, inlen);
+ 825              		.loc 1 84 6 view .LVU190
+ 826              	.LBB21:
+  85:sp800-185.c   **** }
+ 827              		.loc 1 85 5 view .LVU191
+ 828 0018 DDE90A12 		ldrd	r1, r2, [sp, #40]
+ 829 001c 03A8     		add	r0, sp, #12
+ 830              	.LVL70:
+  85:sp800-185.c   **** }
+ 831              		.loc 1 85 5 is_stmt 0 view .LVU192
+ 832 001e FFF7FEFF 		bl	shake256_inc_absorb
+ 833              	.LVL71:
+  85:sp800-185.c   **** }
+ 834              		.loc 1 85 5 view .LVU193
+ 835              	.LBE21:
+ 836              	.LBE20:
+ 153:sp800-185.c   ****     cshake256_inc_finalize(&state);
+ 837              		.loc 1 153 5 is_stmt 1 view .LVU194
+ 838 0022 03A8     		add	r0, sp, #12
+ 839 0024 FFF7FEFF 		bl	cshake256_inc_finalize
+ 840              	.LVL72:
+ 154:sp800-185.c   ****     cshake256_inc_squeeze(output, outlen, &state);
+ 841              		.loc 1 154 5 view .LVU195
+ 842              	.LBB22:
+ 843              	.LBI22:
+  94:sp800-185.c   ****     shake256_inc_squeeze(output, outlen, state);
+ 844              		.loc 1 94 6 view .LVU196
+ 845              	.LBB23:
+  95:sp800-185.c   **** }
+ 846              		.loc 1 95 5 view .LVU197
+ 847 0028 03AA     		add	r2, sp, #12
+ 848              	.LVL73:
+  95:sp800-185.c   **** }
+ 849              		.loc 1 95 5 is_stmt 0 view .LVU198
+ 850 002a 2946     		mov	r1, r5
+ 851 002c 2046     		mov	r0, r4
+ 852 002e FFF7FEFF 		bl	shake256_inc_squeeze
+ 853              	.LVL74:
+  95:sp800-185.c   **** }
+ 854              		.loc 1 95 5 view .LVU199
+ 855              	.LBE23:
+ 856              	.LBE22:
+ 155:sp800-185.c   ****     cshake256_inc_ctx_release(&state);
+ 857              		.loc 1 155 5 is_stmt 1 view .LVU200
+ 858              	.LBB24:
+ 859              	.LBI24:
+  98:sp800-185.c   ****     shake256_inc_ctx_release(state);
+ 860              		.loc 1 98 6 view .LVU201
+ 861              	.LBB25:
+  99:sp800-185.c   **** }
+ 862              		.loc 1 99 5 view .LVU202
+ 863 0032 03A8     		add	r0, sp, #12
+ 864              	.LVL75:
+  99:sp800-185.c   **** }
+ 865              		.loc 1 99 5 is_stmt 0 view .LVU203
+ 866 0034 FFF7FEFF 		bl	shake256_inc_ctx_release
+ 867              	.LVL76:
+  99:sp800-185.c   **** }
+ 868              		.loc 1 99 5 view .LVU204
+ 869              	.LBE25:
+ 870              	.LBE24:
+ 156:sp800-185.c   **** }
+ 871              		.loc 1 156 1 view .LVU205
+ 872 0038 05B0     		add	sp, sp, #20
+ 873              	.LCFI12:
+ 874              		.cfi_def_cfa_offset 12
+ 875              		@ sp needed
+ 876 003a 30BD     		pop	{r4, r5, pc}
+ 877              		.loc 1 156 1 view .LVU206
+ 878              		.cfi_endproc
+ 879              	.LFE14:
+ 881              		.text
+ 882              	.Letext0:
+ 883              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\lib\\gcc\\arm-none-eabi\\
+ 884              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 885              		.file 4 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 886              		.file 5 "fips202.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 sp800-185.c
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:16     .text.left_encode:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:23     .text.left_encode:00000000 left_encode
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:106    .text.cshake128_inc_init:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:113    .text.cshake128_inc_init:00000000 cshake128_inc_init
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:220    .text.cshake128_inc_absorb:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:227    .text.cshake128_inc_absorb:00000000 cshake128_inc_absorb
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:243    .text.cshake128_inc_finalize:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:250    .text.cshake128_inc_finalize:00000000 cshake128_inc_finalize
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:318    .text.cshake128_inc_squeeze:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:325    .text.cshake128_inc_squeeze:00000000 cshake128_inc_squeeze
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:341    .text.cshake128_inc_ctx_release:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:348    .text.cshake128_inc_ctx_release:00000000 cshake128_inc_ctx_release
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:364    .text.cshake128_inc_ctx_clone:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:371    .text.cshake128_inc_ctx_clone:00000000 cshake128_inc_ctx_clone
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:387    .text.cshake256_inc_init:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:394    .text.cshake256_inc_init:00000000 cshake256_inc_init
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:501    .text.cshake256_inc_absorb:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:508    .text.cshake256_inc_absorb:00000000 cshake256_inc_absorb
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:524    .text.cshake256_inc_finalize:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:531    .text.cshake256_inc_finalize:00000000 cshake256_inc_finalize
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:599    .text.cshake256_inc_squeeze:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:606    .text.cshake256_inc_squeeze:00000000 cshake256_inc_squeeze
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:622    .text.cshake256_inc_ctx_release:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:629    .text.cshake256_inc_ctx_release:00000000 cshake256_inc_ctx_release
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:645    .text.cshake256_inc_ctx_clone:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:652    .text.cshake256_inc_ctx_clone:00000000 cshake256_inc_ctx_clone
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:668    .text.cshake128:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:675    .text.cshake128:00000000 cshake128
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:775    .text.cshake256:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\cchI8GN3.s:782    .text.cshake256:00000000 cshake256
+
+UNDEFINED SYMBOLS
+shake128_inc_init
+shake128_inc_absorb
+shake128_inc_squeeze
+shake128_inc_ctx_release
+shake128_inc_ctx_clone
+shake256_inc_init
+shake256_inc_absorb
+shake256_inc_squeeze
+shake256_inc_ctx_release
+shake256_inc_ctx_clone

@@ -1,0 +1,2189 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"polyvec.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand,"ax",%progbits
+  16              		.align	1
+  17              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand:
+  25              	.LVL0:
+  26              	.LFB0:
+  27              		.file 1 "polyvec.c"
+   1:polyvec.c     **** #include "params.h"
+   2:polyvec.c     **** #include "poly.h"
+   3:polyvec.c     **** #include "polyvec.h"
+   4:polyvec.c     **** #include <stdint.h>
+   5:polyvec.c     **** 
+   6:polyvec.c     **** /*************************************************
+   7:polyvec.c     **** * Name:        expand_mat
+   8:polyvec.c     **** *
+   9:polyvec.c     **** * Description: Implementation of ExpandA. Generates matrix A with uniformly
+  10:polyvec.c     **** *              random coefficients a_{i,j} by performing rejection
+  11:polyvec.c     **** *              sampling on the output stream of SHAKE128(rho|j|i)
+  12:polyvec.c     **** *
+  13:polyvec.c     **** * Arguments:   - polyvecl mat[K]: output matrix
+  14:polyvec.c     **** *              - const uint8_t rho[]: byte array containing seed rho
+  15:polyvec.c     **** **************************************************/
+  16:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand(polyvecl mat[K], const uint8_t rho[SEEDBYTES]) 
+  28              		.loc 1 16 100 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  17:polyvec.c     ****     unsigned int i, j;
+  32              		.loc 1 17 5 view .LVU1
+  18:polyvec.c     **** 
+  19:polyvec.c     ****     for (i = 0; i < K; ++i) {
+  33              		.loc 1 19 5 view .LVU2
+  34              		.loc 1 19 17 view .LVU3
+  16:polyvec.c     ****     unsigned int i, j;
+  35              		.loc 1 16 100 is_stmt 0 view .LVU4
+  36 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+  37              	.LCFI0:
+  38              		.cfi_def_cfa_offset 32
+  39              		.cfi_offset 3, -32
+  40              		.cfi_offset 4, -28
+  41              		.cfi_offset 5, -24
+  42              		.cfi_offset 6, -20
+  43              		.cfi_offset 7, -16
+  44              		.cfi_offset 8, -12
+  45              		.cfi_offset 9, -8
+  46              		.cfi_offset 14, -4
+  16:polyvec.c     ****     unsigned int i, j;
+  47              		.loc 1 16 100 view .LVU5
+  48 0004 0646     		mov	r6, r0
+  49 0006 8846     		mov	r8, r1
+  50              		.loc 1 19 12 view .LVU6
+  51 0008 0025     		movs	r5, #0
+  52              	.LVL1:
+  53              	.L2:
+  20:polyvec.c     ****         for (j = 0; j < L; ++j) {
+  54              		.loc 1 20 21 is_stmt 1 view .LVU7
+  55 000a 2F02     		lsls	r7, r5, #8
+  56 000c BFB2     		uxth	r7, r7
+  57 000e 06EB0539 		add	r9, r6, r5, lsl #12
+  58              		.loc 1 20 16 is_stmt 0 view .LVU8
+  59 0012 0024     		movs	r4, #0
+  60              	.LVL2:
+  61              	.L3:
+  21:polyvec.c     ****             PQCLEAN_DILITHIUM2_CLEAN_poly_uniform(&mat[i].vec[j], rho, (uint16_t) ((i << 8) + j));
+  62              		.loc 1 21 13 is_stmt 1 discriminator 3 view .LVU9
+  63 0014 3A19     		adds	r2, r7, r4
+  64 0016 09EB8420 		add	r0, r9, r4, lsl #10
+  65 001a 92B2     		uxth	r2, r2
+  66 001c 4146     		mov	r1, r8
+  20:polyvec.c     ****         for (j = 0; j < L; ++j) {
+  67              		.loc 1 20 28 is_stmt 0 discriminator 3 view .LVU10
+  68 001e 0134     		adds	r4, r4, #1
+  69              	.LVL3:
+  70              		.loc 1 21 13 discriminator 3 view .LVU11
+  71 0020 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_uniform
+  72              	.LVL4:
+  20:polyvec.c     ****         for (j = 0; j < L; ++j) {
+  73              		.loc 1 20 28 is_stmt 1 discriminator 3 view .LVU12
+  20:polyvec.c     ****         for (j = 0; j < L; ++j) {
+  74              		.loc 1 20 21 discriminator 3 view .LVU13
+  20:polyvec.c     ****         for (j = 0; j < L; ++j) {
+  75              		.loc 1 20 9 is_stmt 0 discriminator 3 view .LVU14
+  76 0024 042C     		cmp	r4, #4
+  77 0026 F5D1     		bne	.L3
+  19:polyvec.c     ****         for (j = 0; j < L; ++j) {
+  78              		.loc 1 19 24 is_stmt 1 discriminator 2 view .LVU15
+  79 0028 0135     		adds	r5, r5, #1
+  80              	.LVL5:
+  19:polyvec.c     ****         for (j = 0; j < L; ++j) {
+  81              		.loc 1 19 17 discriminator 2 view .LVU16
+  19:polyvec.c     ****         for (j = 0; j < L; ++j) {
+  82              		.loc 1 19 5 is_stmt 0 discriminator 2 view .LVU17
+  83 002a 042D     		cmp	r5, #4
+  84 002c EDD1     		bne	.L2
+  22:polyvec.c     ****         }
+  23:polyvec.c     ****     }
+  24:polyvec.c     **** }
+  85              		.loc 1 24 1 view .LVU18
+  86 002e BDE8F883 		pop	{r3, r4, r5, r6, r7, r8, r9, pc}
+  87              		.loc 1 24 1 view .LVU19
+  88              		.cfi_endproc
+  89              	.LFE0:
+  91              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta,"ax",%progbits
+  92              		.align	1
+  93              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta
+  94              		.syntax unified
+  95              		.thumb
+  96              		.thumb_func
+  97              		.fpu softvfp
+  99              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta:
+ 100              	.LVL6:
+ 101              	.LFB2:
+  25:polyvec.c     **** 
+  26:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery(polyveck *t, const polyvecl mat[K
+  27:polyvec.c     ****     unsigned int i;
+  28:polyvec.c     **** 
+  29:polyvec.c     ****     for (i = 0; i < K; ++i) {
+  30:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery(&t->vec[i], &mat[i], v);
+  31:polyvec.c     ****     }
+  32:polyvec.c     **** }
+  33:polyvec.c     **** 
+  34:polyvec.c     **** /**************************************************************/
+  35:polyvec.c     **** /************ Vectors of polynomials of length L **************/
+  36:polyvec.c     **** /**************************************************************/
+  37:polyvec.c     **** 
+  38:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta(polyvecl *v, const uint8_t seed[CRHBYTES], uint1
+ 102              		.loc 1 38 111 is_stmt 1 view -0
+ 103              		.cfi_startproc
+ 104              		@ args = 0, pretend = 0, frame = 0
+ 105              		@ frame_needed = 0, uses_anonymous_args = 0
+  39:polyvec.c     ****     unsigned int i;
+ 106              		.loc 1 39 5 view .LVU21
+  40:polyvec.c     **** 
+  41:polyvec.c     ****     for (i = 0; i < L; ++i) {
+ 107              		.loc 1 41 5 view .LVU22
+  38:polyvec.c     ****     unsigned int i;
+ 108              		.loc 1 38 111 is_stmt 0 view .LVU23
+ 109 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 110              	.LCFI1:
+ 111              		.cfi_def_cfa_offset 24
+ 112              		.cfi_offset 3, -24
+ 113              		.cfi_offset 4, -20
+ 114              		.cfi_offset 5, -16
+ 115              		.cfi_offset 6, -12
+ 116              		.cfi_offset 7, -8
+ 117              		.cfi_offset 14, -4
+  38:polyvec.c     ****     unsigned int i;
+ 118              		.loc 1 38 111 view .LVU24
+ 119 0002 0546     		mov	r5, r0
+ 120 0004 0E46     		mov	r6, r1
+ 121 0006 1746     		mov	r7, r2
+ 122              	.LVL7:
+ 123              		.loc 1 41 17 is_stmt 1 view .LVU25
+ 124              		.loc 1 41 12 is_stmt 0 view .LVU26
+ 125 0008 0024     		movs	r4, #0
+ 126              	.LVL8:
+ 127              	.L7:
+  42:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 128              		.loc 1 42 9 is_stmt 1 discriminator 3 view .LVU27
+ 129              		.loc 1 42 9 is_stmt 0 discriminator 3 view .LVU28
+ 130 000a 3A19     		adds	r2, r7, r4
+ 131 000c 05EB8420 		add	r0, r5, r4, lsl #10
+ 132 0010 92B2     		uxth	r2, r2
+ 133 0012 3146     		mov	r1, r6
+  41:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 134              		.loc 1 41 24 discriminator 3 view .LVU29
+ 135 0014 0134     		adds	r4, r4, #1
+ 136              	.LVL9:
+ 137              		.loc 1 42 9 discriminator 3 view .LVU30
+ 138 0016 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta
+ 139              	.LVL10:
+  41:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 140              		.loc 1 41 24 is_stmt 1 discriminator 3 view .LVU31
+  41:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 141              		.loc 1 41 17 discriminator 3 view .LVU32
+  41:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 142              		.loc 1 41 5 is_stmt 0 discriminator 3 view .LVU33
+ 143 001a 042C     		cmp	r4, #4
+ 144 001c F5D1     		bne	.L7
+  43:polyvec.c     ****     }
+  44:polyvec.c     **** }
+ 145              		.loc 1 44 1 view .LVU34
+ 146 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 147              		.loc 1 44 1 view .LVU35
+ 148              		.cfi_endproc
+ 149              	.LFE2:
+ 151              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1,"ax",%progbits
+ 152              		.align	1
+ 153              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1
+ 154              		.syntax unified
+ 155              		.thumb
+ 156              		.thumb_func
+ 157              		.fpu softvfp
+ 159              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1:
+ 160              	.LVL11:
+ 161              	.LFB3:
+  45:polyvec.c     **** 
+  46:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1(polyvecl *v, const uint8_t seed[CRHBYTES], ui
+ 162              		.loc 1 46 114 is_stmt 1 view -0
+ 163              		.cfi_startproc
+ 164              		@ args = 0, pretend = 0, frame = 0
+ 165              		@ frame_needed = 0, uses_anonymous_args = 0
+  47:polyvec.c     ****     unsigned int i;
+ 166              		.loc 1 47 5 view .LVU37
+  48:polyvec.c     **** 
+  49:polyvec.c     ****     for (i = 0; i < L; ++i) {
+ 167              		.loc 1 49 5 view .LVU38
+ 168              		.loc 1 49 17 view .LVU39
+  46:polyvec.c     ****     unsigned int i;
+ 169              		.loc 1 46 114 is_stmt 0 view .LVU40
+ 170 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 171              	.LCFI2:
+ 172              		.cfi_def_cfa_offset 24
+ 173              		.cfi_offset 3, -24
+ 174              		.cfi_offset 4, -20
+ 175              		.cfi_offset 5, -16
+ 176              		.cfi_offset 6, -12
+ 177              		.cfi_offset 7, -8
+ 178              		.cfi_offset 14, -4
+  50:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_gamma1(&v->vec[i], seed, (uint16_t) (L * nonce + i));
+ 179              		.loc 1 50 9 view .LVU41
+ 180 0002 9500     		lsls	r5, r2, #2
+  46:polyvec.c     ****     unsigned int i;
+ 181              		.loc 1 46 114 view .LVU42
+ 182 0004 0646     		mov	r6, r0
+ 183 0006 0F46     		mov	r7, r1
+ 184              		.loc 1 50 9 view .LVU43
+ 185 0008 ADB2     		uxth	r5, r5
+  49:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_gamma1(&v->vec[i], seed, (uint16_t) (L * nonce + i));
+ 186              		.loc 1 49 12 view .LVU44
+ 187 000a 0024     		movs	r4, #0
+ 188              	.LVL12:
+ 189              	.L10:
+ 190              		.loc 1 50 9 is_stmt 1 discriminator 3 view .LVU45
+ 191 000c 2A19     		adds	r2, r5, r4
+ 192 000e 06EB8420 		add	r0, r6, r4, lsl #10
+ 193 0012 92B2     		uxth	r2, r2
+ 194 0014 3946     		mov	r1, r7
+  49:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_gamma1(&v->vec[i], seed, (uint16_t) (L * nonce + i));
+ 195              		.loc 1 49 24 is_stmt 0 discriminator 3 view .LVU46
+ 196 0016 0134     		adds	r4, r4, #1
+ 197              	.LVL13:
+ 198              		.loc 1 50 9 discriminator 3 view .LVU47
+ 199 0018 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_gamma1
+ 200              	.LVL14:
+  49:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_gamma1(&v->vec[i], seed, (uint16_t) (L * nonce + i));
+ 201              		.loc 1 49 24 is_stmt 1 discriminator 3 view .LVU48
+  49:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_gamma1(&v->vec[i], seed, (uint16_t) (L * nonce + i));
+ 202              		.loc 1 49 17 discriminator 3 view .LVU49
+  49:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_gamma1(&v->vec[i], seed, (uint16_t) (L * nonce + i));
+ 203              		.loc 1 49 5 is_stmt 0 discriminator 3 view .LVU50
+ 204 001c 042C     		cmp	r4, #4
+ 205 001e F5D1     		bne	.L10
+  51:polyvec.c     ****     }
+  52:polyvec.c     **** }
+ 206              		.loc 1 52 1 view .LVU51
+ 207 0020 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 208              		.loc 1 52 1 view .LVU52
+ 209              		.cfi_endproc
+ 210              	.LFE3:
+ 212              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce,"ax",%progbits
+ 213              		.align	1
+ 214              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce
+ 215              		.syntax unified
+ 216              		.thumb
+ 217              		.thumb_func
+ 218              		.fpu softvfp
+ 220              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce:
+ 221              	.LVL15:
+ 222              	.LFB4:
+  53:polyvec.c     **** 
+  54:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce(polyvecl *v) {
+ 223              		.loc 1 54 60 is_stmt 1 view -0
+ 224              		.cfi_startproc
+ 225              		@ args = 0, pretend = 0, frame = 0
+ 226              		@ frame_needed = 0, uses_anonymous_args = 0
+  55:polyvec.c     ****     unsigned int i;
+ 227              		.loc 1 55 5 view .LVU54
+  56:polyvec.c     **** 
+  57:polyvec.c     ****     for (i = 0; i < L; ++i) {
+ 228              		.loc 1 57 5 view .LVU55
+ 229              		.loc 1 57 17 view .LVU56
+  58:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 230              		.loc 1 58 9 view .LVU57
+  54:polyvec.c     ****     unsigned int i;
+ 231              		.loc 1 54 60 is_stmt 0 view .LVU58
+ 232 0000 10B5     		push	{r4, lr}
+ 233              	.LCFI3:
+ 234              		.cfi_def_cfa_offset 8
+ 235              		.cfi_offset 4, -8
+ 236              		.cfi_offset 14, -4
+  54:polyvec.c     ****     unsigned int i;
+ 237              		.loc 1 54 60 view .LVU59
+ 238 0002 0446     		mov	r4, r0
+ 239              		.loc 1 58 9 view .LVU60
+ 240 0004 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+ 241              	.LVL16:
+  57:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 242              		.loc 1 57 24 is_stmt 1 view .LVU61
+  57:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 243              		.loc 1 57 17 view .LVU62
+ 244              		.loc 1 58 9 view .LVU63
+ 245 0008 04F58060 		add	r0, r4, #1024
+ 246 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+ 247              	.LVL17:
+  57:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 248              		.loc 1 57 24 view .LVU64
+  57:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 249              		.loc 1 57 17 view .LVU65
+ 250              		.loc 1 58 9 view .LVU66
+ 251 0010 04F50060 		add	r0, r4, #2048
+ 252 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+ 253              	.LVL18:
+  57:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 254              		.loc 1 57 24 view .LVU67
+  57:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 255              		.loc 1 57 17 view .LVU68
+ 256              		.loc 1 58 9 view .LVU69
+ 257 0018 04F54060 		add	r0, r4, #3072
+  59:polyvec.c     ****     }
+  60:polyvec.c     **** }
+ 258              		.loc 1 60 1 is_stmt 0 view .LVU70
+ 259 001c BDE81040 		pop	{r4, lr}
+ 260              	.LCFI4:
+ 261              		.cfi_restore 14
+ 262              		.cfi_restore 4
+ 263              		.cfi_def_cfa_offset 0
+ 264              	.LVL19:
+  58:polyvec.c     ****     }
+ 265              		.loc 1 58 9 view .LVU71
+ 266 0020 FFF7FEBF 		b	PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+ 267              	.LVL20:
+  58:polyvec.c     ****     }
+ 268              		.loc 1 58 9 view .LVU72
+ 269              		.cfi_endproc
+ 270              	.LFE4:
+ 272              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add,"ax",%progbits
+ 273              		.align	1
+ 274              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add
+ 275              		.syntax unified
+ 276              		.thumb
+ 277              		.thumb_func
+ 278              		.fpu softvfp
+ 280              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add:
+ 281              	.LVL21:
+ 282              	.LFB5:
+  61:polyvec.c     **** 
+  62:polyvec.c     **** /*************************************************
+  63:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add
+  64:polyvec.c     **** *
+  65:polyvec.c     **** * Description: Add vectors of polynomials of length L.
+  66:polyvec.c     **** *              No modular reduction is performed.
+  67:polyvec.c     **** *
+  68:polyvec.c     **** * Arguments:   - polyvecl *w: pointer to output vector
+  69:polyvec.c     **** *              - const polyvecl *u: pointer to first summand
+  70:polyvec.c     **** *              - const polyvecl *v: pointer to second summand
+  71:polyvec.c     **** **************************************************/
+  72:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add(polyvecl *w, const polyvecl *u, const polyvecl *v) {
+ 283              		.loc 1 72 95 is_stmt 1 view -0
+ 284              		.cfi_startproc
+ 285              		@ args = 0, pretend = 0, frame = 0
+ 286              		@ frame_needed = 0, uses_anonymous_args = 0
+  73:polyvec.c     ****     unsigned int i;
+ 287              		.loc 1 73 5 view .LVU74
+  74:polyvec.c     **** 
+  75:polyvec.c     ****     for (i = 0; i < L; ++i) {
+ 288              		.loc 1 75 5 view .LVU75
+ 289              		.loc 1 75 17 view .LVU76
+  72:polyvec.c     ****     unsigned int i;
+ 290              		.loc 1 72 95 is_stmt 0 view .LVU77
+ 291 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 292              	.LCFI5:
+ 293              		.cfi_def_cfa_offset 24
+ 294              		.cfi_offset 3, -24
+ 295              		.cfi_offset 4, -20
+ 296              		.cfi_offset 5, -16
+ 297              		.cfi_offset 6, -12
+ 298              		.cfi_offset 7, -8
+ 299              		.cfi_offset 14, -4
+  72:polyvec.c     ****     unsigned int i;
+ 300              		.loc 1 72 95 view .LVU78
+ 301 0002 0546     		mov	r5, r0
+ 302 0004 0E46     		mov	r6, r1
+ 303 0006 1746     		mov	r7, r2
+ 304 0008 0024     		movs	r4, #0
+ 305              	.LVL22:
+ 306              	.L14:
+  76:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 307              		.loc 1 76 9 is_stmt 1 discriminator 3 view .LVU79
+ 308 000a 3A19     		adds	r2, r7, r4
+ 309 000c 3119     		adds	r1, r6, r4
+ 310 000e 2819     		adds	r0, r5, r4
+  75:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 311              		.loc 1 75 5 is_stmt 0 discriminator 3 view .LVU80
+ 312 0010 04F58064 		add	r4, r4, #1024
+ 313              		.loc 1 76 9 discriminator 3 view .LVU81
+ 314 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_add
+ 315              	.LVL23:
+  75:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 316              		.loc 1 75 24 is_stmt 1 discriminator 3 view .LVU82
+  75:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 317              		.loc 1 75 17 discriminator 3 view .LVU83
+  75:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 318              		.loc 1 75 5 is_stmt 0 discriminator 3 view .LVU84
+ 319 0018 B4F5805F 		cmp	r4, #4096
+ 320 001c F5D1     		bne	.L14
+  77:polyvec.c     ****     }
+  78:polyvec.c     **** }
+ 321              		.loc 1 78 1 view .LVU85
+ 322 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 323              		.loc 1 78 1 view .LVU86
+ 324              		.cfi_endproc
+ 325              	.LFE5:
+ 327              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt,"ax",%progbits
+ 328              		.align	1
+ 329              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt
+ 330              		.syntax unified
+ 331              		.thumb
+ 332              		.thumb_func
+ 333              		.fpu softvfp
+ 335              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt:
+ 336              	.LVL24:
+ 337              	.LFB6:
+  79:polyvec.c     **** 
+  80:polyvec.c     **** /*************************************************
+  81:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt
+  82:polyvec.c     **** *
+  83:polyvec.c     **** * Description: Forward NTT of all polynomials in vector of length L. Output
+  84:polyvec.c     **** *              coefficients can be up to 16*Q larger than input coefficients.
+  85:polyvec.c     **** *
+  86:polyvec.c     **** * Arguments:   - polyvecl *v: pointer to input/output vector
+  87:polyvec.c     **** **************************************************/
+  88:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt(polyvecl *v) {
+ 338              		.loc 1 88 57 is_stmt 1 view -0
+ 339              		.cfi_startproc
+ 340              		@ args = 0, pretend = 0, frame = 0
+ 341              		@ frame_needed = 0, uses_anonymous_args = 0
+  89:polyvec.c     ****     unsigned int i;
+ 342              		.loc 1 89 5 view .LVU88
+  90:polyvec.c     **** 
+  91:polyvec.c     ****     for (i = 0; i < L; ++i) {
+ 343              		.loc 1 91 5 view .LVU89
+ 344              		.loc 1 91 17 view .LVU90
+  92:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 345              		.loc 1 92 9 view .LVU91
+  88:polyvec.c     ****     unsigned int i;
+ 346              		.loc 1 88 57 is_stmt 0 view .LVU92
+ 347 0000 10B5     		push	{r4, lr}
+ 348              	.LCFI6:
+ 349              		.cfi_def_cfa_offset 8
+ 350              		.cfi_offset 4, -8
+ 351              		.cfi_offset 14, -4
+  88:polyvec.c     ****     unsigned int i;
+ 352              		.loc 1 88 57 view .LVU93
+ 353 0002 0446     		mov	r4, r0
+ 354              		.loc 1 92 9 view .LVU94
+ 355 0004 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 356              	.LVL25:
+  91:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 357              		.loc 1 91 24 is_stmt 1 view .LVU95
+  91:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 358              		.loc 1 91 17 view .LVU96
+ 359              		.loc 1 92 9 view .LVU97
+ 360 0008 04F58060 		add	r0, r4, #1024
+ 361 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 362              	.LVL26:
+  91:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 363              		.loc 1 91 24 view .LVU98
+  91:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 364              		.loc 1 91 17 view .LVU99
+ 365              		.loc 1 92 9 view .LVU100
+ 366 0010 04F50060 		add	r0, r4, #2048
+ 367 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 368              	.LVL27:
+  91:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 369              		.loc 1 91 24 view .LVU101
+  91:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 370              		.loc 1 91 17 view .LVU102
+ 371              		.loc 1 92 9 view .LVU103
+ 372 0018 04F54060 		add	r0, r4, #3072
+  93:polyvec.c     ****     }
+  94:polyvec.c     **** }
+ 373              		.loc 1 94 1 is_stmt 0 view .LVU104
+ 374 001c BDE81040 		pop	{r4, lr}
+ 375              	.LCFI7:
+ 376              		.cfi_restore 14
+ 377              		.cfi_restore 4
+ 378              		.cfi_def_cfa_offset 0
+ 379              	.LVL28:
+  92:polyvec.c     ****     }
+ 380              		.loc 1 92 9 view .LVU105
+ 381 0020 FFF7FEBF 		b	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 382              	.LVL29:
+  92:polyvec.c     ****     }
+ 383              		.loc 1 92 9 view .LVU106
+ 384              		.cfi_endproc
+ 385              	.LFE6:
+ 387              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont,"ax",%progbits
+ 388              		.align	1
+ 389              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont
+ 390              		.syntax unified
+ 391              		.thumb
+ 392              		.thumb_func
+ 393              		.fpu softvfp
+ 395              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont:
+ 396              	.LVL30:
+ 397              	.LFB7:
+  95:polyvec.c     **** 
+  96:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont(polyvecl *v) {
+ 398              		.loc 1 96 67 is_stmt 1 view -0
+ 399              		.cfi_startproc
+ 400              		@ args = 0, pretend = 0, frame = 0
+ 401              		@ frame_needed = 0, uses_anonymous_args = 0
+  97:polyvec.c     ****     unsigned int i;
+ 402              		.loc 1 97 5 view .LVU108
+  98:polyvec.c     **** 
+  99:polyvec.c     ****     for (i = 0; i < L; ++i) {
+ 403              		.loc 1 99 5 view .LVU109
+ 404              		.loc 1 99 17 view .LVU110
+ 100:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 405              		.loc 1 100 9 view .LVU111
+  96:polyvec.c     ****     unsigned int i;
+ 406              		.loc 1 96 67 is_stmt 0 view .LVU112
+ 407 0000 10B5     		push	{r4, lr}
+ 408              	.LCFI8:
+ 409              		.cfi_def_cfa_offset 8
+ 410              		.cfi_offset 4, -8
+ 411              		.cfi_offset 14, -4
+  96:polyvec.c     ****     unsigned int i;
+ 412              		.loc 1 96 67 view .LVU113
+ 413 0002 0446     		mov	r4, r0
+ 414              		.loc 1 100 9 view .LVU114
+ 415 0004 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+ 416              	.LVL31:
+  99:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 417              		.loc 1 99 24 is_stmt 1 view .LVU115
+  99:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 418              		.loc 1 99 17 view .LVU116
+ 419              		.loc 1 100 9 view .LVU117
+ 420 0008 04F58060 		add	r0, r4, #1024
+ 421 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+ 422              	.LVL32:
+  99:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 423              		.loc 1 99 24 view .LVU118
+  99:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 424              		.loc 1 99 17 view .LVU119
+ 425              		.loc 1 100 9 view .LVU120
+ 426 0010 04F50060 		add	r0, r4, #2048
+ 427 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+ 428              	.LVL33:
+  99:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 429              		.loc 1 99 24 view .LVU121
+  99:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 430              		.loc 1 99 17 view .LVU122
+ 431              		.loc 1 100 9 view .LVU123
+ 432 0018 04F54060 		add	r0, r4, #3072
+ 101:polyvec.c     ****     }
+ 102:polyvec.c     **** }
+ 433              		.loc 1 102 1 is_stmt 0 view .LVU124
+ 434 001c BDE81040 		pop	{r4, lr}
+ 435              	.LCFI9:
+ 436              		.cfi_restore 14
+ 437              		.cfi_restore 4
+ 438              		.cfi_def_cfa_offset 0
+ 439              	.LVL34:
+ 100:polyvec.c     ****     }
+ 440              		.loc 1 100 9 view .LVU125
+ 441 0020 FFF7FEBF 		b	PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+ 442              	.LVL35:
+ 100:polyvec.c     ****     }
+ 443              		.loc 1 100 9 view .LVU126
+ 444              		.cfi_endproc
+ 445              	.LFE7:
+ 447              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery,"ax",%progbits
+ 448              		.align	1
+ 449              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery
+ 450              		.syntax unified
+ 451              		.thumb
+ 452              		.thumb_func
+ 453              		.fpu softvfp
+ 455              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery:
+ 456              	.LVL36:
+ 457              	.LFB8:
+ 103:polyvec.c     **** 
+ 104:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery(polyvecl *r, const poly *a, const 
+ 458              		.loc 1 104 113 is_stmt 1 view -0
+ 459              		.cfi_startproc
+ 460              		@ args = 0, pretend = 0, frame = 0
+ 461              		@ frame_needed = 0, uses_anonymous_args = 0
+ 105:polyvec.c     ****     unsigned int i;
+ 462              		.loc 1 105 5 view .LVU128
+ 106:polyvec.c     **** 
+ 107:polyvec.c     ****     for (i = 0; i < L; ++i) {
+ 463              		.loc 1 107 5 view .LVU129
+ 464              		.loc 1 107 17 view .LVU130
+ 104:polyvec.c     ****     unsigned int i;
+ 465              		.loc 1 104 113 is_stmt 0 view .LVU131
+ 466 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 467              	.LCFI10:
+ 468              		.cfi_def_cfa_offset 24
+ 469              		.cfi_offset 3, -24
+ 470              		.cfi_offset 4, -20
+ 471              		.cfi_offset 5, -16
+ 472              		.cfi_offset 6, -12
+ 473              		.cfi_offset 7, -8
+ 474              		.cfi_offset 14, -4
+ 104:polyvec.c     ****     unsigned int i;
+ 475              		.loc 1 104 113 view .LVU132
+ 476 0002 0546     		mov	r5, r0
+ 477 0004 0E46     		mov	r6, r1
+ 478 0006 1746     		mov	r7, r2
+ 479 0008 0024     		movs	r4, #0
+ 480              	.LVL37:
+ 481              	.L19:
+ 108:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 482              		.loc 1 108 9 is_stmt 1 discriminator 3 view .LVU133
+ 483 000a 3A19     		adds	r2, r7, r4
+ 484 000c 2819     		adds	r0, r5, r4
+ 485 000e 3146     		mov	r1, r6
+ 107:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 486              		.loc 1 107 5 is_stmt 0 discriminator 3 view .LVU134
+ 487 0010 04F58064 		add	r4, r4, #1024
+ 488              		.loc 1 108 9 discriminator 3 view .LVU135
+ 489 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery
+ 490              	.LVL38:
+ 107:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 491              		.loc 1 107 24 is_stmt 1 discriminator 3 view .LVU136
+ 107:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 492              		.loc 1 107 17 discriminator 3 view .LVU137
+ 107:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 493              		.loc 1 107 5 is_stmt 0 discriminator 3 view .LVU138
+ 494 0018 B4F5805F 		cmp	r4, #4096
+ 495 001c F5D1     		bne	.L19
+ 109:polyvec.c     ****     }
+ 110:polyvec.c     **** }
+ 496              		.loc 1 110 1 view .LVU139
+ 497 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 498              		.loc 1 110 1 view .LVU140
+ 499              		.cfi_endproc
+ 500              	.LFE8:
+ 502              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery,"ax",%progbits
+ 503              		.align	1
+ 504              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery
+ 505              		.syntax unified
+ 506              		.thumb
+ 507              		.thumb_func
+ 508              		.fpu softvfp
+ 510              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery:
+ 511              	.LVL39:
+ 512              	.LFB9:
+ 111:polyvec.c     **** 
+ 112:polyvec.c     **** /*************************************************
+ 113:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery
+ 114:polyvec.c     **** *
+ 115:polyvec.c     **** * Description: Pointwise multiply vectors of polynomials of length L, multiply
+ 116:polyvec.c     **** *              resulting vector by 2^{-32} and add (accumulate) polynomials
+ 117:polyvec.c     **** *              in it. Input/output vectors are in NTT domain representation.
+ 118:polyvec.c     **** *
+ 119:polyvec.c     **** * Arguments:   - poly *w: output polynomial
+ 120:polyvec.c     **** *              - const polyvecl *u: pointer to first input vector
+ 121:polyvec.c     **** *              - const polyvecl *v: pointer to second input vector
+ 122:polyvec.c     **** **************************************************/
+ 123:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery(poly *w,
+ 124:polyvec.c     ****         const polyvecl *u,
+ 125:polyvec.c     ****         const polyvecl *v) {
+ 513              		.loc 1 125 28 is_stmt 1 view -0
+ 514              		.cfi_startproc
+ 515              		@ args = 0, pretend = 0, frame = 1024
+ 516              		@ frame_needed = 0, uses_anonymous_args = 0
+ 126:polyvec.c     ****     unsigned int i;
+ 517              		.loc 1 126 5 view .LVU142
+ 127:polyvec.c     ****     poly t;
+ 518              		.loc 1 127 5 view .LVU143
+ 128:polyvec.c     **** 
+ 129:polyvec.c     ****     PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(w, &u->vec[0], &v->vec[0]);
+ 519              		.loc 1 129 5 view .LVU144
+ 125:polyvec.c     ****     unsigned int i;
+ 520              		.loc 1 125 28 is_stmt 0 view .LVU145
+ 521 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 522              	.LCFI11:
+ 523              		.cfi_def_cfa_offset 20
+ 524              		.cfi_offset 4, -20
+ 525              		.cfi_offset 5, -16
+ 526              		.cfi_offset 6, -12
+ 527              		.cfi_offset 7, -8
+ 528              		.cfi_offset 14, -4
+ 529 0002 ADF2044D 		subw	sp, sp, #1028
+ 530              	.LCFI12:
+ 531              		.cfi_def_cfa_offset 1048
+ 125:polyvec.c     ****     unsigned int i;
+ 532              		.loc 1 125 28 view .LVU146
+ 533 0006 0546     		mov	r5, r0
+ 534 0008 0E46     		mov	r6, r1
+ 535 000a 1746     		mov	r7, r2
+ 536              		.loc 1 129 5 view .LVU147
+ 537 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery
+ 538              	.LVL40:
+ 130:polyvec.c     ****     for (i = 1; i < L; ++i) {
+ 539              		.loc 1 130 5 is_stmt 1 view .LVU148
+ 540              		.loc 1 130 17 view .LVU149
+ 129:polyvec.c     ****     for (i = 1; i < L; ++i) {
+ 541              		.loc 1 129 5 is_stmt 0 view .LVU150
+ 542 0010 4FF48064 		mov	r4, #1024
+ 543              	.LVL41:
+ 544              	.L22:
+ 131:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&t, &u->vec[i], &v->vec[i]);
+ 545              		.loc 1 131 9 is_stmt 1 discriminator 3 view .LVU151
+ 546 0014 3A19     		adds	r2, r7, r4
+ 547 0016 3119     		adds	r1, r6, r4
+ 548 0018 6846     		mov	r0, sp
+ 549 001a FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery
+ 550              	.LVL42:
+ 132:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(w, w, &t);
+ 551              		.loc 1 132 9 discriminator 3 view .LVU152
+ 130:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&t, &u->vec[i], &v->vec[i]);
+ 552              		.loc 1 130 5 is_stmt 0 discriminator 3 view .LVU153
+ 553 001e 04F58064 		add	r4, r4, #1024
+ 554              		.loc 1 132 9 discriminator 3 view .LVU154
+ 555 0022 6A46     		mov	r2, sp
+ 556 0024 2946     		mov	r1, r5
+ 557 0026 2846     		mov	r0, r5
+ 558 0028 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_add
+ 559              	.LVL43:
+ 130:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&t, &u->vec[i], &v->vec[i]);
+ 560              		.loc 1 130 24 is_stmt 1 discriminator 3 view .LVU155
+ 130:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&t, &u->vec[i], &v->vec[i]);
+ 561              		.loc 1 130 17 discriminator 3 view .LVU156
+ 130:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&t, &u->vec[i], &v->vec[i]);
+ 562              		.loc 1 130 5 is_stmt 0 discriminator 3 view .LVU157
+ 563 002c B4F5805F 		cmp	r4, #4096
+ 564 0030 F0D1     		bne	.L22
+ 133:polyvec.c     ****     }
+ 134:polyvec.c     **** }
+ 565              		.loc 1 134 1 view .LVU158
+ 566 0032 0DF2044D 		addw	sp, sp, #1028
+ 567              	.LCFI13:
+ 568              		.cfi_def_cfa_offset 20
+ 569              		@ sp needed
+ 570 0036 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 571              		.loc 1 134 1 view .LVU159
+ 572              		.cfi_endproc
+ 573              	.LFE9:
+ 575              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery,"ax",%progbits
+ 576              		.align	1
+ 577              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery
+ 578              		.syntax unified
+ 579              		.thumb
+ 580              		.thumb_func
+ 581              		.fpu softvfp
+ 583              	PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery:
+ 584              	.LVL44:
+ 585              	.LFB1:
+  26:polyvec.c     ****     unsigned int i;
+ 586              		.loc 1 26 122 is_stmt 1 view -0
+ 587              		.cfi_startproc
+ 588              		@ args = 0, pretend = 0, frame = 0
+ 589              		@ frame_needed = 0, uses_anonymous_args = 0
+  27:polyvec.c     **** 
+ 590              		.loc 1 27 5 view .LVU161
+  29:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery(&t->vec[i], &mat[i], v);
+ 591              		.loc 1 29 5 view .LVU162
+  29:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery(&t->vec[i], &mat[i], v);
+ 592              		.loc 1 29 17 view .LVU163
+  26:polyvec.c     ****     unsigned int i;
+ 593              		.loc 1 26 122 is_stmt 0 view .LVU164
+ 594 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 595              	.LCFI14:
+ 596              		.cfi_def_cfa_offset 24
+ 597              		.cfi_offset 3, -24
+ 598              		.cfi_offset 4, -20
+ 599              		.cfi_offset 5, -16
+ 600              		.cfi_offset 6, -12
+ 601              		.cfi_offset 7, -8
+ 602              		.cfi_offset 14, -4
+  26:polyvec.c     ****     unsigned int i;
+ 603              		.loc 1 26 122 view .LVU165
+ 604 0002 1646     		mov	r6, r2
+ 605 0004 0446     		mov	r4, r0
+ 606 0006 0D46     		mov	r5, r1
+ 607 0008 00F58057 		add	r7, r0, #4096
+ 608              	.LVL45:
+ 609              	.L25:
+  30:polyvec.c     ****     }
+ 610              		.loc 1 30 9 is_stmt 1 discriminator 3 view .LVU166
+ 611 000c 2946     		mov	r1, r5
+ 612 000e 2046     		mov	r0, r4
+ 613 0010 3246     		mov	r2, r6
+  29:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery(&t->vec[i], &mat[i], v);
+ 614              		.loc 1 29 5 is_stmt 0 discriminator 3 view .LVU167
+ 615 0012 04F58064 		add	r4, r4, #1024
+  30:polyvec.c     ****     }
+ 616              		.loc 1 30 9 discriminator 3 view .LVU168
+ 617 0016 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery
+ 618              	.LVL46:
+  29:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery(&t->vec[i], &mat[i], v);
+ 619              		.loc 1 29 24 is_stmt 1 discriminator 3 view .LVU169
+  29:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery(&t->vec[i], &mat[i], v);
+ 620              		.loc 1 29 17 discriminator 3 view .LVU170
+  29:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery(&t->vec[i], &mat[i], v);
+ 621              		.loc 1 29 5 is_stmt 0 discriminator 3 view .LVU171
+ 622 001a BC42     		cmp	r4, r7
+ 623 001c 05F58055 		add	r5, r5, #4096
+ 624 0020 F4D1     		bne	.L25
+  32:polyvec.c     **** 
+ 625              		.loc 1 32 1 view .LVU172
+ 626 0022 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  32:polyvec.c     **** 
+ 627              		.loc 1 32 1 view .LVU173
+ 628              		.cfi_endproc
+ 629              	.LFE1:
+ 631              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm,"ax",%progbits
+ 632              		.align	1
+ 633              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm
+ 634              		.syntax unified
+ 635              		.thumb
+ 636              		.thumb_func
+ 637              		.fpu softvfp
+ 639              	PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm:
+ 640              	.LVL47:
+ 641              	.LFB10:
+ 135:polyvec.c     **** 
+ 136:polyvec.c     **** /*************************************************
+ 137:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm
+ 138:polyvec.c     **** *
+ 139:polyvec.c     **** * Description: Check infinity norm of polynomials in vector of length L.
+ 140:polyvec.c     **** *              Assumes input polyvecl to be reduced by PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce().
+ 141:polyvec.c     **** *
+ 142:polyvec.c     **** * Arguments:   - const polyvecl *v: pointer to vector
+ 143:polyvec.c     **** *              - int32_t B: norm bound
+ 144:polyvec.c     **** *
+ 145:polyvec.c     **** * Returns 0 if norm of all polynomials is strictly smaller than B <= (Q-1)/8
+ 146:polyvec.c     **** * and 1 otherwise.
+ 147:polyvec.c     **** **************************************************/
+ 148:polyvec.c     **** int PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm(const polyvecl *v, int32_t bound)  {
+ 642              		.loc 1 148 82 is_stmt 1 view -0
+ 643              		.cfi_startproc
+ 644              		@ args = 0, pretend = 0, frame = 0
+ 645              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149:polyvec.c     ****     unsigned int i;
+ 646              		.loc 1 149 5 view .LVU175
+ 150:polyvec.c     **** 
+ 151:polyvec.c     ****     for (i = 0; i < L; ++i) {
+ 647              		.loc 1 151 5 view .LVU176
+ 648              		.loc 1 151 17 view .LVU177
+ 148:polyvec.c     ****     unsigned int i;
+ 649              		.loc 1 148 82 is_stmt 0 view .LVU178
+ 650 0000 70B5     		push	{r4, r5, r6, lr}
+ 651              	.LCFI15:
+ 652              		.cfi_def_cfa_offset 16
+ 653              		.cfi_offset 4, -16
+ 654              		.cfi_offset 5, -12
+ 655              		.cfi_offset 6, -8
+ 656              		.cfi_offset 14, -4
+ 148:polyvec.c     ****     unsigned int i;
+ 657              		.loc 1 148 82 view .LVU179
+ 658 0002 0D46     		mov	r5, r1
+ 659 0004 0446     		mov	r4, r0
+ 660 0006 00F58056 		add	r6, r0, #4096
+ 661              	.LVL48:
+ 662              	.L29:
+ 152:polyvec.c     ****         if (PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm(&v->vec[i], bound)) {
+ 663              		.loc 1 152 9 is_stmt 1 view .LVU180
+ 664              		.loc 1 152 13 is_stmt 0 view .LVU181
+ 665 000a 2946     		mov	r1, r5
+ 666 000c 2046     		mov	r0, r4
+ 667 000e FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm
+ 668              	.LVL49:
+ 669              		.loc 1 152 12 view .LVU182
+ 670 0012 20B9     		cbnz	r0, .L30
+ 151:polyvec.c     ****         if (PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm(&v->vec[i], bound)) {
+ 671              		.loc 1 151 24 is_stmt 1 discriminator 2 view .LVU183
+ 151:polyvec.c     ****         if (PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm(&v->vec[i], bound)) {
+ 672              		.loc 1 151 17 discriminator 2 view .LVU184
+ 151:polyvec.c     ****         if (PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm(&v->vec[i], bound)) {
+ 673              		.loc 1 151 5 is_stmt 0 discriminator 2 view .LVU185
+ 674 0014 04F58064 		add	r4, r4, #1024
+ 675 0018 B442     		cmp	r4, r6
+ 676 001a F6D1     		bne	.L29
+ 677              	.L27:
+ 153:polyvec.c     ****             return 1;
+ 154:polyvec.c     ****         }
+ 155:polyvec.c     ****     }
+ 156:polyvec.c     **** 
+ 157:polyvec.c     ****     return 0;
+ 158:polyvec.c     **** }
+ 678              		.loc 1 158 1 view .LVU186
+ 679 001c 70BD     		pop	{r4, r5, r6, pc}
+ 680              	.LVL50:
+ 681              	.L30:
+ 153:polyvec.c     ****             return 1;
+ 682              		.loc 1 153 20 view .LVU187
+ 683 001e 0120     		movs	r0, #1
+ 684 0020 FCE7     		b	.L27
+ 685              		.cfi_endproc
+ 686              	.LFE10:
+ 688              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta,"ax",%progbits
+ 689              		.align	1
+ 690              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta
+ 691              		.syntax unified
+ 692              		.thumb
+ 693              		.thumb_func
+ 694              		.fpu softvfp
+ 696              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta:
+ 697              	.LVL51:
+ 698              	.LFB11:
+ 159:polyvec.c     **** 
+ 160:polyvec.c     **** /**************************************************************/
+ 161:polyvec.c     **** /************ Vectors of polynomials of length K **************/
+ 162:polyvec.c     **** /**************************************************************/
+ 163:polyvec.c     **** 
+ 164:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta(polyveck *v, const uint8_t seed[CRHBYTES], uint1
+ 699              		.loc 1 164 111 is_stmt 1 view -0
+ 700              		.cfi_startproc
+ 701              		@ args = 0, pretend = 0, frame = 0
+ 702              		@ frame_needed = 0, uses_anonymous_args = 0
+ 165:polyvec.c     ****     unsigned int i;
+ 703              		.loc 1 165 5 view .LVU189
+ 166:polyvec.c     **** 
+ 167:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 704              		.loc 1 167 5 view .LVU190
+ 164:polyvec.c     ****     unsigned int i;
+ 705              		.loc 1 164 111 is_stmt 0 view .LVU191
+ 706 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 707              	.LCFI16:
+ 708              		.cfi_def_cfa_offset 24
+ 709              		.cfi_offset 3, -24
+ 710              		.cfi_offset 4, -20
+ 711              		.cfi_offset 5, -16
+ 712              		.cfi_offset 6, -12
+ 713              		.cfi_offset 7, -8
+ 714              		.cfi_offset 14, -4
+ 164:polyvec.c     ****     unsigned int i;
+ 715              		.loc 1 164 111 view .LVU192
+ 716 0002 0546     		mov	r5, r0
+ 717 0004 0E46     		mov	r6, r1
+ 718 0006 1746     		mov	r7, r2
+ 719              	.LVL52:
+ 720              		.loc 1 167 17 is_stmt 1 view .LVU193
+ 721              		.loc 1 167 12 is_stmt 0 view .LVU194
+ 722 0008 0024     		movs	r4, #0
+ 723              	.LVL53:
+ 724              	.L33:
+ 168:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 725              		.loc 1 168 9 is_stmt 1 discriminator 3 view .LVU195
+ 726              		.loc 1 168 9 is_stmt 0 discriminator 3 view .LVU196
+ 727 000a 3A19     		adds	r2, r7, r4
+ 728 000c 05EB8420 		add	r0, r5, r4, lsl #10
+ 729 0010 92B2     		uxth	r2, r2
+ 730 0012 3146     		mov	r1, r6
+ 167:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 731              		.loc 1 167 24 discriminator 3 view .LVU197
+ 732 0014 0134     		adds	r4, r4, #1
+ 733              	.LVL54:
+ 734              		.loc 1 168 9 discriminator 3 view .LVU198
+ 735 0016 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta
+ 736              	.LVL55:
+ 167:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 737              		.loc 1 167 24 is_stmt 1 discriminator 3 view .LVU199
+ 167:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 738              		.loc 1 167 17 discriminator 3 view .LVU200
+ 167:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta(&v->vec[i], seed, nonce++);
+ 739              		.loc 1 167 5 is_stmt 0 discriminator 3 view .LVU201
+ 740 001a 042C     		cmp	r4, #4
+ 741 001c F5D1     		bne	.L33
+ 169:polyvec.c     ****     }
+ 170:polyvec.c     **** }
+ 742              		.loc 1 170 1 view .LVU202
+ 743 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 744              		.loc 1 170 1 view .LVU203
+ 745              		.cfi_endproc
+ 746              	.LFE11:
+ 748              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce,"ax",%progbits
+ 749              		.align	1
+ 750              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+ 751              		.syntax unified
+ 752              		.thumb
+ 753              		.thumb_func
+ 754              		.fpu softvfp
+ 756              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce:
+ 757              	.LVL56:
+ 758              	.LFB12:
+ 171:polyvec.c     **** 
+ 172:polyvec.c     **** /*************************************************
+ 173:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+ 174:polyvec.c     **** *
+ 175:polyvec.c     **** * Description: Reduce coefficients of polynomials in vector of length K
+ 176:polyvec.c     **** *              to representatives in [-6283009,6283007].
+ 177:polyvec.c     **** *
+ 178:polyvec.c     **** * Arguments:   - polyveck *v: pointer to input/output vector
+ 179:polyvec.c     **** **************************************************/
+ 180:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce(polyveck *v) {
+ 759              		.loc 1 180 60 is_stmt 1 view -0
+ 760              		.cfi_startproc
+ 761              		@ args = 0, pretend = 0, frame = 0
+ 762              		@ frame_needed = 0, uses_anonymous_args = 0
+ 181:polyvec.c     ****     unsigned int i;
+ 763              		.loc 1 181 5 view .LVU205
+ 182:polyvec.c     **** 
+ 183:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 764              		.loc 1 183 5 view .LVU206
+ 765              		.loc 1 183 17 view .LVU207
+ 184:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 766              		.loc 1 184 9 view .LVU208
+ 180:polyvec.c     ****     unsigned int i;
+ 767              		.loc 1 180 60 is_stmt 0 view .LVU209
+ 768 0000 10B5     		push	{r4, lr}
+ 769              	.LCFI17:
+ 770              		.cfi_def_cfa_offset 8
+ 771              		.cfi_offset 4, -8
+ 772              		.cfi_offset 14, -4
+ 180:polyvec.c     ****     unsigned int i;
+ 773              		.loc 1 180 60 view .LVU210
+ 774 0002 0446     		mov	r4, r0
+ 775              		.loc 1 184 9 view .LVU211
+ 776 0004 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+ 777              	.LVL57:
+ 183:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 778              		.loc 1 183 24 is_stmt 1 view .LVU212
+ 183:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 779              		.loc 1 183 17 view .LVU213
+ 780              		.loc 1 184 9 view .LVU214
+ 781 0008 04F58060 		add	r0, r4, #1024
+ 782 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+ 783              	.LVL58:
+ 183:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 784              		.loc 1 183 24 view .LVU215
+ 183:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 785              		.loc 1 183 17 view .LVU216
+ 786              		.loc 1 184 9 view .LVU217
+ 787 0010 04F50060 		add	r0, r4, #2048
+ 788 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+ 789              	.LVL59:
+ 183:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 790              		.loc 1 183 24 view .LVU218
+ 183:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_reduce(&v->vec[i]);
+ 791              		.loc 1 183 17 view .LVU219
+ 792              		.loc 1 184 9 view .LVU220
+ 793 0018 04F54060 		add	r0, r4, #3072
+ 185:polyvec.c     ****     }
+ 186:polyvec.c     **** }
+ 794              		.loc 1 186 1 is_stmt 0 view .LVU221
+ 795 001c BDE81040 		pop	{r4, lr}
+ 796              	.LCFI18:
+ 797              		.cfi_restore 14
+ 798              		.cfi_restore 4
+ 799              		.cfi_def_cfa_offset 0
+ 800              	.LVL60:
+ 184:polyvec.c     ****     }
+ 801              		.loc 1 184 9 view .LVU222
+ 802 0020 FFF7FEBF 		b	PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+ 803              	.LVL61:
+ 184:polyvec.c     ****     }
+ 804              		.loc 1 184 9 view .LVU223
+ 805              		.cfi_endproc
+ 806              	.LFE12:
+ 808              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq,"ax",%progbits
+ 809              		.align	1
+ 810              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq
+ 811              		.syntax unified
+ 812              		.thumb
+ 813              		.thumb_func
+ 814              		.fpu softvfp
+ 816              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq:
+ 817              	.LVL62:
+ 818              	.LFB13:
+ 187:polyvec.c     **** 
+ 188:polyvec.c     **** /*************************************************
+ 189:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq
+ 190:polyvec.c     **** *
+ 191:polyvec.c     **** * Description: For all coefficients of polynomials in vector of length K
+ 192:polyvec.c     **** *              add Q if coefficient is negative.
+ 193:polyvec.c     **** *
+ 194:polyvec.c     **** * Arguments:   - polyveck *v: pointer to input/output vector
+ 195:polyvec.c     **** **************************************************/
+ 196:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq(polyveck *v) {
+ 819              		.loc 1 196 59 is_stmt 1 view -0
+ 820              		.cfi_startproc
+ 821              		@ args = 0, pretend = 0, frame = 0
+ 822              		@ frame_needed = 0, uses_anonymous_args = 0
+ 197:polyvec.c     ****     unsigned int i;
+ 823              		.loc 1 197 5 view .LVU225
+ 198:polyvec.c     **** 
+ 199:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 824              		.loc 1 199 5 view .LVU226
+ 825              		.loc 1 199 17 view .LVU227
+ 200:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_caddq(&v->vec[i]);
+ 826              		.loc 1 200 9 view .LVU228
+ 196:polyvec.c     ****     unsigned int i;
+ 827              		.loc 1 196 59 is_stmt 0 view .LVU229
+ 828 0000 10B5     		push	{r4, lr}
+ 829              	.LCFI19:
+ 830              		.cfi_def_cfa_offset 8
+ 831              		.cfi_offset 4, -8
+ 832              		.cfi_offset 14, -4
+ 196:polyvec.c     ****     unsigned int i;
+ 833              		.loc 1 196 59 view .LVU230
+ 834 0002 0446     		mov	r4, r0
+ 835              		.loc 1 200 9 view .LVU231
+ 836 0004 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_caddq
+ 837              	.LVL63:
+ 199:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_caddq(&v->vec[i]);
+ 838              		.loc 1 199 24 is_stmt 1 view .LVU232
+ 199:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_caddq(&v->vec[i]);
+ 839              		.loc 1 199 17 view .LVU233
+ 840              		.loc 1 200 9 view .LVU234
+ 841 0008 04F58060 		add	r0, r4, #1024
+ 842 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_caddq
+ 843              	.LVL64:
+ 199:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_caddq(&v->vec[i]);
+ 844              		.loc 1 199 24 view .LVU235
+ 199:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_caddq(&v->vec[i]);
+ 845              		.loc 1 199 17 view .LVU236
+ 846              		.loc 1 200 9 view .LVU237
+ 847 0010 04F50060 		add	r0, r4, #2048
+ 848 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_caddq
+ 849              	.LVL65:
+ 199:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_caddq(&v->vec[i]);
+ 850              		.loc 1 199 24 view .LVU238
+ 199:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_caddq(&v->vec[i]);
+ 851              		.loc 1 199 17 view .LVU239
+ 852              		.loc 1 200 9 view .LVU240
+ 853 0018 04F54060 		add	r0, r4, #3072
+ 201:polyvec.c     ****     }
+ 202:polyvec.c     **** }
+ 854              		.loc 1 202 1 is_stmt 0 view .LVU241
+ 855 001c BDE81040 		pop	{r4, lr}
+ 856              	.LCFI20:
+ 857              		.cfi_restore 14
+ 858              		.cfi_restore 4
+ 859              		.cfi_def_cfa_offset 0
+ 860              	.LVL66:
+ 200:polyvec.c     ****     }
+ 861              		.loc 1 200 9 view .LVU242
+ 862 0020 FFF7FEBF 		b	PQCLEAN_DILITHIUM2_CLEAN_poly_caddq
+ 863              	.LVL67:
+ 200:polyvec.c     ****     }
+ 864              		.loc 1 200 9 view .LVU243
+ 865              		.cfi_endproc
+ 866              	.LFE13:
+ 868              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_add,"ax",%progbits
+ 869              		.align	1
+ 870              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_add
+ 871              		.syntax unified
+ 872              		.thumb
+ 873              		.thumb_func
+ 874              		.fpu softvfp
+ 876              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_add:
+ 877              	.LVL68:
+ 878              	.LFB14:
+ 203:polyvec.c     **** 
+ 204:polyvec.c     **** /*************************************************
+ 205:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_add
+ 206:polyvec.c     **** *
+ 207:polyvec.c     **** * Description: Add vectors of polynomials of length K.
+ 208:polyvec.c     **** *              No modular reduction is performed.
+ 209:polyvec.c     **** *
+ 210:polyvec.c     **** * Arguments:   - polyveck *w: pointer to output vector
+ 211:polyvec.c     **** *              - const polyveck *u: pointer to first summand
+ 212:polyvec.c     **** *              - const polyveck *v: pointer to second summand
+ 213:polyvec.c     **** **************************************************/
+ 214:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_add(polyveck *w, const polyveck *u, const polyveck *v) {
+ 879              		.loc 1 214 95 is_stmt 1 view -0
+ 880              		.cfi_startproc
+ 881              		@ args = 0, pretend = 0, frame = 0
+ 882              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215:polyvec.c     ****     unsigned int i;
+ 883              		.loc 1 215 5 view .LVU245
+ 216:polyvec.c     **** 
+ 217:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 884              		.loc 1 217 5 view .LVU246
+ 885              		.loc 1 217 17 view .LVU247
+ 214:polyvec.c     ****     unsigned int i;
+ 886              		.loc 1 214 95 is_stmt 0 view .LVU248
+ 887 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 888              	.LCFI21:
+ 889              		.cfi_def_cfa_offset 24
+ 890              		.cfi_offset 3, -24
+ 891              		.cfi_offset 4, -20
+ 892              		.cfi_offset 5, -16
+ 893              		.cfi_offset 6, -12
+ 894              		.cfi_offset 7, -8
+ 895              		.cfi_offset 14, -4
+ 214:polyvec.c     ****     unsigned int i;
+ 896              		.loc 1 214 95 view .LVU249
+ 897 0002 0546     		mov	r5, r0
+ 898 0004 0E46     		mov	r6, r1
+ 899 0006 1746     		mov	r7, r2
+ 900 0008 0024     		movs	r4, #0
+ 901              	.LVL69:
+ 902              	.L38:
+ 218:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 903              		.loc 1 218 9 is_stmt 1 discriminator 3 view .LVU250
+ 904 000a 3A19     		adds	r2, r7, r4
+ 905 000c 3119     		adds	r1, r6, r4
+ 906 000e 2819     		adds	r0, r5, r4
+ 217:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 907              		.loc 1 217 5 is_stmt 0 discriminator 3 view .LVU251
+ 908 0010 04F58064 		add	r4, r4, #1024
+ 909              		.loc 1 218 9 discriminator 3 view .LVU252
+ 910 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_add
+ 911              	.LVL70:
+ 217:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 912              		.loc 1 217 24 is_stmt 1 discriminator 3 view .LVU253
+ 217:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 913              		.loc 1 217 17 discriminator 3 view .LVU254
+ 217:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_add(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 914              		.loc 1 217 5 is_stmt 0 discriminator 3 view .LVU255
+ 915 0018 B4F5805F 		cmp	r4, #4096
+ 916 001c F5D1     		bne	.L38
+ 219:polyvec.c     ****     }
+ 220:polyvec.c     **** }
+ 917              		.loc 1 220 1 view .LVU256
+ 918 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 919              		.loc 1 220 1 view .LVU257
+ 920              		.cfi_endproc
+ 921              	.LFE14:
+ 923              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub,"ax",%progbits
+ 924              		.align	1
+ 925              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub
+ 926              		.syntax unified
+ 927              		.thumb
+ 928              		.thumb_func
+ 929              		.fpu softvfp
+ 931              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub:
+ 932              	.LVL71:
+ 933              	.LFB15:
+ 221:polyvec.c     **** 
+ 222:polyvec.c     **** /*************************************************
+ 223:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub
+ 224:polyvec.c     **** *
+ 225:polyvec.c     **** * Description: Subtract vectors of polynomials of length K.
+ 226:polyvec.c     **** *              No modular reduction is performed.
+ 227:polyvec.c     **** *
+ 228:polyvec.c     **** * Arguments:   - polyveck *w: pointer to output vector
+ 229:polyvec.c     **** *              - const polyveck *u: pointer to first input vector
+ 230:polyvec.c     **** *              - const polyveck *v: pointer to second input vector to be
+ 231:polyvec.c     **** *                                   subtracted from first input vector
+ 232:polyvec.c     **** **************************************************/
+ 233:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub(polyveck *w, const polyveck *u, const polyveck *v) {
+ 934              		.loc 1 233 95 is_stmt 1 view -0
+ 935              		.cfi_startproc
+ 936              		@ args = 0, pretend = 0, frame = 0
+ 937              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234:polyvec.c     ****     unsigned int i;
+ 938              		.loc 1 234 5 view .LVU259
+ 235:polyvec.c     **** 
+ 236:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 939              		.loc 1 236 5 view .LVU260
+ 940              		.loc 1 236 17 view .LVU261
+ 233:polyvec.c     ****     unsigned int i;
+ 941              		.loc 1 233 95 is_stmt 0 view .LVU262
+ 942 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 943              	.LCFI22:
+ 944              		.cfi_def_cfa_offset 24
+ 945              		.cfi_offset 3, -24
+ 946              		.cfi_offset 4, -20
+ 947              		.cfi_offset 5, -16
+ 948              		.cfi_offset 6, -12
+ 949              		.cfi_offset 7, -8
+ 950              		.cfi_offset 14, -4
+ 233:polyvec.c     ****     unsigned int i;
+ 951              		.loc 1 233 95 view .LVU263
+ 952 0002 0546     		mov	r5, r0
+ 953 0004 0E46     		mov	r6, r1
+ 954 0006 1746     		mov	r7, r2
+ 955 0008 0024     		movs	r4, #0
+ 956              	.LVL72:
+ 957              	.L41:
+ 237:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_sub(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 958              		.loc 1 237 9 is_stmt 1 discriminator 3 view .LVU264
+ 959 000a 3A19     		adds	r2, r7, r4
+ 960 000c 3119     		adds	r1, r6, r4
+ 961 000e 2819     		adds	r0, r5, r4
+ 236:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_sub(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 962              		.loc 1 236 5 is_stmt 0 discriminator 3 view .LVU265
+ 963 0010 04F58064 		add	r4, r4, #1024
+ 964              		.loc 1 237 9 discriminator 3 view .LVU266
+ 965 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_sub
+ 966              	.LVL73:
+ 236:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_sub(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 967              		.loc 1 236 24 is_stmt 1 discriminator 3 view .LVU267
+ 236:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_sub(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 968              		.loc 1 236 17 discriminator 3 view .LVU268
+ 236:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_sub(&w->vec[i], &u->vec[i], &v->vec[i]);
+ 969              		.loc 1 236 5 is_stmt 0 discriminator 3 view .LVU269
+ 970 0018 B4F5805F 		cmp	r4, #4096
+ 971 001c F5D1     		bne	.L41
+ 238:polyvec.c     ****     }
+ 239:polyvec.c     **** }
+ 972              		.loc 1 239 1 view .LVU270
+ 973 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 974              		.loc 1 239 1 view .LVU271
+ 975              		.cfi_endproc
+ 976              	.LFE15:
+ 978              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl,"ax",%progbits
+ 979              		.align	1
+ 980              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl
+ 981              		.syntax unified
+ 982              		.thumb
+ 983              		.thumb_func
+ 984              		.fpu softvfp
+ 986              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl:
+ 987              	.LVL74:
+ 988              	.LFB16:
+ 240:polyvec.c     **** 
+ 241:polyvec.c     **** /*************************************************
+ 242:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl
+ 243:polyvec.c     **** *
+ 244:polyvec.c     **** * Description: Multiply vector of polynomials of Length K by 2^D without modular
+ 245:polyvec.c     **** *              reduction. Assumes input coefficients to be less than 2^{31-D}.
+ 246:polyvec.c     **** *
+ 247:polyvec.c     **** * Arguments:   - polyveck *v: pointer to input/output vector
+ 248:polyvec.c     **** **************************************************/
+ 249:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl(polyveck *v) {
+ 989              		.loc 1 249 60 is_stmt 1 view -0
+ 990              		.cfi_startproc
+ 991              		@ args = 0, pretend = 0, frame = 0
+ 992              		@ frame_needed = 0, uses_anonymous_args = 0
+ 250:polyvec.c     ****     unsigned int i;
+ 993              		.loc 1 250 5 view .LVU273
+ 251:polyvec.c     **** 
+ 252:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 994              		.loc 1 252 5 view .LVU274
+ 995              		.loc 1 252 17 view .LVU275
+ 253:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl(&v->vec[i]);
+ 996              		.loc 1 253 9 view .LVU276
+ 249:polyvec.c     ****     unsigned int i;
+ 997              		.loc 1 249 60 is_stmt 0 view .LVU277
+ 998 0000 10B5     		push	{r4, lr}
+ 999              	.LCFI23:
+ 1000              		.cfi_def_cfa_offset 8
+ 1001              		.cfi_offset 4, -8
+ 1002              		.cfi_offset 14, -4
+ 249:polyvec.c     ****     unsigned int i;
+ 1003              		.loc 1 249 60 view .LVU278
+ 1004 0002 0446     		mov	r4, r0
+ 1005              		.loc 1 253 9 view .LVU279
+ 1006 0004 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl
+ 1007              	.LVL75:
+ 252:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl(&v->vec[i]);
+ 1008              		.loc 1 252 24 is_stmt 1 view .LVU280
+ 252:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl(&v->vec[i]);
+ 1009              		.loc 1 252 17 view .LVU281
+ 1010              		.loc 1 253 9 view .LVU282
+ 1011 0008 04F58060 		add	r0, r4, #1024
+ 1012 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl
+ 1013              	.LVL76:
+ 252:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl(&v->vec[i]);
+ 1014              		.loc 1 252 24 view .LVU283
+ 252:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl(&v->vec[i]);
+ 1015              		.loc 1 252 17 view .LVU284
+ 1016              		.loc 1 253 9 view .LVU285
+ 1017 0010 04F50060 		add	r0, r4, #2048
+ 1018 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl
+ 1019              	.LVL77:
+ 252:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl(&v->vec[i]);
+ 1020              		.loc 1 252 24 view .LVU286
+ 252:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl(&v->vec[i]);
+ 1021              		.loc 1 252 17 view .LVU287
+ 1022              		.loc 1 253 9 view .LVU288
+ 1023 0018 04F54060 		add	r0, r4, #3072
+ 254:polyvec.c     ****     }
+ 255:polyvec.c     **** }
+ 1024              		.loc 1 255 1 is_stmt 0 view .LVU289
+ 1025 001c BDE81040 		pop	{r4, lr}
+ 1026              	.LCFI24:
+ 1027              		.cfi_restore 14
+ 1028              		.cfi_restore 4
+ 1029              		.cfi_def_cfa_offset 0
+ 1030              	.LVL78:
+ 253:polyvec.c     ****     }
+ 1031              		.loc 1 253 9 view .LVU290
+ 1032 0020 FFF7FEBF 		b	PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl
+ 1033              	.LVL79:
+ 253:polyvec.c     ****     }
+ 1034              		.loc 1 253 9 view .LVU291
+ 1035              		.cfi_endproc
+ 1036              	.LFE16:
+ 1038              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt,"ax",%progbits
+ 1039              		.align	1
+ 1040              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt
+ 1041              		.syntax unified
+ 1042              		.thumb
+ 1043              		.thumb_func
+ 1044              		.fpu softvfp
+ 1046              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt:
+ 1047              	.LVL80:
+ 1048              	.LFB17:
+ 256:polyvec.c     **** 
+ 257:polyvec.c     **** /*************************************************
+ 258:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt
+ 259:polyvec.c     **** *
+ 260:polyvec.c     **** * Description: Forward NTT of all polynomials in vector of length K. Output
+ 261:polyvec.c     **** *              coefficients can be up to 16*Q larger than input coefficients.
+ 262:polyvec.c     **** *
+ 263:polyvec.c     **** * Arguments:   - polyveck *v: pointer to input/output vector
+ 264:polyvec.c     **** **************************************************/
+ 265:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt(polyveck *v) {
+ 1049              		.loc 1 265 57 is_stmt 1 view -0
+ 1050              		.cfi_startproc
+ 1051              		@ args = 0, pretend = 0, frame = 0
+ 1052              		@ frame_needed = 0, uses_anonymous_args = 0
+ 266:polyvec.c     ****     unsigned int i;
+ 1053              		.loc 1 266 5 view .LVU293
+ 267:polyvec.c     **** 
+ 268:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1054              		.loc 1 268 5 view .LVU294
+ 1055              		.loc 1 268 17 view .LVU295
+ 269:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 1056              		.loc 1 269 9 view .LVU296
+ 265:polyvec.c     ****     unsigned int i;
+ 1057              		.loc 1 265 57 is_stmt 0 view .LVU297
+ 1058 0000 10B5     		push	{r4, lr}
+ 1059              	.LCFI25:
+ 1060              		.cfi_def_cfa_offset 8
+ 1061              		.cfi_offset 4, -8
+ 1062              		.cfi_offset 14, -4
+ 265:polyvec.c     ****     unsigned int i;
+ 1063              		.loc 1 265 57 view .LVU298
+ 1064 0002 0446     		mov	r4, r0
+ 1065              		.loc 1 269 9 view .LVU299
+ 1066 0004 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 1067              	.LVL81:
+ 268:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 1068              		.loc 1 268 24 is_stmt 1 view .LVU300
+ 268:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 1069              		.loc 1 268 17 view .LVU301
+ 1070              		.loc 1 269 9 view .LVU302
+ 1071 0008 04F58060 		add	r0, r4, #1024
+ 1072 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 1073              	.LVL82:
+ 268:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 1074              		.loc 1 268 24 view .LVU303
+ 268:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 1075              		.loc 1 268 17 view .LVU304
+ 1076              		.loc 1 269 9 view .LVU305
+ 1077 0010 04F50060 		add	r0, r4, #2048
+ 1078 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 1079              	.LVL83:
+ 268:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 1080              		.loc 1 268 24 view .LVU306
+ 268:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_ntt(&v->vec[i]);
+ 1081              		.loc 1 268 17 view .LVU307
+ 1082              		.loc 1 269 9 view .LVU308
+ 1083 0018 04F54060 		add	r0, r4, #3072
+ 270:polyvec.c     ****     }
+ 271:polyvec.c     **** }
+ 1084              		.loc 1 271 1 is_stmt 0 view .LVU309
+ 1085 001c BDE81040 		pop	{r4, lr}
+ 1086              	.LCFI26:
+ 1087              		.cfi_restore 14
+ 1088              		.cfi_restore 4
+ 1089              		.cfi_def_cfa_offset 0
+ 1090              	.LVL84:
+ 269:polyvec.c     ****     }
+ 1091              		.loc 1 269 9 view .LVU310
+ 1092 0020 FFF7FEBF 		b	PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+ 1093              	.LVL85:
+ 269:polyvec.c     ****     }
+ 1094              		.loc 1 269 9 view .LVU311
+ 1095              		.cfi_endproc
+ 1096              	.LFE17:
+ 1098              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont,"ax",%progbits
+ 1099              		.align	1
+ 1100              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+ 1101              		.syntax unified
+ 1102              		.thumb
+ 1103              		.thumb_func
+ 1104              		.fpu softvfp
+ 1106              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont:
+ 1107              	.LVL86:
+ 1108              	.LFB18:
+ 272:polyvec.c     **** 
+ 273:polyvec.c     **** /*************************************************
+ 274:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+ 275:polyvec.c     **** *
+ 276:polyvec.c     **** * Description: Inverse NTT and multiplication by 2^{32} of polynomials
+ 277:polyvec.c     **** *              in vector of length K. Input coefficients need to be less
+ 278:polyvec.c     **** *              than 2*Q.
+ 279:polyvec.c     **** *
+ 280:polyvec.c     **** * Arguments:   - polyveck *v: pointer to input/output vector
+ 281:polyvec.c     **** **************************************************/
+ 282:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont(polyveck *v) {
+ 1109              		.loc 1 282 67 is_stmt 1 view -0
+ 1110              		.cfi_startproc
+ 1111              		@ args = 0, pretend = 0, frame = 0
+ 1112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 283:polyvec.c     ****     unsigned int i;
+ 1113              		.loc 1 283 5 view .LVU313
+ 284:polyvec.c     **** 
+ 285:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1114              		.loc 1 285 5 view .LVU314
+ 1115              		.loc 1 285 17 view .LVU315
+ 286:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 1116              		.loc 1 286 9 view .LVU316
+ 282:polyvec.c     ****     unsigned int i;
+ 1117              		.loc 1 282 67 is_stmt 0 view .LVU317
+ 1118 0000 10B5     		push	{r4, lr}
+ 1119              	.LCFI27:
+ 1120              		.cfi_def_cfa_offset 8
+ 1121              		.cfi_offset 4, -8
+ 1122              		.cfi_offset 14, -4
+ 282:polyvec.c     ****     unsigned int i;
+ 1123              		.loc 1 282 67 view .LVU318
+ 1124 0002 0446     		mov	r4, r0
+ 1125              		.loc 1 286 9 view .LVU319
+ 1126 0004 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+ 1127              	.LVL87:
+ 285:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 1128              		.loc 1 285 24 is_stmt 1 view .LVU320
+ 285:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 1129              		.loc 1 285 17 view .LVU321
+ 1130              		.loc 1 286 9 view .LVU322
+ 1131 0008 04F58060 		add	r0, r4, #1024
+ 1132 000c FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+ 1133              	.LVL88:
+ 285:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 1134              		.loc 1 285 24 view .LVU323
+ 285:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 1135              		.loc 1 285 17 view .LVU324
+ 1136              		.loc 1 286 9 view .LVU325
+ 1137 0010 04F50060 		add	r0, r4, #2048
+ 1138 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+ 1139              	.LVL89:
+ 285:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 1140              		.loc 1 285 24 view .LVU326
+ 285:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont(&v->vec[i]);
+ 1141              		.loc 1 285 17 view .LVU327
+ 1142              		.loc 1 286 9 view .LVU328
+ 1143 0018 04F54060 		add	r0, r4, #3072
+ 287:polyvec.c     ****     }
+ 288:polyvec.c     **** }
+ 1144              		.loc 1 288 1 is_stmt 0 view .LVU329
+ 1145 001c BDE81040 		pop	{r4, lr}
+ 1146              	.LCFI28:
+ 1147              		.cfi_restore 14
+ 1148              		.cfi_restore 4
+ 1149              		.cfi_def_cfa_offset 0
+ 1150              	.LVL90:
+ 286:polyvec.c     ****     }
+ 1151              		.loc 1 286 9 view .LVU330
+ 1152 0020 FFF7FEBF 		b	PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+ 1153              	.LVL91:
+ 286:polyvec.c     ****     }
+ 1154              		.loc 1 286 9 view .LVU331
+ 1155              		.cfi_endproc
+ 1156              	.LFE18:
+ 1158              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery,"ax",%progbits
+ 1159              		.align	1
+ 1160              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery
+ 1161              		.syntax unified
+ 1162              		.thumb
+ 1163              		.thumb_func
+ 1164              		.fpu softvfp
+ 1166              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery:
+ 1167              	.LVL92:
+ 1168              	.LFB19:
+ 289:polyvec.c     **** 
+ 290:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery(polyveck *r, const poly *a, const 
+ 1169              		.loc 1 290 113 is_stmt 1 view -0
+ 1170              		.cfi_startproc
+ 1171              		@ args = 0, pretend = 0, frame = 0
+ 1172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 291:polyvec.c     ****     unsigned int i;
+ 1173              		.loc 1 291 5 view .LVU333
+ 292:polyvec.c     **** 
+ 293:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1174              		.loc 1 293 5 view .LVU334
+ 1175              		.loc 1 293 17 view .LVU335
+ 290:polyvec.c     ****     unsigned int i;
+ 1176              		.loc 1 290 113 is_stmt 0 view .LVU336
+ 1177 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1178              	.LCFI29:
+ 1179              		.cfi_def_cfa_offset 24
+ 1180              		.cfi_offset 3, -24
+ 1181              		.cfi_offset 4, -20
+ 1182              		.cfi_offset 5, -16
+ 1183              		.cfi_offset 6, -12
+ 1184              		.cfi_offset 7, -8
+ 1185              		.cfi_offset 14, -4
+ 290:polyvec.c     ****     unsigned int i;
+ 1186              		.loc 1 290 113 view .LVU337
+ 1187 0002 0546     		mov	r5, r0
+ 1188 0004 0E46     		mov	r6, r1
+ 1189 0006 1746     		mov	r7, r2
+ 1190 0008 0024     		movs	r4, #0
+ 1191              	.LVL93:
+ 1192              	.L47:
+ 294:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 1193              		.loc 1 294 9 is_stmt 1 discriminator 3 view .LVU338
+ 1194 000a 3A19     		adds	r2, r7, r4
+ 1195 000c 2819     		adds	r0, r5, r4
+ 1196 000e 3146     		mov	r1, r6
+ 293:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 1197              		.loc 1 293 5 is_stmt 0 discriminator 3 view .LVU339
+ 1198 0010 04F58064 		add	r4, r4, #1024
+ 1199              		.loc 1 294 9 discriminator 3 view .LVU340
+ 1200 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery
+ 1201              	.LVL94:
+ 293:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 1202              		.loc 1 293 24 is_stmt 1 discriminator 3 view .LVU341
+ 293:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 1203              		.loc 1 293 17 discriminator 3 view .LVU342
+ 293:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery(&r->vec[i], a, &v->vec[i]);
+ 1204              		.loc 1 293 5 is_stmt 0 discriminator 3 view .LVU343
+ 1205 0018 B4F5805F 		cmp	r4, #4096
+ 1206 001c F5D1     		bne	.L47
+ 295:polyvec.c     ****     }
+ 296:polyvec.c     **** }
+ 1207              		.loc 1 296 1 view .LVU344
+ 1208 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1209              		.loc 1 296 1 view .LVU345
+ 1210              		.cfi_endproc
+ 1211              	.LFE19:
+ 1213              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm,"ax",%progbits
+ 1214              		.align	1
+ 1215              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm
+ 1216              		.syntax unified
+ 1217              		.thumb
+ 1218              		.thumb_func
+ 1219              		.fpu softvfp
+ 1221              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm:
+ 1222              	.LVL95:
+ 1223              	.LFB20:
+ 297:polyvec.c     **** 
+ 298:polyvec.c     **** /*************************************************
+ 299:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm
+ 300:polyvec.c     **** *
+ 301:polyvec.c     **** * Description: Check infinity norm of polynomials in vector of length K.
+ 302:polyvec.c     **** *              Assumes input polyveck to be reduced by PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce().
+ 303:polyvec.c     **** *
+ 304:polyvec.c     **** * Arguments:   - const polyveck *v: pointer to vector
+ 305:polyvec.c     **** *              - int32_t B: norm bound
+ 306:polyvec.c     **** *
+ 307:polyvec.c     **** * Returns 0 if norm of all polynomials are strictly smaller than B <= (Q-1)/8
+ 308:polyvec.c     **** * and 1 otherwise.
+ 309:polyvec.c     **** **************************************************/
+ 310:polyvec.c     **** int PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm(const polyveck *v, int32_t bound) {
+ 1224              		.loc 1 310 81 is_stmt 1 view -0
+ 1225              		.cfi_startproc
+ 1226              		@ args = 0, pretend = 0, frame = 0
+ 1227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 311:polyvec.c     ****     unsigned int i;
+ 1228              		.loc 1 311 5 view .LVU347
+ 312:polyvec.c     **** 
+ 313:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1229              		.loc 1 313 5 view .LVU348
+ 1230              		.loc 1 313 17 view .LVU349
+ 310:polyvec.c     ****     unsigned int i;
+ 1231              		.loc 1 310 81 is_stmt 0 view .LVU350
+ 1232 0000 70B5     		push	{r4, r5, r6, lr}
+ 1233              	.LCFI30:
+ 1234              		.cfi_def_cfa_offset 16
+ 1235              		.cfi_offset 4, -16
+ 1236              		.cfi_offset 5, -12
+ 1237              		.cfi_offset 6, -8
+ 1238              		.cfi_offset 14, -4
+ 310:polyvec.c     ****     unsigned int i;
+ 1239              		.loc 1 310 81 view .LVU351
+ 1240 0002 0D46     		mov	r5, r1
+ 1241 0004 0446     		mov	r4, r0
+ 1242 0006 00F58056 		add	r6, r0, #4096
+ 1243              	.LVL96:
+ 1244              	.L51:
+ 314:polyvec.c     ****         if (PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm(&v->vec[i], bound)) {
+ 1245              		.loc 1 314 9 is_stmt 1 view .LVU352
+ 1246              		.loc 1 314 13 is_stmt 0 view .LVU353
+ 1247 000a 2946     		mov	r1, r5
+ 1248 000c 2046     		mov	r0, r4
+ 1249 000e FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm
+ 1250              	.LVL97:
+ 1251              		.loc 1 314 12 view .LVU354
+ 1252 0012 20B9     		cbnz	r0, .L52
+ 313:polyvec.c     ****         if (PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm(&v->vec[i], bound)) {
+ 1253              		.loc 1 313 24 is_stmt 1 discriminator 2 view .LVU355
+ 313:polyvec.c     ****         if (PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm(&v->vec[i], bound)) {
+ 1254              		.loc 1 313 17 discriminator 2 view .LVU356
+ 313:polyvec.c     ****         if (PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm(&v->vec[i], bound)) {
+ 1255              		.loc 1 313 5 is_stmt 0 discriminator 2 view .LVU357
+ 1256 0014 04F58064 		add	r4, r4, #1024
+ 1257 0018 B442     		cmp	r4, r6
+ 1258 001a F6D1     		bne	.L51
+ 1259              	.L49:
+ 315:polyvec.c     ****             return 1;
+ 316:polyvec.c     ****         }
+ 317:polyvec.c     ****     }
+ 318:polyvec.c     **** 
+ 319:polyvec.c     ****     return 0;
+ 320:polyvec.c     **** }
+ 1260              		.loc 1 320 1 view .LVU358
+ 1261 001c 70BD     		pop	{r4, r5, r6, pc}
+ 1262              	.LVL98:
+ 1263              	.L52:
+ 315:polyvec.c     ****             return 1;
+ 1264              		.loc 1 315 20 view .LVU359
+ 1265 001e 0120     		movs	r0, #1
+ 1266 0020 FCE7     		b	.L49
+ 1267              		.cfi_endproc
+ 1268              	.LFE20:
+ 1270              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round,"ax",%progbits
+ 1271              		.align	1
+ 1272              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round
+ 1273              		.syntax unified
+ 1274              		.thumb
+ 1275              		.thumb_func
+ 1276              		.fpu softvfp
+ 1278              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round:
+ 1279              	.LVL99:
+ 1280              	.LFB21:
+ 321:polyvec.c     **** 
+ 322:polyvec.c     **** /*************************************************
+ 323:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round
+ 324:polyvec.c     **** *
+ 325:polyvec.c     **** * Description: For all coefficients a of polynomials in vector of length K,
+ 326:polyvec.c     **** *              compute a0, a1 such that a mod^+ Q = a1*2^D + a0
+ 327:polyvec.c     **** *              with -2^{D-1} < a0 <= 2^{D-1}. Assumes coefficients to be
+ 328:polyvec.c     **** *              standard representatives.
+ 329:polyvec.c     **** *
+ 330:polyvec.c     **** * Arguments:   - polyveck *v1: pointer to output vector of polynomials with
+ 331:polyvec.c     **** *                              coefficients a1
+ 332:polyvec.c     **** *              - polyveck *v0: pointer to output vector of polynomials with
+ 333:polyvec.c     **** *                              coefficients a0
+ 334:polyvec.c     **** *              - const polyveck *v: pointer to input vector
+ 335:polyvec.c     **** **************************************************/
+ 336:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round(polyveck *v1, polyveck *v0, const polyveck *v) {
+ 1281              		.loc 1 336 99 is_stmt 1 view -0
+ 1282              		.cfi_startproc
+ 1283              		@ args = 0, pretend = 0, frame = 0
+ 1284              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337:polyvec.c     ****     unsigned int i;
+ 1285              		.loc 1 337 5 view .LVU361
+ 338:polyvec.c     **** 
+ 339:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1286              		.loc 1 339 5 view .LVU362
+ 1287              		.loc 1 339 17 view .LVU363
+ 336:polyvec.c     ****     unsigned int i;
+ 1288              		.loc 1 336 99 is_stmt 0 view .LVU364
+ 1289 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1290              	.LCFI31:
+ 1291              		.cfi_def_cfa_offset 24
+ 1292              		.cfi_offset 3, -24
+ 1293              		.cfi_offset 4, -20
+ 1294              		.cfi_offset 5, -16
+ 1295              		.cfi_offset 6, -12
+ 1296              		.cfi_offset 7, -8
+ 1297              		.cfi_offset 14, -4
+ 336:polyvec.c     ****     unsigned int i;
+ 1298              		.loc 1 336 99 view .LVU365
+ 1299 0002 0546     		mov	r5, r0
+ 1300 0004 0E46     		mov	r6, r1
+ 1301 0006 1746     		mov	r7, r2
+ 1302 0008 0024     		movs	r4, #0
+ 1303              	.LVL100:
+ 1304              	.L55:
+ 340:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_power2round(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1305              		.loc 1 340 9 is_stmt 1 discriminator 3 view .LVU366
+ 1306 000a 3A19     		adds	r2, r7, r4
+ 1307 000c 3119     		adds	r1, r6, r4
+ 1308 000e 2819     		adds	r0, r5, r4
+ 339:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_power2round(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1309              		.loc 1 339 5 is_stmt 0 discriminator 3 view .LVU367
+ 1310 0010 04F58064 		add	r4, r4, #1024
+ 1311              		.loc 1 340 9 discriminator 3 view .LVU368
+ 1312 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_power2round
+ 1313              	.LVL101:
+ 339:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_power2round(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1314              		.loc 1 339 24 is_stmt 1 discriminator 3 view .LVU369
+ 339:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_power2round(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1315              		.loc 1 339 17 discriminator 3 view .LVU370
+ 339:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_power2round(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1316              		.loc 1 339 5 is_stmt 0 discriminator 3 view .LVU371
+ 1317 0018 B4F5805F 		cmp	r4, #4096
+ 1318 001c F5D1     		bne	.L55
+ 341:polyvec.c     ****     }
+ 342:polyvec.c     **** }
+ 1319              		.loc 1 342 1 view .LVU372
+ 1320 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1321              		.loc 1 342 1 view .LVU373
+ 1322              		.cfi_endproc
+ 1323              	.LFE21:
+ 1325              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose,"ax",%progbits
+ 1326              		.align	1
+ 1327              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose
+ 1328              		.syntax unified
+ 1329              		.thumb
+ 1330              		.thumb_func
+ 1331              		.fpu softvfp
+ 1333              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose:
+ 1334              	.LVL102:
+ 1335              	.LFB22:
+ 343:polyvec.c     **** 
+ 344:polyvec.c     **** /*************************************************
+ 345:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose
+ 346:polyvec.c     **** *
+ 347:polyvec.c     **** * Description: For all coefficients a of polynomials in vector of length K,
+ 348:polyvec.c     **** *              compute high and low bits a0, a1 such a mod^+ Q = a1*ALPHA + a0
+ 349:polyvec.c     **** *              with -ALPHA/2 < a0 <= ALPHA/2 except a1 = (Q-1)/ALPHA where we
+ 350:polyvec.c     **** *              set a1 = 0 and -ALPHA/2 <= a0 = a mod Q - Q < 0.
+ 351:polyvec.c     **** *              Assumes coefficients to be standard representatives.
+ 352:polyvec.c     **** *
+ 353:polyvec.c     **** * Arguments:   - polyveck *v1: pointer to output vector of polynomials with
+ 354:polyvec.c     **** *                              coefficients a1
+ 355:polyvec.c     **** *              - polyveck *v0: pointer to output vector of polynomials with
+ 356:polyvec.c     **** *                              coefficients a0
+ 357:polyvec.c     **** *              - const polyveck *v: pointer to input vector
+ 358:polyvec.c     **** **************************************************/
+ 359:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose(polyveck *v1, polyveck *v0, const polyveck *v) {
+ 1336              		.loc 1 359 97 is_stmt 1 view -0
+ 1337              		.cfi_startproc
+ 1338              		@ args = 0, pretend = 0, frame = 0
+ 1339              		@ frame_needed = 0, uses_anonymous_args = 0
+ 360:polyvec.c     ****     unsigned int i;
+ 1340              		.loc 1 360 5 view .LVU375
+ 361:polyvec.c     **** 
+ 362:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1341              		.loc 1 362 5 view .LVU376
+ 1342              		.loc 1 362 17 view .LVU377
+ 359:polyvec.c     ****     unsigned int i;
+ 1343              		.loc 1 359 97 is_stmt 0 view .LVU378
+ 1344 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1345              	.LCFI32:
+ 1346              		.cfi_def_cfa_offset 24
+ 1347              		.cfi_offset 3, -24
+ 1348              		.cfi_offset 4, -20
+ 1349              		.cfi_offset 5, -16
+ 1350              		.cfi_offset 6, -12
+ 1351              		.cfi_offset 7, -8
+ 1352              		.cfi_offset 14, -4
+ 359:polyvec.c     ****     unsigned int i;
+ 1353              		.loc 1 359 97 view .LVU379
+ 1354 0002 0546     		mov	r5, r0
+ 1355 0004 0E46     		mov	r6, r1
+ 1356 0006 1746     		mov	r7, r2
+ 1357 0008 0024     		movs	r4, #0
+ 1358              	.LVL103:
+ 1359              	.L58:
+ 363:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_decompose(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1360              		.loc 1 363 9 is_stmt 1 discriminator 3 view .LVU380
+ 1361 000a 3A19     		adds	r2, r7, r4
+ 1362 000c 3119     		adds	r1, r6, r4
+ 1363 000e 2819     		adds	r0, r5, r4
+ 362:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_decompose(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1364              		.loc 1 362 5 is_stmt 0 discriminator 3 view .LVU381
+ 1365 0010 04F58064 		add	r4, r4, #1024
+ 1366              		.loc 1 363 9 discriminator 3 view .LVU382
+ 1367 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_decompose
+ 1368              	.LVL104:
+ 362:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_decompose(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1369              		.loc 1 362 24 is_stmt 1 discriminator 3 view .LVU383
+ 362:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_decompose(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1370              		.loc 1 362 17 discriminator 3 view .LVU384
+ 362:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_decompose(&v1->vec[i], &v0->vec[i], &v->vec[i]);
+ 1371              		.loc 1 362 5 is_stmt 0 discriminator 3 view .LVU385
+ 1372 0018 B4F5805F 		cmp	r4, #4096
+ 1373 001c F5D1     		bne	.L58
+ 364:polyvec.c     ****     }
+ 365:polyvec.c     **** }
+ 1374              		.loc 1 365 1 view .LVU386
+ 1375 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1376              		.loc 1 365 1 view .LVU387
+ 1377              		.cfi_endproc
+ 1378              	.LFE22:
+ 1380              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint,"ax",%progbits
+ 1381              		.align	1
+ 1382              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint
+ 1383              		.syntax unified
+ 1384              		.thumb
+ 1385              		.thumb_func
+ 1386              		.fpu softvfp
+ 1388              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint:
+ 1389              	.LVL105:
+ 1390              	.LFB23:
+ 366:polyvec.c     **** 
+ 367:polyvec.c     **** /*************************************************
+ 368:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint
+ 369:polyvec.c     **** *
+ 370:polyvec.c     **** * Description: Compute hint vector.
+ 371:polyvec.c     **** *
+ 372:polyvec.c     **** * Arguments:   - polyveck *h: pointer to output vector
+ 373:polyvec.c     **** *              - const polyveck *v0: pointer to low part of input vector
+ 374:polyvec.c     **** *              - const polyveck *v1: pointer to high part of input vector
+ 375:polyvec.c     **** *
+ 376:polyvec.c     **** * Returns number of 1 bits.
+ 377:polyvec.c     **** **************************************************/
+ 378:polyvec.c     **** unsigned int PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint(polyveck *h,
+ 379:polyvec.c     ****         const polyveck *v0,
+ 380:polyvec.c     ****         const polyveck *v1) {
+ 1391              		.loc 1 380 29 is_stmt 1 view -0
+ 1392              		.cfi_startproc
+ 1393              		@ args = 0, pretend = 0, frame = 0
+ 1394              		@ frame_needed = 0, uses_anonymous_args = 0
+ 381:polyvec.c     ****     unsigned int i, s = 0;
+ 1395              		.loc 1 381 5 view .LVU389
+ 382:polyvec.c     **** 
+ 383:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1396              		.loc 1 383 5 view .LVU390
+ 1397              		.loc 1 383 17 view .LVU391
+ 380:polyvec.c     ****     unsigned int i, s = 0;
+ 1398              		.loc 1 380 29 is_stmt 0 view .LVU392
+ 1399 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 1400              	.LCFI33:
+ 1401              		.cfi_def_cfa_offset 24
+ 1402              		.cfi_offset 4, -24
+ 1403              		.cfi_offset 5, -20
+ 1404              		.cfi_offset 6, -16
+ 1405              		.cfi_offset 7, -12
+ 1406              		.cfi_offset 8, -8
+ 1407              		.cfi_offset 14, -4
+ 380:polyvec.c     ****     unsigned int i, s = 0;
+ 1408              		.loc 1 380 29 view .LVU393
+ 1409 0004 0024     		movs	r4, #0
+ 1410 0006 0646     		mov	r6, r0
+ 1411 0008 0F46     		mov	r7, r1
+ 1412 000a 9046     		mov	r8, r2
+ 381:polyvec.c     ****     unsigned int i, s = 0;
+ 1413              		.loc 1 381 21 view .LVU394
+ 1414 000c 2546     		mov	r5, r4
+ 1415              	.LVL106:
+ 1416              	.L61:
+ 384:polyvec.c     ****         s += PQCLEAN_DILITHIUM2_CLEAN_poly_make_hint(&h->vec[i], &v0->vec[i], &v1->vec[i]);
+ 1417              		.loc 1 384 9 is_stmt 1 discriminator 3 view .LVU395
+ 1418              		.loc 1 384 14 is_stmt 0 discriminator 3 view .LVU396
+ 1419 000e 08EB0402 		add	r2, r8, r4
+ 1420 0012 3919     		adds	r1, r7, r4
+ 1421 0014 3019     		adds	r0, r6, r4
+ 1422 0016 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_make_hint
+ 1423              	.LVL107:
+ 383:polyvec.c     ****         s += PQCLEAN_DILITHIUM2_CLEAN_poly_make_hint(&h->vec[i], &v0->vec[i], &v1->vec[i]);
+ 1424              		.loc 1 383 5 discriminator 3 view .LVU397
+ 1425 001a 04F58064 		add	r4, r4, #1024
+ 1426 001e B4F5805F 		cmp	r4, #4096
+ 1427              		.loc 1 384 11 discriminator 3 view .LVU398
+ 1428 0022 0544     		add	r5, r5, r0
+ 1429              	.LVL108:
+ 383:polyvec.c     ****         s += PQCLEAN_DILITHIUM2_CLEAN_poly_make_hint(&h->vec[i], &v0->vec[i], &v1->vec[i]);
+ 1430              		.loc 1 383 24 is_stmt 1 discriminator 3 view .LVU399
+ 383:polyvec.c     ****         s += PQCLEAN_DILITHIUM2_CLEAN_poly_make_hint(&h->vec[i], &v0->vec[i], &v1->vec[i]);
+ 1431              		.loc 1 383 17 discriminator 3 view .LVU400
+ 383:polyvec.c     ****         s += PQCLEAN_DILITHIUM2_CLEAN_poly_make_hint(&h->vec[i], &v0->vec[i], &v1->vec[i]);
+ 1432              		.loc 1 383 5 is_stmt 0 discriminator 3 view .LVU401
+ 1433 0024 F3D1     		bne	.L61
+ 385:polyvec.c     ****     }
+ 386:polyvec.c     **** 
+ 387:polyvec.c     ****     return s;
+ 1434              		.loc 1 387 5 is_stmt 1 view .LVU402
+ 388:polyvec.c     **** }
+ 1435              		.loc 1 388 1 is_stmt 0 view .LVU403
+ 1436 0026 2846     		mov	r0, r5
+ 1437 0028 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 1438              		.loc 1 388 1 view .LVU404
+ 1439              		.cfi_endproc
+ 1440              	.LFE23:
+ 1442              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint,"ax",%progbits
+ 1443              		.align	1
+ 1444              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint
+ 1445              		.syntax unified
+ 1446              		.thumb
+ 1447              		.thumb_func
+ 1448              		.fpu softvfp
+ 1450              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint:
+ 1451              	.LVL109:
+ 1452              	.LFB24:
+ 389:polyvec.c     **** 
+ 390:polyvec.c     **** /*************************************************
+ 391:polyvec.c     **** * Name:        PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint
+ 392:polyvec.c     **** *
+ 393:polyvec.c     **** * Description: Use hint vector to correct the high bits of input vector.
+ 394:polyvec.c     **** *
+ 395:polyvec.c     **** * Arguments:   - polyveck *w: pointer to output vector of polynomials with
+ 396:polyvec.c     **** *                             corrected high bits
+ 397:polyvec.c     **** *              - const polyveck *u: pointer to input vector
+ 398:polyvec.c     **** *              - const polyveck *h: pointer to input hint vector
+ 399:polyvec.c     **** **************************************************/
+ 400:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint(polyveck *w, const polyveck *u, const polyveck *h) 
+ 1453              		.loc 1 400 100 is_stmt 1 view -0
+ 1454              		.cfi_startproc
+ 1455              		@ args = 0, pretend = 0, frame = 0
+ 1456              		@ frame_needed = 0, uses_anonymous_args = 0
+ 401:polyvec.c     ****     unsigned int i;
+ 1457              		.loc 1 401 5 view .LVU406
+ 402:polyvec.c     **** 
+ 403:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1458              		.loc 1 403 5 view .LVU407
+ 1459              		.loc 1 403 17 view .LVU408
+ 400:polyvec.c     ****     unsigned int i;
+ 1460              		.loc 1 400 100 is_stmt 0 view .LVU409
+ 1461 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 1462              	.LCFI34:
+ 1463              		.cfi_def_cfa_offset 24
+ 1464              		.cfi_offset 3, -24
+ 1465              		.cfi_offset 4, -20
+ 1466              		.cfi_offset 5, -16
+ 1467              		.cfi_offset 6, -12
+ 1468              		.cfi_offset 7, -8
+ 1469              		.cfi_offset 14, -4
+ 400:polyvec.c     ****     unsigned int i;
+ 1470              		.loc 1 400 100 view .LVU410
+ 1471 0002 0546     		mov	r5, r0
+ 1472 0004 0E46     		mov	r6, r1
+ 1473 0006 1746     		mov	r7, r2
+ 1474 0008 0024     		movs	r4, #0
+ 1475              	.LVL110:
+ 1476              	.L64:
+ 404:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_use_hint(&w->vec[i], &u->vec[i], &h->vec[i]);
+ 1477              		.loc 1 404 9 is_stmt 1 discriminator 3 view .LVU411
+ 1478 000a 3A19     		adds	r2, r7, r4
+ 1479 000c 3119     		adds	r1, r6, r4
+ 1480 000e 2819     		adds	r0, r5, r4
+ 403:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_use_hint(&w->vec[i], &u->vec[i], &h->vec[i]);
+ 1481              		.loc 1 403 5 is_stmt 0 discriminator 3 view .LVU412
+ 1482 0010 04F58064 		add	r4, r4, #1024
+ 1483              		.loc 1 404 9 discriminator 3 view .LVU413
+ 1484 0014 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_poly_use_hint
+ 1485              	.LVL111:
+ 403:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_use_hint(&w->vec[i], &u->vec[i], &h->vec[i]);
+ 1486              		.loc 1 403 24 is_stmt 1 discriminator 3 view .LVU414
+ 403:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_use_hint(&w->vec[i], &u->vec[i], &h->vec[i]);
+ 1487              		.loc 1 403 17 discriminator 3 view .LVU415
+ 403:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_poly_use_hint(&w->vec[i], &u->vec[i], &h->vec[i]);
+ 1488              		.loc 1 403 5 is_stmt 0 discriminator 3 view .LVU416
+ 1489 0018 B4F5805F 		cmp	r4, #4096
+ 1490 001c F5D1     		bne	.L64
+ 405:polyvec.c     ****     }
+ 406:polyvec.c     **** }
+ 1491              		.loc 1 406 1 view .LVU417
+ 1492 001e F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 1493              		.loc 1 406 1 view .LVU418
+ 1494              		.cfi_endproc
+ 1495              	.LFE24:
+ 1497              		.section	.text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1,"ax",%progbits
+ 1498              		.align	1
+ 1499              		.global	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1
+ 1500              		.syntax unified
+ 1501              		.thumb
+ 1502              		.thumb_func
+ 1503              		.fpu softvfp
+ 1505              	PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1:
+ 1506              	.LVL112:
+ 1507              	.LFB25:
+ 407:polyvec.c     **** 
+ 408:polyvec.c     **** void PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1(uint8_t r[K * POLYW1_PACKEDBYTES], const polyveck *w
+ 1508              		.loc 1 408 103 is_stmt 1 view -0
+ 1509              		.cfi_startproc
+ 1510              		@ args = 0, pretend = 0, frame = 0
+ 1511              		@ frame_needed = 0, uses_anonymous_args = 0
+ 409:polyvec.c     ****     unsigned int i;
+ 1512              		.loc 1 409 5 view .LVU420
+ 410:polyvec.c     **** 
+ 411:polyvec.c     ****     for (i = 0; i < K; ++i) {
+ 1513              		.loc 1 411 5 view .LVU421
+ 1514              		.loc 1 411 17 view .LVU422
+ 408:polyvec.c     ****     unsigned int i;
+ 1515              		.loc 1 408 103 is_stmt 0 view .LVU423
+ 1516 0000 70B5     		push	{r4, r5, r6, lr}
+ 1517              	.LCFI35:
+ 1518              		.cfi_def_cfa_offset 16
+ 1519              		.cfi_offset 4, -16
+ 1520              		.cfi_offset 5, -12
+ 1521              		.cfi_offset 6, -8
+ 1522              		.cfi_offset 14, -4
+ 1523 0002 0446     		mov	r4, r0
+ 1524 0004 0D46     		mov	r5, r1
+ 1525 0006 00F54076 		add	r6, r0, #768
+ 1526              	.LVL113:
+ 1527              	.L67:
+ 412:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyw1_pack(&r[i * POLYW1_PACKEDBYTES], &w1->vec[i]);
+ 1528              		.loc 1 412 9 is_stmt 1 discriminator 3 view .LVU424
+ 1529 000a 2946     		mov	r1, r5
+ 1530 000c 2046     		mov	r0, r4
+ 411:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyw1_pack(&r[i * POLYW1_PACKEDBYTES], &w1->vec[i]);
+ 1531              		.loc 1 411 5 is_stmt 0 discriminator 3 view .LVU425
+ 1532 000e C034     		adds	r4, r4, #192
+ 1533              		.loc 1 412 9 discriminator 3 view .LVU426
+ 1534 0010 FFF7FEFF 		bl	PQCLEAN_DILITHIUM2_CLEAN_polyw1_pack
+ 1535              	.LVL114:
+ 411:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyw1_pack(&r[i * POLYW1_PACKEDBYTES], &w1->vec[i]);
+ 1536              		.loc 1 411 24 is_stmt 1 discriminator 3 view .LVU427
+ 411:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyw1_pack(&r[i * POLYW1_PACKEDBYTES], &w1->vec[i]);
+ 1537              		.loc 1 411 17 discriminator 3 view .LVU428
+ 411:polyvec.c     ****         PQCLEAN_DILITHIUM2_CLEAN_polyw1_pack(&r[i * POLYW1_PACKEDBYTES], &w1->vec[i]);
+ 1538              		.loc 1 411 5 is_stmt 0 discriminator 3 view .LVU429
+ 1539 0014 B442     		cmp	r4, r6
+ 1540 0016 05F58065 		add	r5, r5, #1024
+ 1541 001a F6D1     		bne	.L67
+ 413:polyvec.c     ****     }
+ 414:polyvec.c     **** }
+ 1542              		.loc 1 414 1 view .LVU430
+ 1543 001c 70BD     		pop	{r4, r5, r6, pc}
+ 1544              		.loc 1 414 1 view .LVU431
+ 1545              		.cfi_endproc
+ 1546              	.LFE25:
+ 1548              		.text
+ 1549              	.Letext0:
+ 1550              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 1551              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 1552              		.file 4 "poly.h"
+ 1553              		.file 5 "polyvec.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 polyvec.c
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:16     .text.PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:24     .text.PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_expand
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:92     .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:99     .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_eta
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:152    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:159    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_uniform_gamma1
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:213    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:220    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_reduce
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:273    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:280    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_add
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:328    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:335    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_ntt
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:388    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:395    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_invntt_tomont
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:448    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:455    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_poly_montgomery
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:503    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:510    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_pointwise_acc_montgomery
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:576    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:583    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvec_matrix_pointwise_montgomery
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:632    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:639    .text.PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyvecl_chknorm
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:689    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:696    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_uniform_eta
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:749    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:756    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_reduce
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:809    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:816    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_caddq
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:869    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_add:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:876    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_add:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_add
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:924    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:931    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_sub
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:979    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:986    .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_shiftl
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1039   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1046   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_ntt
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1099   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1106   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_invntt_tomont
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1159   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1166   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_pointwise_poly_montgomery
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1214   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1221   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_chknorm
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1271   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1278   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_power2round
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1326   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1333   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_decompose
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1381   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1388   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_make_hint
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1443   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1450   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_use_hint
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1498   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccRpF1MJ.s:1505   .text.PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1:00000000 PQCLEAN_DILITHIUM2_CLEAN_polyveck_pack_w1
+
+UNDEFINED SYMBOLS
+PQCLEAN_DILITHIUM2_CLEAN_poly_uniform
+PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_eta
+PQCLEAN_DILITHIUM2_CLEAN_poly_uniform_gamma1
+PQCLEAN_DILITHIUM2_CLEAN_poly_reduce
+PQCLEAN_DILITHIUM2_CLEAN_poly_add
+PQCLEAN_DILITHIUM2_CLEAN_poly_ntt
+PQCLEAN_DILITHIUM2_CLEAN_poly_invntt_tomont
+PQCLEAN_DILITHIUM2_CLEAN_poly_pointwise_montgomery
+PQCLEAN_DILITHIUM2_CLEAN_poly_chknorm
+PQCLEAN_DILITHIUM2_CLEAN_poly_caddq
+PQCLEAN_DILITHIUM2_CLEAN_poly_sub
+PQCLEAN_DILITHIUM2_CLEAN_poly_shiftl
+PQCLEAN_DILITHIUM2_CLEAN_poly_power2round
+PQCLEAN_DILITHIUM2_CLEAN_poly_decompose
+PQCLEAN_DILITHIUM2_CLEAN_poly_make_hint
+PQCLEAN_DILITHIUM2_CLEAN_poly_use_hint
+PQCLEAN_DILITHIUM2_CLEAN_polyw1_pack

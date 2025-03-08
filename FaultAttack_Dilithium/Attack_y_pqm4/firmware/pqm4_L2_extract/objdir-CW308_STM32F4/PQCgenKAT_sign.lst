@@ -1,0 +1,1305 @@
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 20, 1
+   3              		.eabi_attribute 21, 1
+   4              		.eabi_attribute 23, 3
+   5              		.eabi_attribute 24, 1
+   6              		.eabi_attribute 25, 1
+   7              		.eabi_attribute 26, 1
+   8              		.eabi_attribute 30, 4
+   9              		.eabi_attribute 34, 1
+  10              		.eabi_attribute 18, 4
+  11              		.file	"PQCgenKAT_sign.c"
+  12              		.text
+  13              	.Ltext0:
+  14              		.cfi_sections	.debug_frame
+  15              		.section	.text.enc_password,"ax",%progbits
+  16              		.align	1
+  17              		.global	enc_password
+  18              		.arch armv7e-m
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu softvfp
+  24              	enc_password:
+  25              	.LVL0:
+  26              	.LFB3:
+  27              		.file 1 "PQCgenKAT_sign.c"
+   1:PQCgenKAT_sign.c **** //
+   2:PQCgenKAT_sign.c **** //  PQCgenKAT_sign.c
+   3:PQCgenKAT_sign.c **** //
+   4:PQCgenKAT_sign.c **** //  Created by Bassham, Lawrence E (Fed) on 8/29/17.
+   5:PQCgenKAT_sign.c **** //  Copyright © 2017 Bassham, Lawrence E (Fed). All rights reserved.
+   6:PQCgenKAT_sign.c **** //
+   7:PQCgenKAT_sign.c **** 
+   8:PQCgenKAT_sign.c **** #include <stdio.h>
+   9:PQCgenKAT_sign.c **** //#include <stdlib.h>
+  10:PQCgenKAT_sign.c **** //#include <string.h>
+  11:PQCgenKAT_sign.c **** //#include <ctype.h>
+  12:PQCgenKAT_sign.c **** // #include "rng.h"
+  13:PQCgenKAT_sign.c **** #include "api.h"
+  14:PQCgenKAT_sign.c **** //#include "params.h"
+  15:PQCgenKAT_sign.c **** //#include "sign.h"
+  16:PQCgenKAT_sign.c **** 
+  17:PQCgenKAT_sign.c **** //#include "hal.h"
+  18:PQCgenKAT_sign.c **** #include <stdint.h>
+  19:PQCgenKAT_sign.c **** #include <stdlib.h>
+  20:PQCgenKAT_sign.c **** 
+  21:PQCgenKAT_sign.c **** //#include "simpleserial.h"
+  22:PQCgenKAT_sign.c **** 
+  23:PQCgenKAT_sign.c **** #define	MAX_MARKER_LEN		50
+  24:PQCgenKAT_sign.c **** 
+  25:PQCgenKAT_sign.c **** #define KAT_SUCCESS          0
+  26:PQCgenKAT_sign.c **** #define KAT_FILE_OPEN_ERROR -1
+  27:PQCgenKAT_sign.c **** #define KAT_DATA_ERROR      -3
+  28:PQCgenKAT_sign.c **** #define KAT_CRYPTO_FAILURE  -4
+  29:PQCgenKAT_sign.c **** 
+  30:PQCgenKAT_sign.c **** //int		FindMarker(FILE *infile, const char *marker);
+  31:PQCgenKAT_sign.c **** //int		ReadHex(FILE *infile, unsigned char *A, int Length, char *str);
+  32:PQCgenKAT_sign.c **** 
+  33:PQCgenKAT_sign.c **** 
+  34:PQCgenKAT_sign.c **** // #ifndef API_H
+  35:PQCgenKAT_sign.c **** // #define API_H
+  36:PQCgenKAT_sign.c **** 
+  37:PQCgenKAT_sign.c **** //#include "config.h"
+  38:PQCgenKAT_sign.c **** 
+  39:PQCgenKAT_sign.c **** // #define CRYPTO_PUBLICKEYBYTES 1312
+  40:PQCgenKAT_sign.c **** // #define CRYPTO_SECRETKEYBYTES 2544
+  41:PQCgenKAT_sign.c **** // #define CRYPTO_BYTES 2420
+  42:PQCgenKAT_sign.c **** 
+  43:PQCgenKAT_sign.c **** 
+  44:PQCgenKAT_sign.c **** 
+  45:PQCgenKAT_sign.c **** // int crypto_sign_keypair(uint8_t *pk,uint8_t *sk);
+  46:PQCgenKAT_sign.c **** 
+  47:PQCgenKAT_sign.c **** 
+  48:PQCgenKAT_sign.c **** // int crypto_sign(unsigned char *sm, unsigned long long *smlen,
+  49:PQCgenKAT_sign.c **** //                 const unsigned char *msg, unsigned long long len,
+  50:PQCgenKAT_sign.c **** //                 const unsigned char *sk);
+  51:PQCgenKAT_sign.c **** 
+  52:PQCgenKAT_sign.c **** // int crypto_sign_open(unsigned char *m, unsigned long long *mlen,
+  53:PQCgenKAT_sign.c **** //                      const unsigned char *sm, unsigned long long smlen,
+  54:PQCgenKAT_sign.c **** //                      const unsigned char *pk);
+  55:PQCgenKAT_sign.c **** //uint8_t dilithium1(uint8_t cmd, uint8_t scmd, uint8_t len, uint8_t* p);
+  56:PQCgenKAT_sign.c **** // #endif
+  57:PQCgenKAT_sign.c **** 
+  58:PQCgenKAT_sign.c **** // #ifndef CONFIG_H
+  59:PQCgenKAT_sign.c **** // #define CONFIG_H
+  60:PQCgenKAT_sign.c **** 
+  61:PQCgenKAT_sign.c **** // #define DILITHIUM_MODE 2
+  62:PQCgenKAT_sign.c **** 
+  63:PQCgenKAT_sign.c **** // #define CRYPTO_ALGNAME "Dilithium2"
+  64:PQCgenKAT_sign.c **** // #define DILITHIUM_NAMESPACE(s) pqcrystals_dilithium2_ref##s
+  65:PQCgenKAT_sign.c **** 
+  66:PQCgenKAT_sign.c **** // #endif
+  67:PQCgenKAT_sign.c **** 
+  68:PQCgenKAT_sign.c **** 
+  69:PQCgenKAT_sign.c **** char    AlgName[] = "My Alg Name";
+  70:PQCgenKAT_sign.c **** 
+  71:PQCgenKAT_sign.c **** /*uint8_t smbuf_chunk_1(uint8_t *p, uint8_t len);
+  72:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_2(uint8_t *p, uint8_t len);
+  73:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_3(uint8_t *p, uint8_t len);
+  74:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_4(uint8_t *p, uint8_t len);
+  75:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_5(uint8_t *p, uint8_t len);
+  76:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_6(uint8_t *p, uint8_t len);
+  77:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_7(uint8_t *p, uint8_t len);
+  78:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_8(uint8_t *p, uint8_t len);
+  79:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_9(uint8_t *p, uint8_t len);
+  80:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_10(uint8_t *p, uint8_t len);
+  81:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_11(uint8_t *p, uint8_t len);
+  82:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_12(uint8_t *p, uint8_t len);
+  83:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_13(uint8_t *p, uint8_t len);
+  84:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_14(uint8_t *p, uint8_t len);
+  85:PQCgenKAT_sign.c **** // uint8_t test_chunk_6(uint8_t *p, uint8_t len);*/
+  86:PQCgenKAT_sign.c **** 
+  87:PQCgenKAT_sign.c **** 
+  88:PQCgenKAT_sign.c **** uint8_t enc_password(uint8_t cmd, uint8_t scmd, uint8_t len, uint8_t* p){
+  28              		.loc 1 88 73 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  89:PQCgenKAT_sign.c ****     p[0] = 17;
+  32              		.loc 1 89 5 view .LVU1
+  88:PQCgenKAT_sign.c ****     p[0] = 17;
+  33              		.loc 1 88 73 is_stmt 0 view .LVU2
+  34 0000 10B5     		push	{r4, lr}
+  35              	.LCFI0:
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  88:PQCgenKAT_sign.c ****     p[0] = 17;
+  39              		.loc 1 88 73 view .LVU3
+  40 0002 1C46     		mov	r4, r3
+  41              		.loc 1 89 10 view .LVU4
+  42 0004 1123     		movs	r3, #17
+  43              	.LVL1:
+  44              		.loc 1 89 10 view .LVU5
+  45 0006 2370     		strb	r3, [r4]
+  90:PQCgenKAT_sign.c ****    test_fun2(p);
+  46              		.loc 1 90 4 is_stmt 1 view .LVU6
+  47 0008 2046     		mov	r0, r4
+  48              	.LVL2:
+  49              		.loc 1 90 4 is_stmt 0 view .LVU7
+  50 000a FFF7FEFF 		bl	test_fun2
+  51              	.LVL3:
+  91:PQCgenKAT_sign.c ****    simpleserial_put('r', 136, p);
+  52              		.loc 1 91 4 is_stmt 1 view .LVU8
+  53 000e 2246     		mov	r2, r4
+  54 0010 8821     		movs	r1, #136
+  55 0012 7220     		movs	r0, #114
+  56 0014 FFF7FEFF 		bl	simpleserial_put
+  57              	.LVL4:
+  92:PQCgenKAT_sign.c ****    return 0x00;
+  58              		.loc 1 92 4 view .LVU9
+  93:PQCgenKAT_sign.c **** }
+  59              		.loc 1 93 1 is_stmt 0 view .LVU10
+  60 0018 0020     		movs	r0, #0
+  61 001a 10BD     		pop	{r4, pc}
+  62              		.loc 1 93 1 view .LVU11
+  63              		.cfi_endproc
+  64              	.LFE3:
+  66              		.section	.text.dilithium1,"ax",%progbits
+  67              		.align	1
+  68              		.global	dilithium1
+  69              		.syntax unified
+  70              		.thumb
+  71              		.thumb_func
+  72              		.fpu softvfp
+  74              	dilithium1:
+  75              	.LVL5:
+  76              	.LFB5:
+  94:PQCgenKAT_sign.c **** 
+  95:PQCgenKAT_sign.c **** uint8_t enc_password1(uint8_t cmd, uint8_t scmd, uint8_t len, uint8_t* p){
+  96:PQCgenKAT_sign.c ****     p[0] = 17;
+  97:PQCgenKAT_sign.c ****     char c[16];
+  98:PQCgenKAT_sign.c ****    	unsigned int i=0;
+  99:PQCgenKAT_sign.c **** 	unsigned int j=0,k=0;
+ 100:PQCgenKAT_sign.c **** 	char seedstr[128];
+ 101:PQCgenKAT_sign.c **** 	char seed[64];
+ 102:PQCgenKAT_sign.c ****     for	(i=0;i<16;i++){
+ 103:PQCgenKAT_sign.c **** 	if (i<10)
+ 104:PQCgenKAT_sign.c ****         c[i] = '0' +i;
+ 105:PQCgenKAT_sign.c **** 	else
+ 106:PQCgenKAT_sign.c ****         c[i] = 'A' + i-10;
+ 107:PQCgenKAT_sign.c **** 	}
+ 108:PQCgenKAT_sign.c **** 	for(int i=0; i < 64*2;i++){
+ 109:PQCgenKAT_sign.c ****         seedstr[i] = p[i];
+ 110:PQCgenKAT_sign.c ****     }
+ 111:PQCgenKAT_sign.c **** 	
+ 112:PQCgenKAT_sign.c **** 	//將pc端发送的数据放入seed中，每次读取两个16进制字符转换为一个8bit数
+ 113:PQCgenKAT_sign.c **** 	for(i=0,j=0;i<128;i++,j++){
+ 114:PQCgenKAT_sign.c **** 	seed[j] = 0;
+ 115:PQCgenKAT_sign.c **** 	for(k=0; c[k] != seedstr[i] ;k++);
+ 116:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 117:PQCgenKAT_sign.c **** 	i+=1;
+ 118:PQCgenKAT_sign.c **** 	for(k=0; c[k] != seedstr[i] ;k++);
+ 119:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 120:PQCgenKAT_sign.c **** 	} 
+ 121:PQCgenKAT_sign.c ****    /* test_fun2(p,seed); */
+ 122:PQCgenKAT_sign.c ****    test_fun3(p,seed);
+ 123:PQCgenKAT_sign.c ****    simpleserial_put('r', 136, p);
+ 124:PQCgenKAT_sign.c ****    return 0x00;
+ 125:PQCgenKAT_sign.c **** }
+ 126:PQCgenKAT_sign.c **** 
+ 127:PQCgenKAT_sign.c **** 
+ 128:PQCgenKAT_sign.c **** uint8_t dilithium1(uint8_t cmd, uint8_t scmd, uint8_t len, uint8_t* p)
+ 129:PQCgenKAT_sign.c **** {
+  77              		.loc 1 129 1 is_stmt 1 view -0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 4000
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130:PQCgenKAT_sign.c ****     char                fn_req[32], fn_rsp[32];
+  81              		.loc 1 130 5 view .LVU13
+ 131:PQCgenKAT_sign.c ****     FILE                *fp_req, *fp_rsp;
+  82              		.loc 1 131 5 view .LVU14
+ 132:PQCgenKAT_sign.c ****     unsigned char       seed[48];
+  83              		.loc 1 132 5 view .LVU15
+ 133:PQCgenKAT_sign.c ****     unsigned char       msg[33];
+  84              		.loc 1 133 5 view .LVU16
+ 134:PQCgenKAT_sign.c ****     unsigned char       entropy_input[48];
+  85              		.loc 1 134 5 view .LVU17
+ 135:PQCgenKAT_sign.c ****     unsigned char       *m,*m1,*sm1;
+  86              		.loc 1 135 5 view .LVU18
+ 136:PQCgenKAT_sign.c ****     uint8_t             *sm;
+  87              		.loc 1 136 5 view .LVU19
+ 137:PQCgenKAT_sign.c ****     size_t  mlen, smlen, mlen1;
+  88              		.loc 1 137 5 view .LVU20
+ 138:PQCgenKAT_sign.c ****     int                 count;
+  89              		.loc 1 138 5 view .LVU21
+ 139:PQCgenKAT_sign.c ****     int                 done;
+  90              		.loc 1 139 5 view .LVU22
+ 140:PQCgenKAT_sign.c ****     uint8_t       pk[CRYPTO_PUBLICKEYBYTES], sk[CRYPTO_SECRETKEYBYTES];  //定義公鑰、私钥，
+  91              		.loc 1 140 5 view .LVU23
+ 141:PQCgenKAT_sign.c ****     uint8_t                 ret_val;
+  92              		.loc 1 141 5 view .LVU24
+ 142:PQCgenKAT_sign.c ****         
+ 143:PQCgenKAT_sign.c ****     mlen = 33*(0+1);
+  93              		.loc 1 143 5 view .LVU25
+ 144:PQCgenKAT_sign.c **** 
+ 145:PQCgenKAT_sign.c ****     char c[16];
+  94              		.loc 1 145 5 view .LVU26
+ 146:PQCgenKAT_sign.c ****    	unsigned int i=0;
+  95              		.loc 1 146 5 view .LVU27
+ 147:PQCgenKAT_sign.c **** 	unsigned int j=0,k=0;
+  96              		.loc 1 147 2 view .LVU28
+ 148:PQCgenKAT_sign.c ****     for	(i=0;i<16;i++){
+  97              		.loc 1 148 5 view .LVU29
+  98              		.loc 1 148 14 view .LVU30
+ 129:PQCgenKAT_sign.c ****     char                fn_req[32], fn_rsp[32];
+  99              		.loc 1 129 1 is_stmt 0 view .LVU31
+ 100 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 101              	.LCFI1:
+ 102              		.cfi_def_cfa_offset 24
+ 103              		.cfi_offset 4, -24
+ 104              		.cfi_offset 5, -20
+ 105              		.cfi_offset 6, -16
+ 106              		.cfi_offset 7, -12
+ 107              		.cfi_offset 8, -8
+ 108              		.cfi_offset 14, -4
+ 109 0004 ADF6A87D 		subw	sp, sp, #4008
+ 110              	.LCFI2:
+ 111              		.cfi_def_cfa_offset 4032
+ 129:PQCgenKAT_sign.c ****     char                fn_req[32], fn_rsp[32];
+ 112              		.loc 1 129 1 view .LVU32
+ 113 0008 1D46     		mov	r5, r3
+ 114 000a 04A9     		add	r1, sp, #16
+ 115              	.LVL6:
+ 116              		.loc 1 148 11 view .LVU33
+ 117 000c 0023     		movs	r3, #0
+ 118              	.LVL7:
+ 119              	.L5:
+ 149:PQCgenKAT_sign.c **** 	if (i<10)
+ 120              		.loc 1 149 2 is_stmt 1 view .LVU34
+ 121              		.loc 1 149 5 is_stmt 0 view .LVU35
+ 122 000e 092B     		cmp	r3, #9
+ 150:PQCgenKAT_sign.c ****         c[i] = '0' +i;
+ 123              		.loc 1 150 9 is_stmt 1 view .LVU36
+ 124              		.loc 1 150 20 is_stmt 0 view .LVU37
+ 125 0010 94BF     		ite	ls
+ 126 0012 03F13002 		addls	r2, r3, #48
+ 151:PQCgenKAT_sign.c **** 	else
+ 152:PQCgenKAT_sign.c ****         c[i] = 'A' + i-10;
+ 127              		.loc 1 152 9 is_stmt 1 view .LVU38
+ 128              		.loc 1 152 23 is_stmt 0 view .LVU39
+ 129 0016 03F13702 		addhi	r2, r3, #55
+ 148:PQCgenKAT_sign.c **** 	if (i<10)
+ 130              		.loc 1 148 20 view .LVU40
+ 131 001a 0133     		adds	r3, r3, #1
+ 132              	.LVL8:
+ 133              		.loc 1 152 23 view .LVU41
+ 134 001c D2B2     		uxtb	r2, r2
+ 148:PQCgenKAT_sign.c **** 	if (i<10)
+ 135              		.loc 1 148 5 view .LVU42
+ 136 001e 102B     		cmp	r3, #16
+ 137 0020 01F8012B 		strb	r2, [r1], #1
+ 148:PQCgenKAT_sign.c **** 	if (i<10)
+ 138              		.loc 1 148 19 is_stmt 1 view .LVU43
+ 139              	.LVL9:
+ 148:PQCgenKAT_sign.c **** 	if (i<10)
+ 140              		.loc 1 148 14 view .LVU44
+ 148:PQCgenKAT_sign.c **** 	if (i<10)
+ 141              		.loc 1 148 5 is_stmt 0 view .LVU45
+ 142 0024 F3D1     		bne	.L5
+ 153:PQCgenKAT_sign.c **** 	}
+ 154:PQCgenKAT_sign.c ****     //给消息赋值
+ 155:PQCgenKAT_sign.c ****     //改動1開始，原來只有底下被注釋的一行
+ 156:PQCgenKAT_sign.c ****     char mstr[66] = "35DFB0A4D19D9A123C95D2C3F0201F92D62BAD8254FC32CE3750C64212B6044FDF";
+ 143              		.loc 1 156 5 is_stmt 1 view .LVU46
+ 157:PQCgenKAT_sign.c ****     for(int i=0; i < 66;i++){
+ 144              		.loc 1 157 5 view .LVU47
+ 145              	.LBB2:
+ 146              		.loc 1 157 9 view .LVU48
+ 147              	.LVL10:
+ 148              		.loc 1 157 18 view .LVU49
+ 158:PQCgenKAT_sign.c ****         mstr[i] = p[i];
+ 149              		.loc 1 158 17 is_stmt 0 view .LVU50
+ 150 0026 4222     		movs	r2, #66
+ 151 0028 2946     		mov	r1, r5
+ 152 002a 11A8     		add	r0, sp, #68
+ 153              	.LVL11:
+ 154              		.loc 1 158 17 view .LVU51
+ 155 002c FFF7FEFF 		bl	memcpy
+ 156              	.LVL12:
+ 157              		.loc 1 158 17 view .LVU52
+ 158              	.LBE2:
+ 159              	.LBB3:
+ 159:PQCgenKAT_sign.c ****     }
+ 160:PQCgenKAT_sign.c ****     //改動1結束
+ 161:PQCgenKAT_sign.c **** 
+ 162:PQCgenKAT_sign.c ****    for(int i=0; i < 180;i++){
+ 163:PQCgenKAT_sign.c ****          p[i]=0;
+ 160              		.loc 1 163 14 view .LVU53
+ 161 0030 0021     		movs	r1, #0
+ 162 0032 B422     		movs	r2, #180
+ 163 0034 2846     		mov	r0, r5
+ 164 0036 FFF7FEFF 		bl	memset
+ 165              	.LVL13:
+ 166 003a 08AB     		add	r3, sp, #32
+ 167 003c 11A9     		add	r1, sp, #68
+ 168              	.LBE3:
+ 164:PQCgenKAT_sign.c ****     }
+ 165:PQCgenKAT_sign.c **** 
+ 166:PQCgenKAT_sign.c ****    // for(int i=0; i < 66;i++){
+ 167:PQCgenKAT_sign.c ****    //     p[90+i] = mstr[i];
+ 168:PQCgenKAT_sign.c ****    // }
+ 169:PQCgenKAT_sign.c **** 
+ 170:PQCgenKAT_sign.c ****     //改動2，注釋了以下
+ 171:PQCgenKAT_sign.c ****     for(i=0,j=0;i<66;i++,j++){
+ 169              		.loc 1 171 14 view .LVU54
+ 170 003e 0026     		movs	r6, #0
+ 171 0040 1F46     		mov	r7, r3
+ 172              	.LVL14:
+ 173              	.L6:
+ 172:PQCgenKAT_sign.c **** 	msg[j] = 0;
+ 173:PQCgenKAT_sign.c **** 	for(k=0; c[k] != mstr[i] ;k++);
+ 174              		.loc 1 173 23 view .LVU55
+ 175 0042 0878     		ldrb	r0, [r1]	@ zero_extendqisi2
+ 176 0044 04AA     		add	r2, sp, #16
+ 177              		.loc 1 173 7 view .LVU56
+ 178 0046 0024     		movs	r4, #0
+ 179 0048 00E0     		b	.L11
+ 180              	.LVL15:
+ 181              	.L7:
+ 182              		.loc 1 173 32 is_stmt 1 discriminator 3 view .LVU57
+ 183              		.loc 1 173 28 discriminator 3 view .LVU58
+ 184              		.loc 1 173 29 is_stmt 0 discriminator 3 view .LVU59
+ 185 004a 0134     		adds	r4, r4, #1
+ 186              	.LVL16:
+ 187              	.L11:
+ 188              		.loc 1 173 11 is_stmt 1 discriminator 1 view .LVU60
+ 189              		.loc 1 173 12 is_stmt 0 discriminator 1 view .LVU61
+ 190 004c 12F801CB 		ldrb	ip, [r2], #1	@ zero_extendqisi2
+ 191              		.loc 1 173 2 discriminator 1 view .LVU62
+ 192 0050 8445     		cmp	ip, r0
+ 193 0052 FAD1     		bne	.L7
+ 174:PQCgenKAT_sign.c **** 	msg[j] += k*16;
+ 194              		.loc 1 174 2 is_stmt 1 view .LVU63
+ 195              		.loc 1 174 9 is_stmt 0 view .LVU64
+ 196 0054 2401     		lsls	r4, r4, #4
+ 197              	.LVL17:
+ 175:PQCgenKAT_sign.c **** 	i+=1;
+ 176:PQCgenKAT_sign.c **** 	for(k=0; c[k] != mstr[i] ;k++);
+ 198              		.loc 1 176 23 view .LVU65
+ 199 0056 91F801C0 		ldrb	ip, [r1, #1]	@ zero_extendqisi2
+ 174:PQCgenKAT_sign.c **** 	msg[j] += k*16;
+ 200              		.loc 1 174 9 view .LVU66
+ 201 005a E4B2     		uxtb	r4, r4
+ 175:PQCgenKAT_sign.c **** 	i+=1;
+ 202              		.loc 1 175 2 is_stmt 1 view .LVU67
+ 203              	.LVL18:
+ 204              		.loc 1 176 2 view .LVU68
+ 205              		.loc 1 176 2 is_stmt 0 view .LVU69
+ 206 005c 04A8     		add	r0, sp, #16
+ 207              		.loc 1 176 7 view .LVU70
+ 208 005e 0022     		movs	r2, #0
+ 209              	.LVL19:
+ 210              	.L8:
+ 211              		.loc 1 176 11 is_stmt 1 discriminator 1 view .LVU71
+ 212              		.loc 1 176 12 is_stmt 0 discriminator 1 view .LVU72
+ 213 0060 10F801EB 		ldrb	lr, [r0], #1	@ zero_extendqisi2
+ 214              		.loc 1 176 2 discriminator 1 view .LVU73
+ 215 0064 E645     		cmp	lr, ip
+ 216 0066 32D1     		bne	.L9
+ 177:PQCgenKAT_sign.c **** 	msg[j] += k;
+ 217              		.loc 1 177 2 is_stmt 1 discriminator 2 view .LVU74
+ 171:PQCgenKAT_sign.c **** 	msg[j] = 0;
+ 218              		.loc 1 171 27 is_stmt 0 discriminator 2 view .LVU75
+ 219 0068 0136     		adds	r6, r6, #1
+ 220              	.LVL20:
+ 221              		.loc 1 177 9 discriminator 2 view .LVU76
+ 222 006a 1444     		add	r4, r4, r2
+ 171:PQCgenKAT_sign.c **** 	msg[j] = 0;
+ 223              		.loc 1 171 5 discriminator 2 view .LVU77
+ 224 006c 212E     		cmp	r6, #33
+ 225              		.loc 1 177 9 discriminator 2 view .LVU78
+ 226 006e 03F8014B 		strb	r4, [r3], #1
+ 171:PQCgenKAT_sign.c **** 	msg[j] = 0;
+ 227              		.loc 1 171 22 is_stmt 1 discriminator 2 view .LVU79
+ 228              	.LVL21:
+ 171:PQCgenKAT_sign.c **** 	msg[j] = 0;
+ 229              		.loc 1 171 17 discriminator 2 view .LVU80
+ 171:PQCgenKAT_sign.c **** 	msg[j] = 0;
+ 230              		.loc 1 171 5 is_stmt 0 discriminator 2 view .LVU81
+ 231 0072 01F10201 		add	r1, r1, #2
+ 232              	.LVL22:
+ 171:PQCgenKAT_sign.c **** 	msg[j] = 0;
+ 233              		.loc 1 171 5 discriminator 2 view .LVU82
+ 234 0076 E4D1     		bne	.L6
+ 178:PQCgenKAT_sign.c **** 	}//end for
+ 179:PQCgenKAT_sign.c ****     //改動2結束
+ 180:PQCgenKAT_sign.c **** 
+ 181:PQCgenKAT_sign.c ****     // p[87] = 33;
+ 182:PQCgenKAT_sign.c ****     // p[86] = 33;
+ 183:PQCgenKAT_sign.c ****     
+ 184:PQCgenKAT_sign.c ****     // p[13] = ETA;
+ 185:PQCgenKAT_sign.c ****     m1 = (unsigned char *)calloc(mlen+CRYPTO_BYTES, sizeof(unsigned char));
+ 235              		.loc 1 185 5 is_stmt 1 view .LVU83
+ 186:PQCgenKAT_sign.c ****     sm = (unsigned char *)calloc(mlen+CRYPTO_BYTES, sizeof(unsigned char)); 
+ 236              		.loc 1 186 5 view .LVU84
+ 237              		.loc 1 186 27 is_stmt 0 view .LVU85
+ 238 0078 0121     		movs	r1, #1
+ 239              	.LVL23:
+ 240              		.loc 1 186 27 view .LVU86
+ 241 007a 40F69510 		movw	r0, #2453
+ 242 007e FFF7FEFF 		bl	calloc
+ 243              	.LVL24:
+ 187:PQCgenKAT_sign.c ****     crypto_sign_keypair(pk,sk);
+ 244              		.loc 1 187 5 view .LVU87
+ 245 0082 0DF5B568 		add	r8, sp, #1448
+ 186:PQCgenKAT_sign.c ****     sm = (unsigned char *)calloc(mlen+CRYPTO_BYTES, sizeof(unsigned char)); 
+ 246              		.loc 1 186 27 view .LVU88
+ 247 0086 0446     		mov	r4, r0
+ 248              	.LVL25:
+ 249              		.loc 1 187 5 is_stmt 1 view .LVU89
+ 250 0088 4146     		mov	r1, r8
+ 251 008a 22A8     		add	r0, sp, #136
+ 252              	.LVL26:
+ 253              		.loc 1 187 5 is_stmt 0 view .LVU90
+ 254 008c FFF7FEFF 		bl	crypto_sign_keypair
+ 255              	.LVL27:
+ 188:PQCgenKAT_sign.c ****     //公钥赋值
+ 189:PQCgenKAT_sign.c ****  //    char pkstr[2624] = "1C0EE1111B08003F28E65E8B3BDEB037CF8F221DFCDAF5950EDB38D506D85BEF6177E3DE
+ 190:PQCgenKAT_sign.c **** 
+ 191:PQCgenKAT_sign.c **** 	// for(i=0,j=0; i <2624 ;i++,j++){
+ 192:PQCgenKAT_sign.c **** 	// 	for(k=0;c[k] != pkstr[i]; k++);
+ 193:PQCgenKAT_sign.c **** 	// 	pk[j] += k*16;
+ 194:PQCgenKAT_sign.c **** 	// 	i +=1;
+ 195:PQCgenKAT_sign.c **** 	// 	for(k=0;c[k] != pkstr[i]; k++);
+ 196:PQCgenKAT_sign.c **** 	// 	pk[j] += k;				
+ 197:PQCgenKAT_sign.c **** 	// }
+ 198:PQCgenKAT_sign.c **** 
+ 199:PQCgenKAT_sign.c ****     
+ 200:PQCgenKAT_sign.c ****    //crypto_sign_keypair(pk,sk);
+ 201:PQCgenKAT_sign.c ****     //sk赋值
+ 202:PQCgenKAT_sign.c ****  //    char sksstr[5056] = "1C0EE1111B08003F28E65E8B3BDEB037CF8F221DFCDAF5950EDB38D506D85BEF394D169
+ 203:PQCgenKAT_sign.c **** 
+ 204:PQCgenKAT_sign.c ****     
+ 205:PQCgenKAT_sign.c ****  //    for(i=0,j=0; i<5056 ;i++,j++){
+ 206:PQCgenKAT_sign.c **** 	// 	sk[j] =0;
+ 207:PQCgenKAT_sign.c **** 	// 	for(k=0;c[k] != sksstr[i]; k++);
+ 208:PQCgenKAT_sign.c **** 	// 	sk[j] += k*16;
+ 209:PQCgenKAT_sign.c **** 	// 	i +=1;
+ 210:PQCgenKAT_sign.c **** 	// 	for(k=0;c[k] != sksstr[i]; k++);
+ 211:PQCgenKAT_sign.c **** 	// 	sk[j] += k;
+ 212:PQCgenKAT_sign.c **** 		
+ 213:PQCgenKAT_sign.c **** 	// }
+ 214:PQCgenKAT_sign.c **** 	
+ 215:PQCgenKAT_sign.c **** 
+ 216:PQCgenKAT_sign.c **** 	
+ 217:PQCgenKAT_sign.c **** 
+ 218:PQCgenKAT_sign.c **** 
+ 219:PQCgenKAT_sign.c **** 	//crypto_sign是簽名函數,生成的簽名消息為sm
+ 220:PQCgenKAT_sign.c **** 	
+ 221:PQCgenKAT_sign.c ****     
+ 222:PQCgenKAT_sign.c ****     if ( (ret_val = crypto_sign(sm, &smlen, msg, mlen, sk,p)) != 0) {
+ 256              		.loc 1 222 5 is_stmt 1 view .LVU91
+ 257              		.loc 1 222 21 is_stmt 0 view .LVU92
+ 258 0090 CDE90085 		strd	r8, r5, [sp]
+ 259 0094 3346     		mov	r3, r6
+ 260 0096 3A46     		mov	r2, r7
+ 261 0098 03A9     		add	r1, sp, #12
+ 262 009a 2046     		mov	r0, r4
+ 263 009c FFF7FEFF 		bl	crypto_sign
+ 264              	.LVL28:
+ 265              		.loc 1 222 8 view .LVU93
+ 266 00a0 C0B2     		uxtb	r0, r0
+ 267              		.loc 1 222 8 view .LVU94
+ 268 00a2 38B1     		cbz	r0, .L14
+ 269 00a4 6B1E     		subs	r3, r5, #1
+ 270 00a6 A91D     		adds	r1, r5, #6
+ 271              	.L13:
+ 272              	.LBB4:
+ 223:PQCgenKAT_sign.c ****         //printf("crypto_sign returned <%d>\n", ret_val);
+ 224:PQCgenKAT_sign.c ****         for(int x=0; x <7;x++){
+ 225:PQCgenKAT_sign.c ****             p[x] +=20;
+ 273              		.loc 1 225 13 is_stmt 1 discriminator 3 view .LVU95
+ 274              		.loc 1 225 18 is_stmt 0 discriminator 3 view .LVU96
+ 275 00a8 13F8012F 		ldrb	r2, [r3, #1]!	@ zero_extendqisi2
+ 276 00ac 1432     		adds	r2, r2, #20
+ 224:PQCgenKAT_sign.c ****             p[x] +=20;
+ 277              		.loc 1 224 9 discriminator 3 view .LVU97
+ 278 00ae 9942     		cmp	r1, r3
+ 279              		.loc 1 225 18 discriminator 3 view .LVU98
+ 280 00b0 1A70     		strb	r2, [r3]
+ 224:PQCgenKAT_sign.c ****             p[x] +=20;
+ 281              		.loc 1 224 27 is_stmt 1 discriminator 3 view .LVU99
+ 224:PQCgenKAT_sign.c ****             p[x] +=20;
+ 282              		.loc 1 224 22 discriminator 3 view .LVU100
+ 224:PQCgenKAT_sign.c ****             p[x] +=20;
+ 283              		.loc 1 224 9 is_stmt 0 discriminator 3 view .LVU101
+ 284 00b2 F9D1     		bne	.L13
+ 285              	.L14:
+ 286              	.LBE4:
+ 226:PQCgenKAT_sign.c ****         }
+ 227:PQCgenKAT_sign.c ****     }//end if
+ 228:PQCgenKAT_sign.c **** 	
+ 229:PQCgenKAT_sign.c **** 	
+ 230:PQCgenKAT_sign.c **** 	
+ 231:PQCgenKAT_sign.c **** 	//////////////////////////////////////////////////////////////////////////////////////////////////
+ 232:PQCgenKAT_sign.c **** 	/* char mstr1[66] = "35DFB0A4D19D9A123C95D2C3F0201F92D62BAD8254FC32CE3750C64212B6044FDF";
+ 233:PQCgenKAT_sign.c **** 	for(i=0,j=0;i<66;i++,j++){
+ 234:PQCgenKAT_sign.c **** 	msg1[j] = 0;
+ 235:PQCgenKAT_sign.c **** 	for(k=0; c[k] != mstr1[i] ;k++);
+ 236:PQCgenKAT_sign.c **** 	msg1[j] += k*16;
+ 237:PQCgenKAT_sign.c **** 	i+=1;
+ 238:PQCgenKAT_sign.c **** 	for(k=0; c[k] != mstr1[i] ;k++);
+ 239:PQCgenKAT_sign.c **** 	msg1[j] += k;
+ 240:PQCgenKAT_sign.c **** 	}//end for
+ 241:PQCgenKAT_sign.c **** 	
+ 242:PQCgenKAT_sign.c **** 	
+ 243:PQCgenKAT_sign.c **** 	p[0] = 0;
+ 244:PQCgenKAT_sign.c ****     if ( (ret_val = crypto_sign(sm2, &smlen2, msg1, mlen, sk,p)) != 0) {
+ 245:PQCgenKAT_sign.c ****         //printf("crypto_sign returned <%d>\n", ret_val);
+ 246:PQCgenKAT_sign.c ****         for(int x=0; x <7;x++){
+ 247:PQCgenKAT_sign.c ****             p[x] +=20;
+ 248:PQCgenKAT_sign.c ****         }
+ 249:PQCgenKAT_sign.c ****     }//end if
+ 250:PQCgenKAT_sign.c **** 	p[2] = p[0];
+ 251:PQCgenKAT_sign.c **** 	
+ 252:PQCgenKAT_sign.c **** 	
+ 253:PQCgenKAT_sign.c **** 	uint8_t c1[CTILDEBYTES];
+ 254:PQCgenKAT_sign.c **** 	uint8_t c2[CTILDEBYTES];
+ 255:PQCgenKAT_sign.c **** 	
+ 256:PQCgenKAT_sign.c **** 	polyvecl  z1,z2;
+ 257:PQCgenKAT_sign.c **** 	polyveck h1,h2;
+ 258:PQCgenKAT_sign.c **** 	if(unpack_sig(c1, &z1, &h1, sm))
+ 259:PQCgenKAT_sign.c ****     p[3] =1;  //解包失敗
+ 260:PQCgenKAT_sign.c ****     if(unpack_sig(c2, &z2, &h2, sm))
+ 261:PQCgenKAT_sign.c ****     p[3] =1;
+ 262:PQCgenKAT_sign.c **** 	if(p[2] == 1 && p[1] == 1){
+ 263:PQCgenKAT_sign.c **** 		p[3] = 17;  //符合想法
+ 264:PQCgenKAT_sign.c **** 		for(int ii=0; ii < L;ii++)
+ 265:PQCgenKAT_sign.c **** 			for(int jj=0; jj < 256;jj++)
+ 266:PQCgenKAT_sign.c **** 				if(z1.vec[ii].coeffs[jj] - z2.vec[ii].coeffs[jj] <=0){
+ 267:PQCgenKAT_sign.c **** 					if(z1.vec[ii].coeffs[jj] - z2.vec[ii].coeffs[jj] < -(ETA*TAU))
+ 268:PQCgenKAT_sign.c **** 						P[3] = 16; //bu ok
+ 269:PQCgenKAT_sign.c **** 				}
+ 270:PQCgenKAT_sign.c **** 				else{
+ 271:PQCgenKAT_sign.c **** 					if(z1.vec[ii].coeffs[jj] - z2.vec[ii].coeffs[jj] > (ETA*TAU))
+ 272:PQCgenKAT_sign.c **** 						P[3] = 16;
+ 273:PQCgenKAT_sign.c **** 				}
+ 274:PQCgenKAT_sign.c **** 	}
+ 275:PQCgenKAT_sign.c **** 	else
+ 276:PQCgenKAT_sign.c **** 		p[3] = 7;  *///迭代次數不一致
+ 277:PQCgenKAT_sign.c **** 	//////////////////////////////////////////////////////////////////////////////////////////////////
+ 278:PQCgenKAT_sign.c **** 	
+ 279:PQCgenKAT_sign.c **** 	
+ 280:PQCgenKAT_sign.c ****     
+ 281:PQCgenKAT_sign.c **** 
+ 282:PQCgenKAT_sign.c ****    // for(int i=0; i < 2453 ;i++){
+ 283:PQCgenKAT_sign.c ****    //      buf_sm1[i] = sm[i];
+ 284:PQCgenKAT_sign.c ****    //      // if(i>=2340){
+ 285:PQCgenKAT_sign.c ****    //      //     p[j++] = sig[i];
+ 286:PQCgenKAT_sign.c ****    //      // }
+ 287:PQCgenKAT_sign.c ****    //  }
+ 288:PQCgenKAT_sign.c ****     
+ 289:PQCgenKAT_sign.c **** 
+ 290:PQCgenKAT_sign.c ****     // for(int )
+ 291:PQCgenKAT_sign.c ****     
+ 292:PQCgenKAT_sign.c **** 
+ 293:PQCgenKAT_sign.c ****  //    unsigned char signmess[4906] ="AF5920774603D20E98A79AA3ABFA32B6E22519E673E37AC4AC73FE85341E2
+ 294:PQCgenKAT_sign.c **** 
+ 295:PQCgenKAT_sign.c **** 
+ 296:PQCgenKAT_sign.c **** 
+ 297:PQCgenKAT_sign.c **** 
+ 298:PQCgenKAT_sign.c **** 	// for(i=0,j=0; i < 4906 ;i++,j++){
+ 299:PQCgenKAT_sign.c **** 	// 	sm[j] =0;
+ 300:PQCgenKAT_sign.c **** 	// 	for(k=0;c[k] != signmess[i]; k++);
+ 301:PQCgenKAT_sign.c **** 	// 	sm[j] += k*16;
+ 302:PQCgenKAT_sign.c **** 	// 	i +=1;
+ 303:PQCgenKAT_sign.c **** 	// 	for(k=0;c[k] != signmess[i]; k++);
+ 304:PQCgenKAT_sign.c **** 	// 	sm[j] += k;		
+ 305:PQCgenKAT_sign.c **** 	// }
+ 306:PQCgenKAT_sign.c **** 
+ 307:PQCgenKAT_sign.c ****        
+ 308:PQCgenKAT_sign.c **** 
+ 309:PQCgenKAT_sign.c ****         
+ 310:PQCgenKAT_sign.c **** 	//函數crypto_sign_open用於驗證簽名，如果簽名成功返回0，簽名驗證失敗返回-
+ 311:PQCgenKAT_sign.c ****         // ret_val = crypto_sign_open(msg, &mlen1, sm, smlen, pk);
+ 312:PQCgenKAT_sign.c ****         // simpleserial_put('r', 1, ret_val);
+ 313:PQCgenKAT_sign.c ****     /* if ((ret_val =  crypto_sign_open(m1, &mlen1, sm, smlen, pk)) != 0) {
+ 314:PQCgenKAT_sign.c ****         //printf("crypto_sign_open returned <%d>\n", ret_val);
+ 315:PQCgenKAT_sign.c ****         for(int x=0; x <10;x++){
+ 316:PQCgenKAT_sign.c ****             p[x] +=2;
+ 317:PQCgenKAT_sign.c ****             //p[x] += *virab;
+ 318:PQCgenKAT_sign.c ****         }
+ 319:PQCgenKAT_sign.c ****         p[31] = ret_val;
+ 320:PQCgenKAT_sign.c ****     }
+ 321:PQCgenKAT_sign.c **** 
+ 322:PQCgenKAT_sign.c ****    
+ 323:PQCgenKAT_sign.c ****     if ( mlen != mlen1 ) {
+ 324:PQCgenKAT_sign.c ****         printf("crypto_sign_open returned bad 'mlen': Got <%llu>, expected <%llu>\n", mlen1, mlen);
+ 325:PQCgenKAT_sign.c ****         for(int x=0; x <10;x++){
+ 326:PQCgenKAT_sign.c ****            p[x] +=3;
+ 327:PQCgenKAT_sign.c ****         }
+ 328:PQCgenKAT_sign.c ****     }
+ 329:PQCgenKAT_sign.c ****         
+ 330:PQCgenKAT_sign.c ****     if ( memcmp(msg, m1, mlen) ) {
+ 331:PQCgenKAT_sign.c ****         printf("crypto_sign_open returned bad 'm' value\n");
+ 332:PQCgenKAT_sign.c ****         for(int x=0; x <10;x++){
+ 333:PQCgenKAT_sign.c ****             p[x] +=5;
+ 334:PQCgenKAT_sign.c ****         }
+ 335:PQCgenKAT_sign.c ****     } */
+ 336:PQCgenKAT_sign.c ****     
+ 337:PQCgenKAT_sign.c ****         // for(int c=0; c < 66 ;c++){
+ 338:PQCgenKAT_sign.c ****         //     p[c] = mstr[c];
+ 339:PQCgenKAT_sign.c ****         // }
+ 340:PQCgenKAT_sign.c ****     // for(int x=0; x <16;x++){
+ 341:PQCgenKAT_sign.c ****     //         p[x] +=1;
+ 342:PQCgenKAT_sign.c ****     //     }
+ 343:PQCgenKAT_sign.c ****         // p[25] = DILITHIUM_MODE;
+ 344:PQCgenKAT_sign.c ****     
+ 345:PQCgenKAT_sign.c ****         free(m1);
+ 287              		.loc 1 345 9 is_stmt 1 view .LVU102
+ 346:PQCgenKAT_sign.c ****         // free(sm);
+ 347:PQCgenKAT_sign.c ****         free(m);
+ 288              		.loc 1 347 9 view .LVU103
+ 289 00b4 0020     		movs	r0, #0
+ 290              	.LVL29:
+ 291              		.loc 1 347 9 is_stmt 0 view .LVU104
+ 292 00b6 FFF7FEFF 		bl	free
+ 293              	.LVL30:
+ 348:PQCgenKAT_sign.c ****     simpleserial_put('r', 180, p);
+ 294              		.loc 1 348 5 is_stmt 1 view .LVU105
+ 295 00ba 2A46     		mov	r2, r5
+ 296 00bc B421     		movs	r1, #180
+ 297 00be 7220     		movs	r0, #114
+ 298 00c0 FFF7FEFF 		bl	simpleserial_put
+ 299              	.LVL31:
+ 349:PQCgenKAT_sign.c ****    return 0x00;
+ 300              		.loc 1 349 4 view .LVU106
+ 350:PQCgenKAT_sign.c **** }
+ 301              		.loc 1 350 1 is_stmt 0 view .LVU107
+ 302 00c4 0020     		movs	r0, #0
+ 303 00c6 0DF6A87D 		addw	sp, sp, #4008
+ 304              	.LCFI3:
+ 305              		.cfi_remember_state
+ 306              		.cfi_def_cfa_offset 24
+ 307              		@ sp needed
+ 308 00ca BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 309              	.LVL32:
+ 310              	.L9:
+ 311              	.LCFI4:
+ 312              		.cfi_restore_state
+ 176:PQCgenKAT_sign.c **** 	msg[j] += k;
+ 313              		.loc 1 176 32 is_stmt 1 discriminator 3 view .LVU108
+ 176:PQCgenKAT_sign.c **** 	msg[j] += k;
+ 314              		.loc 1 176 28 discriminator 3 view .LVU109
+ 176:PQCgenKAT_sign.c **** 	msg[j] += k;
+ 315              		.loc 1 176 29 is_stmt 0 discriminator 3 view .LVU110
+ 316 00ce 0132     		adds	r2, r2, #1
+ 317              	.LVL33:
+ 176:PQCgenKAT_sign.c **** 	msg[j] += k;
+ 318              		.loc 1 176 29 discriminator 3 view .LVU111
+ 319 00d0 C6E7     		b	.L8
+ 320              		.cfi_endproc
+ 321              	.LFE5:
+ 323              		.section	.text.enc_password1,"ax",%progbits
+ 324              		.align	1
+ 325              		.global	enc_password1
+ 326              		.syntax unified
+ 327              		.thumb
+ 328              		.thumb_func
+ 329              		.fpu softvfp
+ 331              	enc_password1:
+ 332              	.LVL34:
+ 333              	.LFB4:
+  95:PQCgenKAT_sign.c ****     p[0] = 17;
+ 334              		.loc 1 95 74 is_stmt 1 view -0
+ 335              		.cfi_startproc
+ 336              		@ args = 0, pretend = 0, frame = 208
+ 337              		@ frame_needed = 0, uses_anonymous_args = 0
+  96:PQCgenKAT_sign.c ****     char c[16];
+ 338              		.loc 1 96 5 view .LVU113
+  95:PQCgenKAT_sign.c ****     p[0] = 17;
+ 339              		.loc 1 95 74 is_stmt 0 view .LVU114
+ 340 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 341              	.LCFI5:
+ 342              		.cfi_def_cfa_offset 20
+ 343              		.cfi_offset 4, -20
+ 344              		.cfi_offset 5, -16
+ 345              		.cfi_offset 6, -12
+ 346              		.cfi_offset 7, -8
+ 347              		.cfi_offset 14, -4
+ 348 0002 1E46     		mov	r6, r3
+ 349 0004 B5B0     		sub	sp, sp, #212
+ 350              	.LCFI6:
+ 351              		.cfi_def_cfa_offset 232
+  96:PQCgenKAT_sign.c ****     char c[16];
+ 352              		.loc 1 96 10 view .LVU115
+ 353 0006 1123     		movs	r3, #17
+ 354              	.LVL35:
+  96:PQCgenKAT_sign.c ****     char c[16];
+ 355              		.loc 1 96 10 view .LVU116
+ 356 0008 3370     		strb	r3, [r6]
+  97:PQCgenKAT_sign.c ****    	unsigned int i=0;
+ 357              		.loc 1 97 5 is_stmt 1 view .LVU117
+  98:PQCgenKAT_sign.c **** 	unsigned int j=0,k=0;
+ 358              		.loc 1 98 5 view .LVU118
+ 359              	.LVL36:
+  99:PQCgenKAT_sign.c **** 	char seedstr[128];
+ 360              		.loc 1 99 2 view .LVU119
+ 100:PQCgenKAT_sign.c **** 	char seed[64];
+ 361              		.loc 1 100 2 view .LVU120
+ 101:PQCgenKAT_sign.c ****     for	(i=0;i<16;i++){
+ 362              		.loc 1 101 2 view .LVU121
+ 102:PQCgenKAT_sign.c **** 	if (i<10)
+ 363              		.loc 1 102 5 view .LVU122
+ 102:PQCgenKAT_sign.c **** 	if (i<10)
+ 364              		.loc 1 102 14 view .LVU123
+  96:PQCgenKAT_sign.c ****     char c[16];
+ 365              		.loc 1 96 10 is_stmt 0 view .LVU124
+ 366 000a 6946     		mov	r1, sp
+ 367              	.LVL37:
+ 102:PQCgenKAT_sign.c **** 	if (i<10)
+ 368              		.loc 1 102 11 view .LVU125
+ 369 000c 0023     		movs	r3, #0
+ 370              	.LVL38:
+ 371              	.L22:
+ 103:PQCgenKAT_sign.c ****         c[i] = '0' +i;
+ 372              		.loc 1 103 2 is_stmt 1 view .LVU126
+ 103:PQCgenKAT_sign.c ****         c[i] = '0' +i;
+ 373              		.loc 1 103 5 is_stmt 0 view .LVU127
+ 374 000e 092B     		cmp	r3, #9
+ 104:PQCgenKAT_sign.c **** 	else
+ 375              		.loc 1 104 9 is_stmt 1 view .LVU128
+ 104:PQCgenKAT_sign.c **** 	else
+ 376              		.loc 1 104 20 is_stmt 0 view .LVU129
+ 377 0010 94BF     		ite	ls
+ 378 0012 03F13002 		addls	r2, r3, #48
+ 106:PQCgenKAT_sign.c **** 	}
+ 379              		.loc 1 106 9 is_stmt 1 view .LVU130
+ 106:PQCgenKAT_sign.c **** 	}
+ 380              		.loc 1 106 23 is_stmt 0 view .LVU131
+ 381 0016 03F13702 		addhi	r2, r3, #55
+ 102:PQCgenKAT_sign.c **** 	if (i<10)
+ 382              		.loc 1 102 20 view .LVU132
+ 383 001a 0133     		adds	r3, r3, #1
+ 384              	.LVL39:
+ 106:PQCgenKAT_sign.c **** 	}
+ 385              		.loc 1 106 23 view .LVU133
+ 386 001c D2B2     		uxtb	r2, r2
+ 102:PQCgenKAT_sign.c **** 	if (i<10)
+ 387              		.loc 1 102 5 view .LVU134
+ 388 001e 102B     		cmp	r3, #16
+ 389 0020 01F8012B 		strb	r2, [r1], #1
+ 102:PQCgenKAT_sign.c **** 	if (i<10)
+ 390              		.loc 1 102 19 is_stmt 1 view .LVU135
+ 391              	.LVL40:
+ 102:PQCgenKAT_sign.c **** 	if (i<10)
+ 392              		.loc 1 102 14 view .LVU136
+ 102:PQCgenKAT_sign.c **** 	if (i<10)
+ 393              		.loc 1 102 5 is_stmt 0 view .LVU137
+ 394 0024 F3D1     		bne	.L22
+ 395              	.LBB5:
+ 109:PQCgenKAT_sign.c ****     }
+ 396              		.loc 1 109 20 view .LVU138
+ 397 0026 8022     		movs	r2, #128
+ 398 0028 3146     		mov	r1, r6
+ 399 002a 14A8     		add	r0, sp, #80
+ 400              	.LVL41:
+ 109:PQCgenKAT_sign.c ****     }
+ 401              		.loc 1 109 20 view .LVU139
+ 402 002c FFF7FEFF 		bl	memcpy
+ 403              	.LVL42:
+ 109:PQCgenKAT_sign.c ****     }
+ 404              		.loc 1 109 20 view .LVU140
+ 405 0030 04AB     		add	r3, sp, #16
+ 406 0032 14AD     		add	r5, sp, #80
+ 407              	.LBE5:
+ 113:PQCgenKAT_sign.c **** 	seed[j] = 0;
+ 408              		.loc 1 113 11 view .LVU141
+ 409 0034 0022     		movs	r2, #0
+ 410 0036 1946     		mov	r1, r3
+ 411              	.LVL43:
+ 412              	.L23:
+ 115:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 413              		.loc 1 115 26 view .LVU142
+ 414 0038 2F78     		ldrb	r7, [r5]	@ zero_extendqisi2
+ 415 003a 6846     		mov	r0, sp
+ 115:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 416              		.loc 1 115 7 view .LVU143
+ 417 003c 0024     		movs	r4, #0
+ 418 003e 00E0     		b	.L28
+ 419              	.LVL44:
+ 420              	.L24:
+ 115:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 421              		.loc 1 115 35 is_stmt 1 discriminator 3 view .LVU144
+ 115:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 422              		.loc 1 115 31 discriminator 3 view .LVU145
+ 115:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 423              		.loc 1 115 32 is_stmt 0 discriminator 3 view .LVU146
+ 424 0040 0134     		adds	r4, r4, #1
+ 425              	.LVL45:
+ 426              	.L28:
+ 115:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 427              		.loc 1 115 11 is_stmt 1 discriminator 1 view .LVU147
+ 115:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 428              		.loc 1 115 12 is_stmt 0 discriminator 1 view .LVU148
+ 429 0042 10F801CB 		ldrb	ip, [r0], #1	@ zero_extendqisi2
+ 115:PQCgenKAT_sign.c **** 	seed[j] += k*16;
+ 430              		.loc 1 115 2 discriminator 1 view .LVU149
+ 431 0046 BC45     		cmp	ip, r7
+ 432 0048 FAD1     		bne	.L24
+ 116:PQCgenKAT_sign.c **** 	i+=1;
+ 433              		.loc 1 116 2 is_stmt 1 view .LVU150
+ 116:PQCgenKAT_sign.c **** 	i+=1;
+ 434              		.loc 1 116 10 is_stmt 0 view .LVU151
+ 435 004a 2401     		lsls	r4, r4, #4
+ 436              	.LVL46:
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 437              		.loc 1 118 26 view .LVU152
+ 438 004c 95F801C0 		ldrb	ip, [r5, #1]	@ zero_extendqisi2
+ 116:PQCgenKAT_sign.c **** 	i+=1;
+ 439              		.loc 1 116 10 view .LVU153
+ 440 0050 E4B2     		uxtb	r4, r4
+ 117:PQCgenKAT_sign.c **** 	for(k=0; c[k] != seedstr[i] ;k++);
+ 441              		.loc 1 117 2 is_stmt 1 view .LVU154
+ 442              	.LVL47:
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 443              		.loc 1 118 2 view .LVU155
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 444              		.loc 1 118 2 is_stmt 0 view .LVU156
+ 445 0052 6F46     		mov	r7, sp
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 446              		.loc 1 118 7 view .LVU157
+ 447 0054 0020     		movs	r0, #0
+ 448              	.LVL48:
+ 449              	.L25:
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 450              		.loc 1 118 11 is_stmt 1 discriminator 1 view .LVU158
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 451              		.loc 1 118 12 is_stmt 0 discriminator 1 view .LVU159
+ 452 0056 17F801EB 		ldrb	lr, [r7], #1	@ zero_extendqisi2
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 453              		.loc 1 118 2 discriminator 1 view .LVU160
+ 454 005a E645     		cmp	lr, ip
+ 455 005c 12D1     		bne	.L26
+ 119:PQCgenKAT_sign.c **** 	} 
+ 456              		.loc 1 119 2 is_stmt 1 discriminator 2 view .LVU161
+ 113:PQCgenKAT_sign.c **** 	seed[j] = 0;
+ 457              		.loc 1 113 25 is_stmt 0 discriminator 2 view .LVU162
+ 458 005e 0132     		adds	r2, r2, #1
+ 459              	.LVL49:
+ 119:PQCgenKAT_sign.c **** 	} 
+ 460              		.loc 1 119 10 discriminator 2 view .LVU163
+ 461 0060 0444     		add	r4, r4, r0
+ 113:PQCgenKAT_sign.c **** 	seed[j] = 0;
+ 462              		.loc 1 113 2 discriminator 2 view .LVU164
+ 463 0062 402A     		cmp	r2, #64
+ 119:PQCgenKAT_sign.c **** 	} 
+ 464              		.loc 1 119 10 discriminator 2 view .LVU165
+ 465 0064 03F8014B 		strb	r4, [r3], #1
+ 113:PQCgenKAT_sign.c **** 	seed[j] = 0;
+ 466              		.loc 1 113 20 is_stmt 1 discriminator 2 view .LVU166
+ 467              	.LVL50:
+ 113:PQCgenKAT_sign.c **** 	seed[j] = 0;
+ 468              		.loc 1 113 14 discriminator 2 view .LVU167
+ 113:PQCgenKAT_sign.c **** 	seed[j] = 0;
+ 469              		.loc 1 113 2 is_stmt 0 discriminator 2 view .LVU168
+ 470 0068 05F10205 		add	r5, r5, #2
+ 471              	.LVL51:
+ 113:PQCgenKAT_sign.c **** 	seed[j] = 0;
+ 472              		.loc 1 113 2 discriminator 2 view .LVU169
+ 473 006c E4D1     		bne	.L23
+ 122:PQCgenKAT_sign.c ****    simpleserial_put('r', 136, p);
+ 474              		.loc 1 122 4 is_stmt 1 view .LVU170
+ 475 006e 3046     		mov	r0, r6
+ 476              	.LVL52:
+ 122:PQCgenKAT_sign.c ****    simpleserial_put('r', 136, p);
+ 477              		.loc 1 122 4 is_stmt 0 view .LVU171
+ 478 0070 FFF7FEFF 		bl	test_fun3
+ 479              	.LVL53:
+ 123:PQCgenKAT_sign.c ****    return 0x00;
+ 480              		.loc 1 123 4 is_stmt 1 view .LVU172
+ 481 0074 3246     		mov	r2, r6
+ 482 0076 8821     		movs	r1, #136
+ 483 0078 7220     		movs	r0, #114
+ 484 007a FFF7FEFF 		bl	simpleserial_put
+ 485              	.LVL54:
+ 124:PQCgenKAT_sign.c **** }
+ 486              		.loc 1 124 4 view .LVU173
+ 125:PQCgenKAT_sign.c **** 
+ 487              		.loc 1 125 1 is_stmt 0 view .LVU174
+ 488 007e 0020     		movs	r0, #0
+ 489 0080 35B0     		add	sp, sp, #212
+ 490              	.LCFI7:
+ 491              		.cfi_remember_state
+ 492              		.cfi_def_cfa_offset 20
+ 493              		@ sp needed
+ 494 0082 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 495              	.LVL55:
+ 496              	.L26:
+ 497              	.LCFI8:
+ 498              		.cfi_restore_state
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 499              		.loc 1 118 35 is_stmt 1 discriminator 3 view .LVU175
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 500              		.loc 1 118 31 discriminator 3 view .LVU176
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 501              		.loc 1 118 32 is_stmt 0 discriminator 3 view .LVU177
+ 502 0084 0130     		adds	r0, r0, #1
+ 503              	.LVL56:
+ 118:PQCgenKAT_sign.c **** 	seed[j] += k;
+ 504              		.loc 1 118 32 discriminator 3 view .LVU178
+ 505 0086 E6E7     		b	.L25
+ 506              		.cfi_endproc
+ 507              	.LFE4:
+ 509              		.section	.text.startup.main,"ax",%progbits
+ 510              		.align	1
+ 511              		.global	main
+ 512              		.syntax unified
+ 513              		.thumb
+ 514              		.thumb_func
+ 515              		.fpu softvfp
+ 517              	main:
+ 518              	.LFB6:
+ 351:PQCgenKAT_sign.c **** 
+ 352:PQCgenKAT_sign.c **** //
+ 353:PQCgenKAT_sign.c **** // ALLOW TO READ HEXADECIMAL ENTRY (KEYS, DATA, TEXT, etc.)
+ 354:PQCgenKAT_sign.c **** //
+ 355:PQCgenKAT_sign.c **** //注釋2
+ 356:PQCgenKAT_sign.c **** /*
+ 357:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_1(uint8_t *p, uint8_t len)
+ 358:PQCgenKAT_sign.c **** {
+ 359:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1);
+ 360:PQCgenKAT_sign.c ****      return 0x00;
+ 361:PQCgenKAT_sign.c **** }
+ 362:PQCgenKAT_sign.c **** 
+ 363:PQCgenKAT_sign.c **** 
+ 364:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_2(uint8_t *p, uint8_t len)
+ 365:PQCgenKAT_sign.c **** {
+ 366:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+180);
+ 367:PQCgenKAT_sign.c ****      return 0x00;
+ 368:PQCgenKAT_sign.c **** }
+ 369:PQCgenKAT_sign.c **** 
+ 370:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_3(uint8_t *p, uint8_t len)
+ 371:PQCgenKAT_sign.c **** {
+ 372:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+2*180);
+ 373:PQCgenKAT_sign.c ****      return 0x00;
+ 374:PQCgenKAT_sign.c **** }
+ 375:PQCgenKAT_sign.c **** 
+ 376:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_4(uint8_t *p, uint8_t len)
+ 377:PQCgenKAT_sign.c **** {
+ 378:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+3*180);
+ 379:PQCgenKAT_sign.c ****      return 0x00;
+ 380:PQCgenKAT_sign.c **** }
+ 381:PQCgenKAT_sign.c **** 
+ 382:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_5(uint8_t *p, uint8_t len)
+ 383:PQCgenKAT_sign.c **** {
+ 384:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+4*180);
+ 385:PQCgenKAT_sign.c ****      return 0x00;
+ 386:PQCgenKAT_sign.c **** }
+ 387:PQCgenKAT_sign.c **** 
+ 388:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_6(uint8_t *p, uint8_t len)
+ 389:PQCgenKAT_sign.c **** {
+ 390:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+5*180);
+ 391:PQCgenKAT_sign.c ****      return 0x00;
+ 392:PQCgenKAT_sign.c **** }
+ 393:PQCgenKAT_sign.c **** 
+ 394:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_7(uint8_t *p, uint8_t len)
+ 395:PQCgenKAT_sign.c **** {
+ 396:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+6*180);
+ 397:PQCgenKAT_sign.c ****      return 0x00;
+ 398:PQCgenKAT_sign.c **** }
+ 399:PQCgenKAT_sign.c **** 
+ 400:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_8(uint8_t *p, uint8_t len)
+ 401:PQCgenKAT_sign.c **** {
+ 402:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+7*180);
+ 403:PQCgenKAT_sign.c ****      return 0x00;
+ 404:PQCgenKAT_sign.c **** }
+ 405:PQCgenKAT_sign.c **** 
+ 406:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_9(uint8_t *p, uint8_t len)
+ 407:PQCgenKAT_sign.c **** {
+ 408:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+8*180);
+ 409:PQCgenKAT_sign.c ****      return 0x00;
+ 410:PQCgenKAT_sign.c **** }
+ 411:PQCgenKAT_sign.c **** 
+ 412:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_10(uint8_t *p, uint8_t len)
+ 413:PQCgenKAT_sign.c **** {
+ 414:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+9*180);
+ 415:PQCgenKAT_sign.c ****      return 0x00;
+ 416:PQCgenKAT_sign.c **** }
+ 417:PQCgenKAT_sign.c **** 
+ 418:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_11(uint8_t *p, uint8_t len)
+ 419:PQCgenKAT_sign.c **** {
+ 420:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+10*180);
+ 421:PQCgenKAT_sign.c ****      return 0x00;
+ 422:PQCgenKAT_sign.c **** }
+ 423:PQCgenKAT_sign.c **** 
+ 424:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_12(uint8_t *p, uint8_t len)
+ 425:PQCgenKAT_sign.c **** {
+ 426:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+11*180);
+ 427:PQCgenKAT_sign.c ****      return 0x00;
+ 428:PQCgenKAT_sign.c **** }
+ 429:PQCgenKAT_sign.c **** 
+ 430:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_13(uint8_t *p, uint8_t len)
+ 431:PQCgenKAT_sign.c **** {
+ 432:PQCgenKAT_sign.c ****      simpleserial_put('r', 180, buf_sm1+12*180);
+ 433:PQCgenKAT_sign.c ****      return 0x00;
+ 434:PQCgenKAT_sign.c **** }
+ 435:PQCgenKAT_sign.c **** 
+ 436:PQCgenKAT_sign.c **** uint8_t smbuf_chunk_14(uint8_t *p, uint8_t len)
+ 437:PQCgenKAT_sign.c **** {
+ 438:PQCgenKAT_sign.c ****      simpleserial_put('r', 113, buf_sm1+13*180);
+ 439:PQCgenKAT_sign.c ****      return 0x00;
+ 440:PQCgenKAT_sign.c **** }
+ 441:PQCgenKAT_sign.c **** 
+ 442:PQCgenKAT_sign.c **** // uint8_t test_chunk_6(uint8_t *p, uint8_t len)
+ 443:PQCgenKAT_sign.c **** // {
+ 444:PQCgenKAT_sign.c **** //      simpleserial_put('r',20, array);
+ 445:PQCgenKAT_sign.c **** //      return 0x00;
+ 446:PQCgenKAT_sign.c **** // }
+ 447:PQCgenKAT_sign.c **** 注釋2結束*/
+ 448:PQCgenKAT_sign.c **** int main(void){
+ 519              		.loc 1 448 15 is_stmt 1 view -0
+ 520              		.cfi_startproc
+ 521              		@ Volatile: function does not return.
+ 522              		@ args = 0, pretend = 0, frame = 0
+ 523              		@ frame_needed = 0, uses_anonymous_args = 0
+ 449:PQCgenKAT_sign.c **** 
+ 450:PQCgenKAT_sign.c ****     platform_init();
+ 524              		.loc 1 450 5 view .LVU180
+ 448:PQCgenKAT_sign.c **** 
+ 525              		.loc 1 448 15 is_stmt 0 view .LVU181
+ 526 0000 08B5     		push	{r3, lr}
+ 527              	.LCFI9:
+ 528              		.cfi_def_cfa_offset 8
+ 529              		.cfi_offset 3, -8
+ 530              		.cfi_offset 14, -4
+ 531              		.loc 1 450 5 view .LVU182
+ 532 0002 FFF7FEFF 		bl	platform_init
+ 533              	.LVL57:
+ 451:PQCgenKAT_sign.c ****     init_uart();
+ 534              		.loc 1 451 5 is_stmt 1 view .LVU183
+ 535 0006 FFF7FEFF 		bl	init_uart
+ 536              	.LVL58:
+ 452:PQCgenKAT_sign.c **** 
+ 453:PQCgenKAT_sign.c ****     trigger_setup();
+ 537              		.loc 1 453 5 view .LVU184
+ 538 000a FFF7FEFF 		bl	trigger_setup
+ 539              	.LVL59:
+ 454:PQCgenKAT_sign.c ****     
+ 455:PQCgenKAT_sign.c ****     /* Device reset detected */
+ 456:PQCgenKAT_sign.c ****     putch('r');
+ 540              		.loc 1 456 5 view .LVU185
+ 541 000e 7220     		movs	r0, #114
+ 542 0010 FFF7FEFF 		bl	putch
+ 543              	.LVL60:
+ 457:PQCgenKAT_sign.c ****     putch('R');
+ 544              		.loc 1 457 5 view .LVU186
+ 545 0014 5220     		movs	r0, #82
+ 546 0016 FFF7FEFF 		bl	putch
+ 547              	.LVL61:
+ 458:PQCgenKAT_sign.c ****     putch('E');
+ 548              		.loc 1 458 5 view .LVU187
+ 549 001a 4520     		movs	r0, #69
+ 550 001c FFF7FEFF 		bl	putch
+ 551              	.LVL62:
+ 459:PQCgenKAT_sign.c ****     putch('S');
+ 552              		.loc 1 459 5 view .LVU188
+ 553 0020 5320     		movs	r0, #83
+ 554 0022 FFF7FEFF 		bl	putch
+ 555              	.LVL63:
+ 460:PQCgenKAT_sign.c ****     putch('E');
+ 556              		.loc 1 460 5 view .LVU189
+ 557 0026 4520     		movs	r0, #69
+ 558 0028 FFF7FEFF 		bl	putch
+ 559              	.LVL64:
+ 461:PQCgenKAT_sign.c ****     putch('T');
+ 560              		.loc 1 461 5 view .LVU190
+ 561 002c 5420     		movs	r0, #84
+ 562 002e FFF7FEFF 		bl	putch
+ 563              	.LVL65:
+ 462:PQCgenKAT_sign.c ****     putch(' ');
+ 564              		.loc 1 462 5 view .LVU191
+ 565 0032 2020     		movs	r0, #32
+ 566 0034 FFF7FEFF 		bl	putch
+ 567              	.LVL66:
+ 463:PQCgenKAT_sign.c ****     putch(' ');
+ 568              		.loc 1 463 5 view .LVU192
+ 569 0038 2020     		movs	r0, #32
+ 570 003a FFF7FEFF 		bl	putch
+ 571              	.LVL67:
+ 464:PQCgenKAT_sign.c ****     putch(' ');
+ 572              		.loc 1 464 5 view .LVU193
+ 573 003e 2020     		movs	r0, #32
+ 574 0040 FFF7FEFF 		bl	putch
+ 575              	.LVL68:
+ 465:PQCgenKAT_sign.c ****     putch('\n');
+ 576              		.loc 1 465 5 view .LVU194
+ 577 0044 0A20     		movs	r0, #10
+ 578 0046 FFF7FEFF 		bl	putch
+ 579              	.LVL69:
+ 466:PQCgenKAT_sign.c ****     
+ 467:PQCgenKAT_sign.c ****     simpleserial_init();
+ 580              		.loc 1 467 5 view .LVU195
+ 581 004a FFF7FEFF 		bl	simpleserial_init
+ 582              	.LVL70:
+ 468:PQCgenKAT_sign.c ****     simpleserial_addcmd('A', 136, enc_password);
+ 583              		.loc 1 468 5 view .LVU196
+ 584 004e 064A     		ldr	r2, .L33
+ 585 0050 8821     		movs	r1, #136
+ 586 0052 4120     		movs	r0, #65
+ 587 0054 FFF7FEFF 		bl	simpleserial_addcmd
+ 588              	.LVL71:
+ 469:PQCgenKAT_sign.c ****     
+ 470:PQCgenKAT_sign.c ****     simpleserial_addcmd('3', 180, dilithium1);
+ 589              		.loc 1 470 5 view .LVU197
+ 590 0058 044A     		ldr	r2, .L33+4
+ 591 005a B421     		movs	r1, #180
+ 592 005c 3320     		movs	r0, #51
+ 593 005e FFF7FEFF 		bl	simpleserial_addcmd
+ 594              	.LVL72:
+ 595              	.L32:
+ 471:PQCgenKAT_sign.c **** 
+ 472:PQCgenKAT_sign.c ****     
+ 473:PQCgenKAT_sign.c ****     
+ 474:PQCgenKAT_sign.c **** 
+ 475:PQCgenKAT_sign.c ****     //挑战多项式c的通讯函数
+ 476:PQCgenKAT_sign.c ****     //注釋3
+ 477:PQCgenKAT_sign.c ****     /*
+ 478:PQCgenKAT_sign.c ****     simpleserial_addcmd('1',0,cpbuf_chunk_1);
+ 479:PQCgenKAT_sign.c ****     simpleserial_addcmd('2',0,cpbuf_chunk_2);
+ 480:PQCgenKAT_sign.c ****     // simpleserial_addcmd('7',0,smbuf_chunk_15);
+ 481:PQCgenKAT_sign.c **** 
+ 482:PQCgenKAT_sign.c **** 
+ 483:PQCgenKAT_sign.c ****     simpleserial_addcmd('z',0,test_chunk_6);
+ 484:PQCgenKAT_sign.c **** 
+ 485:PQCgenKAT_sign.c ****      //新版_雙重_選擇_函數
+ 486:PQCgenKAT_sign.c **** 
+ 487:PQCgenKAT_sign.c ****     
+ 488:PQCgenKAT_sign.c ****     // simpleserial_addcmd('A',1,smbuf_z3buf_chunk_1);
+ 489:PQCgenKAT_sign.c ****     // simpleserial_addcmd('B',1,smbuf_z3buf_chunk_2);
+ 490:PQCgenKAT_sign.c ****     // simpleserial_addcmd('C',1,smbuf_z3buf_chunk_3);
+ 491:PQCgenKAT_sign.c ****     // simpleserial_addcmd('D',1,smbuf_z3buf_chunk_4);
+ 492:PQCgenKAT_sign.c ****     // simpleserial_addcmd('E',1,smbuf_z3buf_chunk_5);
+ 493:PQCgenKAT_sign.c ****     // simpleserial_addcmd('F',1,smbuf_z3buf_chunk_6);
+ 494:PQCgenKAT_sign.c ****     // simpleserial_addcmd('G',1,smbuf_z3buf_chunk_7);
+ 495:PQCgenKAT_sign.c ****     // simpleserial_addcmd('H',1,smbuf_z4buf_chunk_8);
+ 496:PQCgenKAT_sign.c ****     // simpleserial_addcmd('I',1,smbuf_z4buf_chunk_9);
+ 497:PQCgenKAT_sign.c ****     // simpleserial_addcmd('J',1,smbuf_z4buf_chunk_10);
+ 498:PQCgenKAT_sign.c ****     // simpleserial_addcmd('K',1,smbuf_z4buf_chunk_11);
+ 499:PQCgenKAT_sign.c ****     // simpleserial_addcmd('L',1,smbuf_z4buf_chunk_12);
+ 500:PQCgenKAT_sign.c ****     // simpleserial_addcmd('M',1,smbuf_z4buf_chunk_13);
+ 501:PQCgenKAT_sign.c ****     // simpleserial_addcmd('N',1,smbuf_z4buf_chunk_14);
+ 502:PQCgenKAT_sign.c ****      
+ 503:PQCgenKAT_sign.c **** 
+ 504:PQCgenKAT_sign.c ****     //z向量的通讯函数
+ 505:PQCgenKAT_sign.c ****     //z[1]
+ 506:PQCgenKAT_sign.c ****     simpleserial_addcmd('a',0,z1buf_chunk_1);
+ 507:PQCgenKAT_sign.c ****     simpleserial_addcmd('b',0,z1buf_chunk_2);
+ 508:PQCgenKAT_sign.c ****     simpleserial_addcmd('c',0,z1buf_chunk_3);
+ 509:PQCgenKAT_sign.c ****     simpleserial_addcmd('d',0,z1buf_chunk_4);
+ 510:PQCgenKAT_sign.c ****     simpleserial_addcmd('e',0,z1buf_chunk_5);
+ 511:PQCgenKAT_sign.c ****     simpleserial_addcmd('f',0,z1buf_chunk_6);
+ 512:PQCgenKAT_sign.c ****     simpleserial_addcmd('g',0,z1buf_chunk_7);
+ 513:PQCgenKAT_sign.c **** 
+ 514:PQCgenKAT_sign.c ****     //z[2]
+ 515:PQCgenKAT_sign.c ****     simpleserial_addcmd('h',0,z2buf_chunk_1);
+ 516:PQCgenKAT_sign.c ****     simpleserial_addcmd('i',0,z2buf_chunk_2);
+ 517:PQCgenKAT_sign.c ****     simpleserial_addcmd('!',0,z2buf_chunk_3);
+ 518:PQCgenKAT_sign.c ****     simpleserial_addcmd('@',0,z2buf_chunk_4);
+ 519:PQCgenKAT_sign.c ****     simpleserial_addcmd('l',0,z2buf_chunk_5);
+ 520:PQCgenKAT_sign.c ****     simpleserial_addcmd('m',0,z2buf_chunk_6);
+ 521:PQCgenKAT_sign.c ****     simpleserial_addcmd('n',0,z2buf_chunk_7);
+ 522:PQCgenKAT_sign.c **** 
+ 523:PQCgenKAT_sign.c ****     //z[3]
+ 524:PQCgenKAT_sign.c ****     simpleserial_addcmd('o',0,z3buf_chunk_1);
+ 525:PQCgenKAT_sign.c ****     simpleserial_addcmd('9',0,z3buf_chunk_2);
+ 526:PQCgenKAT_sign.c ****     simpleserial_addcmd('q',0,z3buf_chunk_3);
+ 527:PQCgenKAT_sign.c ****     simpleserial_addcmd('8',0,z3buf_chunk_4);
+ 528:PQCgenKAT_sign.c ****     simpleserial_addcmd('s',0,z3buf_chunk_5);
+ 529:PQCgenKAT_sign.c ****     simpleserial_addcmd('t',0,z3buf_chunk_6);
+ 530:PQCgenKAT_sign.c ****     simpleserial_addcmd('u',0,z3buf_chunk_7);
+ 531:PQCgenKAT_sign.c **** 
+ 532:PQCgenKAT_sign.c ****     //z[4]
+ 533:PQCgenKAT_sign.c ****     simpleserial_addcmd('x',0,z4buf_chunk_1);
+ 534:PQCgenKAT_sign.c ****     simpleserial_addcmd('y',0,z4buf_chunk_2);
+ 535:PQCgenKAT_sign.c ****     // simpleserial_addcmd('z',0,z4buf_chunk_3);
+ 536:PQCgenKAT_sign.c ****     simpleserial_addcmd('4',0,z4buf_chunk_4);
+ 537:PQCgenKAT_sign.c ****     simpleserial_addcmd('5',0,z4buf_chunk_5);
+ 538:PQCgenKAT_sign.c ****     simpleserial_addcmd('6',0,z4buf_chunk_6);
+ 539:PQCgenKAT_sign.c ****     simpleserial_addcmd('7',0,z4buf_chunk_7);
+ 540:PQCgenKAT_sign.c ****     
+ 541:PQCgenKAT_sign.c ****     simpleserial_addcmd('A',0,smbuf_chunk_1);
+ 542:PQCgenKAT_sign.c ****     simpleserial_addcmd('B',0,smbuf_chunk_2);
+ 543:PQCgenKAT_sign.c ****     simpleserial_addcmd('C',0,smbuf_chunk_3);
+ 544:PQCgenKAT_sign.c ****     simpleserial_addcmd('D',0,smbuf_chunk_4);
+ 545:PQCgenKAT_sign.c ****     simpleserial_addcmd('E',0,smbuf_chunk_5);
+ 546:PQCgenKAT_sign.c ****     simpleserial_addcmd('F',0,smbuf_chunk_6);
+ 547:PQCgenKAT_sign.c ****     simpleserial_addcmd('G',0,smbuf_chunk_7);
+ 548:PQCgenKAT_sign.c ****     simpleserial_addcmd('H',0,smbuf_chunk_8);
+ 549:PQCgenKAT_sign.c ****     simpleserial_addcmd('I',0,smbuf_chunk_9);
+ 550:PQCgenKAT_sign.c ****     simpleserial_addcmd('J',0,smbuf_chunk_10);
+ 551:PQCgenKAT_sign.c ****     simpleserial_addcmd('K',0,smbuf_chunk_11);
+ 552:PQCgenKAT_sign.c ****     simpleserial_addcmd('L',0,smbuf_chunk_12);
+ 553:PQCgenKAT_sign.c ****     simpleserial_addcmd('M',0,smbuf_chunk_13);
+ 554:PQCgenKAT_sign.c ****     simpleserial_addcmd('N',0,smbuf_chunk_14);
+ 555:PQCgenKAT_sign.c **** 
+ 556:PQCgenKAT_sign.c ****    注釋3結束*/
+ 557:PQCgenKAT_sign.c ****     
+ 558:PQCgenKAT_sign.c ****     while(1)
+ 596              		.loc 1 558 5 discriminator 1 view .LVU198
+ 597              	.LBB6:
+ 559:PQCgenKAT_sign.c ****         simpleserial_get();
+ 598              		.loc 1 559 9 discriminator 1 view .LVU199
+ 599 0062 FFF7FEFF 		bl	simpleserial_get
+ 600              	.LVL73:
+ 601              	.LBE6:
+ 558:PQCgenKAT_sign.c ****         simpleserial_get();
+ 602              		.loc 1 558 10 discriminator 1 view .LVU200
+ 603 0066 FCE7     		b	.L32
+ 604              	.L34:
+ 605              		.align	2
+ 606              	.L33:
+ 607 0068 00000000 		.word	enc_password
+ 608 006c 00000000 		.word	dilithium1
+ 609              		.cfi_endproc
+ 610              	.LFE6:
+ 612              		.global	AlgName
+ 613              		.data
+ 616              	AlgName:
+ 617 0000 4D792041 		.ascii	"My Alg Name\000"
+ 617      6C67204E 
+ 617      616D6500 
+ 618              		.text
+ 619              	.Letext0:
+ 620              		.file 2 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\m
+ 621              		.file 3 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\lib\\gcc\\arm-none-eabi\\
+ 622              		.file 4 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 623              		.file 5 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 624              		.file 6 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 625              		.file 7 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 626              		.file 8 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\s
+ 627              		.file 9 "<built-in>"
+ 628              		.file 10 "d:\\cw_software\\chipwhisperer5_64\\cw\\home\\portable\\armgcc\\arm-none-eabi\\include\\
+ 629              		.file 11 "api.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 PQCgenKAT_sign.c
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:16     .text.enc_password:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:24     .text.enc_password:00000000 enc_password
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:67     .text.dilithium1:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:74     .text.dilithium1:00000000 dilithium1
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:324    .text.enc_password1:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:331    .text.enc_password1:00000000 enc_password1
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:510    .text.startup.main:00000000 $t
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:517    .text.startup.main:00000000 main
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:607    .text.startup.main:00000068 $d
+C:\Users\dudixiao\AppData\Local\Temp\ccSY58ud.s:616    .data:00000000 AlgName
+
+UNDEFINED SYMBOLS
+test_fun2
+simpleserial_put
+memcpy
+memset
+calloc
+crypto_sign_keypair
+crypto_sign
+free
+test_fun3
+platform_init
+init_uart
+trigger_setup
+putch
+simpleserial_init
+simpleserial_addcmd
+simpleserial_get

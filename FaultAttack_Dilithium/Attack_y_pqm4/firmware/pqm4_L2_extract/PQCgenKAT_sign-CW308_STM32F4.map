@@ -1,0 +1,1968 @@
+Archive member included to satisfy reference by file (symbol)
+
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+                              objdir-CW308_STM32F4/PQCgenKAT_sign.o (calloc)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o) (_calloc_r)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+                              objdir-CW308_STM32F4/stm32f4_sysmem.o (__errno)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o (exit)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o) (_global_impure_ptr)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o (__libc_init_array)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+                              objdir-CW308_STM32F4/PQCgenKAT_sign.o (free)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o) (_malloc_r)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memcpy.o)
+                              objdir-CW308_STM32F4/PQCgenKAT_sign.o (memcpy)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memset.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o (memset)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o) (__malloc_lock)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o) (_sbrk_r)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o) (__call_exitprocs)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o) (atexit)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o) (__libc_fini_array)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o) (_free_r)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o) (__retarget_lock_acquire_recursive)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o) (errno)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o) (__register_exitproc)
+d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a(_exit.o)
+                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o) (_exit)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+ .data          0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+ .rodata        0x00000000       0x24 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+ .text          0x00000000       0x7c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .ARM.extab     0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .ARM.exidx     0x00000000       0x10 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .ARM.attributes
+                0x00000000       0x1c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .data          0x00000000        0xc objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .text.enc_password1
+                0x00000000       0x88 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/sign.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/sign.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/sign.o
+ .text.test_fun
+                0x00000000       0xc4 objdir-CW308_STM32F4/sign.o
+ .text.test_fun3
+                0x00000000       0x42 objdir-CW308_STM32F4/sign.o
+ .text.crypto_sign_verify
+                0x00000000      0x198 objdir-CW308_STM32F4/sign.o
+ .text.crypto_sign_open
+                0x00000000       0x5a objdir-CW308_STM32F4/sign.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/packing.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/packing.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/packing.o
+ .text.pqcrystals_dilithium_unpack_pk
+                0x00000000       0x36 objdir-CW308_STM32F4/packing.o
+ .text.pqcrystals_dilithium_pack_sig
+                0x00000000       0x76 objdir-CW308_STM32F4/packing.o
+ .text.pqcrystals_dilithium_pack_sig_c
+                0x00000000       0x14 objdir-CW308_STM32F4/packing.o
+ .text.pqcrystals_dilithium_unpack_sig
+                0x00000000       0xb0 objdir-CW308_STM32F4/packing.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/poly.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/poly.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/poly.o
+ .text.pqcrystals_dilithium_poly_shiftl
+                0x00000000       0x14 objdir-CW308_STM32F4/poly.o
+ .text.pqcrystals_dilithium_poly_use_hint
+                0x00000000       0x24 objdir-CW308_STM32F4/poly.o
+ .text.pqcrystals_dilithium_polyt1_unpack
+                0x00000000       0x4c objdir-CW308_STM32F4/poly.o
+ .text.poly_uniform_gamma11
+                0x00000000       0x28 objdir-CW308_STM32F4/poly.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/polyvec.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/polyvec.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/polyvec.o
+ .text.polyvecl_uniform_gamma11
+                0x00000000       0x22 objdir-CW308_STM32F4/polyvec.o
+ .text.pqcrystals_dilithium_polyvecl_invntt_tomont
+                0x00000000       0x24 objdir-CW308_STM32F4/polyvec.o
+ .text.pqcrystals_dilithium_polyvecl_pointwise_poly_montgomery
+                0x00000000       0x20 objdir-CW308_STM32F4/polyvec.o
+ .text.pqcrystals_dilithium_polyveck_sub
+                0x00000000       0x20 objdir-CW308_STM32F4/polyvec.o
+ .text.pqcrystals_dilithium_polyveck_shiftl
+                0x00000000       0x24 objdir-CW308_STM32F4/polyvec.o
+ .text.pqcrystals_dilithium_polyveck_pointwise_poly_montgomery
+                0x00000000       0x20 objdir-CW308_STM32F4/polyvec.o
+ .text.pqcrystals_dilithium_polyveck_chknorm
+                0x00000000       0x22 objdir-CW308_STM32F4/polyvec.o
+ .text.pqcrystals_dilithium_polyveck_make_hint
+                0x00000000       0x2c objdir-CW308_STM32F4/polyvec.o
+ .text.pqcrystals_dilithium_polyveck_use_hint
+                0x00000000       0x20 objdir-CW308_STM32F4/polyvec.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/rounding.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/rounding.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/rounding.o
+ .text.pqcrystals_dilithium_use_hint
+                0x00000000       0x2c objdir-CW308_STM32F4/rounding.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/symmetric-shake.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/symmetric-shake.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/symmetric-shake.o
+ .text.dilithium_shake256_stream_init1
+                0x00000000       0x32 objdir-CW308_STM32F4/symmetric-shake.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/smallpoly.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/smallpoly.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/smallpoly.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/fips202.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/fips202.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/fips202.o
+ .text.keccak_absorb
+                0x00000000       0x6c objdir-CW308_STM32F4/fips202.o
+ .text.keccak_squeezeblocks
+                0x00000000       0x26 objdir-CW308_STM32F4/fips202.o
+ .text.keccak_inc_absorb1.constprop.0
+                0x00000000       0x6a objdir-CW308_STM32F4/fips202.o
+ .text.shake128_inc_ctx_clone
+                0x00000000        0x6 objdir-CW308_STM32F4/fips202.o
+ .text.shake128_inc_ctx_release
+                0x00000000        0x2 objdir-CW308_STM32F4/fips202.o
+ .text.shake256_inc_absorb1
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.shake256_inc_squeeze1
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.shake256_inc_ctx_clone
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.shake256_inc_ctx_release
+                0x00000000        0x2 objdir-CW308_STM32F4/fips202.o
+ .text.cshake128_simple_absorb
+                0x00000000       0x68 objdir-CW308_STM32F4/fips202.o
+ .text.cshake128_simple
+                0x00000000       0x78 objdir-CW308_STM32F4/fips202.o
+ .text.shake128_absorb
+                0x00000000       0x24 objdir-CW308_STM32F4/fips202.o
+ .text.shake128_squeezeblocks
+                0x00000000        0x6 objdir-CW308_STM32F4/fips202.o
+ .text.cshake128_simple_squeezeblocks
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.shake128
+                0x00000000       0x38 objdir-CW308_STM32F4/fips202.o
+ .text.shake128_ctx_release
+                0x00000000        0x2 objdir-CW308_STM32F4/fips202.o
+ .text.shake128_ctx_clone
+                0x00000000        0x6 objdir-CW308_STM32F4/fips202.o
+ .text.shake256_absorb
+                0x00000000       0x24 objdir-CW308_STM32F4/fips202.o
+ .text.shake256_squeezeblocks
+                0x00000000        0x6 objdir-CW308_STM32F4/fips202.o
+ .text.shake2561
+                0x00000000       0x36 objdir-CW308_STM32F4/fips202.o
+ .text.shake256_ctx_release
+                0x00000000        0x2 objdir-CW308_STM32F4/fips202.o
+ .text.shake256_ctx_clone
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_256
+                0x00000000       0x36 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_256_inc_init
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_256_inc_absorb
+                0x00000000        0xa objdir-CW308_STM32F4/fips202.o
+ .text.sha3_256_inc_finalize
+                0x00000000       0x3a objdir-CW308_STM32F4/fips202.o
+ .text.sha3_256_inc_ctx_clone
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_256_inc_ctx_release
+                0x00000000        0x2 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_384_inc_init
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_384_inc_absorb
+                0x00000000        0xa objdir-CW308_STM32F4/fips202.o
+ .text.sha3_384_inc_finalize
+                0x00000000       0x3a objdir-CW308_STM32F4/fips202.o
+ .text.sha3_384_inc_ctx_clone
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_384_inc_ctx_release
+                0x00000000        0x2 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_384
+                0x00000000       0x36 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_512
+                0x00000000       0x36 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_512_inc_init
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_512_inc_absorb
+                0x00000000        0xa objdir-CW308_STM32F4/fips202.o
+ .text.sha3_512_inc_finalize
+                0x00000000       0x3a objdir-CW308_STM32F4/fips202.o
+ .text.sha3_512_inc_ctx_clone
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.sha3_512_inc_ctx_release
+                0x00000000        0x2 objdir-CW308_STM32F4/fips202.o
+ .text.cshake256_simple_absorb
+                0x00000000       0x68 objdir-CW308_STM32F4/fips202.o
+ .text.cshake256_simple_squeezeblocks
+                0x00000000        0x4 objdir-CW308_STM32F4/fips202.o
+ .text.cshake256_simple
+                0x00000000       0x78 objdir-CW308_STM32F4/fips202.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/simpleserial.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/simpleserial.o
+ .text.hex_decode
+                0x00000000       0x78 objdir-CW308_STM32F4/simpleserial.o
+ .text.ss_puts  0x00000000       0x14 objdir-CW308_STM32F4/simpleserial.o
+ .text.check_version
+                0x00000000       0x1c objdir-CW308_STM32F4/simpleserial.o
+ .text.ss_get_commands
+                0x00000000       0x38 objdir-CW308_STM32F4/simpleserial.o
+ .text.simpleserial_put1
+                0x00000000       0x60 objdir-CW308_STM32F4/simpleserial.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4_hal.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4_hal.o
+ .text.get_rand
+                0x00000000       0x20 objdir-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_LoadKey
+                0x00000000       0x18 objdir-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Init
+                0x00000000       0x4c objdir-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Enc_pretrigger
+                0x00000000        0xc objdir-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Enc
+                0x00000000       0x20 objdir-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Enc_posttrigger
+                0x00000000        0x2 objdir-CW308_STM32F4/stm32f4_hal.o
+ .text.HW_AES128_Dec
+                0x00000000       0x28 objdir-CW308_STM32F4/stm32f4_hal.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.CRYP_SetKey
+                0x00000000       0x7e objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.CRYP_ProcessData
+                0x00000000       0x98 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.RCC_AHB2PeriphClockCmd
+                0x00000000       0x18 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_RCC_GetPCLK1Freq
+                0x00000000        0x8 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_RCC_GetPCLK2Freq
+                0x00000000        0x8 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_CRYP_Init
+                0x00000000       0x3c objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_CRYP_DeInit
+                0x00000000       0x2a objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_CRYP_AESECB_Encrypt
+                0x00000000       0x7a objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text.HAL_CRYP_AESECB_Decrypt
+                0x00000000       0xd4 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_MspDeInit
+                0x00000000        0x2 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_DeInit
+                0x00000000       0x28 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GenerateRandomNumber
+                0x00000000       0x54 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GenerateRandomNumber_IT
+                0x00000000       0x2e objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GetRandomNumber
+                0x00000000       0x16 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GetRandomNumber_IT
+                0x00000000       0x22 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_ReadLastRandomNumber
+                0x00000000        0x4 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_ReadyDataCallback
+                0x00000000        0x2 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_ErrorCallback
+                0x00000000        0x2 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_IRQHandler
+                0x00000000       0x4a objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text.HAL_RNG_GetState
+                0x00000000        0x4 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/aes.o
+ .data          0x00000000      0x20b objdir-CW308_STM32F4/aes.o
+ .bss           0x00000000       0xc8 objdir-CW308_STM32F4/aes.o
+ .text.KeyExpansion
+                0x00000000       0xac objdir-CW308_STM32F4/aes.o
+ .text.AddRoundKey
+                0x00000000       0x34 objdir-CW308_STM32F4/aes.o
+ .text.SubBytes
+                0x00000000       0x30 objdir-CW308_STM32F4/aes.o
+ .text.ShiftRows
+                0x00000000       0x3c objdir-CW308_STM32F4/aes.o
+ .text.xtime    0x00000000       0x12 objdir-CW308_STM32F4/aes.o
+ .text.InvSubBytes
+                0x00000000       0x34 objdir-CW308_STM32F4/aes.o
+ .text.InvShiftRows
+                0x00000000       0x3c objdir-CW308_STM32F4/aes.o
+ .text.Cipher   0x00000000       0xac objdir-CW308_STM32F4/aes.o
+ .text.BlockCopy
+                0x00000000       0x14 objdir-CW308_STM32F4/aes.o
+ .text.AES128_ECB_indp_setkey
+                0x00000000        0xc objdir-CW308_STM32F4/aes.o
+ .text.AES128_ECB_indp_crypto
+                0x00000000       0x1c objdir-CW308_STM32F4/aes.o
+ .text.AES128_ECB_encrypt
+                0x00000000       0x28 objdir-CW308_STM32F4/aes.o
+ .text.AES128_ECB_decrypt
+                0x00000000      0x170 objdir-CW308_STM32F4/aes.o
+ .debug_info    0x00000000      0xa17 objdir-CW308_STM32F4/aes.o
+ .debug_abbrev  0x00000000      0x332 objdir-CW308_STM32F4/aes.o
+ .debug_loc     0x00000000      0x836 objdir-CW308_STM32F4/aes.o
+ .debug_aranges
+                0x00000000       0x80 objdir-CW308_STM32F4/aes.o
+ .debug_ranges  0x00000000      0x140 objdir-CW308_STM32F4/aes.o
+ .debug_line    0x00000000      0x87b objdir-CW308_STM32F4/aes.o
+ .debug_str     0x00000000      0x345 objdir-CW308_STM32F4/aes.o
+ .comment       0x00000000       0x4e objdir-CW308_STM32F4/aes.o
+ .debug_frame   0x00000000      0x17c objdir-CW308_STM32F4/aes.o
+ .ARM.attributes
+                0x00000000       0x2e objdir-CW308_STM32F4/aes.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/aes-independant.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/aes-independant.o
+ .bss           0x00000000       0x10 objdir-CW308_STM32F4/aes-independant.o
+ .text.aes_indep_init
+                0x00000000        0x2 objdir-CW308_STM32F4/aes-independant.o
+ .text.aes_indep_key
+                0x00000000        0x4 objdir-CW308_STM32F4/aes-independant.o
+ .text.aes_indep_enc
+                0x00000000        0x4 objdir-CW308_STM32F4/aes-independant.o
+ .text.aes_indep_enc_pretrigger
+                0x00000000        0x2 objdir-CW308_STM32F4/aes-independant.o
+ .text.aes_indep_enc_posttrigger
+                0x00000000        0x2 objdir-CW308_STM32F4/aes-independant.o
+ .text.aes_indep_mask
+                0x00000000        0x2 objdir-CW308_STM32F4/aes-independant.o
+ .debug_info    0x00000000      0x1f2 objdir-CW308_STM32F4/aes-independant.o
+ .debug_abbrev  0x00000000      0x144 objdir-CW308_STM32F4/aes-independant.o
+ .debug_loc     0x00000000       0x4a objdir-CW308_STM32F4/aes-independant.o
+ .debug_aranges
+                0x00000000       0x40 objdir-CW308_STM32F4/aes-independant.o
+ .debug_ranges  0x00000000       0x30 objdir-CW308_STM32F4/aes-independant.o
+ .debug_line    0x00000000      0x19b objdir-CW308_STM32F4/aes-independant.o
+ .debug_str     0x00000000      0x293 objdir-CW308_STM32F4/aes-independant.o
+ .comment       0x00000000       0x4e objdir-CW308_STM32F4/aes-independant.o
+ .debug_frame   0x00000000       0x70 objdir-CW308_STM32F4/aes-independant.o
+ .ARM.attributes
+                0x00000000       0x2e objdir-CW308_STM32F4/aes-independant.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/basemul_257.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/basemul_257.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/fnt_257.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/fnt_257.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/ifnt_257.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/ifnt_257.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/ntt.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/ntt.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/pointwise_mont123.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/pointwise_mont123.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/vector123.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/vector123.o
+ .text          0x00000000        0x0 objdir-CW308_STM32F4/keccakf1600.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/keccakf1600.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/keccakf1600.o
+ .text.KeccakF1600_StateXORBytes1
+                0x00000000       0x3a objdir-CW308_STM32F4/keccakf1600.o
+ .text          0x00000000       0x14 objdir-CW308_STM32F4/stm32f4_startup.o
+ .data          0x00000000        0x0 objdir-CW308_STM32F4/stm32f4_startup.o
+ .bss           0x00000000        0x0 objdir-CW308_STM32F4/stm32f4_startup.o
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+ .text.exit     0x00000000       0x20 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+ .debug_frame   0x00000000       0x28 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+ .ARM.attributes
+                0x00000000       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+ .text.malloc   0x00000000       0x10 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memcpy.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memcpy.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memset.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memset.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memset.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+ .text.__call_exitprocs
+                0x00000000       0xc4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text.__retarget_lock_init
+                0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text.__retarget_lock_init_recursive
+                0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text.__retarget_lock_close
+                0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text.__retarget_lock_close_recursive
+                0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text.__retarget_lock_acquire
+                0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text.__retarget_lock_try_acquire
+                0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text.__retarget_lock_try_acquire_recursive
+                0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text.__retarget_lock_release
+                0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .bss.__lock___arc4random_mutex
+                0x00000000        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .bss.__lock___at_quick_exit_mutex
+                0x00000000        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .bss.__lock___dd_hash_mutex
+                0x00000000        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .bss.__lock___env_recursive_mutex
+                0x00000000        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .bss.__lock___sfp_recursive_mutex
+                0x00000000        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .bss.__lock___sinit_recursive_mutex
+                0x00000000        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .bss.__lock___tz_mutex
+                0x00000000        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+ .text.cleanup_glue
+                0x00000000       0x48 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+ .text._reclaim_reent
+                0x00000000       0x90 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a(_exit.o)
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a(_exit.o)
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a(_exit.o)
+ .text._exit    0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a(_exit.o)
+ .debug_frame   0x00000000       0x20 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a(_exit.o)
+ .ARM.attributes
+                0x00000000       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a(_exit.o)
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtend.o
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtend.o
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtend.o
+ .rodata        0x00000000       0x24 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtend.o
+ .eh_frame      0x00000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtend.o
+ .ARM.attributes
+                0x00000000       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtend.o
+ .text          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtn.o
+ .data          0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtn.o
+ .bss           0x00000000        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtn.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+RAM              0x10000000         0x00030000         xrw
+ROM              0x08000000         0x00100000         xr
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+LOAD objdir-CW308_STM32F4/PQCgenKAT_sign.o
+LOAD objdir-CW308_STM32F4/sign.o
+LOAD objdir-CW308_STM32F4/packing.o
+LOAD objdir-CW308_STM32F4/poly.o
+LOAD objdir-CW308_STM32F4/polyvec.o
+LOAD objdir-CW308_STM32F4/rounding.o
+LOAD objdir-CW308_STM32F4/symmetric-shake.o
+LOAD objdir-CW308_STM32F4/smallpoly.o
+LOAD objdir-CW308_STM32F4/fips202.o
+LOAD objdir-CW308_STM32F4/simpleserial.o
+LOAD objdir-CW308_STM32F4/stm32f4_hal.o
+LOAD objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+LOAD objdir-CW308_STM32F4/stm32f4_sysmem.o
+LOAD objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+LOAD objdir-CW308_STM32F4/aes.o
+LOAD objdir-CW308_STM32F4/aes-independant.o
+LOAD objdir-CW308_STM32F4/basemul_257.o
+LOAD objdir-CW308_STM32F4/fnt_257.o
+LOAD objdir-CW308_STM32F4/ifnt_257.o
+LOAD objdir-CW308_STM32F4/ntt.o
+LOAD objdir-CW308_STM32F4/pointwise_mont123.o
+LOAD objdir-CW308_STM32F4/vector123.o
+LOAD objdir-CW308_STM32F4/keccakf1600.o
+LOAD objdir-CW308_STM32F4/stm32f4_startup.o
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libm.a
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libm.a
+START GROUP
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp\libgcc.a
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libc.a
+END GROUP
+START GROUP
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp\libgcc.a
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libc.a
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a
+END GROUP
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtend.o
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtn.o
+                0x20020000                _estack = 0x20020000
+                0x00000000                _Min_Heap_Size = 0x0
+                0x00001000                _Min_Stack_Size = 0x1000
+
+.isr_vector     0x08000000      0x188
+                0x08000000                . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x08000000      0x188 objdir-CW308_STM32F4/stm32f4_startup.o
+                0x08000000                g_pfnVectors
+                0x08000188                . = ALIGN (0x4)
+
+.text           0x08000188     0x597c
+                0x08000188                . = ALIGN (0x4)
+ *(.text)
+ .text          0x08000188       0x40 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+ .text          0x080001c8       0xd4 objdir-CW308_STM32F4/basemul_257.o
+                0x080001c8                __asm_point_mul_257_16
+                0x08000250                __asm_asymmetric_mul_257_16
+ .text          0x0800029c      0x748 objdir-CW308_STM32F4/fnt_257.o
+                0x0800029c                __asm_fnt_257
+ .text          0x080009e4      0x79c objdir-CW308_STM32F4/ifnt_257.o
+                0x080009e4                __asm_ifnt_257
+ .text          0x08001180      0xa08 objdir-CW308_STM32F4/ntt.o
+                0x08001184                pqcrystals_dilithium_ntt
+                0x0800174c                pqcrystals_dilithium_invntt_tomont
+ .text          0x08001b88      0x128 objdir-CW308_STM32F4/pointwise_mont123.o
+                0x08001b88                pqcrystals_dilithium_asm_pointwise_montgomery
+                0x08001c0c                pqcrystals_dilithium_asm_pointwise_acc_montgomery
+ .text          0x08001cb0      0x23c objdir-CW308_STM32F4/vector123.o
+                0x08001cb0                pqcrystals_dilithium_asm_reduce32
+                0x08001d70                pqcrystals_dilithium_small_asm_reduce32_central
+                0x08001e10                pqcrystals_dilithium_asm_caddq
+                0x08001ea0                pqcrystals_dilithium_asm_rej_uniform
+ .text          0x08001eec      0x134 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memcpy.o)
+                0x08001eec                memcpy
+ *(.text*)
+ .text.enc_password
+                0x08002020       0x1c objdir-CW308_STM32F4/PQCgenKAT_sign.o
+                0x08002020                enc_password
+ .text.dilithium1
+                0x0800203c       0xd2 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+                0x0800203c                dilithium1
+ *fill*         0x0800210e        0x2 
+ .text.startup.main
+                0x08002110       0x70 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+                0x08002110                main
+ .text.crypto_sign_keypair
+                0x08002180      0x144 objdir-CW308_STM32F4/sign.o
+                0x08002180                crypto_sign_keypair
+ .text.test_fun2
+                0x080022c4       0x52 objdir-CW308_STM32F4/sign.o
+                0x080022c4                test_fun2
+ *fill*         0x08002316        0x2 
+ .text.crypto_sign_signature
+                0x08002318      0x2b8 objdir-CW308_STM32F4/sign.o
+                0x08002318                crypto_sign_signature
+ .text.crypto_sign
+                0x080025d0       0x3c objdir-CW308_STM32F4/sign.o
+                0x080025d0                crypto_sign
+ .text.pqcrystals_dilithium_pack_pk
+                0x0800260c       0x36 objdir-CW308_STM32F4/packing.o
+                0x0800260c                pqcrystals_dilithium_pack_pk
+ .text.pqcrystals_dilithium_pack_sk
+                0x08002642       0x8e objdir-CW308_STM32F4/packing.o
+                0x08002642                pqcrystals_dilithium_pack_sk
+ .text.pqcrystals_dilithium_unpack_sk
+                0x080026d0       0x90 objdir-CW308_STM32F4/packing.o
+                0x080026d0                pqcrystals_dilithium_unpack_sk
+ .text.pqcrystals_dilithium_pack_sig_z
+                0x08002760       0x22 objdir-CW308_STM32F4/packing.o
+                0x08002760                pqcrystals_dilithium_pack_sig_z
+ .text.pqcrystals_dilithium_pack_sig_h
+                0x08002782       0x2a objdir-CW308_STM32F4/packing.o
+                0x08002782                pqcrystals_dilithium_pack_sig_h
+ .text.pqcrystals_dilithium_pack_sig_h_zero
+                0x080027ac       0x18 objdir-CW308_STM32F4/packing.o
+                0x080027ac                pqcrystals_dilithium_pack_sig_h_zero
+ .text.rej_eta.constprop.0
+                0x080027c4       0x72 objdir-CW308_STM32F4/poly.o
+ .text.pqcrystals_dilithium_poly_reduce
+                0x08002836        0x4 objdir-CW308_STM32F4/poly.o
+                0x08002836                pqcrystals_dilithium_poly_reduce
+ .text.pqcrystals_dilithium_poly_caddq
+                0x0800283a        0x4 objdir-CW308_STM32F4/poly.o
+                0x0800283a                pqcrystals_dilithium_poly_caddq
+ .text.pqcrystals_dilithium_poly_add
+                0x0800283e       0x1c objdir-CW308_STM32F4/poly.o
+                0x0800283e                pqcrystals_dilithium_poly_add
+ .text.pqcrystals_dilithium_poly_sub
+                0x0800285a       0x1c objdir-CW308_STM32F4/poly.o
+                0x0800285a                pqcrystals_dilithium_poly_sub
+ .text.pqcrystals_dilithium_poly_ntt
+                0x08002876        0x4 objdir-CW308_STM32F4/poly.o
+                0x08002876                pqcrystals_dilithium_poly_ntt
+ .text.pqcrystals_dilithium_poly_invntt_tomont
+                0x0800287a        0x4 objdir-CW308_STM32F4/poly.o
+                0x0800287a                pqcrystals_dilithium_poly_invntt_tomont
+ .text.pqcrystals_dilithium_poly_pointwise_montgomery
+                0x0800287e        0x4 objdir-CW308_STM32F4/poly.o
+                0x0800287e                pqcrystals_dilithium_poly_pointwise_montgomery
+ .text.pqcrystals_dilithium_poly_pointwise_acc_montgomery
+                0x08002882        0x4 objdir-CW308_STM32F4/poly.o
+                0x08002882                pqcrystals_dilithium_poly_pointwise_acc_montgomery
+ .text.pqcrystals_dilithium_poly_power2round
+                0x08002886       0x1e objdir-CW308_STM32F4/poly.o
+                0x08002886                pqcrystals_dilithium_poly_power2round
+ .text.pqcrystals_dilithium_poly_decompose
+                0x080028a4       0x1e objdir-CW308_STM32F4/poly.o
+                0x080028a4                pqcrystals_dilithium_poly_decompose
+ .text.pqcrystals_dilithium_poly_make_hint
+                0x080028c2       0x2e objdir-CW308_STM32F4/poly.o
+                0x080028c2                pqcrystals_dilithium_poly_make_hint
+ .text.pqcrystals_dilithium_poly_chknorm
+                0x080028f0       0x30 objdir-CW308_STM32F4/poly.o
+                0x080028f0                pqcrystals_dilithium_poly_chknorm
+ .text.pqcrystals_dilithium_poly_uniform
+                0x08002920       0x86 objdir-CW308_STM32F4/poly.o
+                0x08002920                pqcrystals_dilithium_poly_uniform
+ .text.pqcrystals_dilithium_poly_uniform_eta
+                0x080029a6       0x48 objdir-CW308_STM32F4/poly.o
+                0x080029a6                pqcrystals_dilithium_poly_uniform_eta
+ .text.pqcrystals_dilithium_poly_challenge
+                0x080029ee       0xb2 objdir-CW308_STM32F4/poly.o
+                0x080029ee                pqcrystals_dilithium_poly_challenge
+ .text.pqcrystals_dilithium_polyeta_pack
+                0x08002aa0       0x84 objdir-CW308_STM32F4/poly.o
+                0x08002aa0                pqcrystals_dilithium_polyeta_pack
+ .text.pqcrystals_dilithium_polyt1_pack
+                0x08002b24       0x40 objdir-CW308_STM32F4/poly.o
+                0x08002b24                pqcrystals_dilithium_polyt1_pack
+ .text.pqcrystals_dilithium_polyt0_pack
+                0x08002b64       0x9c objdir-CW308_STM32F4/poly.o
+                0x08002b64                pqcrystals_dilithium_polyt0_pack
+ .text.pqcrystals_dilithium_polyt0_unpack
+                0x08002c00       0xfe objdir-CW308_STM32F4/poly.o
+                0x08002c00                pqcrystals_dilithium_polyt0_unpack
+ .text.pqcrystals_dilithium_polyz_pack
+                0x08002cfe       0x58 objdir-CW308_STM32F4/poly.o
+                0x08002cfe                pqcrystals_dilithium_polyz_pack
+ .text.pqcrystals_dilithium_polyz_unpack
+                0x08002d56       0x8a objdir-CW308_STM32F4/poly.o
+                0x08002d56                pqcrystals_dilithium_polyz_unpack
+ .text.pqcrystals_dilithium_poly_uniform_gamma1
+                0x08002de0       0x28 objdir-CW308_STM32F4/poly.o
+                0x08002de0                pqcrystals_dilithium_poly_uniform_gamma1
+ .text.pqcrystals_dilithium_polyw1_pack
+                0x08002e08       0x3a objdir-CW308_STM32F4/poly.o
+                0x08002e08                pqcrystals_dilithium_polyw1_pack
+ .text.pqcrystals_dilithium_polyvec_matrix_expand
+                0x08002e42       0x32 objdir-CW308_STM32F4/polyvec.o
+                0x08002e42                pqcrystals_dilithium_polyvec_matrix_expand
+ .text.pqcrystals_dilithium_polyvecl_uniform_eta
+                0x08002e74       0x20 objdir-CW308_STM32F4/polyvec.o
+                0x08002e74                pqcrystals_dilithium_polyvecl_uniform_eta
+ .text.pqcrystals_dilithium_polyvecl_uniform_gamma1
+                0x08002e94       0x22 objdir-CW308_STM32F4/polyvec.o
+                0x08002e94                pqcrystals_dilithium_polyvecl_uniform_gamma1
+ .text.pqcrystals_dilithium_polyvecl_reduce
+                0x08002eb6       0x24 objdir-CW308_STM32F4/polyvec.o
+                0x08002eb6                pqcrystals_dilithium_polyvecl_reduce
+ .text.pqcrystals_dilithium_polyvecl_add
+                0x08002eda       0x20 objdir-CW308_STM32F4/polyvec.o
+                0x08002eda                pqcrystals_dilithium_polyvecl_add
+ .text.pqcrystals_dilithium_polyvecl_ntt
+                0x08002efa       0x24 objdir-CW308_STM32F4/polyvec.o
+                0x08002efa                pqcrystals_dilithium_polyvecl_ntt
+ .text.pqcrystals_dilithium_polyvecl_pointwise_acc_montgomery
+                0x08002f1e       0x26 objdir-CW308_STM32F4/polyvec.o
+                0x08002f1e                pqcrystals_dilithium_polyvecl_pointwise_acc_montgomery
+ .text.pqcrystals_dilithium_polyvec_matrix_pointwise_montgomery
+                0x08002f44       0x24 objdir-CW308_STM32F4/polyvec.o
+                0x08002f44                pqcrystals_dilithium_polyvec_matrix_pointwise_montgomery
+ .text.pqcrystals_dilithium_polyvecl_chknorm
+                0x08002f68       0x22 objdir-CW308_STM32F4/polyvec.o
+                0x08002f68                pqcrystals_dilithium_polyvecl_chknorm
+ .text.pqcrystals_dilithium_polyveck_uniform_eta
+                0x08002f8a       0x20 objdir-CW308_STM32F4/polyvec.o
+                0x08002f8a                pqcrystals_dilithium_polyveck_uniform_eta
+ .text.pqcrystals_dilithium_polyveck_reduce
+                0x08002faa       0x24 objdir-CW308_STM32F4/polyvec.o
+                0x08002faa                pqcrystals_dilithium_polyveck_reduce
+ .text.pqcrystals_dilithium_polyveck_caddq
+                0x08002fce       0x24 objdir-CW308_STM32F4/polyvec.o
+                0x08002fce                pqcrystals_dilithium_polyveck_caddq
+ .text.pqcrystals_dilithium_polyveck_add
+                0x08002ff2       0x20 objdir-CW308_STM32F4/polyvec.o
+                0x08002ff2                pqcrystals_dilithium_polyveck_add
+ .text.pqcrystals_dilithium_polyveck_ntt
+                0x08003012       0x24 objdir-CW308_STM32F4/polyvec.o
+                0x08003012                pqcrystals_dilithium_polyveck_ntt
+ .text.pqcrystals_dilithium_polyveck_invntt_tomont
+                0x08003036       0x24 objdir-CW308_STM32F4/polyvec.o
+                0x08003036                pqcrystals_dilithium_polyveck_invntt_tomont
+ .text.pqcrystals_dilithium_polyveck_power2round
+                0x0800305a       0x20 objdir-CW308_STM32F4/polyvec.o
+                0x0800305a                pqcrystals_dilithium_polyveck_power2round
+ .text.pqcrystals_dilithium_polyveck_decompose
+                0x0800307a       0x20 objdir-CW308_STM32F4/polyvec.o
+                0x0800307a                pqcrystals_dilithium_polyveck_decompose
+ .text.pqcrystals_dilithium_polyveck_pack_w1
+                0x0800309a       0x1e objdir-CW308_STM32F4/polyvec.o
+                0x0800309a                pqcrystals_dilithium_polyveck_pack_w1
+ .text.pqcrystals_dilithium_power2round
+                0x080030b8       0x14 objdir-CW308_STM32F4/rounding.o
+                0x080030b8                pqcrystals_dilithium_power2round
+ .text.pqcrystals_dilithium_decompose
+                0x080030cc       0x44 objdir-CW308_STM32F4/rounding.o
+                0x080030cc                pqcrystals_dilithium_decompose
+ .text.pqcrystals_dilithium_make_hint
+                0x08003110       0x20 objdir-CW308_STM32F4/rounding.o
+                0x08003110                pqcrystals_dilithium_make_hint
+ .text.pqcrystals_dilithium_dilithium_shake128_stream_init
+                0x08003130       0x32 objdir-CW308_STM32F4/symmetric-shake.o
+                0x08003130                pqcrystals_dilithium_dilithium_shake128_stream_init
+ .text.pqcrystals_dilithium_dilithium_shake256_stream_init
+                0x08003162       0x32 objdir-CW308_STM32F4/symmetric-shake.o
+                0x08003162                pqcrystals_dilithium_dilithium_shake256_stream_init
+ .text.poly_small_ntt_precomp
+                0x08003194       0x48 objdir-CW308_STM32F4/smallpoly.o
+                0x08003194                poly_small_ntt_precomp
+ .text.polyvecl_small_ntt
+                0x080031dc       0x28 objdir-CW308_STM32F4/smallpoly.o
+                0x080031dc                polyvecl_small_ntt
+ .text.polyveck_small_ntt
+                0x08003204        0x4 objdir-CW308_STM32F4/smallpoly.o
+                0x08003204                polyveck_small_ntt
+ .text.poly_small_basemul_invntt
+                0x08003208       0x28 objdir-CW308_STM32F4/smallpoly.o
+                0x08003208                poly_small_basemul_invntt
+ .text.polyvecl_small_basemul_invntt
+                0x08003230       0x2a objdir-CW308_STM32F4/smallpoly.o
+                0x08003230                polyvecl_small_basemul_invntt
+ .text.small_polyeta_unpack
+                0x0800325a       0x9e objdir-CW308_STM32F4/smallpoly.o
+                0x0800325a                small_polyeta_unpack
+ .text.keccak_inc_init
+                0x080032f8       0x16 objdir-CW308_STM32F4/fips202.o
+ .text.keccak_inc_finalize
+                0x0800330e       0x54 objdir-CW308_STM32F4/fips202.o
+ .text.keccak_inc_absorb
+                0x08003362       0x64 objdir-CW308_STM32F4/fips202.o
+ .text.keccak_inc_squeeze
+                0x080033c6       0x72 objdir-CW308_STM32F4/fips202.o
+ .text.shake128_inc_init
+                0x08003438        0x4 objdir-CW308_STM32F4/fips202.o
+                0x08003438                shake128_inc_init
+ .text.shake128_inc_absorb
+                0x0800343c        0xa objdir-CW308_STM32F4/fips202.o
+                0x0800343c                shake128_inc_absorb
+ .text.shake128_inc_finalize
+                0x08003446        0x8 objdir-CW308_STM32F4/fips202.o
+                0x08003446                shake128_inc_finalize
+ .text.shake128_inc_squeeze
+                0x0800344e        0x6 objdir-CW308_STM32F4/fips202.o
+                0x0800344e                shake128_inc_squeeze
+ .text.shake256_inc_init
+                0x08003454        0x4 objdir-CW308_STM32F4/fips202.o
+                0x08003454                shake256_inc_init
+ .text.shake256_inc_absorb
+                0x08003458        0xa objdir-CW308_STM32F4/fips202.o
+                0x08003458                shake256_inc_absorb
+ .text.shake256_inc_finalize
+                0x08003462        0x8 objdir-CW308_STM32F4/fips202.o
+                0x08003462                shake256_inc_finalize
+ .text.shake256_inc_squeeze
+                0x0800346a        0x6 objdir-CW308_STM32F4/fips202.o
+                0x0800346a                shake256_inc_squeeze
+ .text.shake256
+                0x08003470       0x38 objdir-CW308_STM32F4/fips202.o
+                0x08003470                shake256
+ .text.ss_crc   0x080034a8       0x2a objdir-CW308_STM32F4/simpleserial.o
+                0x080034a8                ss_crc
+ .text.stuff_data
+                0x080034d2       0x22 objdir-CW308_STM32F4/simpleserial.o
+                0x080034d2                stuff_data
+ .text.unstuff_data
+                0x080034f4       0x1e objdir-CW308_STM32F4/simpleserial.o
+                0x080034f4                unstuff_data
+ .text.simpleserial_init
+                0x08003512        0x2 objdir-CW308_STM32F4/simpleserial.o
+                0x08003512                simpleserial_init
+ .text.simpleserial_addcmd
+                0x08003514       0x38 objdir-CW308_STM32F4/simpleserial.o
+                0x08003514                simpleserial_addcmd
+ .text.simpleserial_put
+                0x0800354c       0x5a objdir-CW308_STM32F4/simpleserial.o
+                0x0800354c                simpleserial_put
+ *fill*         0x080035a6        0x2 
+ .text.simpleserial_get
+                0x080035a8       0xec objdir-CW308_STM32F4/simpleserial.o
+                0x080035a8                simpleserial_get
+ .text.platform_init
+                0x08003694       0x90 objdir-CW308_STM32F4/stm32f4_hal.o
+                0x08003694                platform_init
+ .text.init_uart
+                0x08003724       0x7c objdir-CW308_STM32F4/stm32f4_hal.o
+                0x08003724                init_uart
+ .text.trigger_setup
+                0x080037a0       0x40 objdir-CW308_STM32F4/stm32f4_hal.o
+                0x080037a0                trigger_setup
+ .text.trigger_high
+                0x080037e0       0x10 objdir-CW308_STM32F4/stm32f4_hal.o
+                0x080037e0                trigger_high
+ .text.trigger_low
+                0x080037f0       0x10 objdir-CW308_STM32F4/stm32f4_hal.o
+                0x080037f0                trigger_low
+ .text.getch    0x08003800       0x24 objdir-CW308_STM32F4/stm32f4_hal.o
+                0x08003800                getch
+ .text.putch    0x08003824       0x20 objdir-CW308_STM32F4/stm32f4_hal.o
+                0x08003824                putch
+ .text.HAL_GetTick
+                0x08003844       0x10 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08003844                HAL_GetTick
+ .text.HAL_RCC_OscConfig
+                0x08003854      0x340 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08003854                HAL_RCC_OscConfig
+ .text.HAL_RCC_ClockConfig
+                0x08003b94      0x130 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08003b94                HAL_RCC_ClockConfig
+ .text.HAL_GPIO_Init
+                0x08003cc4      0x1cc objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08003cc4                HAL_GPIO_Init
+ .text.HAL_GPIO_WritePin
+                0x08003e90        0xa objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08003e90                HAL_GPIO_WritePin
+ *fill*         0x08003e9a        0x2 
+ .text.HAL_UART_Init
+                0x08003e9c       0xdc objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08003e9c                HAL_UART_Init
+ .text.HAL_UART_Transmit
+                0x08003f78       0x8a objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08003f78                HAL_UART_Transmit
+ .text.HAL_UART_Receive
+                0x08004002       0x98 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                0x08004002                HAL_UART_Receive
+ *fill*         0x0800409a        0x2 
+ .text._sbrk    0x0800409c       0x34 objdir-CW308_STM32F4/stm32f4_sysmem.o
+                0x0800409c                _sbrk
+ .text.HAL_RNG_MspInit
+                0x080040d0        0x2 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+                0x080040d0                HAL_RNG_MspInit
+ .text.HAL_RNG_Init
+                0x080040d2       0x3a objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+                0x080040d2                HAL_RNG_Init
+ .text.KeccakF1600_StateExtractBytes
+                0x0800410c       0x42 objdir-CW308_STM32F4/keccakf1600.o
+                0x0800410c                KeccakF1600_StateExtractBytes
+ .text.KeccakF1600_StateXORBytes
+                0x0800414e       0x4c objdir-CW308_STM32F4/keccakf1600.o
+                0x0800414e                KeccakF1600_StateXORBytes
+ *fill*         0x0800419a        0x2 
+ .text.KeccakF1600_StatePermute
+                0x0800419c      0xe5c objdir-CW308_STM32F4/keccakf1600.o
+                0x0800419c                KeccakF1600_StatePermute
+ .text.Reset_Handler
+                0x08004ff8       0x48 objdir-CW308_STM32F4/stm32f4_startup.o
+                0x08004ff8                Reset_Handler
+ .text.Default_Handler
+                0x08005040        0x2 objdir-CW308_STM32F4/stm32f4_startup.o
+                0x08005040                DebugMon_Handler
+                0x08005040                HardFault_Handler
+                0x08005040                SysTick_Handler
+                0x08005040                PendSV_Handler
+                0x08005040                NMI_Handler
+                0x08005040                UsageFault_Handler
+                0x08005040                Default_Handler
+                0x08005040                MemManage_Handler
+                0x08005040                SVC_Handler
+                0x08005040                BusFault_Handler
+ *fill*         0x08005042        0x2 
+ .text.calloc   0x08005044       0x18 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+                0x08005044                calloc
+ .text._calloc_r
+                0x0800505c       0x60 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+                0x0800505c                _calloc_r
+ .text.__errno  0x080050bc        0xc d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+                0x080050bc                __errno
+ .text.__libc_init_array
+                0x080050c8       0x48 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+                0x080050c8                __libc_init_array
+ .text.free     0x08005110       0x10 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+                0x08005110                free
+ .text._malloc_r
+                0x08005120      0x560 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                0x08005120                _malloc_r
+ .text.memset   0x08005680       0xa4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memset.o)
+                0x08005680                memset
+ .text.__malloc_lock
+                0x08005724        0xc d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+                0x08005724                __malloc_lock
+ .text.__malloc_unlock
+                0x08005730        0xc d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+                0x08005730                __malloc_unlock
+ .text._sbrk_r  0x0800573c       0x24 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+                0x0800573c                _sbrk_r
+ .text.startup.register_fini
+                0x08005760       0x14 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+ .text.atexit   0x08005774        0xc d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+                0x08005774                atexit
+ .text.__libc_fini_array
+                0x08005780       0x2c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+                0x08005780                __libc_fini_array
+ .text._malloc_trim_r
+                0x080057ac       0xa0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+                0x080057ac                _malloc_trim_r
+ .text._free_r  0x0800584c      0x20c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+                0x0800584c                _free_r
+ .text.__retarget_lock_acquire_recursive
+                0x08005a58        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                0x08005a58                __retarget_lock_acquire_recursive
+ .text.__retarget_lock_release_recursive
+                0x08005a5c        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                0x08005a5c                __retarget_lock_release_recursive
+ .text.__register_exitproc
+                0x08005a60       0x8c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+                0x08005a60                __register_exitproc
+ *(.glue_7)
+ .glue_7        0x08005aec        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x08005aec        0x0 linker stubs
+ *(.eh_frame)
+ .eh_frame      0x08005aec        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+ *(.init)
+ .init          0x08005aec        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+                0x08005aec                _init
+ .init          0x08005af0        0x8 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtn.o
+ *(.fini)
+ .fini          0x08005af8        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+                0x08005af8                _fini
+ .fini          0x08005afc        0x8 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtn.o
+                0x08005b04                . = ALIGN (0x4)
+                0x08005b04                _etext = .
+
+.vfp11_veneer   0x08005b04        0x0
+ .vfp11_veneer  0x08005b04        0x0 linker stubs
+
+.v4_bx          0x08005b04        0x0
+ .v4_bx         0x08005b04        0x0 linker stubs
+
+.iplt           0x08005b04        0x0
+ .iplt          0x08005b04        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+
+.rodata         0x08005b08     0x1280
+                0x08005b08                . = ALIGN (0x4)
+ *(.rodata)
+ .rodata        0x08005b08      0x4c0 objdir-CW308_STM32F4/smallpoly.o
+ .rodata        0x08005fc8      0xbf8 objdir-CW308_STM32F4/ntt.o
+ .rodata        0x08006bc0       0xc0 objdir-CW308_STM32F4/keccakf1600.o
+ *(.rodata*)
+ .rodata.str1.1
+                0x08006c80      0x101 objdir-CW308_STM32F4/sign.o
+ *fill*         0x08006d81        0x3 
+ .rodata._global_impure_ptr
+                0x08006d84        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+                0x08006d84                _global_impure_ptr
+                0x08006d88                . = ALIGN (0x4)
+
+.rel.dyn        0x08006d88        0x0
+ .rel.iplt      0x08006d88        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+
+.ARM.extab      0x08006d88        0x0
+                0x08006d88                . = ALIGN (0x4)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+                0x08006d88                . = ALIGN (0x4)
+
+.ARM            0x08006d88        0x0
+                0x08006d88                . = ALIGN (0x4)
+                0x08006d88                __exidx_start = .
+ *(.ARM.exidx*)
+                0x08006d88                __exidx_end = .
+                0x08006d88                . = ALIGN (0x4)
+
+.preinit_array  0x08006d88        0x0
+                0x08006d88                . = ALIGN (0x4)
+                0x08006d88                PROVIDE (__preinit_array_start = .)
+ *(.preinit_array*)
+                0x08006d88                PROVIDE (__preinit_array_end = .)
+                0x08006d88                . = ALIGN (0x4)
+
+.init_array     0x08006d88        0x8
+                0x08006d88                . = ALIGN (0x4)
+                0x08006d88                PROVIDE (__init_array_start = .)
+ *(SORT_BY_NAME(.init_array.*))
+ .init_array.00000
+                0x08006d88        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+ *(.init_array*)
+ .init_array    0x08006d8c        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+                0x08006d90                PROVIDE (__init_array_end = .)
+                0x08006d90                . = ALIGN (0x4)
+
+.fini_array     0x08006d90        0x4
+                0x08006d90                . = ALIGN (0x4)
+                0x08006d90                PROVIDE (__fini_array_start = .)
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array*)
+ .fini_array    0x08006d90        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+                0x08006d94                PROVIDE (__fini_array_end = .)
+                0x08006d94                . = ALIGN (0x4)
+                0x08006d94                _sidata = LOADADDR (.data)
+
+.data           0x10000000      0x844 load address 0x08006d94
+                0x10000000                . = ALIGN (0x4)
+                0x10000000                _sdata = .
+ *(.data)
+ *(.data*)
+ .data._impure_ptr
+                0x10000000        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+                0x10000000                _impure_ptr
+ *fill*         0x10000004        0x4 
+ .data.impure_data
+                0x10000008      0x428 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+ .data.__malloc_av_
+                0x10000430      0x408 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                0x10000430                __malloc_av_
+ .data.__malloc_sbrk_base
+                0x10000838        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                0x10000838                __malloc_sbrk_base
+ .data.__malloc_trim_threshold
+                0x1000083c        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                0x1000083c                __malloc_trim_threshold
+ .data.__atexit_recursive_mutex
+                0x10000840        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                0x10000840                __atexit_recursive_mutex
+                0x10000844                . = ALIGN (0x4)
+                0x10000844                _edata = .
+
+.igot.plt       0x10000844        0x0 load address 0x080075d8
+ .igot.plt      0x10000844        0x0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+                0x10000844                . = ALIGN (0x4)
+
+.bss            0x10000844      0x704 load address 0x080075d8
+                0x10000844                _sbss = .
+                0x10000844                __bss_start__ = _sbss
+ *(.bss)
+ .bss           0x10000844       0x1c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+ .bss           0x10000860      0x604 objdir-CW308_STM32F4/simpleserial.o
+ .bss           0x10000e64       0x9c objdir-CW308_STM32F4/stm32f4_hal.o
+                0x10000e64                RngHandle
+                0x10000e70                UartHandle
+                0x10000ef0                hw_key
+ .bss           0x10000f00        0x4 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .bss           0x10000f04        0x4 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ *(.bss*)
+ .bss.__malloc_current_mallinfo
+                0x10000f08       0x28 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                0x10000f08                __malloc_current_mallinfo
+ .bss.__malloc_max_sbrked_mem
+                0x10000f30        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                0x10000f30                __malloc_max_sbrked_mem
+ .bss.__malloc_max_total_mem
+                0x10000f34        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                0x10000f34                __malloc_max_total_mem
+ .bss.__malloc_top_pad
+                0x10000f38        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                0x10000f38                __malloc_top_pad
+ .bss.__lock___atexit_recursive_mutex
+                0x10000f3c        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                0x10000f3c                __lock___atexit_recursive_mutex
+ *fill*         0x10000f3d        0x3 
+ .bss.__lock___malloc_recursive_mutex
+                0x10000f40        0x1 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                0x10000f40                __lock___malloc_recursive_mutex
+ *fill*         0x10000f41        0x3 
+ .bss.errno     0x10000f44        0x4 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+                0x10000f44                errno
+ *(COMMON)
+                0x10000f48                . = ALIGN (0x4)
+                0x10000f48                _ebss = .
+                0x10000f48                __bss_end__ = _ebss
+
+._user_heap_stack
+                0x10000f48     0x1000 load address 0x080075d8
+                0x10000f48                . = ALIGN (0x8)
+                0x10000f48                PROVIDE (end = .)
+                [!provide]                PROVIDE (_end = .)
+                0x10000f48                . = (. + _Min_Heap_Size)
+                0x10001f48                . = (. + _Min_Stack_Size)
+ *fill*         0x10000f48     0x1000 
+                0x10001f48                . = ALIGN (0x8)
+
+/DISCARD/
+ libc.a(*)
+ libm.a(*)
+ libgcc.a(*)
+
+.ARM.attributes
+                0x00000000       0x2e
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x1e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+ .ARM.attributes
+                0x0000001e       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+ .ARM.attributes
+                0x0000004c       0x2e objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .ARM.attributes
+                0x0000007a       0x2e objdir-CW308_STM32F4/sign.o
+ .ARM.attributes
+                0x000000a8       0x2e objdir-CW308_STM32F4/packing.o
+ .ARM.attributes
+                0x000000d6       0x2e objdir-CW308_STM32F4/poly.o
+ .ARM.attributes
+                0x00000104       0x2e objdir-CW308_STM32F4/polyvec.o
+ .ARM.attributes
+                0x00000132       0x2e objdir-CW308_STM32F4/rounding.o
+ .ARM.attributes
+                0x00000160       0x2e objdir-CW308_STM32F4/symmetric-shake.o
+ .ARM.attributes
+                0x0000018e       0x2e objdir-CW308_STM32F4/smallpoly.o
+ .ARM.attributes
+                0x000001bc       0x2e objdir-CW308_STM32F4/fips202.o
+ .ARM.attributes
+                0x000001ea       0x2e objdir-CW308_STM32F4/simpleserial.o
+ .ARM.attributes
+                0x00000218       0x2e objdir-CW308_STM32F4/stm32f4_hal.o
+ .ARM.attributes
+                0x00000246       0x2e objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .ARM.attributes
+                0x00000274       0x2e objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .ARM.attributes
+                0x000002a2       0x2e objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .ARM.attributes
+                0x000002d0       0x25 objdir-CW308_STM32F4/basemul_257.o
+ .ARM.attributes
+                0x000002f5       0x25 objdir-CW308_STM32F4/fnt_257.o
+ .ARM.attributes
+                0x0000031a       0x25 objdir-CW308_STM32F4/ifnt_257.o
+ .ARM.attributes
+                0x0000033f       0x20 objdir-CW308_STM32F4/ntt.o
+ .ARM.attributes
+                0x0000035f       0x20 objdir-CW308_STM32F4/pointwise_mont123.o
+ .ARM.attributes
+                0x0000037f       0x20 objdir-CW308_STM32F4/vector123.o
+ .ARM.attributes
+                0x0000039f       0x2e objdir-CW308_STM32F4/keccakf1600.o
+ .ARM.attributes
+                0x000003cd       0x25 objdir-CW308_STM32F4/stm32f4_startup.o
+ .ARM.attributes
+                0x000003f2       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+ .ARM.attributes
+                0x00000420       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+ .ARM.attributes
+                0x0000044e       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+ .ARM.attributes
+                0x0000047c       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+ .ARM.attributes
+                0x000004aa       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+ .ARM.attributes
+                0x000004d8       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+ .ARM.attributes
+                0x00000506       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+ .ARM.attributes
+                0x00000534       0x1c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memcpy.o)
+ .ARM.attributes
+                0x00000550       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memset.o)
+ .ARM.attributes
+                0x0000057e       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+ .ARM.attributes
+                0x000005ac       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+ .ARM.attributes
+                0x000005da       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+ .ARM.attributes
+                0x00000608       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+ .ARM.attributes
+                0x00000636       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+ .ARM.attributes
+                0x00000664       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+ .ARM.attributes
+                0x00000692       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .ARM.attributes
+                0x000006c0       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+ .ARM.attributes
+                0x000006ee       0x2e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+ .ARM.attributes
+                0x0000071c       0x1e d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtn.o
+OUTPUT(PQCgenKAT_sign-CW308_STM32F4.elf elf32-littlearm)
+LOAD linker stubs
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libc.a
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libm.a
+LOAD d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp\libgcc.a
+
+.debug_info     0x00000000     0xd395
+ .debug_info    0x00000000     0x12b8 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .debug_info    0x000012b8     0x1bc9 objdir-CW308_STM32F4/sign.o
+ .debug_info    0x00002e81      0x838 objdir-CW308_STM32F4/packing.o
+ .debug_info    0x000036b9     0x11e9 objdir-CW308_STM32F4/poly.o
+ .debug_info    0x000048a2     0x11e3 objdir-CW308_STM32F4/polyvec.o
+ .debug_info    0x00005a85      0x1f6 objdir-CW308_STM32F4/rounding.o
+ .debug_info    0x00005c7b      0x3f3 objdir-CW308_STM32F4/symmetric-shake.o
+ .debug_info    0x0000606e      0x577 objdir-CW308_STM32F4/smallpoly.o
+ .debug_info    0x000065e5     0x205e objdir-CW308_STM32F4/fips202.o
+ .debug_info    0x00008643      0x9a5 objdir-CW308_STM32F4/simpleserial.o
+ .debug_info    0x00008fe8     0x177c objdir-CW308_STM32F4/stm32f4_hal.o
+ .debug_info    0x0000a764     0x1e8d objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_info    0x0000c5f1      0x119 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_info    0x0000c70a      0x56f objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_info    0x0000cc79      0x71c objdir-CW308_STM32F4/keccakf1600.o
+
+.debug_abbrev   0x00000000     0x1fef
+ .debug_abbrev  0x00000000      0x30b objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .debug_abbrev  0x0000030b      0x299 objdir-CW308_STM32F4/sign.o
+ .debug_abbrev  0x000005a4      0x195 objdir-CW308_STM32F4/packing.o
+ .debug_abbrev  0x00000739      0x2f0 objdir-CW308_STM32F4/poly.o
+ .debug_abbrev  0x00000a29      0x1c0 objdir-CW308_STM32F4/polyvec.o
+ .debug_abbrev  0x00000be9      0x111 objdir-CW308_STM32F4/rounding.o
+ .debug_abbrev  0x00000cfa       0xf6 objdir-CW308_STM32F4/symmetric-shake.o
+ .debug_abbrev  0x00000df0      0x177 objdir-CW308_STM32F4/smallpoly.o
+ .debug_abbrev  0x00000f67      0x2f6 objdir-CW308_STM32F4/fips202.o
+ .debug_abbrev  0x0000125d      0x29d objdir-CW308_STM32F4/simpleserial.o
+ .debug_abbrev  0x000014fa      0x26f objdir-CW308_STM32F4/stm32f4_hal.o
+ .debug_abbrev  0x00001769      0x444 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_abbrev  0x00001bad       0xe1 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_abbrev  0x00001c8e      0x28a objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_abbrev  0x00001f18       0xd7 objdir-CW308_STM32F4/keccakf1600.o
+
+.debug_loc      0x00000000     0xa056
+ .debug_loc     0x00000000      0x53d objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .debug_loc     0x0000053d      0xb46 objdir-CW308_STM32F4/sign.o
+ .debug_loc     0x00001083      0xb7e objdir-CW308_STM32F4/packing.o
+ .debug_loc     0x00001c01     0x144a objdir-CW308_STM32F4/poly.o
+ .debug_loc     0x0000304b     0x1213 objdir-CW308_STM32F4/polyvec.o
+ .debug_loc     0x0000425e      0x259 objdir-CW308_STM32F4/rounding.o
+ .debug_loc     0x000044b7      0x1bf objdir-CW308_STM32F4/symmetric-shake.o
+ .debug_loc     0x00004676      0x3c1 objdir-CW308_STM32F4/smallpoly.o
+ .debug_loc     0x00004a37     0x163c objdir-CW308_STM32F4/fips202.o
+ .debug_loc     0x00006073      0x9ee objdir-CW308_STM32F4/simpleserial.o
+ .debug_loc     0x00006a61      0x2da objdir-CW308_STM32F4/stm32f4_hal.o
+ .debug_loc     0x00006d3b     0x1344 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_loc     0x0000807f       0x74 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_loc     0x000080f3      0x3b9 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_loc     0x000084ac     0x1baa objdir-CW308_STM32F4/keccakf1600.o
+
+.debug_aranges  0x00000000      0x750
+ .debug_aranges
+                0x00000000       0x38 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .debug_aranges
+                0x00000038       0x58 objdir-CW308_STM32F4/sign.o
+ .debug_aranges
+                0x00000090       0x68 objdir-CW308_STM32F4/packing.o
+ .debug_aranges
+                0x000000f8       0xf8 objdir-CW308_STM32F4/poly.o
+ .debug_aranges
+                0x000001f0       0xf0 objdir-CW308_STM32F4/polyvec.o
+ .debug_aranges
+                0x000002e0       0x38 objdir-CW308_STM32F4/rounding.o
+ .debug_aranges
+                0x00000318       0x30 objdir-CW308_STM32F4/symmetric-shake.o
+ .debug_aranges
+                0x00000348       0x40 objdir-CW308_STM32F4/smallpoly.o
+ .debug_aranges
+                0x00000388      0x168 objdir-CW308_STM32F4/fips202.o
+ .debug_aranges
+                0x000004f0       0x78 objdir-CW308_STM32F4/simpleserial.o
+ .debug_aranges
+                0x00000568       0x88 objdir-CW308_STM32F4/stm32f4_hal.o
+ .debug_aranges
+                0x000005f0       0x98 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_aranges
+                0x00000688       0x20 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_aranges
+                0x000006a8       0x70 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_aranges
+                0x00000718       0x38 objdir-CW308_STM32F4/keccakf1600.o
+
+.debug_ranges   0x00000000      0x998
+ .debug_ranges  0x00000000       0x28 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .debug_ranges  0x00000028       0xb8 objdir-CW308_STM32F4/sign.o
+ .debug_ranges  0x000000e0       0x58 objdir-CW308_STM32F4/packing.o
+ .debug_ranges  0x00000138       0xe8 objdir-CW308_STM32F4/poly.o
+ .debug_ranges  0x00000220       0xe0 objdir-CW308_STM32F4/polyvec.o
+ .debug_ranges  0x00000300       0x28 objdir-CW308_STM32F4/rounding.o
+ .debug_ranges  0x00000328       0x20 objdir-CW308_STM32F4/symmetric-shake.o
+ .debug_ranges  0x00000348       0x50 objdir-CW308_STM32F4/smallpoly.o
+ .debug_ranges  0x00000398      0x158 objdir-CW308_STM32F4/fips202.o
+ .debug_ranges  0x000004f0      0x140 objdir-CW308_STM32F4/simpleserial.o
+ .debug_ranges  0x00000630      0x120 objdir-CW308_STM32F4/stm32f4_hal.o
+ .debug_ranges  0x00000750      0x198 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_ranges  0x000008e8       0x10 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_ranges  0x000008f8       0x78 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_ranges  0x00000970       0x28 objdir-CW308_STM32F4/keccakf1600.o
+
+.debug_line     0x00000000     0x842f
+ .debug_line    0x00000000      0x553 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .debug_line    0x00000553      0x781 objdir-CW308_STM32F4/sign.o
+ .debug_line    0x00000cd4      0x860 objdir-CW308_STM32F4/packing.o
+ .debug_line    0x00001534     0x1419 objdir-CW308_STM32F4/poly.o
+ .debug_line    0x0000294d      0x951 objdir-CW308_STM32F4/polyvec.o
+ .debug_line    0x0000329e      0x219 objdir-CW308_STM32F4/rounding.o
+ .debug_line    0x000034b7      0x198 objdir-CW308_STM32F4/symmetric-shake.o
+ .debug_line    0x0000364f      0x439 objdir-CW308_STM32F4/smallpoly.o
+ .debug_line    0x00003a88      0x944 objdir-CW308_STM32F4/fips202.o
+ .debug_line    0x000043cc      0x6fb objdir-CW308_STM32F4/simpleserial.o
+ .debug_line    0x00004ac7      0x5d5 objdir-CW308_STM32F4/stm32f4_hal.o
+ .debug_line    0x0000509c     0x1578 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_line    0x00006614      0x111 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_line    0x00006725      0x4cf objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_line    0x00006bf4     0x183b objdir-CW308_STM32F4/keccakf1600.o
+
+.debug_str      0x00000000     0x2af4
+ .debug_str     0x00000000      0x697 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+                                0x729 (size before relaxing)
+ .debug_str     0x00000697      0x801 objdir-CW308_STM32F4/sign.o
+                                0xa83 (size before relaxing)
+ .debug_str     0x00000e98      0x150 objdir-CW308_STM32F4/packing.o
+                                0x47b (size before relaxing)
+ .debug_str     0x00000fe8      0x3a5 objdir-CW308_STM32F4/poly.o
+                                0x8c3 (size before relaxing)
+ .debug_str     0x0000138d      0x112 objdir-CW308_STM32F4/polyvec.o
+                                0x91f (size before relaxing)
+ .debug_str     0x0000149f        0xb objdir-CW308_STM32F4/rounding.o
+                                0x25b (size before relaxing)
+ .debug_str     0x000014aa       0x83 objdir-CW308_STM32F4/symmetric-shake.o
+                                0x34c (size before relaxing)
+ .debug_str     0x0000152d       0xb8 objdir-CW308_STM32F4/smallpoly.o
+                                0x361 (size before relaxing)
+ .debug_str     0x000015e5      0x456 objdir-CW308_STM32F4/fips202.o
+                                0x7c5 (size before relaxing)
+ .debug_str     0x00001a3b      0x11b objdir-CW308_STM32F4/simpleserial.o
+                                0x38e (size before relaxing)
+ .debug_str     0x00001b56      0xb90 objdir-CW308_STM32F4/stm32f4_hal.o
+                                0xe1c (size before relaxing)
+ .debug_str     0x000026e6      0x262 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                0xe67 (size before relaxing)
+ .debug_str     0x00002948       0x55 objdir-CW308_STM32F4/stm32f4_sysmem.o
+                                0x21f (size before relaxing)
+ .debug_str     0x0000299d      0x132 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+                                0x466 (size before relaxing)
+ .debug_str     0x00002acf       0x25 objdir-CW308_STM32F4/keccakf1600.o
+                                0x280 (size before relaxing)
+
+.comment        0x00000000       0x4d
+ .comment       0x00000000       0x4d objdir-CW308_STM32F4/PQCgenKAT_sign.o
+                                 0x4e (size before relaxing)
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/sign.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/packing.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/poly.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/polyvec.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/rounding.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/symmetric-shake.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/smallpoly.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/fips202.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/simpleserial.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/stm32f4_hal.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .comment       0x0000004d       0x4e objdir-CW308_STM32F4/keccakf1600.o
+
+.debug_frame    0x00000000     0x1aac
+ .debug_frame   0x00000000       0x94 objdir-CW308_STM32F4/PQCgenKAT_sign.o
+ .debug_frame   0x00000094      0x158 objdir-CW308_STM32F4/sign.o
+ .debug_frame   0x000001ec      0x124 objdir-CW308_STM32F4/packing.o
+ .debug_frame   0x00000310      0x318 objdir-CW308_STM32F4/poly.o
+ .debug_frame   0x00000628      0x348 objdir-CW308_STM32F4/polyvec.o
+ .debug_frame   0x00000970       0x68 objdir-CW308_STM32F4/rounding.o
+ .debug_frame   0x000009d8       0x64 objdir-CW308_STM32F4/symmetric-shake.o
+ .debug_frame   0x00000a3c       0xbc objdir-CW308_STM32F4/smallpoly.o
+ .debug_frame   0x00000af8      0x528 objdir-CW308_STM32F4/fips202.o
+ .debug_frame   0x00001020      0x170 objdir-CW308_STM32F4/simpleserial.o
+ .debug_frame   0x00001190      0x168 objdir-CW308_STM32F4/stm32f4_hal.o
+ .debug_frame   0x000012f8      0x1b8 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+ .debug_frame   0x000014b0       0x28 objdir-CW308_STM32F4/stm32f4_sysmem.o
+ .debug_frame   0x000014d8      0x110 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+ .debug_frame   0x000015e8       0x9c objdir-CW308_STM32F4/keccakf1600.o
+ .debug_frame   0x00001684       0x2c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+ .debug_frame   0x000016b0       0x28 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+ .debug_frame   0x000016d8       0x20 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+ .debug_frame   0x000016f8       0x2c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+ .debug_frame   0x00001724       0x30 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+ .debug_frame   0x00001754       0x4c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+ .debug_frame   0x000017a0       0x2c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memset.o)
+ .debug_frame   0x000017cc       0x30 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+ .debug_frame   0x000017fc       0x2c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+ .debug_frame   0x00001828       0x5c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+ .debug_frame   0x00001884       0x20 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+ .debug_frame   0x000018a4       0x34 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+ .debug_frame   0x000018d8       0x8c d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+ .debug_frame   0x00001964       0xb0 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+ .debug_frame   0x00001a14       0x64 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+ .debug_frame   0x00001a78       0x34 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+
+.stab           0x00000000     0x22f8
+ .stab          0x00000000      0x270 objdir-CW308_STM32F4/basemul_257.o
+ .stab          0x00000270      0x294 objdir-CW308_STM32F4/fnt_257.o
+                                0x2a0 (size before relaxing)
+ .stab          0x00000504      0x960 objdir-CW308_STM32F4/ifnt_257.o
+                                0x96c (size before relaxing)
+ .stab          0x00000e64      0x9a8 objdir-CW308_STM32F4/ntt.o
+                                0x9b4 (size before relaxing)
+ .stab          0x0000180c      0x420 objdir-CW308_STM32F4/pointwise_mont123.o
+                                0x42c (size before relaxing)
+ .stab          0x00001c2c      0x594 objdir-CW308_STM32F4/vector123.o
+                                0x5a0 (size before relaxing)
+ .stab          0x000021c0      0x138 objdir-CW308_STM32F4/stm32f4_startup.o
+                                0x144 (size before relaxing)
+
+.stabstr        0x00000000      0x1bd
+ .stabstr       0x00000000      0x1bd objdir-CW308_STM32F4/basemul_257.o
+
+Cross Reference Table
+
+Symbol                                            File
+AES128_ECB_decrypt                                objdir-CW308_STM32F4/aes.o
+AES128_ECB_encrypt                                objdir-CW308_STM32F4/aes.o
+AES128_ECB_indp_crypto                            objdir-CW308_STM32F4/aes.o
+                                                  objdir-CW308_STM32F4/aes-independant.o
+AES128_ECB_indp_setkey                            objdir-CW308_STM32F4/aes.o
+                                                  objdir-CW308_STM32F4/aes-independant.o
+AlgName                                           objdir-CW308_STM32F4/PQCgenKAT_sign.o
+BusFault_Handler                                  objdir-CW308_STM32F4/stm32f4_startup.o
+DebugMon_Handler                                  objdir-CW308_STM32F4/stm32f4_startup.o
+Default_Handler                                   objdir-CW308_STM32F4/stm32f4_startup.o
+HAL_CRYP_AESECB_Decrypt                           objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_CRYP_AESECB_Encrypt                           objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_CRYP_DeInit                                   objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+HAL_CRYP_Init                                     objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_GPIO_Init                                     objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_GPIO_WritePin                                 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_GetTick                                       objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RCC_ClockConfig                               objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_RCC_GetPCLK1Freq                              objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+HAL_RCC_GetPCLK2Freq                              objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+HAL_RCC_OscConfig                                 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_RNG_DeInit                                    objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_ErrorCallback                             objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_GenerateRandomNumber                      objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_RNG_GenerateRandomNumber_IT                   objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_GetRandomNumber                           objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_GetRandomNumber_IT                        objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_GetState                                  objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_IRQHandler                                objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_Init                                      objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_RNG_MspDeInit                                 objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_MspInit                                   objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_ReadLastRandomNumber                      objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_RNG_ReadyDataCallback                         objdir-CW308_STM32F4/stm32f4xx_hal_rng.o
+HAL_UART_Init                                     objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_UART_Receive                                  objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HAL_UART_Transmit                                 objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+                                                  objdir-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Dec                                     objdir-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Enc                                     objdir-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Enc_posttrigger                         objdir-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Enc_pretrigger                          objdir-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_Init                                    objdir-CW308_STM32F4/stm32f4_hal.o
+HW_AES128_LoadKey                                 objdir-CW308_STM32F4/stm32f4_hal.o
+HardFault_Handler                                 objdir-CW308_STM32F4/stm32f4_startup.o
+KeccakF1600_StateExtractBytes                     objdir-CW308_STM32F4/keccakf1600.o
+                                                  objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/sign.o
+KeccakF1600_StatePermute                          objdir-CW308_STM32F4/keccakf1600.o
+                                                  objdir-CW308_STM32F4/fips202.o
+KeccakF1600_StateXORBytes                         objdir-CW308_STM32F4/keccakf1600.o
+                                                  objdir-CW308_STM32F4/fips202.o
+KeccakF1600_StateXORBytes1                        objdir-CW308_STM32F4/keccakf1600.o
+                                                  objdir-CW308_STM32F4/fips202.o
+MemManage_Handler                                 objdir-CW308_STM32F4/stm32f4_startup.o
+NMI_Handler                                       objdir-CW308_STM32F4/stm32f4_startup.o
+PendSV_Handler                                    objdir-CW308_STM32F4/stm32f4_startup.o
+RCC_AHB2PeriphClockCmd                            objdir-CW308_STM32F4/stm32f4_hal_lowlevel.o
+Rcon                                              objdir-CW308_STM32F4/aes.o
+Reset_Handler                                     objdir-CW308_STM32F4/stm32f4_startup.o
+RngHandle                                         objdir-CW308_STM32F4/stm32f4_hal.o
+SVC_Handler                                       objdir-CW308_STM32F4/stm32f4_startup.o
+SysTick_Handler                                   objdir-CW308_STM32F4/stm32f4_startup.o
+SystemInit                                        objdir-CW308_STM32F4/stm32f4_startup.o
+UartHandle                                        objdir-CW308_STM32F4/stm32f4_hal.o
+UsageFault_Handler                                objdir-CW308_STM32F4/stm32f4_startup.o
+__asm_asymmetric_mul_257_16                       objdir-CW308_STM32F4/basemul_257.o
+                                                  objdir-CW308_STM32F4/smallpoly.o
+__asm_fnt_257                                     objdir-CW308_STM32F4/fnt_257.o
+                                                  objdir-CW308_STM32F4/smallpoly.o
+__asm_ifnt_257                                    objdir-CW308_STM32F4/ifnt_257.o
+                                                  objdir-CW308_STM32F4/smallpoly.o
+__asm_point_mul_257_16                            objdir-CW308_STM32F4/basemul_257.o
+                                                  objdir-CW308_STM32F4/smallpoly.o
+__atexit_recursive_mutex                          d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+__bss_end__                                       d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__bss_start__                                     d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__call_exitprocs                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+__deregister_frame_info                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+__dso_handle                                      d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+__errno                                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+                                                  objdir-CW308_STM32F4/stm32f4_sysmem.o
+__fini_array_end                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+__fini_array_start                                d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+__init_array_end                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+__init_array_start                                d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+__libc_fini                                       d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+__libc_fini_array                                 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__libc_init_array                                 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+                                                  objdir-CW308_STM32F4/stm32f4_startup.o
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+__lock___arc4random_mutex                         d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__lock___at_quick_exit_mutex                      d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__lock___atexit_recursive_mutex                   d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+__lock___dd_hash_mutex                            d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__lock___env_recursive_mutex                      d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__lock___malloc_recursive_mutex                   d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+__lock___sfp_recursive_mutex                      d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__lock___sinit_recursive_mutex                    d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__lock___tz_mutex                                 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__malloc_av_                                      d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+__malloc_current_mallinfo                         d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+__malloc_lock                                     d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+__malloc_max_sbrked_mem                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+__malloc_max_total_mem                            d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+__malloc_sbrk_base                                d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+__malloc_top_pad                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+__malloc_trim_threshold                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+__malloc_unlock                                   d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+__preinit_array_end                               d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+__preinit_array_start                             d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+__register_exitproc                               d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+__register_frame_info                             d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crtbegin.o
+__retarget_lock_acquire                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__retarget_lock_acquire_recursive                 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+__retarget_lock_close                             d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__retarget_lock_close_recursive                   d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__retarget_lock_init                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__retarget_lock_init_recursive                    d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__retarget_lock_release                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__retarget_lock_release_recursive                 d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mlock.o)
+__retarget_lock_try_acquire                       d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__retarget_lock_try_acquire_recursive             d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-lock.o)
+__stack                                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+_calloc_r                                         d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+_ebss                                             objdir-CW308_STM32F4/stm32f4_startup.o
+_edata                                            objdir-CW308_STM32F4/stm32f4_startup.o
+_estack                                           objdir-CW308_STM32F4/stm32f4_startup.o
+_exit                                             d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libnosys.a(_exit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+_fini                                             d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-fini.o)
+_free_r                                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+_global_impure_ptr                                d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+_impure_ptr                                       d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-impure.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-errno.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+_init                                             d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/thumb/v7e-m/nofp/crti.o
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-init.o)
+_mainCRTStartup                                   d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+_malloc_r                                         d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+_malloc_trim_r                                    d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+_reclaim_reent                                    d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+_sbrk                                             objdir-CW308_STM32F4/stm32f4_sysmem.o
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+_sbrk_r                                           d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-freer.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-mallocr.o)
+_sbss                                             objdir-CW308_STM32F4/stm32f4_startup.o
+_sdata                                            objdir-CW308_STM32F4/stm32f4_startup.o
+_sidata                                           objdir-CW308_STM32F4/stm32f4_startup.o
+_stack_init                                       d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+_start                                            d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+aes_indep_enc                                     objdir-CW308_STM32F4/aes-independant.o
+aes_indep_enc_posttrigger                         objdir-CW308_STM32F4/aes-independant.o
+aes_indep_enc_pretrigger                          objdir-CW308_STM32F4/aes-independant.o
+aes_indep_init                                    objdir-CW308_STM32F4/aes-independant.o
+aes_indep_key                                     objdir-CW308_STM32F4/aes-independant.o
+aes_indep_mask                                    objdir-CW308_STM32F4/aes-independant.o
+atexit                                            d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-__call_atexit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+calloc                                            d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-calloc.o)
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+check_version                                     objdir-CW308_STM32F4/simpleserial.o
+cleanup_glue                                      d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+crypto_sign                                       objdir-CW308_STM32F4/sign.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+crypto_sign_keypair                               objdir-CW308_STM32F4/sign.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+crypto_sign_open                                  objdir-CW308_STM32F4/sign.o
+crypto_sign_signature                             objdir-CW308_STM32F4/sign.o
+crypto_sign_verify                                objdir-CW308_STM32F4/sign.o
+cshake128_simple                                  objdir-CW308_STM32F4/fips202.o
+cshake128_simple_absorb                           objdir-CW308_STM32F4/fips202.o
+cshake128_simple_squeezeblocks                    objdir-CW308_STM32F4/fips202.o
+cshake256_simple                                  objdir-CW308_STM32F4/fips202.o
+cshake256_simple_absorb                           objdir-CW308_STM32F4/fips202.o
+cshake256_simple_squeezeblocks                    objdir-CW308_STM32F4/fips202.o
+dilithium1                                        objdir-CW308_STM32F4/PQCgenKAT_sign.o
+dilithium_shake256_stream_init1                   objdir-CW308_STM32F4/symmetric-shake.o
+enc_password                                      objdir-CW308_STM32F4/PQCgenKAT_sign.o
+enc_password1                                     objdir-CW308_STM32F4/PQCgenKAT_sign.o
+enckey                                            objdir-CW308_STM32F4/aes-independant.o
+end                                               objdir-CW308_STM32F4/stm32f4_sysmem.o
+errno                                             d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-reent.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-sbrkr.o)
+exit                                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-exit.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+free                                              d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+g_pfnVectors                                      objdir-CW308_STM32F4/stm32f4_startup.o
+get_rand                                          objdir-CW308_STM32F4/stm32f4_hal.o
+getch                                             objdir-CW308_STM32F4/stm32f4_hal.o
+                                                  objdir-CW308_STM32F4/simpleserial.o
+hardware_init_hook                                d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+hex_decode                                        objdir-CW308_STM32F4/simpleserial.o
+hw_key                                            objdir-CW308_STM32F4/stm32f4_hal.o
+init_uart                                         objdir-CW308_STM32F4/stm32f4_hal.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+main                                              objdir-CW308_STM32F4/PQCgenKAT_sign.o
+                                                  objdir-CW308_STM32F4/stm32f4_startup.o
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+malloc                                            d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-malloc.o)
+memcpy                                            d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memcpy.o)
+                                                  objdir-CW308_STM32F4/simpleserial.o
+                                                  objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/sign.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+memset                                            d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-memset.o)
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp\libg.a(lib_a-callocr.o)
+                                                  objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+                                                  d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+platform_init                                     objdir-CW308_STM32F4/stm32f4_hal.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+poly_small_basemul_invntt                         objdir-CW308_STM32F4/smallpoly.o
+                                                  objdir-CW308_STM32F4/sign.o
+poly_small_ntt_precomp                            objdir-CW308_STM32F4/smallpoly.o
+                                                  objdir-CW308_STM32F4/sign.o
+poly_uniform_gamma11                              objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+polyveck_small_ntt                                objdir-CW308_STM32F4/smallpoly.o
+                                                  objdir-CW308_STM32F4/sign.o
+polyvecl_small_basemul_invntt                     objdir-CW308_STM32F4/smallpoly.o
+                                                  objdir-CW308_STM32F4/sign.o
+polyvecl_small_ntt                                objdir-CW308_STM32F4/smallpoly.o
+                                                  objdir-CW308_STM32F4/sign.o
+polyvecl_uniform_gamma11                          objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_asm_caddq                    objdir-CW308_STM32F4/vector123.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_asm_pointwise_acc_montgomery objdir-CW308_STM32F4/pointwise_mont123.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_asm_pointwise_montgomery     objdir-CW308_STM32F4/pointwise_mont123.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_asm_reduce32                 objdir-CW308_STM32F4/vector123.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_asm_rej_uniform              objdir-CW308_STM32F4/vector123.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_decompose                    objdir-CW308_STM32F4/rounding.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_dilithium_shake128_stream_init objdir-CW308_STM32F4/symmetric-shake.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_dilithium_shake256_stream_init objdir-CW308_STM32F4/symmetric-shake.o
+                                                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_invntt_tomont                objdir-CW308_STM32F4/ntt.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_make_hint                    objdir-CW308_STM32F4/rounding.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_ntt                          objdir-CW308_STM32F4/ntt.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_pack_pk                      objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_pack_sig                     objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_pack_sig_c                   objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_pack_sig_h                   objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_pack_sig_h_zero              objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_pack_sig_z                   objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_pack_sk                      objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_add                     objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_caddq                   objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_poly_challenge               objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_chknorm                 objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_decompose               objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_poly_invntt_tomont           objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_make_hint               objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_ntt                     objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_pointwise_acc_montgomery objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_poly_pointwise_montgomery    objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_power2round             objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_poly_reduce                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_shiftl                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_poly_sub                     objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_poly_uniform                 objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_poly_uniform_eta             objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_poly_uniform_gamma1          objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_poly_use_hint                objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_polyeta_pack                 objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_polyt0_pack                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_polyt0_unpack                objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_polyt1_pack                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_polyt1_unpack                objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_polyvec_matrix_expand        objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyvec_matrix_pointwise_montgomery objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_add                 objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_caddq               objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_chknorm             objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_polyveck_decompose           objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_invntt_tomont       objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_make_hint           objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_polyveck_ntt                 objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_pack_w1             objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_pointwise_poly_montgomery objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_power2round         objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_reduce              objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_shiftl              objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_sub                 objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_uniform_eta         objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyveck_use_hint            objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyvecl_add                 objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyvecl_chknorm             objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyvecl_invntt_tomont       objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_polyvecl_ntt                 objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyvecl_pointwise_acc_montgomery objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_polyvecl_pointwise_poly_montgomery objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_polyvecl_reduce              objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyvecl_uniform_eta         objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyvecl_uniform_gamma1      objdir-CW308_STM32F4/polyvec.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_polyw1_pack                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/polyvec.o
+pqcrystals_dilithium_polyz_pack                   objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_polyz_unpack                 objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/packing.o
+pqcrystals_dilithium_power2round                  objdir-CW308_STM32F4/rounding.o
+                                                  objdir-CW308_STM32F4/poly.o
+pqcrystals_dilithium_small_asm_reduce32_central   objdir-CW308_STM32F4/vector123.o
+pqcrystals_dilithium_unpack_pk                    objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_unpack_sig                   objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_unpack_sk                    objdir-CW308_STM32F4/packing.o
+                                                  objdir-CW308_STM32F4/sign.o
+pqcrystals_dilithium_use_hint                     objdir-CW308_STM32F4/rounding.o
+                                                  objdir-CW308_STM32F4/poly.o
+putch                                             objdir-CW308_STM32F4/stm32f4_hal.o
+                                                  objdir-CW308_STM32F4/simpleserial.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+rsbox                                             objdir-CW308_STM32F4/aes.o
+sbox                                              objdir-CW308_STM32F4/aes.o
+sha3_256                                          objdir-CW308_STM32F4/fips202.o
+sha3_256_inc_absorb                               objdir-CW308_STM32F4/fips202.o
+sha3_256_inc_ctx_clone                            objdir-CW308_STM32F4/fips202.o
+sha3_256_inc_ctx_release                          objdir-CW308_STM32F4/fips202.o
+sha3_256_inc_finalize                             objdir-CW308_STM32F4/fips202.o
+sha3_256_inc_init                                 objdir-CW308_STM32F4/fips202.o
+sha3_384                                          objdir-CW308_STM32F4/fips202.o
+sha3_384_inc_absorb                               objdir-CW308_STM32F4/fips202.o
+sha3_384_inc_ctx_clone                            objdir-CW308_STM32F4/fips202.o
+sha3_384_inc_ctx_release                          objdir-CW308_STM32F4/fips202.o
+sha3_384_inc_finalize                             objdir-CW308_STM32F4/fips202.o
+sha3_384_inc_init                                 objdir-CW308_STM32F4/fips202.o
+sha3_512                                          objdir-CW308_STM32F4/fips202.o
+sha3_512_inc_absorb                               objdir-CW308_STM32F4/fips202.o
+sha3_512_inc_ctx_clone                            objdir-CW308_STM32F4/fips202.o
+sha3_512_inc_ctx_release                          objdir-CW308_STM32F4/fips202.o
+sha3_512_inc_finalize                             objdir-CW308_STM32F4/fips202.o
+sha3_512_inc_init                                 objdir-CW308_STM32F4/fips202.o
+shake128                                          objdir-CW308_STM32F4/fips202.o
+shake128_absorb                                   objdir-CW308_STM32F4/fips202.o
+shake128_ctx_clone                                objdir-CW308_STM32F4/fips202.o
+shake128_ctx_release                              objdir-CW308_STM32F4/fips202.o
+shake128_inc_absorb                               objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/symmetric-shake.o
+shake128_inc_ctx_clone                            objdir-CW308_STM32F4/fips202.o
+shake128_inc_ctx_release                          objdir-CW308_STM32F4/fips202.o
+shake128_inc_finalize                             objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/symmetric-shake.o
+shake128_inc_init                                 objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/symmetric-shake.o
+shake128_inc_squeeze                              objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/poly.o
+shake128_squeezeblocks                            objdir-CW308_STM32F4/fips202.o
+shake256                                          objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/sign.o
+shake2561                                         objdir-CW308_STM32F4/fips202.o
+shake256_absorb                                   objdir-CW308_STM32F4/fips202.o
+shake256_ctx_clone                                objdir-CW308_STM32F4/fips202.o
+shake256_ctx_release                              objdir-CW308_STM32F4/fips202.o
+shake256_inc_absorb                               objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/symmetric-shake.o
+                                                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/sign.o
+shake256_inc_absorb1                              objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/symmetric-shake.o
+shake256_inc_ctx_clone                            objdir-CW308_STM32F4/fips202.o
+shake256_inc_ctx_release                          objdir-CW308_STM32F4/fips202.o
+shake256_inc_finalize                             objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/symmetric-shake.o
+                                                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/sign.o
+shake256_inc_init                                 objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/symmetric-shake.o
+                                                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/sign.o
+shake256_inc_squeeze                              objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/poly.o
+                                                  objdir-CW308_STM32F4/sign.o
+shake256_inc_squeeze1                             objdir-CW308_STM32F4/fips202.o
+                                                  objdir-CW308_STM32F4/poly.o
+shake256_squeezeblocks                            objdir-CW308_STM32F4/fips202.o
+simpleserial_addcmd                               objdir-CW308_STM32F4/simpleserial.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+simpleserial_get                                  objdir-CW308_STM32F4/simpleserial.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+simpleserial_init                                 objdir-CW308_STM32F4/simpleserial.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+simpleserial_put                                  objdir-CW308_STM32F4/simpleserial.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+simpleserial_put1                                 objdir-CW308_STM32F4/simpleserial.o
+small_polyeta_unpack                              objdir-CW308_STM32F4/smallpoly.o
+                                                  objdir-CW308_STM32F4/packing.o
+software_init_hook                                d:/cw_software/chipwhisperer5_64/cw/home/portable/armgcc/bin/../lib/gcc/arm-none-eabi/10.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m/nofp/crt0.o
+ss_crc                                            objdir-CW308_STM32F4/simpleserial.o
+ss_get_commands                                   objdir-CW308_STM32F4/simpleserial.o
+ss_puts                                           objdir-CW308_STM32F4/simpleserial.o
+stuff_data                                        objdir-CW308_STM32F4/simpleserial.o
+test_fun                                          objdir-CW308_STM32F4/sign.o
+test_fun2                                         objdir-CW308_STM32F4/sign.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+test_fun3                                         objdir-CW308_STM32F4/sign.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+trigger_high                                      objdir-CW308_STM32F4/stm32f4_hal.o
+                                                  objdir-CW308_STM32F4/sign.o
+trigger_low                                       objdir-CW308_STM32F4/stm32f4_hal.o
+                                                  objdir-CW308_STM32F4/sign.o
+trigger_setup                                     objdir-CW308_STM32F4/stm32f4_hal.o
+                                                  objdir-CW308_STM32F4/PQCgenKAT_sign.o
+unstuff_data                                      objdir-CW308_STM32F4/simpleserial.o

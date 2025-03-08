@@ -1,0 +1,474 @@
+   1              	# 1 "ifnt_257.S"
+   1              	#include "macros_fnt.i"
+   0              	
+   0              	
+   1              	// 2
+   2              	.macro ldrstr2 ldrstr, target, c0, c1, mem0, mem1
+   3              	    \ldrstr \c0, [\target, \mem0]
+   4              	    \ldrstr \c1, [\target, \mem1]
+   5              	.endm
+   6              	
+   7              	// 2
+   8              	.macro ldrstr2jump ldrstr, target, c0, c1, mem1, jump
+   9              	    \ldrstr \c1, [\target, \mem1]
+  10              	    \ldrstr \c0, [\target], \jump
+  11              	.endm
+  12              	
+  13              	// 4
+  14              	.macro ldrstr4 ldrstr, target, c0, c1, c2, c3, mem0, mem1, mem2, mem3
+  15              	    \ldrstr \c0, [\target, \mem0]
+  16              	    \ldrstr \c1, [\target, \mem1]
+  17              	    \ldrstr \c2, [\target, \mem2]
+  18              	    \ldrstr \c3, [\target, \mem3]
+  19              	.endm
+  20              	
+  21              	// 4
+  22              	.macro ldrstr4jump ldrstr, target, c0, c1, c2, c3, mem1, mem2, mem3, jump
+  23              	    \ldrstr \c1, [\target, \mem1]
+  24              	    \ldrstr \c2, [\target, \mem2]
+  25              	    \ldrstr \c3, [\target, \mem3]
+  26              	    \ldrstr \c0, [\target], \jump
+  27              	.endm
+  28              	
+  29              	// 8
+  30              	.macro ldrstrvec ldrstr, target, c0, c1, c2, c3, c4, c5, c6, c7, mem0, mem1, mem2, mem3, mem4, mem5
+  31              	    ldrstr4 \ldrstr, \target, \c0, \c1, \c2, \c3, \mem0, \mem1, \mem2, \mem3
+  32              	    ldrstr4 \ldrstr, \target, \c4, \c5, \c6, \c7, \mem4, \mem5, \mem6, \mem7
+  33              	.endm
+  34              	
+  35              	// 8
+  36              	.macro ldrstrvecjump ldrstr, target, c0, c1, c2, c3, c4, c5, c6, c7, mem1, mem2, mem3, mem4, mem5, 
+  37              	    ldrstr4 \ldrstr, \target, \c4, \c5, \c6, \c7, \mem4, \mem5, \mem6, \mem7
+  38              	    ldrstr4jump \ldrstr, \target, \c0, \c1, \c2, \c3, \mem1, \mem2, \mem3, \jump
+  39              	.endm
+  40              	
+  41              	
+  42              	
+  43              	.macro addSub1 c0, c1
+  44              	    add.w \c0, \c1
+  45              	    sub.w \c1, \c0, \c1, lsl #1
+  46              	.endm
+  47              	
+  48              	.macro addSub2 c0, c1, c2, c3
+  49              	    add \c0, \c1
+  50              	    add \c2, \c3
+  51              	    sub.w \c1, \c0, \c1, lsl #1
+  52              	    sub.w \c3, \c2, \c3, lsl #1
+  53              	.endm
+  54              	
+  55              	.macro addSub4 c0, c1, c2, c3, c4, c5, c6, c7
+  56              	    add \c0, \c1
+  57              	    add \c2, \c3
+  58              	    add \c4, \c5
+  59              	    add \c6, \c7
+  60              	    sub.w \c1, \c0, \c1, lsl #1
+  61              	    sub.w \c3, \c2, \c3, lsl #1
+  62              	    sub.w \c5, \c4, \c5, lsl #1
+  63              	    sub.w \c7, \c6, \c7, lsl #1
+  64              	.endm
+  65              	
+  66              	// 2
+  67              	.macro barrett_32 a, Qbar, Q, tmp
+  68              	    smmulr.w \tmp, \a, \Qbar
+  69              	    mls.w \a, \tmp, \Q, \a
+  70              	.endm
+  71              	
+  72              	.macro FNT_CT_butterfly c0, c1, logW
+  73              	    add.w \c0, \c0, \c1, lsl #\logW
+  74              	    sub.w \c1, \c0, \c1, lsl #(\logW+1)
+  75              	.endm
+  76              	
+  77              	.macro shift_subAdd c0, c1, shlv
+  78              	    sub.w \c0, \c0, \c1, lsl #(\shlv)
+  79              	    add.w \c1, \c0, \c1, lsl #(\shlv+1)
+  80              	.endm
+  81              	
+  82              	.macro FNT_CT_ibutterfly c0, c1, shlv
+  83              	    shift_subAdd \c0, \c1, \shlv
+  84              	.endm
+  85              	
+  86              	// 46
+  87              	.macro _3_layer_CT_32_FNT c0, c1, c2, c3, c4, c5, c6, c7, xi0, xi1, xi2, xi3, xi4, xi5, xi6, twiddl
+  88              	    vmov.w \twiddle, \xi0
+  89              	
+  90              	    // c0, c1, c2, c3, c4, c5, c6, c7, c8
+  91              	    // 0,4
+  92              	    mla \tmp, \c4, \twiddle, \c0
+  93              	    mls \c4, \c4, \twiddle, \c0
+  94              	
+  95              	    // 1,5
+  96              	    mla \c0, \c5, \twiddle, \c1
+  97              	    mls \c5, \c5, \twiddle, \c1
+  98              	
+  99              	    // 2,6
+ 100              	    mla \c1, \c6, \twiddle, \c2
+ 101              	    mls \c6, \c6, \twiddle, \c2
+ 102              	
+ 103              	    // 3,7
+ 104              	    mla \c2, \c7, \twiddle, \c3
+ 105              	    mls \c7, \c7, \twiddle, \c3
+ 106              	
+ 107              	    // tmp, c0, c1, c2, c4, c5, c6, c7
+ 108              	
+ 109              	    barrett_32 \tmp, \Qprime, \Q, \c3
+ 110              	    barrett_32 \c0, \Qprime, \Q, \c3
+ 111              	    barrett_32 \c1, \Qprime, \Q, \c3
+ 112              	    barrett_32 \c2, \Qprime, \Q, \c3
+ 113              	    barrett_32 \c4, \Qprime, \Q, \c3
+ 114              	    barrett_32 \c5, \Qprime, \Q, \c3
+ 115              	    barrett_32 \c6, \Qprime, \Q, \c3
+ 116              	    barrett_32 \c7, \Qprime, \Q, \c3
+ 117              	
+ 118              	    vmov.w \twiddle, \xi1
+ 119              	    // 0,2
+ 120              	    mla \tmp2, \c1, \twiddle, \tmp
+ 121              	    mls \c3, \c1, \twiddle, \tmp
+ 122              	
+ 123              	    // 1,3
+ 124              	    mla \tmp, \c2, \twiddle, \c0
+ 125              	    mls \c0, \c2, \twiddle, \c0
+ 126              	
+ 127              	    vmov.w \twiddle, \xi2
+ 128              	
+ 129              	    // 4,6
+ 130              	    mla \c2, \c6, \twiddle, \c4
+ 131              	    mls \c1, \c6, \twiddle, \c4
+ 132              	
+ 133              	    // 5,7
+ 134              	    mla \c6, \c7, \twiddle, \c5
+ 135              	    mls \c7, \c7, \twiddle, \c5
+ 136              	
+ 137              	    // tmp2, tmp, c3, c0 | c2, c6, c1, c7
+ 138              	
+ 139              	    // 4,5
+ 140              	    vmov.w \twiddle, \xi5
+ 141              	    mla \c4, \c6, \twiddle, \c2
+ 142              	    mls \c5, \c6, \twiddle, \c2
+ 143              	
+ 144              	    // 6,7
+ 145              	    vmov.w \twiddle, \xi6
+ 146              	    mla \c6, \c7, \twiddle, \c1
+ 147              	    mls \c7, \c7, \twiddle, \c1
+ 148              	
+ 149              	    // 2,3
+ 150              	    vmov.w \twiddle, \xi4
+ 151              	    mla \c2, \c0, \twiddle, \c3
+ 152              	    mls \c3, \c0, \twiddle, \c3
+ 153              	
+ 154              	    // 0,1
+ 155              	    vmov.w \twiddle, \xi3
+ 156              	    mla \c0, \tmp, \twiddle, \tmp2
+ 157              	    mls \c1, \tmp, \twiddle, \tmp2
+ 158              	.endm...
+   2              	.macro final_butterfly c0, c1, c1f, twiddle
+   3              	    vmov.w \c1, \c1f
+   4              	    add.w \c0, \c1
+   5              	    sub.w \c1, \c0, \c1, lsl#1
+   6              	    mul.w \c1, \twiddle
+   7              	.endm
+   8              	
+   9              	.macro final_butterfly2 c0, c0out, c1, c1f, twiddle, twiddle2
+  10              	    vmov.w \c1, \c1f
+  11              	    mla.w \c0out, \twiddle2, \c1, \c0
+  12              	    mls.w \c1, \twiddle2, \c1, \c0
+  13              	    mul.w \c1, \twiddle
+  14              	.endm
+  15              	
+  16              	.syntax unified
+  17              	.cpu cortex-m4
+  18              	.align 2
+  19              	.global __asm_ifnt_257
+  21              	__asm_ifnt_257:
+  22:ifnt_257.S    ****     push.w {r4-r11, lr}
+  23:ifnt_257.S    ****     vpush.w {s16-s24}
+  24              	
+  25              	    .equ width, 4
+  26              	
+  27:ifnt_257.S    ****     add.w r12, r0, #256*width
+  28:ifnt_257.S    ****     vmov.w s1, r12
+  29              	    _ifnt_7_6_5_4:
+  30              	
+  31:ifnt_257.S    ****         vldm.w r1!, {s2-s16}
+  32              	
+  33              	// ================
+  34              	
+  35:ifnt_257.S    ****             ldrstrvec ldr.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(2*8*width), #(2*9*width), #(2*
+  36              	
+  37:ifnt_257.S    ****             addSub4 r4, r5, r6, r7, r8, r9, r10, r11
+  38:ifnt_257.S    ****             vmov.w r14, s6
+  39:ifnt_257.S    ****             mul.w r5, r5, r14
+  40:ifnt_257.S    ****             vmov.w r14, s8
+  41:ifnt_257.S    ****             mul.w r9, r9, r14
+  42:ifnt_257.S    ****             addSub2 r4, r6, r8, r10
+  43:ifnt_257.S    ****             vmov.w r14, s7
+  44:ifnt_257.S    ****             mla.w r12, r7, r14, r5
+  45:ifnt_257.S    ****             mls.w r7, r7, r14, r5
+  46:ifnt_257.S    ****             vmov.w r14, s9
+  47:ifnt_257.S    ****             mla.w r5, r11, r14, r9
+  48:ifnt_257.S    ****             mls.w r11, r11, r14, r9
+  49              	
+  50              	            // r4, r12, r6, r7, r8, r5, r10, r11
+  51              	
+  52:ifnt_257.S    ****             vmov.w r14, s12
+  53:ifnt_257.S    ****             mul.w r6, r6, r14
+  54:ifnt_257.S    ****             mul.w r7, r7, r14
+  55:ifnt_257.S    ****             vmov.w r14, s13
+  56:ifnt_257.S    ****             mul.w r10, r10, r14
+  57:ifnt_257.S    ****             mul.w r11, r11, r14
+  58              	
+  59:ifnt_257.S    ****     barrett_32 r4, r2, r3, r14
+  60:ifnt_257.S    ****     barrett_32 r12, r2, r3, r14
+  61:ifnt_257.S    ****     barrett_32 r6, r2, r3, r14
+  62:ifnt_257.S    ****     barrett_32 r7, r2, r3, r14
+  63:ifnt_257.S    ****     barrett_32 r8, r2, r3, r14
+  64:ifnt_257.S    ****     barrett_32 r5, r2, r3, r14
+  65:ifnt_257.S    ****     barrett_32 r10, r2, r3, r14
+  66:ifnt_257.S    ****     barrett_32 r11, r2, r3, r14
+  67              	
+  68:ifnt_257.S    ****             addSub4 r4, r8, r6, r10, r12, r5, r7, r11
+  69              	
+  70:ifnt_257.S    ****             vmov.w s17, s18, r4, r12
+  71:ifnt_257.S    ****             vmov.w s19, s20, r6, r7
+  72:ifnt_257.S    ****             vmov.w s21, s22, r8, r5
+  73:ifnt_257.S    ****             vmov.w s23, s24, r10, r11
+  74              	
+  75:ifnt_257.S    ****             ldrstrvec ldr.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(2*0*width), #(2*1*width), #(2*
+  76              	
+  77:ifnt_257.S    ****             addSub4 r4, r5, r6, r7, r8, r9, r10, r11
+  78:ifnt_257.S    ****             vmov.w r14, s2
+  79:ifnt_257.S    ****             mul.w r5, r5, r14
+  80:ifnt_257.S    ****             vmov.w r14, s4
+  81:ifnt_257.S    ****             mul.w r9, r9, r14
+  82:ifnt_257.S    ****             addSub2 r4, r6, r8, r10
+  83:ifnt_257.S    ****             vmov.w r14, s3
+  84:ifnt_257.S    ****             mla.w r12, r7, r14, r5
+  85:ifnt_257.S    ****             mls.w r7, r7, r14, r5
+  86:ifnt_257.S    ****             vmov.w r14, s5
+  87:ifnt_257.S    ****             mla.w r5, r11, r14, r9
+  88:ifnt_257.S    ****             mls.w r11, r11, r14, r9
+  89              	
+  90              	            // r4, r12, r6, r7, r8, r5, r10, r11
+  91              	
+  92:ifnt_257.S    ****             vmov.w r14, s10
+  93:ifnt_257.S    ****             mul.w r6, r6, r14
+  94:ifnt_257.S    ****             mul.w r7, r7, r14
+  95:ifnt_257.S    ****             vmov.w r14, s11
+  96:ifnt_257.S    ****             mul.w r10, r10, r14
+  97:ifnt_257.S    ****             mul.w r11, r11, r14
+  98              	
+  99:ifnt_257.S    ****     barrett_32 r4, r2, r3, r14
+ 100:ifnt_257.S    ****     barrett_32 r12, r2, r3, r14
+ 101:ifnt_257.S    ****     barrett_32 r6, r2, r3, r14
+ 102:ifnt_257.S    ****     barrett_32 r7, r2, r3, r14
+ 103:ifnt_257.S    ****     barrett_32 r8, r2, r3, r14
+ 104:ifnt_257.S    ****     barrett_32 r5, r2, r3, r14
+ 105:ifnt_257.S    ****     barrett_32 r10, r2, r3, r14
+ 106:ifnt_257.S    ****     barrett_32 r11, r2, r3, r14
+ 107              	
+ 108:ifnt_257.S    ****             addSub4 r4, r8, r6, r10, r12, r5, r7, r11
+ 109:ifnt_257.S    ****             vmov.w r14, s14
+ 110:ifnt_257.S    ****             mul.w r8, r8, r14
+ 111:ifnt_257.S    ****             mul.w r5, r5, r14
+ 112:ifnt_257.S    ****             mul.w r10, r10, r14
+ 113:ifnt_257.S    ****             mul.w r11, r11, r14
+ 114:ifnt_257.S    ****             vmov.w r14, s16
+ 115:ifnt_257.S    ****             final_butterfly r12, r9, s18, r14
+ 116:ifnt_257.S    ****             str.w r12, [r0, #(2*1*width)]
+ 117:ifnt_257.S    ****             str.w r9, [r0, #(2*9*width)]
+ 118:ifnt_257.S    ****             final_butterfly r6, r9, s19, r14
+ 119:ifnt_257.S    ****             str.w r6, [r0, #(2*2*width)]
+ 120:ifnt_257.S    ****             str.w r9, [r0, #(2*10*width)]
+ 121:ifnt_257.S    ****             final_butterfly r7, r9, s20, r14
+ 122:ifnt_257.S    ****             str.w r7, [r0, #(2*3*width)]
+ 123:ifnt_257.S    ****             str.w r9, [r0, #(2*11*width)]
+ 124:ifnt_257.S    ****             vmov.w r12, s15
+ 125:ifnt_257.S    ****             final_butterfly2 r8, r6, r9, s21, r14, r12
+ 126:ifnt_257.S    ****             str.w r6, [r0, #(2*4*width)]
+ 127:ifnt_257.S    ****             str.w r9, [r0, #(2*12*width)]
+ 128:ifnt_257.S    ****             final_butterfly2 r5, r6, r9, s22, r14, r12
+ 129:ifnt_257.S    ****             str.w r6, [r0, #(2*5*width)]
+ 130:ifnt_257.S    ****             str.w r9, [r0, #(2*13*width)]
+ 131:ifnt_257.S    ****             final_butterfly2 r10, r6, r9, s23, r14, r12
+ 132:ifnt_257.S    ****             str.w r6, [r0, #(2*6*width)]
+ 133:ifnt_257.S    ****             str.w r9, [r0, #(2*14*width)]
+ 134:ifnt_257.S    ****             final_butterfly2 r11, r6, r9, s24, r14, r12
+ 135:ifnt_257.S    ****             str.w r6, [r0, #(2*7*width)]
+ 136:ifnt_257.S    ****             str.w r9, [r0, #(2*15*width)]
+ 137:ifnt_257.S    ****             final_butterfly r4, r9, s17, r14
+ 138:ifnt_257.S    ****             str.w r9, [r0, #(2*8*width)]
+ 139:ifnt_257.S    ****             str.w r4, [r0], #width
+ 140              	
+ 141              	// ================
+ 142              	
+ 143:ifnt_257.S    ****             ldrstrvec ldr.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(2*8*width), #(2*9*width), #(2*
+ 144              	
+ 145:ifnt_257.S    ****             addSub4 r4, r5, r6, r7, r8, r9, r10, r11
+ 146:ifnt_257.S    ****             vmov.w r14, s6
+ 147:ifnt_257.S    ****             mul.w r5, r5, r14
+ 148:ifnt_257.S    ****             vmov.w r14, s8
+ 149:ifnt_257.S    ****             mul.w r9, r9, r14
+ 150:ifnt_257.S    ****             addSub2 r4, r6, r8, r10
+ 151:ifnt_257.S    ****             vmov.w r14, s7
+ 152:ifnt_257.S    ****             mla.w r12, r7, r14, r5
+ 153:ifnt_257.S    ****             mls.w r7, r7, r14, r5
+ 154:ifnt_257.S    ****             vmov.w r14, s9
+ 155:ifnt_257.S    ****             mla.w r5, r11, r14, r9
+ 156:ifnt_257.S    ****             mls.w r11, r11, r14, r9
+ 157              	
+ 158              	            // r4, r12, r6, r7, r8, r5, r10, r11
+ 159              	
+ 160:ifnt_257.S    ****             vmov.w r14, s12
+ 161:ifnt_257.S    ****             mul.w r6, r6, r14
+ 162:ifnt_257.S    ****             mul.w r7, r7, r14
+ 163:ifnt_257.S    ****             vmov.w r14, s13
+ 164:ifnt_257.S    ****             mul.w r10, r10, r14
+ 165:ifnt_257.S    ****             mul.w r11, r11, r14
+ 166              	
+ 167:ifnt_257.S    ****     barrett_32 r4, r2, r3, r14
+ 168:ifnt_257.S    ****     barrett_32 r12, r2, r3, r14
+ 169:ifnt_257.S    ****     barrett_32 r6, r2, r3, r14
+ 170:ifnt_257.S    ****     barrett_32 r7, r2, r3, r14
+ 171:ifnt_257.S    ****     barrett_32 r8, r2, r3, r14
+ 172:ifnt_257.S    ****     barrett_32 r5, r2, r3, r14
+ 173:ifnt_257.S    ****     barrett_32 r10, r2, r3, r14
+ 174:ifnt_257.S    ****     barrett_32 r11, r2, r3, r14
+ 175              	
+ 176:ifnt_257.S    ****             addSub4 r4, r8, r6, r10, r12, r5, r7, r11
+ 177              	
+ 178:ifnt_257.S    ****             vmov.w s17, s18, r4, r12
+ 179:ifnt_257.S    ****             vmov.w s19, s20, r6, r7
+ 180:ifnt_257.S    ****             vmov.w s21, s22, r8, r5
+ 181:ifnt_257.S    ****             vmov.w s23, s24, r10, r11
+ 182              	
+ 183:ifnt_257.S    ****             ldrstrvec ldr.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(2*0*width), #(2*1*width), #(2*
+ 184              	
+ 185:ifnt_257.S    ****             addSub4 r4, r5, r6, r7, r8, r9, r10, r11
+ 186:ifnt_257.S    ****             vmov.w r14, s2
+ 187:ifnt_257.S    ****             mul.w r5, r5, r14
+ 188:ifnt_257.S    ****             vmov.w r14, s4
+ 189:ifnt_257.S    ****             mul.w r9, r9, r14
+ 190:ifnt_257.S    ****             addSub2 r4, r6, r8, r10
+ 191:ifnt_257.S    ****             vmov.w r14, s3
+ 192:ifnt_257.S    ****             mla.w r12, r7, r14, r5
+ 193:ifnt_257.S    ****             mls.w r7, r7, r14, r5
+ 194:ifnt_257.S    ****             vmov.w r14, s5
+ 195:ifnt_257.S    ****             mla.w r5, r11, r14, r9
+ 196:ifnt_257.S    ****             mls.w r11, r11, r14, r9
+ 197              	
+ 198              	            // r4, r12, r6, r7, r8, r5, r10, r11
+ 199              	
+ 200:ifnt_257.S    ****             vmov.w r14, s10
+ 201:ifnt_257.S    ****             mul.w r6, r6, r14
+ 202:ifnt_257.S    ****             mul.w r7, r7, r14
+ 203:ifnt_257.S    ****             vmov.w r14, s11
+ 204:ifnt_257.S    ****             mul.w r10, r10, r14
+ 205:ifnt_257.S    ****             mul.w r11, r11, r14
+ 206              	
+ 207:ifnt_257.S    ****     barrett_32 r4, r2, r3, r14
+ 208:ifnt_257.S    ****     barrett_32 r12, r2, r3, r14
+ 209:ifnt_257.S    ****     barrett_32 r6, r2, r3, r14
+ 210:ifnt_257.S    ****     barrett_32 r7, r2, r3, r14
+ 211:ifnt_257.S    ****     barrett_32 r8, r2, r3, r14
+ 212:ifnt_257.S    ****     barrett_32 r5, r2, r3, r14
+ 213:ifnt_257.S    ****     barrett_32 r10, r2, r3, r14
+ 214:ifnt_257.S    ****     barrett_32 r11, r2, r3, r14
+ 215              	
+ 216:ifnt_257.S    ****             addSub4 r4, r8, r6, r10, r12, r5, r7, r11
+ 217:ifnt_257.S    ****             vmov.w r14, s14
+ 218:ifnt_257.S    ****             mul.w r8, r8, r14
+ 219:ifnt_257.S    ****             mul.w r5, r5, r14
+ 220:ifnt_257.S    ****             mul.w r10, r10, r14
+ 221:ifnt_257.S    ****             mul.w r11, r11, r14
+ 222:ifnt_257.S    ****             vmov.w r14, s16
+ 223              	
+ 224:ifnt_257.S    ****             final_butterfly r12, r9, s18, r14
+ 225:ifnt_257.S    ****             str.w r12, [r0, #(2*1*width)]
+ 226:ifnt_257.S    ****             str.w r9, [r0, #(2*9*width)]
+ 227:ifnt_257.S    ****             final_butterfly r6, r9, s19, r14
+ 228:ifnt_257.S    ****             str.w r6, [r0, #(2*2*width)]
+ 229:ifnt_257.S    ****             str.w r9, [r0, #(2*10*width)]
+ 230:ifnt_257.S    ****             final_butterfly r7, r9, s20, r14
+ 231:ifnt_257.S    ****             str.w r7, [r0, #(2*3*width)]
+ 232:ifnt_257.S    ****             str.w r9, [r0, #(2*11*width)]
+ 233:ifnt_257.S    ****             vmov.w r12, s15
+ 234:ifnt_257.S    ****             final_butterfly2 r8, r6, r9, s21, r14, r12
+ 235:ifnt_257.S    ****             str.w r6, [r0, #(2*4*width)]
+ 236:ifnt_257.S    ****             str.w r9, [r0, #(2*12*width)]
+ 237:ifnt_257.S    ****             final_butterfly2 r5, r6, r9, s22, r14, r12
+ 238:ifnt_257.S    ****             str.w r6, [r0, #(2*5*width)]
+ 239:ifnt_257.S    ****             str.w r9, [r0, #(2*13*width)]
+ 240:ifnt_257.S    ****             final_butterfly2 r10, r6, r9, s23, r14, r12
+ 241:ifnt_257.S    ****             str.w r6, [r0, #(2*6*width)]
+ 242:ifnt_257.S    ****             str.w r9, [r0, #(2*14*width)]
+ 243:ifnt_257.S    ****             final_butterfly2 r11, r6, r9, s24, r14, r12
+ 244:ifnt_257.S    ****             str.w r6, [r0, #(2*7*width)]
+ 245:ifnt_257.S    ****             str.w r9, [r0, #(2*15*width)]
+ 246:ifnt_257.S    ****             final_butterfly r4, r9, s17, r14
+ 247:ifnt_257.S    ****             str.w r9, [r0, #(2*8*width)]
+ 248:ifnt_257.S    ****             str.w r4, [r0], #31*width
+ 249              	
+ 250              	// ================
+ 251              	
+ 252:ifnt_257.S    ****     vmov.w r12, s1
+ 253:ifnt_257.S    ****     cmp.w r0, r12
+ 254:ifnt_257.S    ****     bne.w _ifnt_7_6_5_4
+ 255              	
+ 256:ifnt_257.S    ****     sub.w r0, r0, #256*width
+ 257              	
+ 258:ifnt_257.S    ****     mov.w r14, #0
+ 259              	
+ 260:ifnt_257.S    ****     add.w r1, r0, #32*width
+ 261              	    _ifnt_0_1_2:
+ 262              	
+ 263              	.rept 2
+ 264:ifnt_257.S    **** 
+ 265:ifnt_257.S    ****     ldrstrvec ldr.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(32*0*width), #(32*1*width), #(32*2*wid
+ 266:ifnt_257.S    **** 
+ 267:ifnt_257.S    ****     addSub4 r4, r5, r6, r7, r8, r9, r10, r11
+ 268:ifnt_257.S    **** 
+ 269:ifnt_257.S    ****     addSub2 r4, r6, r8, r10
+ 270:ifnt_257.S    ****     FNT_CT_ibutterfly r5, r7, 4
+ 271:ifnt_257.S    ****     FNT_CT_ibutterfly r9, r11, 4
+ 272:ifnt_257.S    **** 
+ 273:ifnt_257.S    ****     addSub1 r4, r8
+ 274:ifnt_257.S    ****     barrett_32 r9, r2, r3, r12
+ 275:ifnt_257.S    ****     FNT_CT_ibutterfly r5, r9, 6
+ 276:ifnt_257.S    ****     FNT_CT_ibutterfly r6, r10, 4
+ 277:ifnt_257.S    ****     FNT_CT_ibutterfly r7, r11, 2
+ 278:ifnt_257.S    **** 
+ 279:ifnt_257.S    ****     barrett_32 r6, r2, r3, r12
+ 280:ifnt_257.S    ****     barrett_32 r7, r2, r3, r12
+ 281:ifnt_257.S    ****     sub.w r4, r14, r4, lsl #1
+ 282:ifnt_257.S    ****     neg.w r5, r5
+ 283:ifnt_257.S    ****     lsl.w r6, r6, #7
+ 284:ifnt_257.S    ****     lsl.w r7, r7, #6
+ 285:ifnt_257.S    ****     lsl.w r8, r8, #5
+ 286:ifnt_257.S    ****     lsl.w r9, r9, #4
+ 287:ifnt_257.S    ****     lsl.w r10, r10, #3
+ 288:ifnt_257.S    ****     lsl.w r11, r11, #2
+ 289:ifnt_257.S    **** 
+ 290:ifnt_257.S    ****     barrett_32 r4, r2, r3, r12
+ 291:ifnt_257.S    ****     barrett_32 r5, r2, r3, r12
+ 292:ifnt_257.S    ****     barrett_32 r6, r2, r3, r12
+ 293:ifnt_257.S    ****     barrett_32 r7, r2, r3, r12
+ 294:ifnt_257.S    ****     barrett_32 r8, r2, r3, r12
+ 295:ifnt_257.S    ****     barrett_32 r9, r2, r3, r12
+ 296:ifnt_257.S    ****     barrett_32 r10, r2, r3, r12
+ 297:ifnt_257.S    ****     barrett_32 r11, r2, r3, r12
+ 298:ifnt_257.S    **** 
+ 299:ifnt_257.S    ****     ldrstrvecjump str.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(32*1*width), #(32*2*width), #(32*3
+ 300:ifnt_257.S    **** 
+ 301:ifnt_257.S    **** .endr
+ 302              	
+ 303:ifnt_257.S    ****     cmp.w r0, r1
+ 304:ifnt_257.S    ****     bne.w _ifnt_0_1_2
+ 305:ifnt_257.S    ****     vpop.w {s16-s24}
+ 306:ifnt_257.S    ****     pop.w {r4-r11, pc}
+DEFINED SYMBOLS
+          ifnt_257.S:18     .text:00000000 $t
+          ifnt_257.S:21     .text:00000000 __asm_ifnt_257
+          ifnt_257.S:25     *ABS*:00000004 width
+          ifnt_257.S:29     .text:00000010 _ifnt_7_6_5_4
+          ifnt_257.S:261    .text:00000574 _ifnt_0_1_2
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,308 @@
+   1              	# 1 "fnt_257.S"
+   1              	#include "macros_fnt.i"
+   0              	
+   0              	
+   1              	// 2
+   2              	.macro ldrstr2 ldrstr, target, c0, c1, mem0, mem1
+   3              	    \ldrstr \c0, [\target, \mem0]
+   4              	    \ldrstr \c1, [\target, \mem1]
+   5              	.endm
+   6              	
+   7              	// 2
+   8              	.macro ldrstr2jump ldrstr, target, c0, c1, mem1, jump
+   9              	    \ldrstr \c1, [\target, \mem1]
+  10              	    \ldrstr \c0, [\target], \jump
+  11              	.endm
+  12              	
+  13              	// 4
+  14              	.macro ldrstr4 ldrstr, target, c0, c1, c2, c3, mem0, mem1, mem2, mem3
+  15              	    \ldrstr \c0, [\target, \mem0]
+  16              	    \ldrstr \c1, [\target, \mem1]
+  17              	    \ldrstr \c2, [\target, \mem2]
+  18              	    \ldrstr \c3, [\target, \mem3]
+  19              	.endm
+  20              	
+  21              	// 4
+  22              	.macro ldrstr4jump ldrstr, target, c0, c1, c2, c3, mem1, mem2, mem3, jump
+  23              	    \ldrstr \c1, [\target, \mem1]
+  24              	    \ldrstr \c2, [\target, \mem2]
+  25              	    \ldrstr \c3, [\target, \mem3]
+  26              	    \ldrstr \c0, [\target], \jump
+  27              	.endm
+  28              	
+  29              	// 8
+  30              	.macro ldrstrvec ldrstr, target, c0, c1, c2, c3, c4, c5, c6, c7, mem0, mem1, mem2, mem3, mem4, mem5
+  31              	    ldrstr4 \ldrstr, \target, \c0, \c1, \c2, \c3, \mem0, \mem1, \mem2, \mem3
+  32              	    ldrstr4 \ldrstr, \target, \c4, \c5, \c6, \c7, \mem4, \mem5, \mem6, \mem7
+  33              	.endm
+  34              	
+  35              	// 8
+  36              	.macro ldrstrvecjump ldrstr, target, c0, c1, c2, c3, c4, c5, c6, c7, mem1, mem2, mem3, mem4, mem5, 
+  37              	    ldrstr4 \ldrstr, \target, \c4, \c5, \c6, \c7, \mem4, \mem5, \mem6, \mem7
+  38              	    ldrstr4jump \ldrstr, \target, \c0, \c1, \c2, \c3, \mem1, \mem2, \mem3, \jump
+  39              	.endm
+  40              	
+  41              	
+  42              	
+  43              	.macro addSub1 c0, c1
+  44              	    add.w \c0, \c1
+  45              	    sub.w \c1, \c0, \c1, lsl #1
+  46              	.endm
+  47              	
+  48              	.macro addSub2 c0, c1, c2, c3
+  49              	    add \c0, \c1
+  50              	    add \c2, \c3
+  51              	    sub.w \c1, \c0, \c1, lsl #1
+  52              	    sub.w \c3, \c2, \c3, lsl #1
+  53              	.endm
+  54              	
+  55              	.macro addSub4 c0, c1, c2, c3, c4, c5, c6, c7
+  56              	    add \c0, \c1
+  57              	    add \c2, \c3
+  58              	    add \c4, \c5
+  59              	    add \c6, \c7
+  60              	    sub.w \c1, \c0, \c1, lsl #1
+  61              	    sub.w \c3, \c2, \c3, lsl #1
+  62              	    sub.w \c5, \c4, \c5, lsl #1
+  63              	    sub.w \c7, \c6, \c7, lsl #1
+  64              	.endm
+  65              	
+  66              	// 2
+  67              	.macro barrett_32 a, Qbar, Q, tmp
+  68              	    smmulr.w \tmp, \a, \Qbar
+  69              	    mls.w \a, \tmp, \Q, \a
+  70              	.endm
+  71              	
+  72              	.macro FNT_CT_butterfly c0, c1, logW
+  73              	    add.w \c0, \c0, \c1, lsl #\logW
+  74              	    sub.w \c1, \c0, \c1, lsl #(\logW+1)
+  75              	.endm
+  76              	
+  77              	.macro shift_subAdd c0, c1, shlv
+  78              	    sub.w \c0, \c0, \c1, lsl #(\shlv)
+  79              	    add.w \c1, \c0, \c1, lsl #(\shlv+1)
+  80              	.endm
+  81              	
+  82              	.macro FNT_CT_ibutterfly c0, c1, shlv
+  83              	    shift_subAdd \c0, \c1, \shlv
+  84              	.endm
+  85              	
+  86              	// 46
+  87              	.macro _3_layer_CT_32_FNT c0, c1, c2, c3, c4, c5, c6, c7, xi0, xi1, xi2, xi3, xi4, xi5, xi6, twiddl
+  88              	    vmov.w \twiddle, \xi0
+  89              	
+  90              	    // c0, c1, c2, c3, c4, c5, c6, c7, c8
+  91              	    // 0,4
+  92              	    mla \tmp, \c4, \twiddle, \c0
+  93              	    mls \c4, \c4, \twiddle, \c0
+  94              	
+  95              	    // 1,5
+  96              	    mla \c0, \c5, \twiddle, \c1
+  97              	    mls \c5, \c5, \twiddle, \c1
+  98              	
+  99              	    // 2,6
+ 100              	    mla \c1, \c6, \twiddle, \c2
+ 101              	    mls \c6, \c6, \twiddle, \c2
+ 102              	
+ 103              	    // 3,7
+ 104              	    mla \c2, \c7, \twiddle, \c3
+ 105              	    mls \c7, \c7, \twiddle, \c3
+ 106              	
+ 107              	    // tmp, c0, c1, c2, c4, c5, c6, c7
+ 108              	
+ 109              	    barrett_32 \tmp, \Qprime, \Q, \c3
+ 110              	    barrett_32 \c0, \Qprime, \Q, \c3
+ 111              	    barrett_32 \c1, \Qprime, \Q, \c3
+ 112              	    barrett_32 \c2, \Qprime, \Q, \c3
+ 113              	    barrett_32 \c4, \Qprime, \Q, \c3
+ 114              	    barrett_32 \c5, \Qprime, \Q, \c3
+ 115              	    barrett_32 \c6, \Qprime, \Q, \c3
+ 116              	    barrett_32 \c7, \Qprime, \Q, \c3
+ 117              	
+ 118              	    vmov.w \twiddle, \xi1
+ 119              	    // 0,2
+ 120              	    mla \tmp2, \c1, \twiddle, \tmp
+ 121              	    mls \c3, \c1, \twiddle, \tmp
+ 122              	
+ 123              	    // 1,3
+ 124              	    mla \tmp, \c2, \twiddle, \c0
+ 125              	    mls \c0, \c2, \twiddle, \c0
+ 126              	
+ 127              	    vmov.w \twiddle, \xi2
+ 128              	
+ 129              	    // 4,6
+ 130              	    mla \c2, \c6, \twiddle, \c4
+ 131              	    mls \c1, \c6, \twiddle, \c4
+ 132              	
+ 133              	    // 5,7
+ 134              	    mla \c6, \c7, \twiddle, \c5
+ 135              	    mls \c7, \c7, \twiddle, \c5
+ 136              	
+ 137              	    // tmp2, tmp, c3, c0 | c2, c6, c1, c7
+ 138              	
+ 139              	    // 4,5
+ 140              	    vmov.w \twiddle, \xi5
+ 141              	    mla \c4, \c6, \twiddle, \c2
+ 142              	    mls \c5, \c6, \twiddle, \c2
+ 143              	
+ 144              	    // 6,7
+ 145              	    vmov.w \twiddle, \xi6
+ 146              	    mla \c6, \c7, \twiddle, \c1
+ 147              	    mls \c7, \c7, \twiddle, \c1
+ 148              	
+ 149              	    // 2,3
+ 150              	    vmov.w \twiddle, \xi4
+ 151              	    mla \c2, \c0, \twiddle, \c3
+ 152              	    mls \c3, \c0, \twiddle, \c3
+ 153              	
+ 154              	    // 0,1
+ 155              	    vmov.w \twiddle, \xi3
+ 156              	    mla \c0, \tmp, \twiddle, \tmp2
+ 157              	    mls \c1, \tmp, \twiddle, \tmp2
+ 158              	.endm...
+   2              	.macro final_butterfly c0, c1f, twiddle, c0out, c1, qprime, q, tmp
+   3              	    vmov.w \c1, \c1f
+   4              	    vmov.w \tmp, \twiddle
+   5              	
+   6              	    mla \c0out, \c1, \tmp, \c0
+   7              	    mls \c1, \c1, \tmp, \c0
+   8              	
+   9              	    barrett_32 \c0out, \qprime, \q, \tmp
+  10              	    barrett_32 \c1, \qprime, \q, \tmp
+  11              	.endm
+  12              	
+  13              	
+  14              	.syntax unified
+  15              	.cpu cortex-m4
+  16              	
+  17              	.align 2
+  18              	.global __asm_fnt_257
+  20              	__asm_fnt_257:
+  21:fnt_257.S     ****     push.w {r4-r11, lr}
+  22:fnt_257.S     ****     vpush.w {s16-s27}
+  23              	
+  24:fnt_257.S     ****     vmov.w s27, r1
+  25              	
+  26              	    .equ width, 4
+  27              	
+  28:fnt_257.S     ****     add.w r12, r0, #32*width
+  29              	    _fnt_0_1_2:
+  30              	
+  31:fnt_257.S     ****     ldrstrvec ldr.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(32*0*width), #(32*1*width), #(32*2*wid
+  32              	
+  33:fnt_257.S     ****     FNT_CT_butterfly  r4,  r8, 4
+  34:fnt_257.S     ****     FNT_CT_butterfly  r5,  r9, 4
+  35:fnt_257.S     ****     FNT_CT_butterfly  r6, r10, 4
+  36:fnt_257.S     ****     FNT_CT_butterfly  r7, r11, 4
+  37              	
+  38:fnt_257.S     ****     FNT_CT_butterfly  r4,  r6, 2
+  39:fnt_257.S     ****     FNT_CT_butterfly  r5,  r7, 2
+  40:fnt_257.S     ****     FNT_CT_butterfly  r8, r10, 6
+  41:fnt_257.S     ****     FNT_CT_butterfly  r9, r11, 6
+  42              	
+  43:fnt_257.S     ****     FNT_CT_butterfly  r4, r5, 1
+  44:fnt_257.S     ****     FNT_CT_butterfly  r6, r7, 5
+  45:fnt_257.S     ****     FNT_CT_butterfly  r8, r9, 3
+  46:fnt_257.S     ****     FNT_CT_butterfly  r10, r11, 7
+  47              	
+  48:fnt_257.S     ****     ldrstrvecjump str.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(32*1*width), #(32*2*width), #(32*3
+  49              	
+  50:fnt_257.S     ****     cmp.w r0, r12
+  51:fnt_257.S     ****     bne.w _fnt_0_1_2
+  52              	
+  53:fnt_257.S     ****     sub.w r0, r0, #32*width
+  54              	
+  55:fnt_257.S     ****     add.w r12, r0, #256*width
+  56:fnt_257.S     ****     vmov.w s25, r12
+  57              	    _fnt_3_4_5_6:
+  58              	
+  59:fnt_257.S     ****         vmov r1, s27
+  60:fnt_257.S     ****         vldm.w r1!, {s2-s16}
+  61:fnt_257.S     ****         vmov s27, r1
+  62              	
+  63              	        .rept 2
+  64:fnt_257.S     ****             ldrstrvec ldr.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(4*0*width+2*width), #(4*1*widt
+  65:fnt_257.S     **** 
+  66:fnt_257.S     ****             _3_layer_CT_32_FNT r4, r5, r6, r7, r8, r9, r10, r11, s2, s3, s4, s5, s6, s7, s8, r14, r
+  67:fnt_257.S     **** 
+  68:fnt_257.S     ****             vmov.w s17, s18, r4, r5 // a1, a3
+  69:fnt_257.S     ****             vmov.w s19, s20, r6, r7 // a5, a7
+  70:fnt_257.S     ****             vmov.w s21, s22, r8, r9 // a9, a11
+  71:fnt_257.S     ****             vmov.w s23, s24, r10, r11 // a13, a15
+  72:fnt_257.S     **** 
+  73:fnt_257.S     ****             ldrstrvec ldr.w, r0, r4, r5, r6, r7, r8, r9, r10, r11, #(4*0*width), #(4*1*width), #(4*
+  74:fnt_257.S     **** 
+  75:fnt_257.S     ****             _3_layer_CT_32_FNT r4, r5, r6, r7, r8, r9, r10, r11, s2, s3, s4, s5, s6, s7, s8, r14, r
+  76:fnt_257.S     **** 
+  77:fnt_257.S     ****             final_butterfly r5, s18, s10, r1, r12, r2, r3, r14
+  78:fnt_257.S     ****             str.w r12, [r0, #(4*1*width+2*width)]
+  79:fnt_257.S     ****             str.w r1, [r0, #(4*1*width)]
+  80:fnt_257.S     **** 
+  81:fnt_257.S     ****             final_butterfly r6, s19, s11, r1, r12, r2, r3, r14
+  82:fnt_257.S     ****             str.w r12, [r0, #(4*2*width+2*width)]
+  83:fnt_257.S     ****             str.w r1, [r0, #(4*2*width)]
+  84:fnt_257.S     **** 
+  85:fnt_257.S     ****             final_butterfly r7, s20, s12, r1, r12, r2, r3, r14
+  86:fnt_257.S     ****             str.w r12, [r0, #(4*3*width+2*width)]
+  87:fnt_257.S     ****             str.w r1, [r0, #(4*3*width)]
+  88:fnt_257.S     **** 
+  89:fnt_257.S     ****             final_butterfly r8, s21, s13, r1, r12, r2, r3, r14
+  90:fnt_257.S     ****             str.w r12, [r0, #(4*4*width+2*width)]
+  91:fnt_257.S     ****             str.w r1, [r0, #(4*4*width)]
+  92:fnt_257.S     **** 
+  93:fnt_257.S     ****             final_butterfly r9, s22, s14, r1, r12, r2, r3, r14
+  94:fnt_257.S     ****             str.w r12, [r0, #(4*5*width+2*width)]
+  95:fnt_257.S     ****             str.w r1, [r0, #(4*5*width)]
+  96:fnt_257.S     **** 
+  97:fnt_257.S     ****             final_butterfly r10, s23, s15, r1, r12, r2, r3, r14
+  98:fnt_257.S     ****             str.w r12, [r0, #(4*6*width+2*width)]
+  99:fnt_257.S     ****             str.w r1, [r0, #(4*6*width)]
+ 100:fnt_257.S     **** 
+ 101:fnt_257.S     ****             final_butterfly r11, s24, s16, r1, r12, r2, r3, r14
+ 102:fnt_257.S     ****             str.w r12, [r0, #(4*7*width+2*width)]
+ 103:fnt_257.S     ****             str.w r1, [r0, #(4*7*width)]
+ 104:fnt_257.S     **** 
+ 105:fnt_257.S     ****             final_butterfly r4, s17, s9, r1, r12, r2, r3, r14
+ 106:fnt_257.S     ****             str.w r12, [r0, #(4*0*width+2*width)]
+ 107:fnt_257.S     ****             str.w r1, [r0], #width
+ 108:fnt_257.S     ****         .endr
+ 109:fnt_257.S     ****         add.w r0, #((32-2)*width)
+ 110              	
+ 111:fnt_257.S     ****     vmov.w r12, s25
+ 112:fnt_257.S     ****     cmp.w r0, r12
+ 113:fnt_257.S     ****     bne.w _fnt_3_4_5_6
+ 114              	
+ 115              	    # switch to 16-bit representation
+ 116:fnt_257.S     ****     sub.w r0, r0, #256*width
+ 117:fnt_257.S     ****     mov.w r1, r0
+ 118              	    _fnt_to_16_bit:
+ 119:fnt_257.S     ****         ldr.w r3, [r0, #1*width]
+ 120:fnt_257.S     ****         ldr.w r4, [r0, #2*width]
+ 121:fnt_257.S     ****         ldr.w r5, [r0, #3*width]
+ 122:fnt_257.S     ****         ldr.w r6, [r0, #4*width]
+ 123:fnt_257.S     ****         ldr.w r7, [r0, #5*width]
+ 124:fnt_257.S     ****         ldr.w r8, [r0, #6*width]
+ 125:fnt_257.S     ****         ldr.w r9, [r0, #7*width]
+ 126:fnt_257.S     ****         ldr.w r2, [r0], #8*width
+ 127:fnt_257.S     ****         strh.w r3, [r1, #1*2]
+ 128:fnt_257.S     ****         strh.w r4, [r1, #2*2]
+ 129:fnt_257.S     ****         strh.w r5, [r1, #3*2]
+ 130:fnt_257.S     ****         strh.w r6, [r1, #4*2]
+ 131:fnt_257.S     ****         strh.w r7, [r1, #5*2]
+ 132:fnt_257.S     ****         strh.w r8, [r1, #6*2]
+ 133:fnt_257.S     ****         strh.w r9, [r1, #7*2]
+ 134:fnt_257.S     ****         strh.w r2, [r1], #8*2
+ 135:fnt_257.S     ****         cmp.w r0, r12
+ 136:fnt_257.S     ****         bne.w _fnt_to_16_bit
+ 137              	
+ 138:fnt_257.S     ****     vpop.w {s16-s27}
+ 139:fnt_257.S     ****     pop.w {r4-r11, pc}
+DEFINED SYMBOLS
+           fnt_257.S:17     .text:00000000 $t
+           fnt_257.S:20     .text:00000000 __asm_fnt_257
+           fnt_257.S:26     *ABS*:00000004 width
+           fnt_257.S:29     .text:00000010 _fnt_0_1_2
+           fnt_257.S:57     .text:000000c4 _fnt_3_4_5_6
+           fnt_257.S:118    .text:000006f8 _fnt_to_16_bit
+
+NO UNDEFINED SYMBOLS
