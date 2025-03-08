@@ -7,3 +7,5 @@ The `firmware` folder contains source code that can be compiled using `arm-none-
 In the `attack_code` folder, there is one or more `.ipynb` files showcasing the Python code used for our attacks.
 
 In each folder, the `readme` provides a detailed explanation of what the `.ipynb` files in the `attack_code` do.
+
+If the .ipynb files in the attack_code folder are too large to be displayed on GitHub's web interface, please download them and open them using VSCode or Jupyter Notebook.
